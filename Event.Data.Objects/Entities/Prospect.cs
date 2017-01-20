@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Event.Data.Objects.Entities
 {
-    public class Vendor : Transport
+    public class Prospect : Transport
     {
-        public long VendorId { get; set; }
+        public long ProspectId { get; set; }
     }
 }
