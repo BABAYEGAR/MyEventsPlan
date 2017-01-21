@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\ProspectContactMappingDataContext.cs" />
+    <Compile Include="DataContext\ContactDataContext.cs" />
+    <Compile Include="DataContext\EventContactMappingDataContext.cs" />
     <Compile Include="DataContext\AppUserDataContext.cs" />
     <Compile Include="DataContext\EventPlannerDataContext.cs" />
     <Compile Include="DataContext\VendorDataContext.cs" />
@@ -57,6 +60,11 @@
     <Compile Include="DataContext\AppointmentDataContext.cs" />
     <Compile Include="DataContext\EventTypeDataContext.cs" />
     <Compile Include="DataContext\EventDataContext.cs" />
+    <Compile Include="Migrations\201701210253123_migration1.cs" />
+    <Compile Include="Migrations\201701210253123_migration1.Designer.cs">
+      <DependentUpon>201701210253123_migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -68,6 +76,11 @@
       <Project>{2C6EA932-34DA-4A8D-97E6-D04F450718D5}</Project>
       <Name>MyEventPlan.Data.Objects</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201701210253123_migration1.resx">
+      <DependentUpon>201701210253123_migration1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

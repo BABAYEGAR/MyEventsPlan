@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Event.Data.Objects.Entities
 {
-    public class Appointment
+    public class Appointment :Transport
     {
         public long AppointmentId { get; set; }
         public long EventId { get; set; }

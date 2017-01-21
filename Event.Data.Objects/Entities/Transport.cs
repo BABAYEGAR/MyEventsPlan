@@ -6,15 +6,15 @@ namespace Event.Data.Objects.Entities
     public class Transport
     {
         [DisplayName("Created By")]
-        public virtual long CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         [DisplayName("Date Created")]
-        public virtual DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [DisplayName("Date Last Modified")]
-        public virtual DateTime DateLastModified { get; set; }
+        public DateTime DateLastModified { get; set; }
 
         [DisplayName("Last Modified By")]
-        public virtual long LastModifiedBy { get; set; }
+        public long? LastModifiedBy { get; set; }
     }
 }

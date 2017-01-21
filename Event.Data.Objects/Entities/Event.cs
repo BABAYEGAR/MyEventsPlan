@@ -12,7 +12,7 @@ namespace Event.Data.Objects.Entities
     {
         public long EventId { get; set; }
         [Required]
-        public string EventName { get; set; }
+        public string Name { get; set; }
         [Required]
         public string Color { get; set; }
         [Required]
@@ -30,5 +30,6 @@ namespace Event.Data.Objects.Entities
         [Required]
         public string EndTime { get; set; }
         public IEnumerable<Appointment> Appointments { get; set; }
+        public IEnumerable<EventContactMapping> EventContactMapping { get; set; }
     }
 }

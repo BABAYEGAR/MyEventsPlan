@@ -3,15 +3,15 @@ using Event.Data.Objects.Entities;
 
 namespace MyEventPlan.Data.DataContext.DataContext
 {
-    public class ProspectDataContext : DbContext
+    public class EventContactMappingDataContext : DbContext
     {
-        // Your context has been configured to use a 'ProspectDataContext' connection string from your application's 
+        // Your context has been configured to use a 'EventContactMappingDataContext' connection string from your application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
-        // 'MyEventsPlan.Data.Context.DataContext.ProspectDataContext' database on your LocalDb instance. 
+        // 'MyEventsPlan.Data.Context.DataContext.EventContactMappingDataContext' database on your LocalDb instance. 
         // 
-        // If you wish to target a different database and/or database provider, modify the 'ProspectDataContext' 
+        // If you wish to target a different database and/or database provider, modify the 'EventContactMappingDataContext' 
         // connection string in the application configuration file.
-        public ProspectDataContext()
+        public EventContactMappingDataContext()
             : base("name=Event")
         {
         }
@@ -20,8 +20,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
         public virtual DbSet<Event.Data.Objects.Entities.Event> Event { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
-        public virtual DbSet<Prospect> Prospects { get; set; }
-        public virtual DbSet<ProspectContactMapping> ProspectsContactMappings { get; set; }
+        public virtual DbSet<EventContactMapping> EventContactMapping { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

@@ -196,6 +196,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventManagement\EventsController.cs" />
+    <Compile Include="Controllers\EventManagement\EventTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -289,6 +291,19 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_LayoutDashboard.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Events\Create.cshtml" />
+    <Content Include="Views\Events\Delete.cshtml" />
+    <Content Include="Views\Events\Details.cshtml" />
+    <Content Include="Views\Events\Edit.cshtml" />
+    <Content Include="Views\Events\Index.cshtml" />
+    <Content Include="Views\EventTypes\Create.cshtml" />
+    <Content Include="Views\EventTypes\Delete.cshtml" />
+    <Content Include="Views\EventTypes\Details.cshtml" />
+    <Content Include="Views\EventTypes\Edit.cshtml" />
+    <Content Include="Views\EventTypes\Index.cshtml" />
+    <Content Include="Views\Shared\_PartialSidebar.cshtml" />
+    <Content Include="Views\Shared\_PartialNavigation.cshtml" />
+    <Content Include="Views\Shared\_LayoutForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -300,6 +315,20 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Event.Data.Objects\MyEventPlan.Data.Objects.csproj">
+      <Project>{2c6ea932-34da-4a8d-97e6-d04f450718d5}</Project>
+      <Name>MyEventPlan.Data.Objects</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyEventPlan.Data.DataContext\MyEventPlan.Data.DataContext.csproj">
+      <Project>{175a6497-c3a2-4773-b968-31b4994b929a}</Project>
+      <Name>MyEventPlan.Data.DataContext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyEventPlan.Data.Service\MyEventPlan.Data.Service.csproj">
+      <Project>{8b206f16-b12d-4a18-b631-44e64e58f44a}</Project>
+      <Name>MyEventPlan.Data.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

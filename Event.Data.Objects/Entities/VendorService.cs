@@ -9,7 +9,7 @@ namespace Event.Data.Objects.Entities
 {
     public class VendorService : Transport
     {
-        public long VendorServicesId { get; set; }
+        public long VendorServiceId { get; set; }
         [Required]
         public string ServiceName { get; set; }
         [Required]
