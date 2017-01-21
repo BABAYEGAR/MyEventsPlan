@@ -25,7 +25,7 @@ namespace Event.Data.Objects.Entities
         [EmailAddress]
         public string Mobile { get; set; }
         [Required]
-        public long RoleId { get; set; }
+        public long? RoleId { get; set; }
         [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
         public IEnumerable<AppUser> AppUsers { get; set; }

@@ -22,7 +22,7 @@ namespace Event.Data.Objects.Entities
         public string Email { get; set; }
         [Required]
         public string Mobile { get; set; }
-        public long ContactRoleId { get; set; }
+        public long? ContactRoleId { get; set; }
         [ForeignKey("ContactRoleId")]
         public virtual ContactRole ContactRole { get; set; }
         public IEnumerable<Event> Events { get; set; }

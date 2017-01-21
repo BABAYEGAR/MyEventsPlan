@@ -54,6 +54,7 @@
     <Compile Include="DataContext\EventContactMappingDataContext.cs" />
     <Compile Include="DataContext\AppUserDataContext.cs" />
     <Compile Include="DataContext\EventPlannerDataContext.cs" />
+    <Compile Include="DataContext\VendorServiceDataContext.cs" />
     <Compile Include="DataContext\VendorDataContext.cs" />
     <Compile Include="DataContext\RoleDataContext.cs" />
     <Compile Include="DataContext\ProspectDataContext.cs" />
@@ -63,6 +64,10 @@
     <Compile Include="Migrations\201701210253123_migration1.cs" />
     <Compile Include="Migrations\201701210253123_migration1.Designer.cs">
       <DependentUpon>201701210253123_migration1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701210539514_migration2.cs" />
+    <Compile Include="Migrations\201701210539514_migration2.Designer.cs">
+      <DependentUpon>201701210539514_migration2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +162,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701210253123_migration1.resx">
       <DependentUpon>201701210253123_migration1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701210539514_migration2.resx">
+      <DependentUpon>201701210539514_migration2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

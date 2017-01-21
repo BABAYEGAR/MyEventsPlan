@@ -200,6 +200,8 @@
     <Compile Include="Controllers\EventManagement\EventTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoleManagement\RolesController.cs" />
+    <Compile Include="Controllers\VendorManagement\VendorServicesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -400,6 +402,16 @@
     <Content Include="Views\Shared\_PartialNavigation.cshtml" />
     <Content Include="Views\Shared\_LayoutForm.cshtml" />
     <Content Include="Views\Shared\_LayoutTable.cshtml" />
+    <Content Include="Views\VendorServices\Create.cshtml" />
+    <Content Include="Views\VendorServices\Delete.cshtml" />
+    <Content Include="Views\VendorServices\Details.cshtml" />
+    <Content Include="Views\VendorServices\Edit.cshtml" />
+    <Content Include="Views\VendorServices\Index.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
+    <Content Include="Views\Roles\Details.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

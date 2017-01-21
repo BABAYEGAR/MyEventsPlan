@@ -21,7 +21,7 @@ namespace Event.Data.Objects.Entities
         [Required]
         public string Mobile { get; set; }
         [Required]
-        public  long VendorServiceId { get; set; }
+        public  long? VendorServiceId { get; set; }
         [ForeignKey("VendorServiceId")]
         public virtual VendorService VendorService { get; set; }
     }

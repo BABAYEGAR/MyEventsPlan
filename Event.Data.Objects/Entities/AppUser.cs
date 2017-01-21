@@ -31,7 +31,7 @@ namespace Event.Data.Objects.Entities
         [Required]
         public string Password { get; set; }
         [Required]
-        public long RoleId { get; set; }
+        public long? RoleId { get; set; }
         [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
         public long EventPlannerId { get; set; }

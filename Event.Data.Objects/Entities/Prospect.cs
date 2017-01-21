@@ -15,7 +15,7 @@ namespace Event.Data.Objects.Entities
         [Required]
         public string Color { get; set; }
         [Required]
-        public long EventTypeId { get; set; }
+        public long? EventTypeId { get; set; }
         [ForeignKey("EventTypeId")]
         public virtual EventType EventType { get; set; }
         [Required]
