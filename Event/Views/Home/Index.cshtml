@@ -1,5 +1,8 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using Event.Data.Objects.Entities
+@{
+    ViewBag.Title = "Home";
+    var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+    var role = Session["role"] as Role;
 }
 
 <div class="jumbotron">

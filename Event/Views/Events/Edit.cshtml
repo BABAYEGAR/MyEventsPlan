@@ -1,4 +1,4 @@
-﻿@model Event.Data.Objects.Entities.Prospect
+﻿@model Event.Data.Objects.Entities.Event
 @{
     ViewBag.Title = "Edit";
     ViewBag.Header = "Edit a prospect";
@@ -6,7 +6,7 @@
 }
 @using (Html.BeginForm("Edit", "Prospects", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
 {
-    @Html.HiddenFor(m=>m.ProspectId)
+    @Html.HiddenFor(m=>m.EventId)
     @Html.HiddenFor(m=>m.DateCreated)
     @Html.HiddenFor(m=>m.CreatedBy)
     @Html.AntiForgeryToken()

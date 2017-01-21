@@ -49,10 +49,20 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (ModelState.IsValid)
             {
+                var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
                 vendorService.DateCreated = DateTime.Now;
                 vendorService.DateLastModified = DateTime.Now;
-                vendorService.LastModifiedBy = null;
-                vendorService.CreatedBy = null;
+                if (loggedinuser != null)
+                {
+                    vendorService.LastModifiedBy = loggedinuser.AppUserId;
+                    vendorService.CreatedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login","Account");
+                }
                 db.VendorService.Add(vendorService);
                 db.SaveChanges();
                 TempData["eventType"] = "You have successfully added a vendor service!";
@@ -85,10 +95,20 @@ namespace MyEventPlan.Controllers.VendorManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "VendorServiceId,ServiceName,Scale,CreatedBy,DateCreated")] VendorService vendorService)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 vendorService.DateLastModified = DateTime.Now;
-                vendorService.LastModifiedBy = null;
+                if (loggedinuser != null)
+                {
+                    vendorService.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
                 db.Entry(vendorService).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["eventType"] = "You have successfully modified a vendor service!";

@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventManagement\AppUsersController.cs" />
     <Compile Include="Controllers\EventManagement\EventPlannersController.cs" />
     <Compile Include="Controllers\EventManagement\EventsController.cs" />
     <Compile Include="Controllers\EventManagement\EventTypesController.cs" />
@@ -426,6 +427,11 @@
     <Content Include="Views\EventPlanners\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutOutterForm.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\AppUsers\Create.cshtml" />
+    <Content Include="Views\AppUsers\Delete.cshtml" />
+    <Content Include="Views\AppUsers\Details.cshtml" />
+    <Content Include="Views\AppUsers\Edit.cshtml" />
+    <Content Include="Views\AppUsers\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

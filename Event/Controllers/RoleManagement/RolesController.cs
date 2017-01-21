@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.RoleManagement
 {
@@ -49,12 +47,22 @@ namespace MyEventPlan.Controllers.RoleManagement
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals")] Role role)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 role.DateCreated = DateTime.Now;
                 role.DateLastModified = DateTime.Now;
-                role.CreatedBy = null;
-                role.LastModifiedBy = null;
+                if (loggedinuser != null)
+                {
+                    role.CreatedBy = loggedinuser.AppUserId;
+                    role.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
                 db.Roles.Add(role);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -85,10 +93,20 @@ namespace MyEventPlan.Controllers.RoleManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals,CreatedBy,DateCreated")] Role role)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 role.DateLastModified = DateTime.Now;
-                role.LastModifiedBy = null;
+                if (loggedinuser != null)
+                {
+                    role.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
                 db.Entry(role).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

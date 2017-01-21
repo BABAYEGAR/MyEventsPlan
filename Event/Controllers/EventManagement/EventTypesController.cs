@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Enum;
-using Event = Event.Data.Objects.Entities.Event;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -51,12 +47,22 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EventTypeId,Name")] EventType eventType)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 eventType.DateCreated = DateTime.Now;
                 eventType.DateLastModified = DateTime.Now;
-                eventType.CreatedBy = null;
-                eventType.LastModifiedBy = null;
+                if (loggedinuser != null)
+                {
+                    eventType.CreatedBy = loggedinuser.AppUserId;
+                    eventType.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
                 db.EventTypes.Add(eventType);
                 db.SaveChanges();
                 TempData["eventType"] = "You have successfully added an event type!";
@@ -89,10 +95,20 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EventTypeId,Name,CreatedBy,DateCreated")] EventType eventType)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 eventType.DateLastModified = DateTime.Now;
-                eventType.LastModifiedBy = null;
+                if (loggedinuser != null)
+                {
+                    eventType.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
                 db.Entry(eventType).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["eventType"] = "You have successfully edit an event type!";

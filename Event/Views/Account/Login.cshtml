@@ -3,8 +3,10 @@
     ViewBag.Title = "Log in";
     Layout = "../Shared/_LayoutLogin.cshtml";
 }
-@using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-vertical"}))
+@using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-vertical" }))
 {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="module-head">
         <h3>Sign In</h3>
     </div>

@@ -1,64 +1,89 @@
-﻿<div class="sidebar">
-    <ul class="widget widget-menu unstyled">
-        <li class="active">
-            <a href="@Url.Action("Dashboard", "Home")">
-                <i class="menu-icon icon-dashboard"></i>Dashboard
-            </a>
-        </li>
-        <li>
-            <a href="@Url.Action("Index", "Events")"><i class="menu-icon icon-book"></i>My Events </a>
-        </li>
-        <li>
-            <a href="@Url.Action("Index", "Prospects")"><i class="menu-icon icon-briefcase"></i>My Prospects </a>
-        </li>
-        <li>
-            <a href="@Url.Action("Index", "Roles")">
-                <i class="menu-icon icon-lock"></i>Roles & Priviledges <b class="label green pull-right">
-                    11
-                </b>
-            </a>
-        </li>
-        <li>
-            <a href="task.html">
-                <i class="menu-icon icon-tasks"></i>Tasks <b class="label orange pull-right">
-                    19
-                </b>
-            </a>
-        </li>
-    </ul>
-    <!--/.widget-nav-->
+﻿@using Event.Data.Objects.Entities
+@{
+    var role = Session["role"] as Role;
+}
+@if (role != null)
+{
+    <div class="sidebar">
+        <ul class="widget widget-menu unstyled">
+            <li class="active">
+                <a href="@Url.Action("Dashboard", "Home")">
+                    <i class="menu-icon icon-dashboard"></i>Dashboard
+                </a>
+            </li>
+            @if (role.ManageApplicationUser)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "AppUsers")"><i class="menu-icon icon-user"></i>Users </a>
+                </li>
+            }
+            @if (role.ManageEvents)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Events")"><i class="menu-icon icon-book"></i>My Events </a>
+                </li>
+            }
+            @if (role.ManageProspects)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Prospects")"><i class="menu-icon icon-briefcase"></i>My Prospects </a>
+                </li>
+            }
+            @if (role.ManageRoles)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Roles")">
+                        <i class="menu-icon icon-lock"></i>Roles & Priviledges <b class="label green pull-right">
+                            11
+                        </b>
+                    </a>
+                </li>
+            }
+            <li>
+                <a href="task.html">
+                    <i class="menu-icon icon-tasks"></i>Tasks <b class="label orange pull-right">
+                        19
+                    </b>
+                </a>
+            </li>
+        </ul>
+        <!--/.widget-nav-->
 
 
-    <ul class="widget widget-menu unstyled">
-        <li>
-            <a href="@Url.Action("Index", "EventTypes")"><i class="menu-icon icon-bold"></i> Event Types </a>
-        </li>
-        <li>
-            <a href="@Url.Action("Index", "VendorServices")"><i class="menu-icon icon-bold"></i> Vendor Services </a>
-        </li>
-    </ul>
-    <!--/.widget-nav-->
-    <ul class="widget widget-menu unstyled">
-        <li>
-            <a class="collapsed" data-toggle="collapse" href="#togglePages">
-                <i class="menu-icon icon-cog">
-                </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
-                </i>More Pages
-            </a>
-            <ul id="togglePages" class="collapse unstyled">
+        <ul class="widget widget-menu unstyled">
+            @if (role.ManageEventType)
+            {
                 <li>
-                    <a href="other-login.html"><i class="icon-inbox"></i>Login </a>
+                    <a href="@Url.Action("Index", "EventTypes")"><i class="menu-icon icon-bold"></i> Event Types </a>
                 </li>
+            }
+            @if (role.ManageVendorServices)
+            {
                 <li>
-                    <a href="other-user-profile.html"><i class="icon-inbox"></i>Profile </a>
+                    <a href="@Url.Action("Index", "VendorServices")"><i class="menu-icon icon-bold"></i> Vendor Services </a>
                 </li>
-                <li>
-                    <a href="other-user-listing.html"><i class="icon-inbox"></i>All Users </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="#"><i class="menu-icon icon-signout"></i>Logout </a>
-        </li>
-    </ul>
-</div>
+            }
+        </ul>
+        <!--/.widget-nav-->
+        <ul class="widget widget-menu unstyled">
+            <li>
+                <a class="collapsed" data-toggle="collapse" href="#togglePages">
+                    <i class="menu-icon icon-cog">
+                    </i><i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right">
+                    </i>More Pages
+                </a>
+                <ul id="togglePages" class="collapse unstyled">
+                    <li>
+                        <a href="other-user-profile.html"><i class="icon-inbox"></i>Profile </a>
+                    </li>
+                    <li>
+                        <a href="other-user-listing.html"><i class="icon-inbox"></i>All Users </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="menu-icon icon-signout"></i>Logout </a>
+            </li>
+        </ul>
+    </div>
+}

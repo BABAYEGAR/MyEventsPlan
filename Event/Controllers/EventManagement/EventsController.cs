@@ -3,7 +3,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -14,7 +16,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: Events
         public ActionResult Index()
         {
-            var events = db.Event.Include(n=> n.EventType);
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var events = db.Event.Include(n=> n.EventType).Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(events.ToList());
         }
 
@@ -47,13 +50,24 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Event.Data.Objects.Entities.Event @event)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
-                @event.CreatedBy = null;
-                @event.DateCreated = DateTime.Now;
-                @event.DateLastModified = DateTime.Now;
-                @event.LastModifiedBy = null;
-                db.Event.Add(@event);
+                if (loggedinuser != null)
+                {
+                    @event.CreatedBy = loggedinuser.AppUserId;
+                    @event.DateCreated = DateTime.Now;
+                    @event.DateLastModified = DateTime.Now;
+                    @event.LastModifiedBy = loggedinuser.AppUserId;
+                
+            }
+            else
+            {
+                TempData["login"] = "Your session has expired, Login again!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
+                return RedirectToAction("Login", "Account");
+            }
+            db.Event.Add(@event);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -85,10 +99,20 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Event.Data.Objects.Entities.Event @event)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 @event.DateLastModified = DateTime.Now;
-                @event.LastModifiedBy = null;
+                if (loggedinuser != null)
+                {
+                    @event.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
                 db.Entry(@event).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

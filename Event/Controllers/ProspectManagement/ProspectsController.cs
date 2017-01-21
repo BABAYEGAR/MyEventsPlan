@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.ProspectManagement
 {
@@ -18,7 +16,8 @@ namespace MyEventPlan.Controllers.ProspectManagement
         // GET: Prospects
         public ActionResult Index()
         {
-            var prospects = db.Prospects.Include(p => p.EventType);
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var prospects = db.Prospects.Include(p => p.EventType).Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(prospects.ToList());
         }
 
@@ -51,12 +50,22 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Prospect prospect)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 prospect.DateCreated = DateTime.Now;
                 prospect.DateLastModified = DateTime.Now;
-                prospect.CreatedBy = null;
-                prospect.LastModifiedBy = null;
+                if (loggedinuser != null)
+                {
+                    prospect.CreatedBy = loggedinuser.AppUserId;
+                    prospect.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
                 db.Prospects.Add(prospect);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -89,10 +98,21 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Prospect prospect)
         {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 prospect.DateLastModified = DateTime.Now;
-                prospect.LastModifiedBy = null;
+                if (loggedinuser != null)
+                {
+                    prospect.LastModifiedBy = loggedinuser.AppUserId;
+
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
                 db.Entry(prospect).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

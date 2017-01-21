@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Encryption;
+using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -70,14 +71,26 @@ namespace MyEventPlan.Controllers.EventManagement
                 appuser.DateLastModified = DateTime.Now;
                 appuser.LastModifiedBy = null;
                 appuser.CreatedBy = null;
-               
 
+                var checkeventPlanner = db.EventPlanners.SingleOrDefault(n => n.Email == eventPlanner.Email);
+                if (checkeventPlanner != null)
+                {
+                    TempData["planner"] = "The email already exist, try another email!";
+                    TempData["notificationtype"] = NotificationType.Error.ToString();
+                    return RedirectToAction("Create",eventPlanner);
+                }
                 db.EventPlanners.Add(eventPlanner);
                 db.SaveChanges();
+
+
                 appuser.EventPlannerId = eventPlanner.EventPlannerId;
                 appuser.Role = eventPlanner.Role;
+
+
                 dbc.AppUsers.Add(appuser);
                 dbc.SaveChanges();
+                TempData["login"] = "You have successfully signed up to PlanMyLeave type!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Login","Account");
             }
 
