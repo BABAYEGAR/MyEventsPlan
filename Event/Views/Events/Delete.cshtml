@@ -1,128 +1,114 @@
 ﻿@model Event.Data.Objects.Entities.Event
-
 @{
-    Layout = null;
+    ViewBag.Title = "Delete";
+    ViewBag.Header = "Delete event type";
+    Layout = "../Shared/_LayoutForm.cshtml";
 }
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.EventType.Name)
+    </dt>
 
-<!DOCTYPE html>
+    <dd>
+        @Html.DisplayFor(model => model.EventType.Name)
+    </dd>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
-</head>
-<body>
-    <h3>Are you sure you want to delete this?</h3>
-    <div>
-        <h4>Event</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.EventType.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EventType.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Color)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Color)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.TargetBudget)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.TargetBudget)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.StartDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.StartTime)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EndDate)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EndTime)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreatedBy)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateCreated)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateLastModified)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateLastModified)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.LastModifiedBy)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.LastModifiedBy)
-            </dd>
-    
-        </dl>
-    
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-    
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        }
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Color)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Color)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.TargetBudget)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.TargetBudget)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.StartDate)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.StartDate)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.StartTime)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.StartTime)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.EndDate)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.EndDate)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.EndTime)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.EndTime)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CreatedBy)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.CreatedBy)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DateCreated)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DateCreated)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DateLastModified)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DateLastModified)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.LastModifiedBy)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.LastModifiedBy)
+    </dd>
+
+</dl>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
+        <input type="submit" value="Delete" class="btn btn-danger"/>
+
     </div>
-</body>
-</html>
+}
