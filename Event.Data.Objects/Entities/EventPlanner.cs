@@ -24,6 +24,7 @@ namespace Event.Data.Objects.Entities
         [MaxLength(100, ErrorMessage = "This field is does not support more than 100 characters")]
         [EmailAddress]
         public string Mobile { get; set; }
+        [Required]
         public long RoleId { get; set; }
         [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }

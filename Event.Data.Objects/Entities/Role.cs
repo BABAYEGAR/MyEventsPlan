@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Event.Data.Objects.Entities
 {
     public class Role : Transport
     {
         public long RoleId { get; set; }
+        [Required]
         public string Name { get; set; }
         public bool ManageApplicationUser { get; set; }
         public bool ManageRoles { get; set; }
