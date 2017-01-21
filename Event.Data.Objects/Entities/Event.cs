@@ -38,6 +38,10 @@ namespace Event.Data.Objects.Entities
         [Required]
         [DisplayName("End Time")]
         public string EndTime { get; set; }
+        [DisplayName("Event Planner")]
+        public long? EventPlannerId { get; set; }
+        [ForeignKey("EventPlannerId")]
+        public virtual EventPlanner EventPlanner { get; set; }
         public IEnumerable<Appointment> Appointments { get; set; }
         public IEnumerable<EventContactMapping> EventContactMapping { get; set; }
     }

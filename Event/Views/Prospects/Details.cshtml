@@ -1,7 +1,7 @@
-﻿@model Event.Data.Objects.Entities.Event
+﻿@model Event.Data.Objects.Entities.Prospect
 @{
-    ViewBag.Title = "Delete";
-    ViewBag.Header = "Delete event";
+    ViewBag.Title = "View";
+    ViewBag.Header = "View prospect";
     Layout = "../Shared/_LayoutForm.cshtml";
 }
 <dl class="dl-horizontal">
@@ -102,13 +102,8 @@
     </dd>
 
 </dl>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProspectId }, new { @class = "btn btn-primary" })
 
-    <div class="form-actions no-color">
-        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
-        <input type="submit" value="Delete" class="btn btn-danger"/>
-
-    </div>
-}
+</p>

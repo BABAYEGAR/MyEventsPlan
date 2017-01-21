@@ -196,10 +196,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EventManagement\EventPlannersController.cs" />
     <Compile Include="Controllers\EventManagement\EventsController.cs" />
     <Compile Include="Controllers\EventManagement\EventTypesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorServicesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -412,6 +414,18 @@
     <Content Include="Views\Roles\Details.cshtml" />
     <Content Include="Views\Roles\Edit.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Prospects\Create.cshtml" />
+    <Content Include="Views\Prospects\Delete.cshtml" />
+    <Content Include="Views\Prospects\Details.cshtml" />
+    <Content Include="Views\Prospects\Edit.cshtml" />
+    <Content Include="Views\Prospects\Index.cshtml" />
+    <Content Include="Views\EventPlanners\Create.cshtml" />
+    <Content Include="Views\EventPlanners\Delete.cshtml" />
+    <Content Include="Views\EventPlanners\Details.cshtml" />
+    <Content Include="Views\EventPlanners\Edit.cshtml" />
+    <Content Include="Views\EventPlanners\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutOutterForm.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

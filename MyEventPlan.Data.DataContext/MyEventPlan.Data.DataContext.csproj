@@ -69,6 +69,34 @@
     <Compile Include="Migrations\201701210539514_migration2.Designer.cs">
       <DependentUpon>201701210539514_migration2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701211133470_migration3.cs" />
+    <Compile Include="Migrations\201701211133470_migration3.Designer.cs">
+      <DependentUpon>201701211133470_migration3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701211155026_migration4.cs" />
+    <Compile Include="Migrations\201701211155026_migration4.Designer.cs">
+      <DependentUpon>201701211155026_migration4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701211223041_migration5.cs" />
+    <Compile Include="Migrations\201701211223041_migration5.Designer.cs">
+      <DependentUpon>201701211223041_migration5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701211255493_migration6.cs" />
+    <Compile Include="Migrations\201701211255493_migration6.Designer.cs">
+      <DependentUpon>201701211255493_migration6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701211302361_migration7.cs" />
+    <Compile Include="Migrations\201701211302361_migration7.Designer.cs">
+      <DependentUpon>201701211302361_migration7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701211308207_migration8.cs" />
+    <Compile Include="Migrations\201701211308207_migration8.Designer.cs">
+      <DependentUpon>201701211308207_migration8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701211311152_migration9.cs" />
+    <Compile Include="Migrations\201701211311152_migration9.Designer.cs">
+      <DependentUpon>201701211311152_migration9.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -165,6 +193,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701210539514_migration2.resx">
       <DependentUpon>201701210539514_migration2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701211133470_migration3.resx">
+      <DependentUpon>201701211133470_migration3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701211155026_migration4.resx">
+      <DependentUpon>201701211155026_migration4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701211223041_migration5.resx">
+      <DependentUpon>201701211223041_migration5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701211255493_migration6.resx">
+      <DependentUpon>201701211255493_migration6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701211302361_migration7.resx">
+      <DependentUpon>201701211302361_migration7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701211308207_migration8.resx">
+      <DependentUpon>201701211308207_migration8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701211311152_migration9.resx">
+      <DependentUpon>201701211311152_migration9.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
