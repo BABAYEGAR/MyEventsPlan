@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,12 +8,9 @@ using System.Threading.Tasks;
 
 namespace Event.Data.Objects.Entities
 {
-    public class AppUser :Transport
+    public class EventPlanner
     {
-        public long AppUserId { get; set; }
-        [Required(ErrorMessage = "This field is compulsory")]
-        [MaxLength(100, ErrorMessage = "This field is does not support more than 100 characters")]
-        [RegularExpression("[a-zA-Z ]*$")]
+        public long EventPlannerId { get; set; }
         public string Firstname { get; set; }
         [Required(ErrorMessage = "This field is compulsory")]
         [MaxLength(100, ErrorMessage = "This field is does not support more than 100 characters")]
@@ -26,16 +22,11 @@ namespace Event.Data.Objects.Entities
         public string Email { get; set; }
         [Required(ErrorMessage = "This field is compulsory")]
         [MaxLength(100, ErrorMessage = "This field is does not support more than 100 characters")]
-        [RegularExpression("^[0-9]*$")]
+        [EmailAddress]
         public string Mobile { get; set; }
-        public string Password { get; set; }
         public long RoleId { get; set; }
         [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
-        public long EventPlannerId { get; set; }
-        [ForeignKey("EventPlannerId")]
-        public virtual EventPlanner EventPlanner { get; set; }
-        public string ProfileImage { get; set; }
-
+        public IEnumerable<AppUser> AppUsers { get; set; }
     }
 }

@@ -49,7 +49,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext\EventsDataContext.cs" />
+    <Compile Include="DataContext\AppUserDataContext.cs" />
+    <Compile Include="DataContext\EventPlannerDataContext.cs" />
+    <Compile Include="DataContext\VendorDataContext.cs" />
+    <Compile Include="DataContext\RoleDataContext.cs" />
+    <Compile Include="DataContext\ProspectDataContext.cs" />
+    <Compile Include="DataContext\AppointmentDataContext.cs" />
+    <Compile Include="DataContext\EventTypeDataContext.cs" />
+    <Compile Include="DataContext\EventDataContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

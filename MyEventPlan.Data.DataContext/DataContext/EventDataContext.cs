@@ -3,15 +3,15 @@ using Event.Data.Objects.Entities;
 
 namespace MyEventPlan.Data.DataContext.DataContext
 {
-    public class EventsDataContext : DbContext
+    public class EventDataContext : DbContext
     {
-        // Your context has been configured to use a 'EventsDataContext' connection string from your application's 
+        // Your context has been configured to use a 'EventDataContext' connection string from your application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
         // 'MyEventsPlan.Data.Context.DataContext.EventsDataContext' database on your LocalDb instance. 
         // 
-        // If you wish to target a different database and/or database provider, modify the 'EventsDataContext' 
+        // If you wish to target a different database and/or database provider, modify the 'EventDataContext' 
         // connection string in the application configuration file.
-        public EventsDataContext()
+        public EventDataContext()
             : base("name=Event")
         {
         }

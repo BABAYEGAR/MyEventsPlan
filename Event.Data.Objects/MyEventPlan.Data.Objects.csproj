@@ -44,11 +44,13 @@
     <Compile Include="Entities\Appointment.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\EventPlanner.cs" />
     <Compile Include="Entities\EventType.cs" />
     <Compile Include="Entities\Prospect.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Transport.cs" />
     <Compile Include="Entities\Vendor.cs" />
+    <Compile Include="Entities\VendorServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
