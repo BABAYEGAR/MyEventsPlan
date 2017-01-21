@@ -1,20 +1,9 @@
 ﻿@model Event.Data.Objects.Entities.EventType
-
 @{
-    Layout = null;
+    ViewBag.Title = "View";
+    ViewBag.Header = "View event type";
+    Layout = "../Shared/_LayoutForm.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>EventType</h4>
-        <hr />
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Name)
@@ -57,10 +46,9 @@
             </dd>
     
         </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.EventTypeId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Edit", "Edit", new {id = Model.EventTypeId}, new {@class = "btn btn-primary"})
+
+</p>

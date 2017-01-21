@@ -304,6 +304,7 @@
     <Content Include="Views\Shared\_PartialSidebar.cshtml" />
     <Content Include="Views\Shared\_PartialNavigation.cshtml" />
     <Content Include="Views\Shared\_LayoutForm.cshtml" />
+    <Content Include="Views\Shared\_LayoutTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
