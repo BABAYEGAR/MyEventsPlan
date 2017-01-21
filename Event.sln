@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEventPlan.Data.Objects", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEventPlan.Data.DataContext", "MyEventPlan.Data.DataContext\MyEventPlan.Data.DataContext.csproj", "{175A6497-C3A2-4773-B968-31B4994B929A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyEventPlan.Data.Service", "MyEventPlan.Data.Service\MyEventPlan.Data.Service.csproj", "{8B206F16-B12D-4A18-B631-44E64E58F44A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{175A6497-C3A2-4773-B968-31B4994B929A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{175A6497-C3A2-4773-B968-31B4994B929A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{175A6497-C3A2-4773-B968-31B4994B929A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B206F16-B12D-4A18-B631-44E64E58F44A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B206F16-B12D-4A18-B631-44E64E58F44A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B206F16-B12D-4A18-B631-44E64E58F44A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B206F16-B12D-4A18-B631-44E64E58F44A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
