@@ -29,5 +29,6 @@ namespace Event.Data.Objects.Entities
         public DateTime EndDate { get; set; }
         [Required]
         public string EndTime { get; set; }
+        public IEnumerable<Appointment> Appointments { get; set; }
     }
 }
