@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<monthly>
+  <event>
+    <id>1</id>
+    <name>Emcee Wedding</name>
+    <startdate>12/10/2016</startdate>
+    <enddate>12/10/2016</enddate>
+    <color>6AA7FF</color>
+    <url>http://www.google.com</url>
+  </event>
+</monthly>

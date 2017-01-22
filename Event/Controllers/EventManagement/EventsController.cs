@@ -20,6 +20,13 @@ namespace MyEventPlan.Controllers.EventManagement
             var events = db.Event.Include(n=> n.EventType).Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(events.ToList());
         }
+        // GET: Events
+        public JsonResult GetMyEvents()
+        {
+            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var events = db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            return Json(events, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Events/Details/5
         public ActionResult Details(long? id)

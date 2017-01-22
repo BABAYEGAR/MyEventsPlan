@@ -240,6 +240,9 @@
     <Content Include="Content\Dashboard\scripts\jquery-1.9.1.min.js" />
     <Content Include="Content\Dashboard\scripts\jquery-ui-1.10.1.custom.min.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\monthly.css" />
+    <Content Include="event.xml" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jscolor.min.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -351,6 +354,7 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\monthly.js" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />

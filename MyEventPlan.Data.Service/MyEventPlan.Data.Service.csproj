@@ -55,6 +55,7 @@
     <Compile Include="EmailService\MailerDaemon.cs" />
     <Compile Include="Encryption\Md5Ecryption.cs" />
     <Compile Include="Encryption\QueryStingEncoder.cs" />
+    <Compile Include="Encryption\SerializeObject.cs" />
     <Compile Include="Enum\NotificationType.cs" />
     <Compile Include="Enum\UploadType.cs" />
     <Compile Include="FileUploader\FileUploader.cs" />
