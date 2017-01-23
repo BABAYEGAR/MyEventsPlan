@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.Services;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Enum;
@@ -11,15 +14,16 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class EventsController : Controller
     {
-        private EventDataContext db = new EventDataContext();
+        private readonly EventDataContext db = new EventDataContext();
 
         // GET: Events
         public ActionResult Index()
         {
             var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
-            var events = db.Event.Include(n=> n.EventType).Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
+            var events = db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(events.ToList());
         }
+
         // GET: Events
         public JsonResult GetMyEvents()
         {
@@ -27,19 +31,14 @@ namespace MyEventPlan.Controllers.EventManagement
             var events = db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return Json(events, JsonRequestBehavior.AllowGet);
         }
-
         // GET: Events/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event.Data.Objects.Entities.Event @event = db.Event.Find(id);
+            var @event = db.Event.Find(id);
             if (@event == null)
-            {
                 return HttpNotFound();
-            }
             return View(@event);
         }
 
@@ -55,7 +54,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Event.Data.Objects.Entities.Event @event)
+        public ActionResult Create(
+            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Event.Data.Objects.Entities.Event @event)
         {
             var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -66,15 +66,14 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.DateCreated = DateTime.Now;
                     @event.DateLastModified = DateTime.Now;
                     @event.LastModifiedBy = loggedinuser.AppUserId;
-                
-            }
-            else
-            {
-                TempData["login"] = "Your session has expired, Login again!";
-                TempData["notificationtype"] = NotificationType.Info.ToString();
-                return RedirectToAction("Login", "Account");
-            }
-            db.Event.Add(@event);
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
+                db.Event.Add(@event);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -87,14 +86,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event.Data.Objects.Entities.Event @event = db.Event.Find(id);
+            var @event = db.Event.Find(id);
             if (@event == null)
-            {
                 return HttpNotFound();
-            }
             ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
             return View(@event);
         }
@@ -104,7 +99,11 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Event.Data.Objects.Entities.Event @event)
+        public ActionResult Edit(
+            [Bind(
+                 Include =
+                     "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated"
+             )] Event.Data.Objects.Entities.Event @event)
         {
             var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -132,23 +131,20 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event.Data.Objects.Entities.Event @event = db.Event.Find(id);
+            var @event = db.Event.Find(id);
             if (@event == null)
-            {
                 return HttpNotFound();
-            }
             return View(@event);
         }
 
         // POST: Events/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Event.Data.Objects.Entities.Event @event = db.Event.Find(id);
+            var @event = db.Event.Find(id);
             db.Event.Remove(@event);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -157,9 +153,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }
