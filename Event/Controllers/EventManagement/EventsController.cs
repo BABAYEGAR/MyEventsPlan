@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.Services;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.Calender;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -24,12 +22,29 @@ namespace MyEventPlan.Controllers.EventManagement
             return View(events.ToList());
         }
 
-        // GET: Events
+        //// GET: Events
+        //public JsonResult GetMyEvents()
+        //{
+        //    var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+        //    var events = db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+        //    return Json(events, JsonRequestBehavior.AllowGet);
+        //}
         public JsonResult GetMyEvents()
         {
             var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
-            var events = db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
-            return Json(events, JsonRequestBehavior.AllowGet);
+            var events = new CalenderEvent().LoadAllUserEvents(loggedinuser?.EventPlannerId);
+            var eventList = from e in events
+                            select new
+                            {
+                                id = e.EventId,
+                                title = e.Name,
+                                start = e.StartDate,
+                                end = e.EndDate,
+                                color = e.Color,
+                                allDay = false
+                            };
+            var rows = eventList.ToArray();
+            return Json(rows, JsonRequestBehavior.AllowGet);
         }
         // GET: Events/Details/5
         public ActionResult Details(long? id)
@@ -66,6 +81,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.DateCreated = DateTime.Now;
                     @event.DateLastModified = DateTime.Now;
                     @event.LastModifiedBy = loggedinuser.AppUserId;
+                    @event.StatusColor = ColorEnum.New.ToString();
                 }
                 else
                 {
@@ -102,7 +118,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated"
+                     "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,StatusColor,EndDate,EndTime,CreatedBy,DateCreated"
              )] Event.Data.Objects.Entities.Event @event)
         {
             var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;

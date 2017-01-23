@@ -11,22 +11,6 @@
     var role = Session["role"] as Role;
     var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
     var prospects = dbProspects.Prospects.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-    foreach (var eventss in events)
-     {
-         var doc = XDocument.Load("C:\\Users\\PC\\Documents\\Visual Studio 2015\\Projects\\Event\\Event\\event.xml");
-         var items = from i in doc.Descendants("event")
-             select i;
-
-         foreach (var item in items)
-         {
-             item.Element("id").Value = eventss.EventId.ToString();
-             item.Element("name").Value = eventss.Name;
-             item.Element("startdate").Value = eventss.StartDate.ToShortDateString();
-             item.Element("enddate").Value = eventss.StartDate.ToShortDateString();
-             item.Element("color").Value = eventss.Color;
-         }
-         doc.Save("C:\\Users\\PC\\Documents\\Visual Studio 2015\\Projects\\Event\\Event\\event.xml");
-     }
 
 }
 @section css{
@@ -144,7 +128,7 @@
                                 Calendar
                             </h3>
                         </div>
-                        <div class="module-body">
+                        <div class="module-body"> 
                             <div id="calendar" class="monthly">
                             </div>
                         </div>
@@ -159,12 +143,22 @@
     </div>
 }
 @section scripts{
-    <script src="~/Scripts/monthly.js"></script>
+   
     <script>
+  
         $('#calendar')
-            .monthly({
-                mode: 'event',
-                xmlUrl: '../../event.xml'
+            .fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,agendaWeek,agendaDay'
+                },
+                defaultView : 'agendaDay',
+                editable: true,
+                allDaySlot: false,
+                selectable : true ,
+                slotMinutes: 15,
+                events : "@Url.Action("GetMyEvents", "Events")"
             });
 
     </script>

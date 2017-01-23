@@ -97,6 +97,18 @@
     <Compile Include="Migrations\201701211311152_migration9.Designer.cs">
       <DependentUpon>201701211311152_migration9.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701232217391_MigrateFifteen.cs" />
+    <Compile Include="Migrations\201701232217391_MigrateFifteen.Designer.cs">
+      <DependentUpon>201701232217391_MigrateFifteen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701232232068_MigrateSixteen.cs" />
+    <Compile Include="Migrations\201701232232068_MigrateSixteen.Designer.cs">
+      <DependentUpon>201701232232068_MigrateSixteen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701232247479_MigrateSeventeen.cs" />
+    <Compile Include="Migrations\201701232247479_MigrateSeventeen.Designer.cs">
+      <DependentUpon>201701232247479_MigrateSeventeen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -214,6 +226,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701211311152_migration9.resx">
       <DependentUpon>201701211311152_migration9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701232217391_MigrateFifteen.resx">
+      <DependentUpon>201701232217391_MigrateFifteen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701232232068_MigrateSixteen.resx">
+      <DependentUpon>201701232232068_MigrateSixteen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701232247479_MigrateSeventeen.resx">
+      <DependentUpon>201701232247479_MigrateSeventeen.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
