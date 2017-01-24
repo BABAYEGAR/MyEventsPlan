@@ -10,7 +10,6 @@ namespace MyEventPlan.Data.Service.Calender
 {
     public class CalenderEvent
     {
-        //private readonly EventDataContext _ent = new EventDataContext();
         public  List<Event.Data.Objects.Entities.Event> LoadAllUserEvents(long? id)
         {
             using (EventDataContext ent = new EventDataContext())
@@ -25,24 +24,10 @@ namespace MyEventPlan.Data.Service.Calender
                     rec.EndDate = item.EndDate; 
                     rec.Name = item.Name;
                     rec.Color = item.Color;
-                    //rec.StatusColor = item.StatusColor(typeof(DescriptionAttribute), false);
                     result.Add(rec);
                 }
                 return result;
             }
-        }
-        public static string GetEnumDescription<T>(string value)
-        {
-            Type type = typeof(T);
-            var name = System.Enum.GetNames(type).Where(f => f.Equals(value,
-            StringComparison.CurrentCultureIgnoreCase)).Select(d => d).FirstOrDefault();
-            if (name == null)
-            {
-                return string.Empty;
-            }
-            var field = type.GetField(name);
-            var customAttribute = field.GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return customAttribute.Length > 0 ? ((DescriptionAttribute)customAttribute[0]).Description : name;
         }
     }
 }

@@ -109,6 +109,10 @@
     <Compile Include="Migrations\201701232247479_MigrateSeventeen.Designer.cs">
       <DependentUpon>201701232247479_MigrateSeventeen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701232318336_EighteenthMigrate.cs" />
+    <Compile Include="Migrations\201701232318336_EighteenthMigrate.Designer.cs">
+      <DependentUpon>201701232318336_EighteenthMigrate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -235,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701232247479_MigrateSeventeen.resx">
       <DependentUpon>201701232247479_MigrateSeventeen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701232318336_EighteenthMigrate.resx">
+      <DependentUpon>201701232318336_EighteenthMigrate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

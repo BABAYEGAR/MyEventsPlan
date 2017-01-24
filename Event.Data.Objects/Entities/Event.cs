@@ -15,7 +15,7 @@ namespace Event.Data.Objects.Entities
         [Required]
         [DisplayName("Event Color")]
         public string Color { get; set; }
-        public string StatusColor { get; set; }
+        public string Status { get; set; }
         [Required]
         [DisplayName("Event Type")]
         public long? EventTypeId { get; set; }

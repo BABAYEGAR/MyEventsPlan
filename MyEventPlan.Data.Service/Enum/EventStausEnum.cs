@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MyEventPlan.Data.Service.Enum
 {
-    public enum ColorEnum
+    public enum EventStausEnum
     {
         [Description("2048FF")]
         New,

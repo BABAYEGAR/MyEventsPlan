@@ -12,23 +12,17 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class EventsController : Controller
     {
-        private readonly EventDataContext db = new EventDataContext();
+        private readonly EventDataContext _db = new EventDataContext();
 
         // GET: Events
         public ActionResult Index()
         {
             var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
-            var events = db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            var events = _db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(events.ToList());
         }
 
         //// GET: Events
-        //public JsonResult GetMyEvents()
-        //{
-        //    var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
-        //    var events = db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
-        //    return Json(events, JsonRequestBehavior.AllowGet);
-        //}
         public JsonResult GetMyEvents()
         {
             var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
@@ -37,7 +31,7 @@ namespace MyEventPlan.Controllers.EventManagement
                             select new
                             {
                                 id = e.EventId,
-                                title = e.Name,
+                                title = e.Name + " " + (Convert.ToDateTime(e.EndTime) - Convert.ToDateTime(e.StartTime)) + " mins",
                                 start = e.StartDate,
                                 end = e.EndDate,
                                 color = e.Color,
@@ -51,7 +45,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var @event = db.Event.Find(id);
+            var @event = _db.Event.Find(id);
             if (@event == null)
                 return HttpNotFound();
             return View(@event);
@@ -60,7 +54,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: Events/Create
         public ActionResult Create()
         {
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name");
+            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
             return View();
         }
 
@@ -81,7 +75,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.DateCreated = DateTime.Now;
                     @event.DateLastModified = DateTime.Now;
                     @event.LastModifiedBy = loggedinuser.AppUserId;
-                    @event.StatusColor = ColorEnum.New.ToString();
+                    @event.Status = EventStausEnum.New.ToString();
                 }
                 else
                 {
@@ -89,12 +83,12 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Event.Add(@event);
-                db.SaveChanges();
+                _db.Event.Add(@event);
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
+            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
             return View(@event);
         }
 
@@ -103,10 +97,10 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var @event = db.Event.Find(id);
+            var @event = _db.Event.Find(id);
             if (@event == null)
                 return HttpNotFound();
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
+            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
             return View(@event);
         }
 
@@ -118,7 +112,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,StatusColor,EndDate,EndTime,CreatedBy,DateCreated"
+                     "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,Status,EndDate,EndTime,CreatedBy,DateCreated"
              )] Event.Data.Objects.Entities.Event @event)
         {
             var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
@@ -135,11 +129,11 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(@event).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(@event).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
+            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
             return View(@event);
         }
 
@@ -148,7 +142,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var @event = db.Event.Find(id);
+            var @event = _db.Event.Find(id);
             if (@event == null)
                 return HttpNotFound();
             return View(@event);
@@ -160,16 +154,16 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            var @event = db.Event.Find(id);
-            db.Event.Remove(@event);
-            db.SaveChanges();
+            var @event = _db.Event.Find(id);
+            _db.Event.Remove(@event);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _db.Dispose();
             base.Dispose(disposing);
         }
     }
