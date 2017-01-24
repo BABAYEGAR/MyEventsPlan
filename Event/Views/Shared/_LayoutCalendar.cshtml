@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    
+    <link type="text/css" href="~/Content/Dashboard/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" href="~/Content/Dashboard/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="~/Content/Calendar/lib/cupertino/jquery-ui.min.css" rel="stylesheet" />
+    <link href="~/Content/Calendar/fullcalendar.min.css" rel="stylesheet"/>
+    <link type="text/css" href="~/Content/Dashboard/css/theme.css" rel="stylesheet">
+    <link type="text/css" href="~/Content/Dashboard/images/icons/css/font-awesome.css" rel="stylesheet">
+    <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
+          rel="stylesheet">
+    @RenderSection("css", false)
+</head>
+<body>
+@{ Html.RenderPartial("_PartialNavigation"); }
+<!-- /navbar -->
+<div class="wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="span3">
+                @{ Html.RenderPartial("_PartialSidebar"); }
+                <!--/.sidebar-->
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+    <!--/.container-->
+</div>
+<!--/.wrapper-->
+<div class="footer">
+    <div class="container">
+        <b class="copyright">@DateTime.Now.Year </b>All rights reserved.
+    </div>
+</div>
+<script src="~/Content/Calendar/lib/jquery.min.js"></script>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Content/Calendar/lib/moment.min.js"></script>
+<script src="~/Content/Calendar/lib/jquery-ui.min.js"></script>
+<script src="~/Content/Calendar/fullcalendar.min.js"></script>
+
+
+@RenderSection("scripts", false)
+</body>

@@ -1,0 +1,293 @@
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@model Event
+@{
+    var _db = new EventDataContext();
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutCalendar.cshtml";
+    var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+    var role = Session["role"] as Role;
+    ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
+}
+@section css{
+    <link href="~/Content/themes/base/jquery.ui.core.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.button.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.slider.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet"/>
+
+}
+@if ((loggedinuser != null) && (role != null))
+{
+    <!--/.span3-->
+    <div class="span9">
+        <div class="content">
+            @if (TempData["event"] != null)
+            {
+                if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+                {
+                    <div class="alert-success alert-dismissable">@TempData["event"]</div>
+                }
+                else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+                {
+                    <div class="alert-danger alert-dismissable">@TempData["event"]</div>
+                }
+                else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+                {
+                    <div class="alert-info alert-dismissable">@TempData["event"]</div>
+                }
+            }
+            <div id="popupEventForm" class="modal hide" style="display: none;">
+
+                @using (Html.BeginForm("SaveEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+                {
+                    <div class="modal-header">
+                        <h3>Add new event</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.Name, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8"}})
+                                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.Color, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor"}})
+                                @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.DropDownList("EventTypeId", null, new {@class = "span8"})
+                                @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.TargetBudget, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8"}})
+                                @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "span8 form_datetime", id = "datetimepicker6"}})
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8 form_datetime", id = "datetimepicker7"}})
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.StartTime, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "span8"}})
+                                @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.EndTime, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.EditorFor(model => model.EndTime, new {htmlAttributes = new {@class = "span8"}})
+                                @Html.ValidationMessageFor(model => model.EndTime, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnPopupCancel" data-dismiss="modal" class="btn">Cancel</button>
+                        <input type="submit" value="Create" class="btn btn-primary"/>
+                    </div>
+                }
+
+            </div>
+            <div class="btn-controls">
+                <div class="btn-box-row row-fluid">
+                    <div class="module">
+                        <div class="module-head">
+                            <h3>
+                                Calendar
+                            </h3>
+                        </div>
+                        <div class="module-body">
+                            <div id="calendar" class="monthly">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!--/.module-->
+                </div>
+                <!--/.content-->
+            </div>
+            <!--/.span9-->
+
+        </div>
+    </div>
+}
+@section scripts{
+
+    <script>
+        $(document)
+            .ready(function() {
+
+                var sourceFullView = { url: '@Url.Action("GetMyEvents", "Events")' };
+                var sourceSummaryView = { url: '@Url.Action("GetMyEvents", "Events")' };
+                var calLoading = true;
+
+                $('#calendar')
+                    .fullCalendar({
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay'
+                        },
+                        defaultView: 'month',
+                        editable: true,
+                        allDaySlot: false,
+                        selectable: true,
+                        slotMinutes: 15,
+                        events: '@Url.Action("GetMyEvents", "Events")',
+                        eventClick: function(calEvent) {
+                            ShowEventPopup(calEvent);
+
+                        },
+
+                        eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc) {
+                            if (confirm("Confirm move?")) {
+                                UpdateEvent(event.id, event.start, event.end);
+                            } else {
+                                revertFunc();
+                            }
+                        },
+
+                        eventResize: function(event, dayDelta, minuteDelta, revertFunc) {
+
+                            if (confirm("Confirm change appointment length?")) {
+                                UpdateEvent(event.id, event.start, event.end);
+                            } else {
+                                revertFunc();
+                            }
+                        },
+
+
+                        dayClick: function(date) {
+                            $('#eventTitle').val("");
+                            //$('#eventDate').val($.moment(date).format('YYYY-MM-DDTHH:mm:ssZ'));
+                            //$('#eventTime').val($.moment(date).format('YYYY-MM-DDTHH:mm:ssZ'));
+                            ShowEventPopup(date);
+                        },
+
+                        viewRender: function(view) {
+
+                            if (!calLoading) {
+                                if (view.name === 'month') {
+                                    $('#calendar').fullCalendar('removeEventSource', sourceFullView);
+                                    $('#calendar').fullCalendar('removeEvents');
+                                    $('#calendar').fullCalendar('addEventSource', sourceSummaryView);
+                                } else {
+                                    $('#calendar').fullCalendar('removeEventSource', sourceSummaryView);
+                                    $('#calendar').fullCalendar('removeEvents');
+                                    $('#calendar').fullCalendar('addEventSource', sourceFullView);
+                                }
+                            }
+                        }
+
+                    });
+
+                calLoading = false;
+
+
+            });
+
+        $('#btnPopupCancel')
+            .click(function() {
+                ClearPopupFormValues();
+                $('#popupEventForm').hide();
+            });
+
+        $('#btnPopupSave')
+            .click(function() {
+
+                $('#popupEventForm').hide();
+
+                var dataRow = {
+                    'Title': $('#eventTitle').val(),
+                    'NewEventDate': $('#eventDate').val(),
+                    'NewEventTime': $('#eventTime').val(),
+                    'NewEventDuration': $('#eventDuration').val()
+                };
+                ClearPopupFormValues();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("SaveEvent", "Events")",
+                    data: dataRow,
+                    success: function(response) {
+                        if (response === 'True') {
+                            $('#calendar').fullCalendar('refetchEvents');
+                            alert('New event saved!');
+                        } else {
+                            alert('Error, could not save event!');
+                        }
+                    }
+                });
+            });
+
+        function ShowEventPopup() {
+            ClearPopupFormValues();
+            $('#popupEventForm').fadeIn();
+            $('#eventTitle').focus();
+        }
+
+        function ClearPopupFormValues() {
+            $('#eventID').val("");
+            $('#eventTitle').val("");
+            $('#eventDateTime').val("");
+            $('#eventDuration').val("");
+        }
+
+        function UpdateEvent(eventId, eventStart, eventEnd) {
+
+            var dataRow = {
+                'ID': eventId,
+                'NewEventStart': eventStart,
+                'NewEventEnd': eventEnd
+            };
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("UpdateEvent", "Events")",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(dataRow)
+            });
+        }
+
+    </script>
+
+}
