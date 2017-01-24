@@ -8,6 +8,7 @@
     var dbProspects = new ProspectDataContext();
     var role = Session["role"] as Role;
     var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+    var upComingvents = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.StartDate > DateTime.Now).ToList();
     var prospects = dbProspects.Prospects.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
 }
 
@@ -20,10 +21,10 @@
                 <div class="btn-box-row row-fluid">
                     @if (role.ManageEvents)
                     {
-                        <a href="#" class="btn-box big span4">
-                            <i class=" icon-book"></i><b>@events.Count</b>
+                        <a href="@Url.Action("Calendar","Events")" class="btn-box big span4">
+                            <i class=" icon-calendar"></i><b>@upComingvents.Count events</b>
                             <p class="text-muted">
-                                Events
+                              Calender Events
                             </p>
                         </a>
                     }
@@ -36,7 +37,7 @@
                             </p>
                         </a>
                     }
-                    if (role.ManageEvents)
+                    @if (role.ManageEvents)
                     {
                     <a href="#" class="btn-box big span4">
                         <i class="icon-money"></i><b>@prospects.Count</b>
