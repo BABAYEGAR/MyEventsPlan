@@ -6,7 +6,8 @@
     var _db = new EventDataContext();
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutCalendar.cshtml";
-    var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+    AppUser loggedinuser = null;
+    loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
     var role = Session["role"] as Role;
     ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
 }
@@ -23,7 +24,7 @@
     <link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet"/>
     <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet"/>
     <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet"/>
-
+    <link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 }
 @if ((loggedinuser != null) && (role != null))
 {
@@ -47,7 +48,7 @@
             }
             <div id="popupEventForm" class="modal hide" style="display: none;">
 
-                @using (Html.BeginForm("SaveEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+                @using (Html.BeginForm("CreateNewEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "EventForm"}))
                 {
                     <div class="modal-header">
                         <h3>Add new event</h3>
@@ -58,7 +59,7 @@
                         <div class="control-group">
                             @Html.LabelFor(model => model.Name, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8"}})
+                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitle"}})
                                 @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                             </div>
                         </div>
@@ -66,7 +67,7 @@
                         <div class="control-group">
                             @Html.LabelFor(model => model.Color, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor"}})
+                                @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor", id = "eventColor"}})
                                 @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
                             </div>
                         </div>
@@ -74,7 +75,7 @@
                         <div class="control-group">
                             @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new {@class = "control-label"})
                             <div class="controls">
-                                @Html.DropDownList("EventTypeId", null, new {@class = "span8"})
+                                @Html.DropDownList("EventTypeId", null, new {@class = "span8", id = "eventType"})
                                 @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
                             </div>
                         </div>
@@ -82,7 +83,7 @@
                         <div class="control-group">
                             @Html.LabelFor(model => model.TargetBudget, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8"}})
+                                @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8", id = "eventBudget"}})
                                 @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
                             </div>
                         </div>
@@ -90,21 +91,21 @@
                         <div class="control-group">
                             @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "span8 form_datetime", id = "datetimepicker6"}})
+                                @Html.TextBoxFor(model => model.StartDate, new {@class = "span8 startDate", id = "eventStartDate"})
                                 @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
                             @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8 form_datetime", id = "datetimepicker7"}})
+                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8 endDate", id = "eventEndDate"}})
                                 @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
                             @Html.LabelFor(model => model.StartTime, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "span8"}})
+                                @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "span8 timepicker", id = "eventStartTime"}})
                                 @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
                             </div>
                         </div>
@@ -113,18 +114,17 @@
                         <div class="control-group">
                             @Html.LabelFor(model => model.EndTime, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.EndTime, new {htmlAttributes = new {@class = "span8"}})
+                                @Html.EditorFor(model => model.EndTime, new {htmlAttributes = new {@class = "span8 timepicker", id = "eventEndTime"}})
                                 @Html.ValidationMessageFor(model => model.EndTime, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnPopupCancel" data-dismiss="modal" class="btn">Cancel</button>
-                        <input type="submit" value="Create" class="btn btn-primary"/>
-                    </div>
                 }
-
+                <div class="modal-footer">
+                    <button type="button" id="btnPopupCancel" data-dismiss="modal" class="btn">Cancel</button>
+                    <button type="button" id="btnPopupSave" data-dismiss="modal" class="btn btn-primary">Save event</button>
+                </div>
             </div>
             <div class="btn-controls">
                 <div class="btn-box-row row-fluid">
@@ -151,7 +151,9 @@
     </div>
 }
 @section scripts{
-
+    <script src="~/Scripts/jscolor.min.js"></script>
+    <script src="~/Scripts/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script>
         $(document)
             .ready(function() {
@@ -198,8 +200,7 @@
 
                         dayClick: function(date) {
                             $('#eventTitle').val("");
-                            //$('#eventDate').val($.moment(date).format('YYYY-MM-DDTHH:mm:ssZ'));
-                            //$('#eventTime').val($.moment(date).format('YYYY-MM-DDTHH:mm:ssZ'));
+                            $('#eventStartDate').val(date.toString());
                             ShowEventPopup(date);
                         },
 
@@ -233,20 +234,24 @@
 
         $('#btnPopupSave')
             .click(function() {
-
                 $('#popupEventForm').hide();
 
                 var dataRow = {
-                    'Title': $('#eventTitle').val(),
-                    'NewEventDate': $('#eventDate').val(),
-                    'NewEventTime': $('#eventTime').val(),
-                    'NewEventDuration': $('#eventDuration').val()
+                    'title': $('#eventTitle').val(),
+                    'newEventStartDate': $('#eventStartDate').val(),
+                    'newEventEndDate': $('#eventEndDate').val(),
+                    'newEventStartTime': $('#eventStartTime').val(),
+                    'newEventEndTime': $('#eventEndTime').val(),
+                    'color': $('#eventColor').val(),
+                    'budget': $('#eventBudget').val(),
+                    'plannerId': @loggedinuser.EventPlannerId,
+                    'type': $('#eventType').val()
                 };
                 ClearPopupFormValues();
 
                 $.ajax({
                     type: 'POST',
-                    url: "@Url.Action("SaveEvent", "Events")",
+                    url: "@Url.Action("CreateNewEvent", "Events")",
                     data: dataRow,
                     success: function(response) {
                         if (response === 'True') {
@@ -286,8 +291,27 @@
                 contentType: "application/json",
                 data: JSON.stringify(dataRow)
             });
+
         }
 
+        // init datepicker for start date
+        $('.startDate').datepicker();
+
+        // init datepicker for start date
+        $('.endDate').datepicker();
+
+        // init datepicker for date
+        $('.startDate').datepicker({ 'endDate': new Date() });
+
+        // set start date of end date based on selected start date
+        $('.startDate')
+            .datepicker()
+            .on('changeDate',
+                function(e) {
+
+                    // apply selected date as start date for expiry
+                    $('.endDate').datepicker('setStartDate', e.date);
+                });
     </script>
 
 }

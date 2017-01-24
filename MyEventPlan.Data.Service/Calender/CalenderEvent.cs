@@ -51,24 +51,34 @@ namespace MyEventPlan.Data.Service.Calender
                 }
             }
         }
-        public bool CreateNewEvent(string title, string newEventDate, string newEventTime, string color,long budget,long plannerId,long type)
-        {
+        public bool CreateNewEvent(string title, string newEventStartDate, string newEventEndDate, string newEventStartTime, string newEventEndTime, string color, long budget,
+            long plannerId, long type)
+        { 
             try
             {
                 EventDataContext ent = new EventDataContext();
-                Event.Data.Objects.Entities.Event rec = new Event.Data.Objects.Entities.Event();
-                rec.Name = title;
-                rec.StartDate = DateTime.ParseExact(newEventDate + " " + newEventTime, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-                rec.EndDate = DateTime.ParseExact(newEventDate + " " + newEventTime, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
-                rec.Status = EventStausEnum.New.ToString();
-                rec.Color = color ;
-                rec.TargetBudget = budget;
-                rec.EventPlannerId = plannerId;
-                rec.EventTypeId = type;
+                Event.Data.Objects.Entities.Event rec = new Event.Data.Objects.Entities.Event
+                {
+                    Name = title,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now,
+                    Status = EventStausEnum.New.ToString(),
+                    Color = color,
+                    TargetBudget = budget,
+                    EventPlannerId = plannerId,
+                    EventTypeId = type,
+                    StartTime = newEventStartTime,
+                    EndTime = newEventEndTime,
+                    CreatedBy = plannerId,
+                    LastModifiedBy = plannerId,
+                    DateCreated = DateTime.Now,
+                    DateLastModified = DateTime.Now
+                };
+
                 ent.Event.Add(rec);
                 ent.SaveChanges();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

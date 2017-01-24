@@ -61,39 +61,20 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             new CalenderEvent().UpdateCalendarEvent(id, newEventStart, newEventEnd);
         }
-        public ActionResult SaveEvent(
-        [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Event.Data.Objects.Entities.Event @event)
-        {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
-            var role = Session["role"] as Role;
-            if (ModelState.IsValid)
-            {
-                if (role != null && (loggedinuser != null &&  role.Name == "Event Planner"))
-                {
-                    @event.CreatedBy = loggedinuser.AppUserId;
-                    @event.DateCreated = DateTime.Now;
-                    @event.DateLastModified = DateTime.Now;
-                    @event.LastModifiedBy = loggedinuser.AppUserId;
-                    @event.Status = EventStausEnum.New.ToString();
-                    @event.EventPlannerId = loggedinuser.EventPlannerId;
-                }
-                else
-                {
-                    TempData["login"] = "Your session has expired, Login again!";
-                    TempData["notificationtype"] = NotificationType.Info.ToString();
-                    return RedirectToAction("Login", "Account");
-                }
-                _db.Event.Add(@event);
-                _db.SaveChanges();
-                TempData["event"] = "Your have successfully added an event!";
-                TempData["notificationtype"] = NotificationType.Success.ToString();
-                return View("Calendar");
-            }
 
-            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
-            return View(@event);
+        public bool CreateNewEvent(string title, string newEventStartDate,string newEventEndDate, string newEventStartTime,string newEventEndTime, string color, long budget,
+            long plannerId, long type)
+        {
+            try { new CalenderEvent().CreateNewEvent(title, newEventStartDate, newEventEndDate, newEventStartTime, newEventEndTime, color, budget,
+                plannerId, type);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
-        // GET: Events/Create
+
         public ActionResult Create()
         {
             ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
