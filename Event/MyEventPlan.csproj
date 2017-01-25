@@ -200,6 +200,7 @@
     <Compile Include="Controllers\EventManagement\EventPlannersController.cs" />
     <Compile Include="Controllers\EventManagement\EventsController.cs" />
     <Compile Include="Controllers\EventManagement\EventTypesController.cs" />
+    <Compile Include="Controllers\EventManagement\StaffsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
@@ -1082,6 +1083,11 @@
     <Content Include="Scripts\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.min.css.map" />
     <Content Include="Scripts\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.css.map" />
     <Content Include="Scripts\plugins\bootstrap-datepicker\css\bootstrap-datepicker3.standalone.min.css.map" />
+    <Content Include="Views\Staffs\Create.cshtml" />
+    <Content Include="Views\Staffs\Delete.cshtml" />
+    <Content Include="Views\Staffs\Details.cshtml" />
+    <Content Include="Views\Staffs\Edit.cshtml" />
+    <Content Include="Views\Staffs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

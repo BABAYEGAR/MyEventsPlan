@@ -16,7 +16,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         // GET: Prospects
         public ActionResult Index()
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var prospects = db.Prospects.Include(p => p.EventType).Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(prospects.ToList());
         }
@@ -50,7 +50,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Prospect prospect)
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 prospect.DateCreated = DateTime.Now;
@@ -98,7 +98,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Prospect prospect)
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 prospect.DateLastModified = DateTime.Now;

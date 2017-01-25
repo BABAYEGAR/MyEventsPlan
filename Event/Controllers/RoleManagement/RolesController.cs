@@ -47,7 +47,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals")] Role role)
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 role.DateCreated = DateTime.Now;
@@ -93,7 +93,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals,CreatedBy,DateCreated")] Role role)
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 role.DateLastModified = DateTime.Now;

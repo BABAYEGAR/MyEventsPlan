@@ -63,7 +63,7 @@ namespace MyEventPlan.Controllers
             var user = new AuthenticationFactory().AuthenticateAppUserLogin(model.Email, model.Password);
             if (user != null)
             {
-                Session["planmyleaveloggedinuser"] = user;
+                Session["myeventplanloggedinuser"] = user;
                 Session["role"] = user.Role;
                 return RedirectToAction("Dashboard", "Home");
             }

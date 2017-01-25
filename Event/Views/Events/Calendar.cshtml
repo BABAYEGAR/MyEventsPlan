@@ -7,7 +7,7 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutCalendar.cshtml";
     AppUser loggedinuser = null;
-    loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+    loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
     var role = Session["role"] as Role;
     ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
 }

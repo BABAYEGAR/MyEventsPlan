@@ -49,7 +49,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (ModelState.IsValid)
             {
-                var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 vendorService.DateCreated = DateTime.Now;
                 vendorService.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
@@ -95,7 +95,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "VendorServiceId,ServiceName,Scale,CreatedBy,DateCreated")] VendorService vendorService)
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 vendorService.DateLastModified = DateTime.Now;

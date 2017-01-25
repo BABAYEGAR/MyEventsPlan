@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Event.Data.Objects.Entities
 {
@@ -31,6 +32,7 @@ namespace Event.Data.Objects.Entities
         public bool ManageContracts { get; set; }
         [DisplayName("Manage Proposals")]
         public bool ManageProposals { get; set; }
+        public IEnumerable<Staff> Staff { get; set; }
         public IEnumerable<EventPlanner> EventPlanners { get; set; }
         public IEnumerable<AppUser> AppUsers { get; set; }
     }

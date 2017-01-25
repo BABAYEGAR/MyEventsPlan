@@ -18,7 +18,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: Events
         public ActionResult Index()
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var events = _db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(events.ToList());
         }
@@ -32,7 +32,7 @@ namespace MyEventPlan.Controllers.EventManagement
         //// GET: Events
         public JsonResult GetMyEvents()
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var events = new CalenderEvent().LoadAllUserEvents(loggedinuser?.EventPlannerId);
             var eventList = from e in events
                             select new
@@ -68,7 +68,7 @@ namespace MyEventPlan.Controllers.EventManagement
             try { new CalenderEvent().CreateNewEvent(title, newEventStartDate, newEventEndDate, newEventStartTime, newEventEndTime, color, budget,
                 plannerId, type);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -89,7 +89,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Create(
             [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Event.Data.Objects.Entities.Event @event)
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
             if (ModelState.IsValid)
             {
@@ -110,6 +110,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _db.Event.Add(@event);
                 _db.SaveChanges();
+                TempData["event"] = "You have successfully added an event!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
 
@@ -140,7 +142,7 @@ namespace MyEventPlan.Controllers.EventManagement
                      "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,Status,EndDate,EndTime,CreatedBy,DateCreated"
              )] Event.Data.Objects.Entities.Event @event)
         {
-            var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 @event.DateLastModified = DateTime.Now;
@@ -156,6 +158,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _db.Entry(@event).State = EntityState.Modified;
                 _db.SaveChanges();
+                TempData["event"] = "You have successfully modified an event!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
             ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name", @event.EventTypeId);
@@ -182,6 +186,8 @@ namespace MyEventPlan.Controllers.EventManagement
             var @event = _db.Event.Find(id);
             _db.Event.Remove(@event);
             _db.SaveChanges();
+            TempData["event"] = "You have successfully deleted an event!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 

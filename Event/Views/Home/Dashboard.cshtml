@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    var loggedinuser = Session["planmyleaveloggedinuser"] as AppUser;
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
     var dbEvent = new EventDataContext();
     var dbProspects = new ProspectDataContext();
     var role = Session["role"] as Role;

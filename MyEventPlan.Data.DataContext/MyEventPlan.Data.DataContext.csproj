@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\StaffDataContext.cs" />
     <Compile Include="DataContext\ProspectContactMappingDataContext.cs" />
     <Compile Include="DataContext\ContactDataContext.cs" />
     <Compile Include="DataContext\EventContactMappingDataContext.cs" />
@@ -112,6 +113,14 @@
     <Compile Include="Migrations\201701232318336_EighteenthMigrate.cs" />
     <Compile Include="Migrations\201701232318336_EighteenthMigrate.Designer.cs">
       <DependentUpon>201701232318336_EighteenthMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701252201068_twentietMigrate.cs" />
+    <Compile Include="Migrations\201701252201068_twentietMigrate.Designer.cs">
+      <DependentUpon>201701252201068_twentietMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701252231465_twentyFirstMigrate.cs" />
+    <Compile Include="Migrations\201701252231465_twentyFirstMigrate.Designer.cs">
+      <DependentUpon>201701252231465_twentyFirstMigrate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -242,6 +251,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701232318336_EighteenthMigrate.resx">
       <DependentUpon>201701232318336_EighteenthMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701252201068_twentietMigrate.resx">
+      <DependentUpon>201701252201068_twentietMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701252231465_twentyFirstMigrate.resx">
+      <DependentUpon>201701252231465_twentyFirstMigrate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

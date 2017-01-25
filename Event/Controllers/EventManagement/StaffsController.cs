@@ -3,59 +3,68 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.Security;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.Encryption;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
-    public class EventTypesController : Controller
+    public class StaffsController : Controller
     {
-        private EventTypeDataContext db = new EventTypeDataContext();
+        private StaffDataContext db = new StaffDataContext();
 
-        // GET: EventTypes
+        // GET: Staffs
         public ActionResult Index()
         {
-            return View(db.EventTypes.ToList());
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var staff = db.Staff.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId).Include(s => s.Role);
+            return View(staff.ToList());
         }
 
-        // GET: EventTypes/Details/5
+        // GET: Staffs/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventType eventType = db.EventTypes.Find(id);
-            if (eventType == null)
+            Staff staff = db.Staff.Find(id);
+            if (staff == null)
             {
                 return HttpNotFound();
             }
-            return View(eventType);
+            return View(staff);
         }
 
-        // GET: EventTypes/Create
+        // GET: Staffs/Create
         public ActionResult Create()
         {
+            //ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name");
             return View();
         }
 
-        // POST: EventTypes/Create
+        // POST: Staffs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventTypeId,Name")] EventType eventType)
+        public ActionResult Create([Bind(Include = "StaffId,Firstname,Lastname,Email,Mobile")] Staff staff)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var role = db.Roles.SingleOrDefault(n => n.Name == "Staff");
             if (ModelState.IsValid)
             {
-                eventType.DateCreated = DateTime.Now;
-                eventType.DateLastModified = DateTime.Now;
-                if (loggedinuser != null)
+                if (loggedinuser != null && role != null)
                 {
-                    eventType.CreatedBy = loggedinuser.AppUserId;
-                    eventType.LastModifiedBy = loggedinuser.AppUserId;
+                    staff.CreatedBy = loggedinuser.AppUserId;
+                    staff.DateCreated = DateTime.Now;
+                    staff.DateLastModified = DateTime.Now;
+                    staff.LastModifiedBy = loggedinuser.AppUserId;
+                    staff.RoleId = role.RoleId;
+                    staff.EventPlannerId = loggedinuser.EventPlannerId;
+                    staff.Password = new Md5Ecryption().ConvertStringToMd5Hash(Membership.GeneratePassword(6, 0));
                 }
                 else
                 {
@@ -63,45 +72,47 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.EventTypes.Add(eventType);
+                db.Staff.Add(staff);
                 db.SaveChanges();
-                TempData["eventType"] = "You have successfully added an event type!";
+                TempData["staff"] = "You have successfully added a staff!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
 
-            return View(eventType);
+           // ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", staff.RoleId);
+            return View(staff);
         }
 
-        // GET: EventTypes/Edit/5
+        // GET: Staffs/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventType eventType = db.EventTypes.Find(id);
-            if (eventType == null)
+            Staff staff = db.Staff.Find(id);
+            if (staff == null)
             {
                 return HttpNotFound();
             }
-            return View(eventType);
+            //ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", staff.RoleId);
+            return View(staff);
         }
 
-        // POST: EventTypes/Edit/5
+        // POST: Staffs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventTypeId,Name,CreatedBy,DateCreated")] EventType eventType)
+        public ActionResult Edit([Bind(Include = "StaffId,Firstname,Lastname,Email,Mobile,Password,RoleId,CreatedBy,EventPlannerId,DateCreated")] Staff staff)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
-                eventType.DateLastModified = DateTime.Now;
+                staff.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
                 {
-                    eventType.LastModifiedBy = loggedinuser.AppUserId;
+                    staff.LastModifiedBy = loggedinuser.AppUserId;
                 }
                 else
                 {
@@ -109,39 +120,40 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(eventType).State = EntityState.Modified;
+                db.Entry(staff).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["eventType"] = "You have successfully edit an event type!";
+                TempData["staff"] = "You have successfully modifed a staff!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
-            return View(eventType);
+            //ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", staff.RoleId);
+            return View(staff);
         }
 
-        // GET: EventTypes/Delete/5
+        // GET: Staffs/Delete/5
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EventType eventType = db.EventTypes.Find(id);
-            if (eventType == null)
+            Staff staff = db.Staff.Find(id);
+            if (staff == null)
             {
                 return HttpNotFound();
             }
-            return View(eventType);
+            return View(staff);
         }
 
-        // POST: EventTypes/Delete/5
+        // POST: Staffs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            EventType eventType = db.EventTypes.Find(id);
-            db.EventTypes.Remove(eventType);
+            Staff staff = db.Staff.Find(id);
+            db.Staff.Remove(staff);
             db.SaveChanges();
-            TempData["eventType"] = "You have successfully deleted an event type!";
+            TempData["staff"] = "You have successfully deleted a staff!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
