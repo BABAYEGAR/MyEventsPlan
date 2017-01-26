@@ -3,13 +3,16 @@
 @using MyEventPlan.Data.Service.Enum
 @model Event
 @{
-    var _db = new EventDataContext();
+    var db = new EventDataContext();
+
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_LayoutCalendar.cshtml";
+
     AppUser loggedinuser = null;
     loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+
     var role = Session["role"] as Role;
-    ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
+    ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name");
 }
 @section css{
     <link href="~/Content/themes/base/jquery.ui.core.css" rel="stylesheet"/>

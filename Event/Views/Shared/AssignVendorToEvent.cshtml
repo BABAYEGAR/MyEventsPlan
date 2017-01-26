@@ -1,0 +1,23 @@
+﻿@model Event.Data.Objects.Entities.EventVendorMapping
+    @{
+        long? eventId = ViewBag.Event;
+    }
+@using (Html.BeginForm("Create", "EventVendorMappings", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("EventId",eventId)
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.VendorId, "VendorId", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("VendorId", null, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.VendorId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Assign" class="btn btn-default" />
+        </div>
+    </div>
+}

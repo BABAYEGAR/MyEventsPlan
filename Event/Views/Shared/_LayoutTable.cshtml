@@ -48,6 +48,21 @@
                                     <div class="alert-info alert-dismissable">@TempData["eventtype"]</div>
                                 }
                             }
+                            @if (TempData["mapping"] != null)
+                            {
+                                if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+                                {
+                                    <div class="alert-success alert-dismissable">@TempData["mapping"]</div>
+                                }
+                                else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+                                {
+                                    <div class="alert-danger alert-dismissable">@TempData["mapping"]</div>
+                                }
+                                else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+                                {
+                                    <div class="alert-info alert-dismissable">@TempData["mapping"]</div>
+                                }
+                            }
                             @if (TempData["staff"] != null)
                             {
                                 if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))

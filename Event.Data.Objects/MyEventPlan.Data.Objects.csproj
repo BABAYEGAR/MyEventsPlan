@@ -46,6 +46,7 @@
     <Compile Include="Entities\Contact.cs" />
     <Compile Include="Entities\ContactRole.cs" />
     <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\EventVendorMapping.cs" />
     <Compile Include="Entities\ProspectContactMapping.cs" />
     <Compile Include="Entities\EventContactMapping.cs" />
     <Compile Include="Entities\EventPlanner.cs" />

@@ -9,101 +9,57 @@ using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.VendorManagement
 {
-    public class VendorServicesController : Controller
+    public class VendorsController : Controller
     {
-        private VendorServiceDataContext db = new VendorServiceDataContext();
+        private VendorDataContext db = new VendorDataContext();
 
-        // GET: VendorServices
+        // GET: Vendors
         public ActionResult Index()
         {
-            return View(db.VendorService.ToList());
+            var vendors = db.Vendors.Include(v => v.VendorService);
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
+            return View(vendors.ToList());
         }
 
-        // GET: VendorServices/Details/5
+        // GET: Vendors/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VendorService vendorService = db.VendorService.Find(id);
-            if (vendorService == null)
+            Vendor vendor = db.Vendors.Find(id);
+            if (vendor == null)
             {
                 return HttpNotFound();
             }
-            return View(vendorService);
+            return View(vendor);
         }
 
-        // GET: VendorServices/Create
+        // GET: Vendors/Create
         public ActionResult Create()
         {
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
             return View();
         }
 
-        // POST: VendorServices/Create
+        // POST: Vendors/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorServiceId,ServiceName,Scale")] VendorService vendorService,FormCollection collectedValues)
+        public ActionResult Create([Bind(Include = "VendorId,Name,Address,Email,Mobile,VendorServiceId,EventPlannerId")] Vendor vendor)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-                vendorService.DateCreated = DateTime.Now;
-                vendorService.DateLastModified = DateTime.Now;
-                vendorService.Scale = typeof(VendorScale).GetEnumName(int.Parse(collectedValues["Scale"]));
+                vendor.DateCreated = DateTime.Now;
+                vendor.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
                 {
-                    vendorService.LastModifiedBy = loggedinuser.AppUserId;
-                    vendorService.CreatedBy = loggedinuser.AppUserId;
-                }
-                else
-                {
-                    TempData["login"] = "Your session has expired, Login again!";
-                    TempData["notificationtype"] = NotificationType.Info.ToString();
-                    return RedirectToAction("Login","Account");
-                }
-                db.VendorService.Add(vendorService);
-                db.SaveChanges();
-                TempData["service"] = "You have successfully added a vendor service!";
-                TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index");
-            }
-
-            return View(vendorService);
-        }
-
-        // GET: VendorServices/Edit/5
-        public ActionResult Edit(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorService vendorService = db.VendorService.Find(id);
-            if (vendorService == null)
-            {
-                return HttpNotFound();
-            }
-            return View(vendorService);
-        }
-
-        // POST: VendorServices/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VendorServiceId,ServiceName,CreatedBy,DateCreated")] VendorService vendorService,FormCollection collectedValues)
-        {
-            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            if (ModelState.IsValid)
-            {
-                vendorService.DateLastModified = DateTime.Now;
-                vendorService.Scale = typeof(VendorScale).GetEnumName(int.Parse(collectedValues["Scale"]));
-                if (loggedinuser != null)
-                {
-                    vendorService.LastModifiedBy = loggedinuser.AppUserId;
+                    vendor.LastModifiedBy = loggedinuser.AppUserId;
+                    vendor.CreatedBy = loggedinuser.AppUserId;
+                    vendor.EventPlannerId = loggedinuser.EventPlannerId;
                 }
                 else
                 {
@@ -111,40 +67,88 @@ namespace MyEventPlan.Controllers.VendorManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(vendorService).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["service"] = "You have successfully modified a vendor service!";
+                TempData["vendor"] = "You have successfully added a vendor!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
+                db.Vendors.Add(vendor);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(vendorService);
+
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", vendor.VendorServiceId);
+            return View(vendor);
         }
 
-        // GET: VendorServices/Delete/5
+        // GET: Vendors/Edit/5
+        public ActionResult Edit(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Vendor vendor = db.Vendors.Find(id);
+            if (vendor == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", vendor.VendorServiceId);
+            return View(vendor);
+        }
+
+        // POST: Vendors/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "VendorId,Name,Address,Email,Mobile,VendorServiceId,CreatedBy,DateCreated,EventPlannerId")] Vendor vendor)
+        {
+            if (ModelState.IsValid)
+            {
+                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                vendor.DateLastModified = DateTime.Now;
+                if (loggedinuser != null)
+                {
+                    vendor.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
+                db.Entry(vendor).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["vendor"] = "You have successfully modified a vendor!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
+                return RedirectToAction("Index");
+            }
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", vendor.VendorServiceId);
+            return View(vendor);
+        }
+
+        // GET: Vendors/Delete/5
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VendorService vendorService = db.VendorService.Find(id);
-            if (vendorService == null)
+            Vendor vendor = db.Vendors.Find(id);
+            if (vendor == null)
             {
                 return HttpNotFound();
             }
-            return View(vendorService);
+            return View(vendor);
         }
 
-        // POST: VendorServices/Delete/5
+        // POST: Vendors/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            VendorService vendorService = db.VendorService.Find(id);
-            db.VendorService.Remove(vendorService);
+            Vendor vendor = db.Vendors.Find(id);
+            db.Vendors.Remove(vendor);
             db.SaveChanges();
-            TempData["service"] = "You have successfully deleted a vendor service!";
-            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 

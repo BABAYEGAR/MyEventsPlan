@@ -14,7 +14,7 @@ namespace MyEventPlan.Data.Service.Calender
         {
             using (EventDataContext ent = new EventDataContext())
             {
-                var rslt = ent.Event.Where(n=>n.EventPlannerId == id);
+                var rslt = ent.Event.Where(n=>n.EventPlannerId == id && n.StartDate > DateTime.Now);
                 List<Event.Data.Objects.Entities.Event> result = new List<Event.Data.Objects.Entities.Event>();
                 foreach (var item in rslt)
                 {

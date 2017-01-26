@@ -45,5 +45,6 @@ namespace Event.Data.Objects.Entities
         public virtual Staff Staff { get; set; }
         public IEnumerable<Appointment> Appointments { get; set; }
         public IEnumerable<EventContactMapping> EventContactMapping { get; set; }
+        public IEnumerable<EventVendorMapping> EventVendorMappings { get; set; }
     }
 }

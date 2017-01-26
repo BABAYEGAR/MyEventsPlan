@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Event.Data.Objects.Entities
@@ -19,5 +20,10 @@ namespace Event.Data.Objects.Entities
         public  long? VendorServiceId { get; set; }
         [ForeignKey("VendorServiceId")]
         public virtual VendorService VendorService { get; set; }
+        public long? EventPlannerId { get; set; }
+        [ForeignKey("EventPlannerId")]
+        public virtual EventPlanner EventPlanner { get; set; }
+
+        public  IEnumerable<EventVendorMapping> EventVendorMappings { get; set; }
     }
 }

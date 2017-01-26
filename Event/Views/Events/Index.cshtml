@@ -6,7 +6,7 @@
     ViewBag.TableHeader = "List of all my events";
     Layout = "../Shared/_LayoutTable.cshtml";
     var events = new Event();
-     EventDataContext _db = new EventDataContext();
+     EventDataContext db = new EventDataContext();
 }
 @section css{
     <link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
@@ -31,7 +31,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
+                        ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name");
                         Html.RenderPartial("CreateEventModal",events);
                     }
                 </div>
@@ -56,12 +56,6 @@
         <th>
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </th>
         <th>Action</th>
     </tr>
     </thead>
@@ -82,14 +76,9 @@
                 @item.EndDate.ToShortDateString()
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndTime)
-            </td>
-            <td>
                 @Html.ActionLink("Edit", "Edit", new {id = item.EventId}, new {@class = "btn btn-xs btn-primary"})
                 @Html.ActionLink("Details", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default"})
+                @Html.ActionLink("Assign Vendor", "Index","EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning" })
                 @Html.ActionLink("Delete", "Delete", new {id = item.EventId}, new {@class = "btn btn-xs btn-danger"})
             </td>
         </tr>

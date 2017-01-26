@@ -1,4 +1,5 @@
-﻿@model Event.Data.Objects.Entities.VendorService
+﻿@using MyEventPlan.Data.Service.Enum
+@model Event.Data.Objects.Entities.VendorService
 @using (Html.BeginForm("Create", "VendorServices", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
 {
     @Html.AntiForgeryToken()
@@ -10,10 +11,11 @@
             @Html.ValidationMessageFor(model => model.ServiceName, "", new { @class = "text-danger" })
         </div>
     </div>
+
     <div class="control-group">
         @Html.LabelFor(model => model.Scale, new { @class = "control-label" })
         <div class="controls">
-            @Html.EditorFor(model => model.Scale, new { htmlAttributes = new { @class = "span8" } })
+            @Html.DropDownListFor(m=>m.Scale, EnumHelper.GetSelectList(typeof(VendorScale)), "select the vendor scale", new { @class = "span8" })
             @Html.ValidationMessageFor(model => model.Scale, "", new { @class = "text-danger" })
         </div>
     </div>

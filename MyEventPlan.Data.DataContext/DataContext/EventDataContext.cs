@@ -29,6 +29,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<ContactRole> ContactsRoles { get; set; }
         public virtual DbSet<EventContactMapping> EventContactMappings { get; set; }
+        public virtual DbSet<EventVendorMapping> EventVendorMappings { get; set; }
         public virtual DbSet<ProspectContactMapping> ProspectContactMappings { get; set; }
         public virtual DbSet<EventPlanner> EventPlanners { get; set; }
         public virtual DbSet<VendorService> VendorServices { get; set; }

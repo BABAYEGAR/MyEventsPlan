@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\EventVendorMappingDataContext.cs" />
     <Compile Include="DataContext\StaffDataContext.cs" />
     <Compile Include="DataContext\ProspectContactMappingDataContext.cs" />
     <Compile Include="DataContext\ContactDataContext.cs" />
@@ -121,6 +122,26 @@
     <Compile Include="Migrations\201701252231465_twentyFirstMigrate.cs" />
     <Compile Include="Migrations\201701252231465_twentyFirstMigrate.Designer.cs">
       <DependentUpon>201701252231465_twentyFirstMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260226556_TwentySecondMigrate.cs" />
+    <Compile Include="Migrations\201701260226556_TwentySecondMigrate.Designer.cs">
+      <DependentUpon>201701260226556_TwentySecondMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260257548_TwentyThirdMigrate.cs" />
+    <Compile Include="Migrations\201701260257548_TwentyThirdMigrate.Designer.cs">
+      <DependentUpon>201701260257548_TwentyThirdMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260258413_TwentyFourthMigrate.cs" />
+    <Compile Include="Migrations\201701260258413_TwentyFourthMigrate.Designer.cs">
+      <DependentUpon>201701260258413_TwentyFourthMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260304179_TwentyFifthMigrate.cs" />
+    <Compile Include="Migrations\201701260304179_TwentyFifthMigrate.Designer.cs">
+      <DependentUpon>201701260304179_TwentyFifthMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260317512_TwentySixthMigrate.cs" />
+    <Compile Include="Migrations\201701260317512_TwentySixthMigrate.Designer.cs">
+      <DependentUpon>201701260317512_TwentySixthMigrate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -257,6 +278,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701252231465_twentyFirstMigrate.resx">
       <DependentUpon>201701252231465_twentyFirstMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260226556_TwentySecondMigrate.resx">
+      <DependentUpon>201701260226556_TwentySecondMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260257548_TwentyThirdMigrate.resx">
+      <DependentUpon>201701260257548_TwentyThirdMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260258413_TwentyFourthMigrate.resx">
+      <DependentUpon>201701260258413_TwentyFourthMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260304179_TwentyFifthMigrate.resx">
+      <DependentUpon>201701260304179_TwentyFifthMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260317512_TwentySixthMigrate.resx">
+      <DependentUpon>201701260317512_TwentySixthMigrate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

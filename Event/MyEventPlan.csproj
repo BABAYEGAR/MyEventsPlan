@@ -203,8 +203,10 @@
     <Compile Include="Controllers\EventManagement\StaffsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MappingManagement\EventVendorMappingsController.cs" />
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
+    <Compile Include="Controllers\VendorManagement\VendorsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorServicesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1093,6 +1095,18 @@
     <Content Include="Views\Shared\CreateEventTypeModal.cshtml" />
     <Content Include="Views\Shared\CreateVendorServiceModal.cshtml" />
     <Content Include="Views\Shared\CreateProspectModal.cshtml" />
+    <Content Include="Views\Vendors\Create.cshtml" />
+    <Content Include="Views\Vendors\Delete.cshtml" />
+    <Content Include="Views\Vendors\Details.cshtml" />
+    <Content Include="Views\Vendors\Edit.cshtml" />
+    <Content Include="Views\Vendors\Index.cshtml" />
+    <Content Include="Views\Shared\CreateVendorModal.cshtml" />
+    <Content Include="Views\EventVendorMappings\Create.cshtml" />
+    <Content Include="Views\EventVendorMappings\Delete.cshtml" />
+    <Content Include="Views\EventVendorMappings\Details.cshtml" />
+    <Content Include="Views\EventVendorMappings\Edit.cshtml" />
+    <Content Include="Views\EventVendorMappings\Index.cshtml" />
+    <Content Include="Views\Shared\AssignVendorToEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

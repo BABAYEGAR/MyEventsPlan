@@ -5,12 +5,7 @@
                 <i class="icon-reorder shaded"></i>
             </a><a class="brand" href="@Url.Action("Index", "Home")">MyEventPlanner </a>
             <div class="nav-collapse collapse navbar-inverse-collapse">
-                @if (ViewBag.Nav != null)
-                {
-                }
-                else
-                {
-                    <ul class="nav nav-icons">
+                    @*<ul class="nav nav-icons">
                         <li class="active">
                             <a href="#">
                                 <i class="icon-envelope"></i>
@@ -32,13 +27,8 @@
                         <button class="btn" type="button">
                             <i class="icon-search"></i>
                         </button>
-                    </form>
-                }
-                @if (ViewBag.Nav != null)
-                {
-                }
-                else
-                {
+                    </form>*@
+                
                     <ul class="nav pull-right">
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -84,7 +74,7 @@
                             </ul>
                         </li>
                     </ul>
-                }
+                
             </div>
             <!-- /.nav-collapse -->
         </div>
