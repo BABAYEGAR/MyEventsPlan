@@ -11,45 +11,45 @@ namespace MyEventPlan.Controllers.MappingManagement
 {
     public class EventVendorMappingsController : Controller
     {
-        private EventVendorMappingDataContext db = new EventVendorMappingDataContext();
+        private readonly EventVendorMappingDataContext _db = new EventVendorMappingDataContext();
 
         // GET: EventVendorMappings
         public ActionResult Index(long? id)
         {
             ViewBag.Event = id;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var mappings = db.EventVendorMapping.Where(n => n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId);
-            var vedors = 
-                from a in db.Vendors
+            var mappings =
+                _db.EventVendorMapping.Where(n => (n.EventId == id) && (n.EventPlannerId == loggedinuser.EventPlannerId));
+            var vedors =
+                from a in _db.Vendors
                 join b in mappings on a.VendorId equals b.VendorId
                 where a.EventPlannerId == loggedinuser.EventPlannerId
                 select a;
-          
-            ViewBag.VendorId = new SelectList(db.Vendors.Except(vedors), "VendorId", "Name");
-            var eventVendorMapping = db.EventVendorMapping.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId).Include(e => e.Event).Include(e => e.Vendor);
-            return View(eventVendorMapping.Where(n=>n.EventId == id).ToList());
+
+            ViewBag.VendorId = new SelectList(_db.Vendors.Except(vedors), "VendorId", "Name");
+            var eventVendorMapping =
+                _db.EventVendorMapping.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId)
+                    .Include(e => e.Event)
+                    .Include(e => e.Vendor);
+            return View(eventVendorMapping.Where(n => n.EventId == id).ToList());
         }
 
         // GET: EventVendorMappings/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventVendorMapping eventVendorMapping = db.EventVendorMapping.Find(id);
+            var eventVendorMapping = _db.EventVendorMapping.Find(id);
             if (eventVendorMapping == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventVendorMapping);
         }
 
         // GET: EventVendorMappings/Create
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name");
+            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name");
+            ViewBag.VendorId = new SelectList(_db.Vendors, "VendorId", "Name");
             return View();
         }
 
@@ -58,10 +58,13 @@ namespace MyEventPlan.Controllers.MappingManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventVendorMappingId,EventId,VendorId")] EventVendorMapping eventVendorMapping)
+        public ActionResult Create(
+            [Bind(Include = "EventVendorMappingId,EventId,VendorId")] EventVendorMapping eventVendorMapping,
+            FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            
+            var eventId = Convert.ToInt64(collectedValues["EventId"]);
+
             if (ModelState.IsValid)
             {
                 eventVendorMapping.DateCreated = DateTime.Now;
@@ -78,17 +81,22 @@ namespace MyEventPlan.Controllers.MappingManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                var id = eventVendorMapping.EventId;
-                db.EventVendorMapping.Add(eventVendorMapping);
-                db.SaveChanges();
+                _db.EventVendorMapping.Add(eventVendorMapping);
+                _db.SaveChanges();
                 TempData["mapping"] = "You have successfully assigned the vendor to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
-                return View("Index",db.EventVendorMapping.Where(n => n.EventId == id).ToList());
+                return RedirectToAction("Index", new {id = eventId});
             }
+            var mappings =
+                _db.EventVendorMapping.Where(
+                    n => (n.EventId == eventId) && (n.EventPlannerId == loggedinuser.EventPlannerId));
+            var vedors =
+                from a in _db.Vendors
+                join b in mappings on a.VendorId equals b.VendorId
+                where a.EventPlannerId == loggedinuser.EventPlannerId
+                select a;
 
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", eventVendorMapping.EventId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
+            ViewBag.VendorId = new SelectList(_db.Vendors.Except(vedors), "VendorId", "Name");
             return View(eventVendorMapping);
         }
 
@@ -96,16 +104,12 @@ namespace MyEventPlan.Controllers.MappingManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventVendorMapping eventVendorMapping = db.EventVendorMapping.Find(id);
+            var eventVendorMapping = _db.EventVendorMapping.Find(id);
             if (eventVendorMapping == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", eventVendorMapping.EventId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
+            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name", eventVendorMapping.EventId);
+            ViewBag.VendorId = new SelectList(_db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
             return View(eventVendorMapping);
         }
 
@@ -114,7 +118,9 @@ namespace MyEventPlan.Controllers.MappingManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventVendorMappingId,EventId,VendorId,CreatedBy,DateCreated")] EventVendorMapping eventVendorMapping)
+        public ActionResult Edit(
+            [Bind(Include = "EventVendorMappingId,EventId,VendorId,CreatedBy,DateCreated")] EventVendorMapping
+                eventVendorMapping)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -123,7 +129,6 @@ namespace MyEventPlan.Controllers.MappingManagement
                 if (loggedinuser != null)
                 {
                     eventVendorMapping.LastModifiedBy = loggedinuser.AppUserId;
-
                 }
                 else
                 {
@@ -131,12 +136,12 @@ namespace MyEventPlan.Controllers.MappingManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(eventVendorMapping).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Entry(eventVendorMapping).State = EntityState.Modified;
+                _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", eventVendorMapping.EventId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
+            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name", eventVendorMapping.EventId);
+            ViewBag.VendorId = new SelectList(_db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
             return View(eventVendorMapping);
         }
 
@@ -144,34 +149,29 @@ namespace MyEventPlan.Controllers.MappingManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventVendorMapping eventVendorMapping = db.EventVendorMapping.Find(id);
+            var eventVendorMapping = _db.EventVendorMapping.Find(id);
             if (eventVendorMapping == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventVendorMapping);
         }
 
         // POST: EventVendorMappings/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            EventVendorMapping eventVendorMapping = db.EventVendorMapping.Find(id);
-            db.EventVendorMapping.Remove(eventVendorMapping);
-            db.SaveChanges();
+            var eventVendorMapping = _db.EventVendorMapping.Find(id);
+            _db.EventVendorMapping.Remove(eventVendorMapping);
+            _db.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
-                db.Dispose();
-            }
+                _db.Dispose();
             base.Dispose(disposing);
         }
     }

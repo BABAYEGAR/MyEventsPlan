@@ -76,11 +76,11 @@
                 @item.EndDate.ToShortDateString()
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.EventId}, new {@class = "btn btn-xs btn-primary"})
-                @Html.ActionLink("Details", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default"})
-                @Html.ActionLink("Manage Vendors", "Index","EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning" })
-                @Html.ActionLink("Manage Staff", "Index", "StaffEventMappings", new { id = item.EventId }, new { @class = "btn btn-xs btn-success" })
-                @Html.ActionLink("Delete", "Delete", new {id = item.EventId}, new {@class = "btn btn-xs btn-danger"})
+                @Html.ActionLink("Edit", "Edit", new {id = item.EventId}, new {@class = "btn btn-xs btn-primary icon-pencil"})
+                @Html.ActionLink("Details", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-screenshot" })
+                @Html.ActionLink("Manage Vendors", "Index","EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning icon-wrench" })
+                @Html.ActionLink("Manage Staff", "Index", "StaffEventMappings", new { id = item.EventId }, new { @class = "btn btn-xs btn-success icon-wrench" })
+                @Html.ActionLink("Delete", "Delete", new {id = item.EventId}, new {@class = "btn btn-xs btn-danger icon-remove" })
             </td>
         </tr>
     }
