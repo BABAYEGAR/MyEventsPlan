@@ -30,6 +30,7 @@ namespace Event.Data.Objects.Entities
         public string Mobile { get; set; }
         [PasswordPropertyText]
         public string Password { get; set; }
+        public string Status { get; set; }
         public long? RoleId { get; set; }
         [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
@@ -39,5 +40,6 @@ namespace Event.Data.Objects.Entities
         public virtual EventPlanner EventPlanner { get; set; }
         public IEnumerable<AppUser> AppUsers { get; set; }
         public IEnumerable<Event> Events { get; set; }
+        public IEnumerable<StaffEventMapping> StaffEventMapping { get; set; }
     }
 }

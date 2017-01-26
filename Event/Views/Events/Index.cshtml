@@ -78,7 +78,8 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new {id = item.EventId}, new {@class = "btn btn-xs btn-primary"})
                 @Html.ActionLink("Details", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default"})
-                @Html.ActionLink("Assign Vendor", "Index","EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning" })
+                @Html.ActionLink("Manage Vendors", "Index","EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning" })
+                @Html.ActionLink("Manage Staff", "Index", "StaffEventMappings", new { id = item.EventId }, new { @class = "btn btn-xs btn-success" })
                 @Html.ActionLink("Delete", "Delete", new {id = item.EventId}, new {@class = "btn btn-xs btn-danger"})
             </td>
         </tr>

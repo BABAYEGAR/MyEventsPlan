@@ -13,28 +13,54 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class StaffsController : Controller
     {
-        private StaffDataContext db = new StaffDataContext();
+        private readonly StaffDataContext db = new StaffDataContext();
 
         // GET: Staffs
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var staff = db.Staff.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId).Include(s => s.Role);
+            var staff = db.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(s => s.Role);
             return View(staff.ToList());
+        }
+
+        public ActionResult ActivateStaff(long? id)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var staff =
+                db.Staff.SingleOrDefault(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StaffId == id));
+            if (staff != null)
+                staff.Status = StaffStatus.Activated.ToString();
+            TempData["staff"] = "You have successfully activated the staff!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+
+            db.Entry(staff).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult DeActivateStaff(long? id)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var staff =
+                db.Staff.SingleOrDefault(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StaffId == id));
+            if (staff != null)
+                staff.Status = StaffStatus.Deactivated.ToString();
+            TempData["staff"] = "You have successfully activated the staff!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+
+            db.Entry(staff).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         // GET: Staffs/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Staff staff = db.Staff.Find(id);
+            var staff = db.Staff.Find(id);
             if (staff == null)
-            {
                 return HttpNotFound();
-            }
             return View(staff);
         }
 
@@ -56,7 +82,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var role = db.Roles.SingleOrDefault(n => n.Name == "Staff");
             if (ModelState.IsValid)
             {
-                if (loggedinuser != null && role != null)
+                if ((loggedinuser != null) && (role != null))
                 {
                     staff.CreatedBy = loggedinuser.AppUserId;
                     staff.DateCreated = DateTime.Now;
@@ -65,6 +91,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     staff.RoleId = role.RoleId;
                     staff.EventPlannerId = loggedinuser.EventPlannerId;
                     staff.Password = new Md5Ecryption().ConvertStringToMd5Hash(Membership.GeneratePassword(6, 0));
+                    staff.Status = StaffStatus.Activated.ToString();
                 }
                 else
                 {
@@ -79,7 +106,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 return RedirectToAction("Index");
             }
 
-           // ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", staff.RoleId);
+            // ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", staff.RoleId);
             return View(staff);
         }
 
@@ -87,14 +114,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Staff staff = db.Staff.Find(id);
+            var staff = db.Staff.Find(id);
             if (staff == null)
-            {
                 return HttpNotFound();
-            }
             //ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", staff.RoleId);
             return View(staff);
         }
@@ -104,7 +127,11 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "StaffId,Firstname,Lastname,Email,Mobile,Password,RoleId,CreatedBy,EventPlannerId,DateCreated")] Staff staff)
+        public ActionResult Edit(
+            [Bind(
+                 Include =
+                     "StaffId,Firstname,Lastname,Status,Email,Mobile,Password,RoleId,CreatedBy,EventPlannerId,DateCreated"
+             )] Staff staff)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -122,7 +149,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(staff).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["staff"] = "You have successfully modifed a staff!";
+                TempData["staff"] = "You have successfully modified a staff!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -134,23 +161,20 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Staff staff = db.Staff.Find(id);
+            var staff = db.Staff.Find(id);
             if (staff == null)
-            {
                 return HttpNotFound();
-            }
             return View(staff);
         }
 
         // POST: Staffs/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Staff staff = db.Staff.Find(id);
+            var staff = db.Staff.Find(id);
             db.Staff.Remove(staff);
             db.SaveChanges();
             TempData["staff"] = "You have successfully deleted a staff!";
@@ -161,9 +185,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

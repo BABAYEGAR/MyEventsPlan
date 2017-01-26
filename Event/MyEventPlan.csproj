@@ -204,6 +204,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingManagement\EventVendorMappingsController.cs" />
+    <Compile Include="Controllers\MappingManagement\StaffEventMappingsController.cs" />
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorsController.cs" />
@@ -1107,6 +1108,12 @@
     <Content Include="Views\EventVendorMappings\Edit.cshtml" />
     <Content Include="Views\EventVendorMappings\Index.cshtml" />
     <Content Include="Views\Shared\AssignVendorToEvent.cshtml" />
+    <Content Include="Views\StaffEventMappings\Create.cshtml" />
+    <Content Include="Views\StaffEventMappings\Delete.cshtml" />
+    <Content Include="Views\StaffEventMappings\Details.cshtml" />
+    <Content Include="Views\StaffEventMappings\Edit.cshtml" />
+    <Content Include="Views\StaffEventMappings\Index.cshtml" />
+    <Content Include="Views\Shared\AssignStaffToEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

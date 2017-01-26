@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\StaffEventMappingDataContext.cs" />
     <Compile Include="DataContext\EventVendorMappingDataContext.cs" />
     <Compile Include="DataContext\StaffDataContext.cs" />
     <Compile Include="DataContext\ProspectContactMappingDataContext.cs" />
@@ -142,6 +143,18 @@
     <Compile Include="Migrations\201701260317512_TwentySixthMigrate.cs" />
     <Compile Include="Migrations\201701260317512_TwentySixthMigrate.Designer.cs">
       <DependentUpon>201701260317512_TwentySixthMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260459259_TwentySeventhMigrate.cs" />
+    <Compile Include="Migrations\201701260459259_TwentySeventhMigrate.Designer.cs">
+      <DependentUpon>201701260459259_TwentySeventhMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260529268_TwentyEighteenthMigrate.cs" />
+    <Compile Include="Migrations\201701260529268_TwentyEighteenthMigrate.Designer.cs">
+      <DependentUpon>201701260529268_TwentyEighteenthMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701260531173_TwentyNineteenthMigrate.cs" />
+    <Compile Include="Migrations\201701260531173_TwentyNineteenthMigrate.Designer.cs">
+      <DependentUpon>201701260531173_TwentyNineteenthMigrate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -293,6 +306,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701260317512_TwentySixthMigrate.resx">
       <DependentUpon>201701260317512_TwentySixthMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260459259_TwentySeventhMigrate.resx">
+      <DependentUpon>201701260459259_TwentySeventhMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260529268_TwentyEighteenthMigrate.resx">
+      <DependentUpon>201701260529268_TwentyEighteenthMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701260531173_TwentyNineteenthMigrate.resx">
+      <DependentUpon>201701260531173_TwentyNineteenthMigrate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

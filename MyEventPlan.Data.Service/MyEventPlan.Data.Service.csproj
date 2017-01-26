@@ -59,6 +59,7 @@
     <Compile Include="Encryption\SerializeObject.cs" />
     <Compile Include="Enum\EventStausEnum.cs" />
     <Compile Include="Enum\NotificationType.cs" />
+    <Compile Include="Enum\StaffStatus.cs" />
     <Compile Include="Enum\UploadType.cs" />
     <Compile Include="Enum\VendorScale.cs" />
     <Compile Include="FileUploader\FileUploader.cs" />

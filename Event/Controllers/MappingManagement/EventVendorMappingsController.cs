@@ -78,12 +78,13 @@ namespace MyEventPlan.Controllers.MappingManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                var events = db.Event.Find(eventVendorMapping.EventId);
+                var id = eventVendorMapping.EventId;
                 db.EventVendorMapping.Add(eventVendorMapping);
                 db.SaveChanges();
                 TempData["mapping"] = "You have successfully assigned the vendor to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index");
+                ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
+                return View("Index",db.EventVendorMapping.Where(n => n.EventId == id).ToList());
             }
 
             ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", eventVendorMapping.EventId);
