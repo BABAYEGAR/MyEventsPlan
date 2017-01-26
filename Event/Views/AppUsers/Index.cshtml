@@ -8,10 +8,7 @@
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role.Name)
+            @Html.DisplayName("Role")
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Firstname)
@@ -33,9 +30,6 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EventPlanner.Firstname)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Role.Name)
                 </td>
                 <td>
@@ -51,7 +45,7 @@
                     @Html.DisplayFor(modelItem => item.Mobile)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.AppUserId })
+                    @Html.ActionLink("Details", "Details", new { id = item.AppUserId }, new { @class = "btn btn-xs btn-default" })
                 </td>
             </tr>
         }

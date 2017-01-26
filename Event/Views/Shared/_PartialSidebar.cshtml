@@ -36,20 +36,24 @@
             {
                 <li>
                     <a href="@Url.Action("Index", "Roles")">
-                        <i class="menu-icon icon-lock"></i>Roles & Priviledges <b class="label green pull-right">
+                        <i class="menu-icon icon-lock"></i>Roles & Priviledges @*<b class="label green pull-right">
                             11
-                        </b>
+                        </b>*@
                     </a>
                 </li>
             }
-            <li>
-                <a href="@Url.Action("Calendar", "Events")">
-                    <i class="menu-icon icon-calendar"></i>Calendar <b class="label orange pull-right">
+@if (role.ManageEvents)
+{
+    <li>
+        <a href="@Url.Action("Calendar", "Events")">
+            <i class="menu-icon icon-calendar"></i>Calendar @*<b class="label orange pull-right">
                         19
-                    </b>
-                </a>
-            </li>
+                    </b>*@
+        </a>
+    </li>
+}
         </ul>
+
         <!--/.widget-nav-->
 
 

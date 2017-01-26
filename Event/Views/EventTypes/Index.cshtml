@@ -1,8 +1,36 @@
-﻿@model IEnumerable<Event.Data.Objects.Entities.EventType>
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<EventType>
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all event types";
     Layout = "../Shared/_LayoutTable.cshtml";
+    var eventType = new EventType();
+}
+@section add {
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Event Type
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new event type</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("CreateEventTypeModal", eventType);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
 }
 <table class="datatable-1 table table-bordered table-striped display">
     <thead>

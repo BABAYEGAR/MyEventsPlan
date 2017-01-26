@@ -385,10 +385,12 @@ namespace MyEventPlan.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
+        [HttpGet]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            Session["myeventplanloggedinuser"] = null;
+            Session["role"] = null;
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }

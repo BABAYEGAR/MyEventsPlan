@@ -1088,6 +1088,11 @@
     <Content Include="Views\Staffs\Details.cshtml" />
     <Content Include="Views\Staffs\Edit.cshtml" />
     <Content Include="Views\Staffs\Index.cshtml" />
+    <Content Include="Views\Shared\CreateStaffModal.cshtml" />
+    <Content Include="Views\Shared\CreateEventModal.cshtml" />
+    <Content Include="Views\Shared\CreateEventTypeModal.cshtml" />
+    <Content Include="Views\Shared\CreateVendorServiceModal.cshtml" />
+    <Content Include="Views\Shared\CreateProspectModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
