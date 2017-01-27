@@ -1,4 +1,5 @@
 ﻿@model Event.Data.Objects.Entities.Event
+<link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 @using (Html.BeginForm("Create", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
@@ -65,12 +66,33 @@
             @Html.ValidationMessageFor(model => model.EndTime, "", new {@class = "text-danger"})
         </div>
     </div>
-
-
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Create" class="btn btn-default"/>
         </div>
     </div>
 }
-v
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jscolor.min.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+    // init datepicker for start date
+    $('.startDate').datepicker();
+
+    // init datepicker for start date
+    $('.endDate').datepicker();
+
+    // init datepicker for date
+    $('.startDate').datepicker({ 'endDate': new Date() });
+
+    // set start date of end date based on selected start date
+    $('.startDate')
+        .datepicker()
+        .on('changeDate',
+            function(e) {
+
+                // apply selected date as start date for expiry
+                $('.endDate').datepicker('setStartDate', e.date);
+            });
+</script>

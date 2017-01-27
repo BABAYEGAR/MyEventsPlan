@@ -333,6 +333,11 @@
     <Content Include="Content\Dashboard\scripts\jquery-ui-1.10.1.custom.min.js" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\monthly.css" />
+    <Content Include="Content\PageLoader\css\jquery-loading.css" />
+    <Content Include="Content\PageLoader\css\jquery-loading.min.css" />
+    <Content Include="Content\PageLoader\js\jquery-loading.js" />
+    <Content Include="Content\PageLoader\js\main.min.js" />
+    <Content Include="Content\PageLoader\js\vendor\jquery-3.1.0.min\index.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -482,6 +487,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\Calendar\demos\json\events.json" />
+    <Content Include="Content\PageLoader\css\maps\jquery-loading.css.map" />
+    <Content Include="Content\PageLoader\js\vendor\jquery-3.1.0.min\.bower.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
