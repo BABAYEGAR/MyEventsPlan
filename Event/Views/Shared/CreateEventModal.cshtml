@@ -1,5 +1,9 @@
 ﻿@model Event.Data.Objects.Entities.Event
+
 <link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 @using (Html.BeginForm("Create", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
@@ -72,11 +76,13 @@
         </div>
     </div>
 }
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Content/Dashboard/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
 <script src="~/Scripts/jscolor.min.js"></script>
 <script src="~/Scripts/moment.min.js"></script>
 <script src="~/Scripts/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script type="text/javascript">
+    
     // init datepicker for start date
     $('.startDate').datepicker();
 
@@ -95,4 +101,17 @@
                 // apply selected date as start date for expiry
                 $('.endDate').datepicker('setStartDate', e.date);
             });
+    $('.timepicker')
+        .timepicker({
+            timeFormat: 'h:mm p',
+            interval: 30,
+            minTime: '00:00am',
+            maxTime: '11:59pm',
+            defaultTime: '10',
+            defaultDate: "2016-09-05",
+            startTime: '10:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
 </script>

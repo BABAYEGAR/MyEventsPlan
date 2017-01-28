@@ -28,6 +28,12 @@ namespace MyEventPlan.Controllers.EventManagement
             return View();
         }
 
+        // GET: EventsModal
+        public ActionResult CreateModal()
+        {
+            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
+            return View();
+        }
 
         //// GET: Events
         public JsonResult GetMyEvents()

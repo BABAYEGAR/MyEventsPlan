@@ -41,5 +41,6 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<Vendor> Vendors { get; set; }
         public IEnumerable<EventVendorMapping> EventVendorMappings { get; set; }
         public IEnumerable<StaffEventMapping> StaffEventMapping { get; set; }
+        public IEnumerable<Appointment> Appointments { get; set; }
     }
 }
