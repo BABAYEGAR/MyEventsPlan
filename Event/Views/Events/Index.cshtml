@@ -16,9 +16,6 @@
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Color)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.StartDate)
         </th>
      
@@ -36,20 +33,16 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
                 @item.StartDate.ToShortDateString()
             </td>
             <td>
                 @item.EndDate.ToShortDateString()
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.EventId}, new {@class = "btn btn-xs btn-primary icon-pencil",id = "show" })
-                @Html.ActionLink("Details", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-screenshot" })
+                @Html.ActionLink("View", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-screenshot" })
                 @Html.ActionLink("Manage Vendors", "Index","EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning icon-wrench" })
                 @Html.ActionLink("Manage Staff", "Index", "StaffEventMappings", new { id = item.EventId }, new { @class = "btn btn-xs btn-success icon-wrench" })
-                @Html.ActionLink("Delete", "Delete", new {id = item.EventId}, new {@class = "btn btn-xs btn-danger icon-remove" })
+                @Html.ActionLink("Appointments", "Index","Appointments", new {id = item.EventId}, new {@class = "btn btn-xs btn-danger icon-remove" })
             </td>
         </tr>
     }

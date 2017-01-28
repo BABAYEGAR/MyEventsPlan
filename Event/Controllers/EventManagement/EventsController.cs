@@ -146,7 +146,7 @@ namespace MyEventPlan.Controllers.EventManagement
             [Bind(
                  Include =
                      "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,Status,EndDate,EndTime,CreatedBy,DateCreated"
-             )] Event.Data.Objects.Entities.Event @event)
+             )] Event.Data.Objects.Entities.Event @event,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
