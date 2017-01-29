@@ -4,58 +4,58 @@
     ViewBag.Header = "View vendor service";
     Layout = "../Shared/_LayoutForm.cshtml";
 }
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.ServiceName)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.ServiceName)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Scale)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Scale)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreatedBy)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateCreated)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateLastModified)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateLastModified)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.LastModifiedBy)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.LastModifiedBy)
-            </dd>
-    
-        </dl>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.ServiceName)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.ServiceName)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Scale)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Scale)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CreatedBy)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.CreatedBy)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DateCreated)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DateCreated)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DateLastModified)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DateLastModified)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.LastModifiedBy)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.LastModifiedBy)
+    </dd>
+
+</dl>
 <p>
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
-    @Html.ActionLink("Edit", "Edit", new { id = Model.VendorServiceId }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
+    @Html.ActionLink("Edit", "Edit", new {id = Model.VendorServiceId}, new {@class = "btn btn-primary"})
 
 </p>

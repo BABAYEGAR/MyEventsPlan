@@ -76,7 +76,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new {id = item.StaffId}, new {@class = "btn btn-xs btn-primary"})
                 @Html.ActionLink("Details", "Details", new {id = item.StaffId}, new {@class = "btn btn-xs btn-default"})
-           
+
                 @if (item.Status == StaffStatus.Activated.ToString())
                 {
                     @Html.ActionLink("Deactivate", "DeActivateStaff", new {id = item.StaffId}, new {@class = "btn btn-xs btn-warning"})
@@ -85,7 +85,7 @@
                 {
                     @Html.ActionLink("Activate", "ActivateStaff", new {id = item.StaffId}, new {@class = "btn btn-xs btn-success"})
                 }
-                @Html.ActionLink("Delete", "Delete", new { id = item.StaffId }, new { @class = "btn btn-xs btn-danger" })
+                @Html.ActionLink("Delete", "Delete", new {id = item.StaffId}, new {@class = "btn btn-xs btn-danger"})
             </td>
         </tr>
     }

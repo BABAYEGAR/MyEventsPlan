@@ -3,7 +3,7 @@
 @{
     var events = Model.FirstOrDefault();
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "List of all vedors assigned to "+ events?.Event.Name+"!";
+    ViewBag.TableHeader = "List of all vedors assigned to " + events?.Event.Name + "!";
     Layout = "../Shared/_LayoutTable.cshtml";
     var mapping = new EventVendorMapping();
 }

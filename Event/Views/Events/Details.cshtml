@@ -1,8 +1,10 @@
-﻿@model Event.Data.Objects.Entities.Event
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@model Event.Data.Objects.Entities.Event
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View event";
     Layout = "../Shared/_LayoutForm.cshtml";
+    var userDb = new AppUserDataContext();
 }
 <dl class="dl-horizontal">
     <dt>
@@ -74,7 +76,7 @@
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.CreatedBy)
+      @(userDb.AppUsers.Find(Model.CreatedBy).Firstname + " " + userDb.AppUsers.Find(Model.CreatedBy).Lastname)
     </dd>
 
     <dt>
@@ -98,7 +100,7 @@
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.LastModifiedBy)
+     @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
     </dd>
 
 </dl>

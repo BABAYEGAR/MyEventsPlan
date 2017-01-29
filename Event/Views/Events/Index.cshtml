@@ -1,12 +1,11 @@
-﻿@using Event.Data.Objects.Entities
-@model IEnumerable<Event>
+﻿@model IEnumerable<Event.Data.Objects.Entities.Event>
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all my events";
     Layout = "../Shared/_LayoutTable.cshtml";
 }
 @section add {
-@Html.ActionLink("Add Event", "Create",null, new { @class = "btn btn-primary btn-xs icon-plus pull-right" })
+    @Html.ActionLink("Add Event", "Create", null, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
 }
 
 <table class="datatable-1 table table-bordered table-striped display">
@@ -18,7 +17,7 @@
         <th>
             @Html.DisplayNameFor(model => model.StartDate)
         </th>
-     
+
         <th>
             @Html.DisplayNameFor(model => model.EndDate)
         </th>
@@ -39,10 +38,10 @@
                 @item.EndDate.ToShortDateString()
             </td>
             <td>
-                @Html.ActionLink("View", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-screenshot" })
-                @Html.ActionLink("Manage Vendors", "Index","EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning icon-wrench" })
-                @Html.ActionLink("Manage Staff", "Index", "StaffEventMappings", new { id = item.EventId }, new { @class = "btn btn-xs btn-success icon-wrench" })
-                @Html.ActionLink("Appointments", "Index","Appointments", new {id = item.EventId}, new {@class = "btn btn-xs btn-danger icon-remove" })
+                @Html.ActionLink("View", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-screenshot"})
+                @Html.ActionLink("Manage Vendors", "Index", "EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning icon-wrench"})
+                @Html.ActionLink("Manage Staff", "Index", "StaffEventMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-success icon-wrench"})
+                @Html.ActionLink("Appointments", "Index", "Appointments", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-calendar"})
             </td>
         </tr>
     }

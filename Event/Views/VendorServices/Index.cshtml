@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                      
+
                         Html.RenderPartial("CreateVendorServiceModal", vendorService);
                     }
                 </div>
@@ -49,25 +49,24 @@
     </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServiceName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Scale)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.VendorServiceId }, new { @class = "btn btn-xs btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.VendorServiceId }, new { @class = "btn btn-xs btn-default" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.VendorServiceId }, new { @class = "btn btn-xs btn-danger" })
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Scale)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-primary"})
+                @Html.ActionLink("Details", "Details", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-default"})
+                @Html.ActionLink("Delete", "Delete", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-danger"})
+            </td>
+        </tr>
+    }
     </tbody>
 </table>
-

@@ -1,42 +1,70 @@
-﻿@model Event.Data.Objects.Entities.EventVendorMapping
-
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@model Event.Data.Objects.Entities.EventVendorMapping
 @{
-    Layout = null;
+    ViewBag.Title = "View";
+    ViewBag.Header = "Vendor Details";
+    Layout = "../Shared/_LayoutForm.cshtml";
+    var userDb = new AppUserDataContext();
 }
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Event.Name)
+    </dt>
 
-<!DOCTYPE html>
+    <dd>
+        @Html.DisplayFor(model => model.Event.Name)
+    </dd>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>EventVendorMapping</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Event.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Vendor.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Vendor.Name)
-            </dd>
-    
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.EventVendorMappingId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+    <dt>
+        @Html.DisplayName("Event Planner")
+    </dt>
+
+    <dd>
+        @(Model.EventPlanner.Firstname + " " + Model.EventPlanner.Lastname)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Vendor.Name)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Vendor.Name)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.CreatedBy)
+    </dt>
+    <dd>
+        @userDb.AppUsers.Find(Model.CreatedBy).Firstname
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DateCreated)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DateCreated)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.DateLastModified)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.DateLastModified)
+    </dd>
+
+    <dd>
+        @Html.DisplayNameFor(model => model.LastModifiedBy)
+    </dd>
+
+    <dd>
+        @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
+    </dd>
+
+</dl>
+
+
+<p>
+    @Html.ActionLink("Back to List", "Index", new {id = Model.EventId}, new {@class = "btn btn-default"})
+</p>

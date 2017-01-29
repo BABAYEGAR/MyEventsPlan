@@ -163,9 +163,10 @@ namespace MyEventPlan.Controllers.MappingManagement
         public ActionResult DeleteConfirmed(long id)
         {
             var eventVendorMapping = _db.EventVendorMapping.Find(id);
+            var eventId = eventVendorMapping.EventId;
             _db.EventVendorMapping.Remove(eventVendorMapping);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { id = eventId });
         }
 
         protected override void Dispose(bool disposing)

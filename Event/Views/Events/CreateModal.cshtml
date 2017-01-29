@@ -4,9 +4,7 @@
     Layout = "../Shared/_LayoutModal.cshtml";
 }
 <style>
-    div.ui-timepicker-container.ui-timepicker-standard {
-        z-index: 1500;
-    }
+    div.ui-timepicker-container.ui-timepicker-standard { z-index: 1500; }
 </style>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="z-index: 1050">
     <div class="modal-dialog" role="document">
@@ -19,7 +17,7 @@
             </div>
             <div class="modal-body">
                 @{
-                    Html.RenderPartial("CreateEventModal",events);
+                    Html.RenderPartial("CreateEventModal", events);
                 }
             </div>
         </div>
@@ -27,7 +25,8 @@
 
 </div>
 <script type="text/javascript">
-    $(window).load(function(){
-        $('#myModal').modal('show');
-    });
+    $(window)
+        .load(function() {
+            $('#myModal').modal('show');
+        });
 </script>

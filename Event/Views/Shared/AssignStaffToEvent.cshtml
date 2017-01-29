@@ -1,22 +1,22 @@
 ﻿@model Event.Data.Objects.Entities.StaffEventMapping
-    @{
-        long? eventId = ViewBag.Event;
-    }
-@using (Html.BeginForm("Create", "StaffEventMappings", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@{
+    long? eventId = ViewBag.Event;
+}
+@using (Html.BeginForm("Create", "StaffEventMappings", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
-    @Html.Hidden("EventId",eventId)
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.Hidden("EventId", eventId)
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="form-group">
-        @Html.LabelFor(model => model.StaffId, "Staff", new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.StaffId, "Staff", new {@class = "control-label col-md-2"})
         <div class="col-md-10">
-            @Html.DropDownList("StaffId", null, new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.StaffId, "", new { @class = "text-danger" })
+            @Html.DropDownList("StaffId", null, new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.StaffId, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Assign" class="btn btn-default" />
+            <input type="submit" value="Assign" class="btn btn-default"/>
         </div>
     </div>
 }

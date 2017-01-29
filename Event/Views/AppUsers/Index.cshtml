@@ -26,28 +26,28 @@
     </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Role.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Firstname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Lastname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Mobile)
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.AppUserId }, new { @class = "btn btn-xs btn-default" })
-                </td>
-            </tr>
-        }
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new {id = item.AppUserId}, new {@class = "btn btn-xs btn-default"})
+            </td>
+        </tr>
+    }
     </tbody>
 </table>

@@ -5,111 +5,111 @@
     ViewBag.Header = "Edit a role";
     Layout = "../Shared/_LayoutForm.cshtml";
 }
-@using (Html.BeginForm("Edit", "Roles", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Edit", "Roles", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.HiddenFor(m => m.RoleId)
     @Html.HiddenFor(m => m.DateCreated)
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="control-group">
-        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+        @Html.LabelFor(model => model.Name, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageApplicationUser, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageApplicationUser, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageApplicationUser)
-            @Html.ValidationMessageFor(model => model.ManageApplicationUser, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageApplicationUser, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageRoles, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageRoles, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageRoles)
-            @Html.ValidationMessageFor(model => model.ManageRoles, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageRoles, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageEvents, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageEvents, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageEvents)
-            @Html.ValidationMessageFor(model => model.ManageEvents, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageEvents, "", new {@class = "text-danger span8"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageEventType, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageEventType, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageEventType)
-            @Html.ValidationMessageFor(model => model.ManageEventType, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageEventType, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageEventPlanners, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageEventPlanners, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageEventPlanners)
-            @Html.ValidationMessageFor(model => model.ManageEventPlanners, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageEventPlanners, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageVendors, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageVendors, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageVendors)
-            @Html.ValidationMessageFor(model => model.ManageVendors, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageVendors, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageVendorServices, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageVendorServices, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageVendorServices)
-            @Html.ValidationMessageFor(model => model.ManageVendorServices, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageVendorServices, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageProspects, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageProspects, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageProspects)
-            @Html.ValidationMessageFor(model => model.ManageProspects, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageProspects, "", new {@class = "text-danger span8"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageInvoices, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageInvoices, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageInvoices)
-            @Html.ValidationMessageFor(model => model.ManageInvoices, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageInvoices, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageContracts, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageContracts, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageContracts)
-            @Html.ValidationMessageFor(model => model.ManageContracts, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageContracts, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageProposals, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageProposals, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageProposals)
-            @Html.ValidationMessageFor(model => model.ManageProposals, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageProposals, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
 
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Update" class="btn btn-default pull-right" />
+            <input type="submit" value="Update" class="btn btn-default pull-right"/>
         </div>
     </div>
 }
