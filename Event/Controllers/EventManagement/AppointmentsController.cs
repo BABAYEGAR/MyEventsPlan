@@ -22,11 +22,11 @@ namespace MyEventPlan.Controllers.EventManagement
             return View(appointments.ToList());
         }
 
-        //// GET: Events
+        //// GET: GetMyAppointments
         public JsonResult GetMyAppointments()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var appointments = new CalenderEvent().LoadAllUserAppointments(loggedinuser?.EventPlannerId);
+            var appointments = new CalenderAppointment().LoadAllUserAppointments(loggedinuser?.EventPlannerId);
             var appointmentList = from e in appointments
                 select new
                 {
@@ -39,7 +39,10 @@ namespace MyEventPlan.Controllers.EventManagement
             var rows = appointmentList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);
         }
-
+        public void UpdateEventAppoitments(int id, string newEventStart, string newEventEnd)
+        {
+            new CalenderAppointment().UpdateCalendarEventAppoitment(id, newEventStart, newEventEnd);
+        }
         // GET: Appointments/Details/5
         public ActionResult Details(long? id)
         {

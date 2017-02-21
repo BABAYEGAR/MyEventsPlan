@@ -4,6 +4,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -17,7 +18,24 @@ namespace MyEventPlan.Controllers.EventManagement
             var appUsers = db.AppUsers.Include(a => a.EventPlanner).Include(a => a.Role);
             return View(appUsers.ToList());
         }
-
+        // GET: EnableUser
+        public ActionResult EnableUser(long? id)
+        {
+            var appUser = db.AppUsers.Find(id);
+            appUser.Status = UserAccountStatus.Enabled.ToString();
+            db.Entry(appUser).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+        // GET: DisableUser
+        public ActionResult DisableUser(long? id)
+        {
+            var appUser = db.AppUsers.Find(id);
+            appUser.Status = UserAccountStatus.Disabled.ToString();
+            db.Entry(appUser).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: AppUsers/Details/5
         public ActionResult Details(long? id)
         {

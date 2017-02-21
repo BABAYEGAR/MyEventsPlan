@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Event.Data.Objects.Entities.Contact>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "List of all my contacts";
+    Layout = "../Shared/_LayoutTable.cshtml";
+}
+@section add {
+    @Html.ActionLink("Add Contact", "Create", null, new { @class = "btn btn-primary btn-xs icon-plus pull-right" })
+}
+
+<table class="datatable-1 table table-bordered table-striped display">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { id = item.ContactId },new {@class = "btn btn-default"})
+                </td>
+            </tr>
+        }
+
+</table>

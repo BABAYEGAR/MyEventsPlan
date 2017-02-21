@@ -20,7 +20,9 @@ namespace MyEventPlan.Data.DataContext.DataContext
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
         public virtual DbSet<Event.Data.Objects.Entities.Event> Event { get; set; }
         public virtual DbSet<EventType> EventTypes { get; set; }
+        public virtual DbSet<EventPlanner> EventPlanner { get; set; }
         public virtual DbSet<Contact> Contact { get; set; }
+        public virtual DbSet<ContactRole> ContactRoles { get; set; }
         public virtual DbSet<EventContactMapping> EventContactMapping { get; set; }
         public virtual DbSet<ProspectContactMapping> ProspectContactMapping { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

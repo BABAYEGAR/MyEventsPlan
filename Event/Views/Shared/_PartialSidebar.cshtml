@@ -49,6 +49,14 @@
                     </a>
                 </li>
             }
+            @if (role.ManageEvents)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Contacts")">
+                        <i class="menu-icon icon-user-md"></i>Contacts
+                    </a>
+                </li>
+            }
         </ul>
 
 

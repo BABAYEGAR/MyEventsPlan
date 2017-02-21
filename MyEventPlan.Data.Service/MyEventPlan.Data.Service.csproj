@@ -51,12 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthenticationManagement\AuthenticationFactory.cs" />
+    <Compile Include="Calender\CalenderAppointment.cs" />
     <Compile Include="Calender\CalenderEvent.cs" />
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="EmailService\MailerDaemon.cs" />
     <Compile Include="Encryption\Md5Ecryption.cs" />
     <Compile Include="Encryption\QueryStingEncoder.cs" />
     <Compile Include="Encryption\SerializeObject.cs" />
+    <Compile Include="Enum\UserAccountStatus.cs" />
     <Compile Include="Enum\EventStausEnum.cs" />
     <Compile Include="Enum\NotificationType.cs" />
     <Compile Include="Enum\StaffStatus.cs" />

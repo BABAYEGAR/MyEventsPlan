@@ -164,6 +164,18 @@
     <Compile Include="Migrations\201701282026164_migrate12.Designer.cs">
       <DependentUpon>201701282026164_migrate12.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201702211034358_migrate13.cs" />
+    <Compile Include="Migrations\201702211034358_migrate13.Designer.cs">
+      <DependentUpon>201702211034358_migrate13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702211057109_migrate14.cs" />
+    <Compile Include="Migrations\201702211057109_migrate14.Designer.cs">
+      <DependentUpon>201702211057109_migrate14.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702211122193_migrate15.cs" />
+    <Compile Include="Migrations\201702211122193_migrate15.Designer.cs">
+      <DependentUpon>201702211122193_migrate15.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -329,6 +341,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701282026164_migrate12.resx">
       <DependentUpon>201701282026164_migrate12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702211034358_migrate13.resx">
+      <DependentUpon>201702211034358_migrate13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702211057109_migrate14.resx">
+      <DependentUpon>201702211057109_migrate14.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702211122193_migrate15.resx">
+      <DependentUpon>201702211122193_migrate15.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -33,26 +33,6 @@ namespace MyEventPlan.Data.Service.Calender
                 return result;
             }
         }
-        public List<Event.Data.Objects.Entities.Appointment> LoadAllUserAppointments(long? id)
-        {
-            using (AppointmentDataContext ent = new AppointmentDataContext())
-            {
-                var rslt = ent.Appointments.Where(n => n.EventPlannerId == id && n.StartDate > DateTime.Now);
-                List<Event.Data.Objects.Entities.Appointment> result = new List<Event.Data.Objects.Entities.Appointment>();
-                foreach (var item in rslt)
-                {
-                    Event.Data.Objects.Entities.Appointment rec = new Event.Data.Objects.Entities.Appointment
-                    {
-                        EventId = item.EventId,
-                        StartDate = item.StartDate,
-                        EndDate = item.EndDate,
-                        Name = item.Name
-                    };
-                    result.Add(rec);
-                }
-                return result;
-            }
-        }
         public  void UpdateCalendarEvent(int id, string newEventStart, string newEventEnd)
         {
             // EventStart comes ISO 8601 format, eg:  "2000-01-10T10:00:00Z" - need to convert to DateTime

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,11 +19,10 @@ namespace Event.Data.Objects.Entities
         public string Email { get; set; }
         [Required]
         public string Mobile { get; set; }
-        public long? ContactRoleId { get; set; }
-        [ForeignKey("ContactRoleId")]
-        public virtual ContactRole ContactRole { get; set; }
-        public IEnumerable<Event> Events { get; set; }
-        public IEnumerable<Prospect> Prospects { get; set; }
+        [DisplayName("Event Planner")]
+        public long? EventPlannerId { get; set; }
+        [ForeignKey("EventPlannerId")]
+        public virtual EventPlanner EventPlanner { get; set; }
         public IEnumerable<EventContactMapping> EventContactMapping { get; set; }
     }
 }
