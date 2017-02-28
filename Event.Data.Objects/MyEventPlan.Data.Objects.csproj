@@ -46,6 +46,8 @@
     <Compile Include="Entities\Contact.cs" />
     <Compile Include="Entities\ContactRole.cs" />
     <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\Guest.cs" />
+    <Compile Include="Entities\GuestList.cs" />
     <Compile Include="Entities\StaffEventMapping.cs" />
     <Compile Include="Entities\EventVendorMapping.cs" />
     <Compile Include="Entities\ProspectContactMapping.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Entities\Prospect.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Staff.cs" />
+    <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\Transport.cs" />
     <Compile Include="Entities\Vendor.cs" />
     <Compile Include="Entities\VendorService.cs" />

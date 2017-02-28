@@ -44,5 +44,8 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<Appointment> Appointments { get; set; }
         public IEnumerable<Contact> Contacts { get; set; }
         public IEnumerable<ContactRole> ContactRoles { get; set; }
+        public IEnumerable<GuestList> GuestLists { get; set; }
+        public IEnumerable<Guest> Guests { get; set; }
+        public IEnumerable<Task> Tasks { get; set; }
     }
 }

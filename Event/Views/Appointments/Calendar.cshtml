@@ -1,0 +1,173 @@
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@model Appointment
+@{
+    var db = new EventDataContext();
+
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_LayoutCalendar.cshtml";
+
+    AppUser loggedinuser = null;
+    loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+
+    var role = Session["role"] as Role;
+    ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name");
+}
+@section css{
+    <link href="~/Content/themes/base/jquery.ui.core.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.button.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.slider.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet"/>
+}
+@if ((loggedinuser != null) && (role != null))
+{
+    @Html.ActionLink("Add Appointment", "Create", "Appointments", new { }, new { @class = "btn btn-default icon-plus pull-right" })
+    <br/>
+    <br/>
+    <!--/.span3-->
+    <div class="span9">
+        <div class="content">
+            @if (TempData["appointment"] != null)
+            {
+                if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+                {
+                    <div class="alert-success alert-dismissable">@TempData["appointment"]</div>
+                }
+                else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+                {
+                    <div class="alert-danger alert-dismissable">@TempData["appointment"]</div>
+                }
+                else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+                {
+                    <div class="alert-info alert-dismissable">@TempData["appointment"]</div>
+                }
+            }
+
+            <div class="btn-controls">
+                
+                <div class="btn-box-row row-fluid">
+
+                    <div class="module">
+
+                        <div class="module-head">
+                            <h3>
+                                Calendar
+                            </h3>
+                        </div>
+                        <div class="module-body">
+                            <div id="calendar" class="monthly">
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <!--/.module-->
+                </div>
+                <!--/.content-->
+            </div>
+            <!--/.span9-->
+
+        </div>
+    </div>
+}
+@section scripts{
+    <script>
+        $(document)
+            .ready(function() {
+
+                var sourceFullView = { url: '@Url.Action("GetMyAppointments", "Appointments")' };
+                var sourceSummaryView = { url: '@Url.Action("GetMyAppointments", "Appointments")' };
+                var calLoading = true;
+
+                $('#calendar')
+                    .fullCalendar({
+                        header: {
+                            left: 'prev,next today',
+                            center: 'title',
+                            right: 'month,agendaWeek,agendaDay'
+                        },
+                        defaultView: 'month',
+                        editable: true,
+                        allDaySlot: false,
+                        selectable: true,
+                        slotMinutes: 15,
+                        events: '@Url.Action("GetMyAppointments", "Appointments")',
+                        eventClick: function(calEvent) {
+                            ShowEventPopup(calEvent);
+
+                        },
+
+                        eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc) {
+                            if (confirm("Confirm move?")) {
+                                UpdateEvent(event.id, event.start, event.end);
+                            } else {
+                                revertFunc();
+                            }
+                        },
+
+                        eventResize: function(event, dayDelta, minuteDelta, revertFunc) {
+
+                            if (confirm("Confirm change appointment length?")) {
+                                UpdateEvent(event.id, event.start, event.end);
+                            } else {
+                                revertFunc();
+                            }
+                        },
+
+
+                        dayClick: function(date) {
+                            $('#eventTitle').val("");
+                            $('#eventStartDate').val(date.toString());
+                            ShowEventPopup(date);
+                        },
+
+                        viewRender: function(view) {
+
+                            if (!calLoading) {
+                                if (view.name === 'month') {
+                                    $('#calendar').fullCalendar('removeEventSource', sourceFullView);
+                                    $('#calendar').fullCalendar('removeEvents');
+                                    $('#calendar').fullCalendar('addEventSource', sourceSummaryView);
+                                } else {
+                                    $('#calendar').fullCalendar('removeEventSource', sourceSummaryView);
+                                    $('#calendar').fullCalendar('removeEvents');
+                                    $('#calendar').fullCalendar('addEventSource', sourceFullView);
+                                }
+                            }
+                        }
+
+                    });
+
+                calLoading = false;
+
+
+            });
+
+        function UpdateEvent(eventId, eventStart, eventEnd) {
+
+            var dataRow = {
+                'ID': eventId,
+                'NewEventStart': eventStart,
+                'NewEventEnd': eventEnd
+            };
+            $.ajax({
+                type: 'POST',
+                url: "@Url.Action("UpdateEventAppoitments", "Appointments")",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify(dataRow)
+            });
+
+        }
+    </script>
+
+}

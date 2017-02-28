@@ -202,7 +202,10 @@
     <Compile Include="Controllers\EventManagement\EventPlannersController.cs" />
     <Compile Include="Controllers\EventManagement\EventsController.cs" />
     <Compile Include="Controllers\EventManagement\EventTypesController.cs" />
+    <Compile Include="Controllers\EventManagement\GuestListsController.cs" />
+    <Compile Include="Controllers\EventManagement\GuestsController.cs" />
     <Compile Include="Controllers\EventManagement\StaffsController.cs" />
+    <Compile Include="Controllers\EventManagement\TasksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingManagement\EventVendorMappingsController.cs" />
@@ -1156,6 +1159,23 @@
     <Content Include="Views\Contacts\Details.cshtml" />
     <Content Include="Views\Contacts\Edit.cshtml" />
     <Content Include="Views\Contacts\Index.cshtml" />
+    <Content Include="Views\Home\ViewProfile.cshtml" />
+    <Content Include="Views\Appointments\Calendar.cshtml" />
+    <Content Include="Views\Guests\Create.cshtml" />
+    <Content Include="Views\Guests\Delete.cshtml" />
+    <Content Include="Views\Guests\Details.cshtml" />
+    <Content Include="Views\Guests\Edit.cshtml" />
+    <Content Include="Views\Guests\Index.cshtml" />
+    <Content Include="Views\GuestLists\Create.cshtml" />
+    <Content Include="Views\GuestLists\Delete.cshtml" />
+    <Content Include="Views\GuestLists\Details.cshtml" />
+    <Content Include="Views\GuestLists\Edit.cshtml" />
+    <Content Include="Views\GuestLists\Index.cshtml" />
+    <Content Include="Views\Tasks\Create.cshtml" />
+    <Content Include="Views\Tasks\Delete.cshtml" />
+    <Content Include="Views\Tasks\Details.cshtml" />
+    <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Tasks\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

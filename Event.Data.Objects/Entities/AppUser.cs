@@ -35,6 +35,9 @@ namespace Event.Data.Objects.Entities
         public virtual Staff Staff { get; set; }
         public string ProfileImage { get; set; }
         public string Status { get; set; }
+        public string DisplayName
+     => Firstname + " " + Lastname;
+
 
     }
 }

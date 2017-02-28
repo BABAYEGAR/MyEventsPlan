@@ -38,10 +38,7 @@
                 @item.EndDate.ToShortDateString()
             </td>
             <td>
-                @Html.ActionLink("View", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-screenshot"})
-                @Html.ActionLink("Manage Vendors", "Index", "EventVendorMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-warning icon-wrench"})
-                @Html.ActionLink("Manage Staff", "Index", "StaffEventMappings", new {id = item.EventId}, new {@class = "btn btn-xs btn-success icon-wrench"})
-                @Html.ActionLink("Appointments", "Index", "Appointments", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-calendar"})
+                @Html.ActionLink("Open", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-screenshot"})
             </td>
         </tr>
     }

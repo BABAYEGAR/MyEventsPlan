@@ -12,6 +12,12 @@ namespace MyEventPlan.Controllers
         {
             return View();
         }
+        public ActionResult ViewProfile()
+        {
+
+            return View();
+        }
+
 
         public ActionResult About()
         {

@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Event;
+using Event.Data.Objects.Entities;
 using Event.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
@@ -17,7 +19,7 @@ namespace MyEventPlan.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private readonly AppUserDataContext db = new AppUserDataContext();
         public AccountController()
         {
         }
@@ -87,7 +89,6 @@ namespace MyEventPlan.Controllers
             //        return View(model);
             //}
         }
-
 
         //
         // GET: /Account/VerifyCode

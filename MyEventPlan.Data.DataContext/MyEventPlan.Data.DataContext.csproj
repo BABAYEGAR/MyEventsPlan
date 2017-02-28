@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\TaskDataContext.cs" />
+    <Compile Include="DataContext\GuestListDataContext.cs" />
+    <Compile Include="DataContext\GuestDataContext.cs" />
     <Compile Include="DataContext\StaffEventMappingDataContext.cs" />
     <Compile Include="DataContext\EventVendorMappingDataContext.cs" />
     <Compile Include="DataContext\StaffDataContext.cs" />
@@ -175,6 +178,10 @@
     <Compile Include="Migrations\201702211122193_migrate15.cs" />
     <Compile Include="Migrations\201702211122193_migrate15.Designer.cs">
       <DependentUpon>201702211122193_migrate15.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702282126145_migrate16.cs" />
+    <Compile Include="Migrations\201702282126145_migrate16.Designer.cs">
+      <DependentUpon>201702282126145_migrate16.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -350,6 +357,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702211122193_migrate15.resx">
       <DependentUpon>201702211122193_migrate15.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702282126145_migrate16.resx">
+      <DependentUpon>201702282126145_migrate16.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,133 @@
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@{
+    var db = new AppUserDataContext();
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+    var user = db.AppUsers.Find(loggedinuser.AppUserId);
+    ViewBag.Title = "Profile";
+    Layout = "../Shared/_LayoutForm.cshtml";
+
+}
+
+<div class="container">
+    @if (TempData["profile"] != null)
+    {
+        if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+        {
+            <div class="alert-success alert-dismissable">@TempData["profile"]</div>
+        }
+        else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+        {
+            <div class="alert-danger alert-dismissable">@TempData["profile"]</div>
+        }
+        else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+        {
+            <div class="alert-info alert-dismissable">@TempData["profile"]</div>
+        }
+    }
+    <div class="row">
+        <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+            <p class="text-info">@DateTime.Now</p>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
+
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">@user.DisplayName</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center">
+                            @if (user.ProfileImage != null)
+                            {
+                                <img alt="User Pic" src="../../UploadedFiles/ProfileImage/@user.ProfileImage" class="img-circle img-responsive">
+                            }
+                            else
+                            {
+                                <img alt="User Pic" src="../../Content/Dashboard/images/user.png" class="img-circle img-responsive">
+                            }
+
+                        </div>
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                <tr>
+                                    <td>First Nmae:</td>
+                                    <td style="font-weight: bolder">@user.Firstname</td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name:</td>
+                                    <td style="font-weight: bolder">@user.Lastname</td>
+                                </tr>
+                                <tr>
+                                    <td>Role:</td>
+                                    <td style="font-weight: bolder">@user.Role</td>
+                                </tr>
+
+                                <tr>
+                                    <tr>
+                                        <td>Email</td>
+                                        <td style="font-weight: bolder">@user.Email</td>
+                                    </tr>
+                                    <td>Phone Number</td>
+                                    <td style="font-weight: bolder">
+                                        @user.Mobile
+                                    </td>
+
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            @if ((loggedinuser != null) && (user.AppUserId == loggedinuser.AppUserId))
+                            {
+                                <a href="@Url.Action("Dashboard", "Home")" data-original-title="Return to Dashboard" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary">
+                                    <i class="fa fa-backward"></i>
+                                </a>
+                                <span class="pull-right">
+                                        <a href="@Url.Action("Edit", "AppUsers", new {Id = user.AppUserId})" data-original-title="Edit" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+                                        <a href="@Url.Action("ChangePassword")" data-original-title="Change Password" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-lock"></i></a>
+                                    </span>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document)
+            .ready(function() {
+                var panels = $('.user-infos');
+                var panelsButton = $('.dropdown-user');
+                panels.hide();
+
+                //Click dropdown
+                panelsButton.click(function() {
+                    //get data-for attribute
+                    var dataFor = $(this).attr('data-for');
+                    var idFor = $(dataFor);
+
+                    //current button
+                    var currentButton = $(this);
+                    idFor.slideToggle(400,
+                        function() {
+                            //Completed slidetoggle
+                            if (idFor.is(':visible')) {
+                                currentButton.html('<i class="glyphicon glyphicon-chevron-up text-muted"></i>');
+                            } else {
+                                currentButton.html('<i class="glyphicon glyphicon-chevron-down text-muted"></i>');
+                            }
+                        });
+                });
+
+
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+    </script>
+}

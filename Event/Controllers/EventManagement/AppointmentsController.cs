@@ -7,6 +7,7 @@ using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Calender;
 using MyEventPlan.Data.Service.Enum;
+using Event = Event.Data.Objects.Entities.Event;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -21,23 +22,36 @@ namespace MyEventPlan.Controllers.EventManagement
             var appointments = _db.Appointments.Where(n=>n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId ).Include(a => a.Event);
             return View(appointments.ToList());
         }
-
+        // GET: Appointments
+        public ActionResult Calendar()
+        {
+            return View();
+        }
         //// GET: GetMyAppointments
         public JsonResult GetMyAppointments()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var appointments = new CalenderAppointment().LoadAllUserAppointments(loggedinuser?.EventPlannerId);
-            var appointmentList = from e in appointments
-                select new
-                {
-                    id = e.AppointmentId,
-                    title = e.Name + " " + (Convert.ToDateTime(e.EndTime) - Convert.ToDateTime(e.StartTime)) + " mins",
-                    start = e.StartDate,
-                    end = e.EndDate,
-                    allDay = false
-                };
-            var rows = appointmentList.ToArray();
-            return Json(rows, JsonRequestBehavior.AllowGet);
+            global::Event.Data.Objects.Entities.Event appoitmentEvent = null;
+            foreach (var item in appointments)
+            {
+                appoitmentEvent = _db.Event.Find(item.EventId);
+
+                var appointmentList = from e in appointments
+                    select new
+                    {
+                        id = e.AppointmentId,
+                        title =
+                        appoitmentEvent.Name + Environment.NewLine + e.Name + " " +
+                        (Convert.ToDateTime(e.EndTime) - Convert.ToDateTime(e.StartTime)) + " mins",
+                        start = e.StartDate,
+                        end = e.EndDate,
+                        allDay = false
+                    };
+                var rows = appointmentList.ToArray();
+                return Json(rows, JsonRequestBehavior.AllowGet);
+            }
+            return Json(appointments.ToArray(), JsonRequestBehavior.AllowGet);
         }
         public void UpdateEventAppoitments(int id, string newEventStart, string newEventEnd)
         {

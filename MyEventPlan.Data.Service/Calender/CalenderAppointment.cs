@@ -14,7 +14,7 @@ namespace MyEventPlan.Data.Service.Calender
         {
             using (AppointmentDataContext ent = new AppointmentDataContext())
             {
-                var rslt = ent.Appointments.Where(n=>n.EventPlannerId == id && n.StartDate > DateTime.Now);
+                var rslt = ent.Appointments.Where(n=>n.EventPlannerId == id && n.StartDate >= DateTime.Now);
                 List<Event.Data.Objects.Entities.Appointment> result = new List<Event.Data.Objects.Entities.Appointment>();
                 foreach (var item in rslt)
                 {
@@ -37,7 +37,7 @@ namespace MyEventPlan.Data.Service.Calender
         {
             using (AppointmentDataContext ent = new AppointmentDataContext())
             {
-                var rslt = ent.Appointments.Where(n => n.EventPlannerId == id && n.StartDate > DateTime.Now);
+                var rslt = ent.Appointments.Where(n => n.EventPlannerId == id).Include(n=>n.Event);
                 List<Event.Data.Objects.Entities.Appointment> result = new List<Event.Data.Objects.Entities.Appointment>();
                 foreach (var item in rslt)
                 {
