@@ -1,0 +1,207 @@
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Web.Mvc;
+using Event.Data.Objects.Entities;
+using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.Enum;
+
+namespace MyEventPlan.Controllers.EventManagement
+{
+    public class CheckListItemsController : Controller
+    {
+        private readonly CheckListItemDataContext db = new CheckListItemDataContext();
+
+        // GET: CheckListItems
+        public ActionResult Index(long? id)
+        {
+            var checkListItems =
+                db.CheckListItems.Where(n => n.CheckListId == id).Include(c => c.CheckList).Include(c => c.Event);
+            ViewBag.id = id;
+            return View(checkListItems.ToList());
+        }
+
+        // GET: CheckListItems/Details/5
+        public ActionResult Details(long? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var checkListItem = db.CheckListItems.Find(id);
+            if (checkListItem == null)
+                return HttpNotFound();
+            return View(checkListItem);
+        }
+
+        // GET: CheckItem
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CheckItem(int[] table_records, FormCollection collectedValues)
+        {
+            var allMappings = db.CheckListItems.ToList();
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var checkListId = Convert.ToInt64(collectedValues["id"]);
+            if (table_records != null)
+            {
+                var length = table_records.Length;
+                for (var i = 0; i < length; i++)
+                {
+                    var id = table_records[i];
+                    if (
+                        allMappings.Any(
+                            n =>
+                                (n.CheckListItemId == id) &&
+                                (n.CheckListId == checkListId) && n.Checked == true))
+                    {
+                    }
+                    else
+                    {
+                        var item = db.CheckListItems.Find(id);
+                        item.Checked = true;
+                        item.DateLastModified = DateTime.Now;
+                        if (loggedinuser != null) item.LastModifiedBy = loggedinuser.AppUserId;
+                        db.Entry(item).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                        TempData["item"] = "you have succesfully check the item(s)!";
+                        TempData["notificationtype"] = NotificationType.Success.ToString();
+                    }
+                }
+            }
+            else
+            {
+                TempData["training"] = "no item has been selected!";
+                TempData["notificationtype"] = NotificationType.Error.ToString();
+                return RedirectToAction("Index", new {id = checkListId});
+            }
+            return RedirectToAction("Index", new {id = checkListId});
+        }
+
+        // GET: CheckListItems/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: CheckListItems/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(
+            [Bind(Include = "CheckListItemId,Name,Checked,EventId,CheckListId")] CheckListItem checkListItem)
+        {
+            if (ModelState.IsValid)
+            {
+                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                checkListItem.DateCreated = DateTime.Now;
+                checkListItem.DateLastModified = DateTime.Now;
+                if (loggedinuser != null)
+                {
+                    checkListItem.LastModifiedBy = loggedinuser.AppUserId;
+                    checkListItem.CreatedBy = loggedinuser.AppUserId;
+                    checkListItem.Checked = false;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
+                db.CheckListItems.Add(checkListItem);
+                db.SaveChanges();
+                return RedirectToAction("Index", new {id = checkListItem.CheckListId});
+            }
+            return View(checkListItem);
+        }
+        // GET: CheckListItems/UncheckItem/5
+        public ActionResult UncheckItem(long? id)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var checkListItem = db.CheckListItems.Find(id);
+            if (checkListItem == null)
+                return HttpNotFound();
+            checkListItem.Checked = false;
+            checkListItem.DateLastModified = DateTime.Now;
+            if (loggedinuser != null) checkListItem.LastModifiedBy = loggedinuser.AppUserId;
+            db.Entry(checkListItem).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index",new {id = checkListItem.CheckListId});
+        }
+
+        // GET: CheckListItems/Edit/5
+        public ActionResult Edit(long? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var checkListItem = db.CheckListItems.Find(id);
+            if (checkListItem == null)
+                return HttpNotFound();
+            return View(checkListItem);
+        }
+
+        // POST: CheckListItems/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(
+            [Bind(Include = "CheckListItemId,Name,Checked,EventId,CheckListId,CreatedBy,DateCreated")] CheckListItem
+                checkListItem)
+        {
+            if (ModelState.IsValid)
+            {
+                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                checkListItem.DateLastModified = DateTime.Now;
+                if (loggedinuser != null)
+                {
+                    checkListItem.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
+                db.Entry(checkListItem).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.CheckListId = new SelectList(db.CheckLists, "CheckListId", "Name", checkListItem.CheckListId);
+            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", checkListItem.EventId);
+            return View(checkListItem);
+        }
+
+        // GET: CheckListItems/Delete/5
+        public ActionResult Delete(long? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var checkListItem = db.CheckListItems.Find(id);
+            if (checkListItem == null)
+                return HttpNotFound();
+            return View(checkListItem);
+        }
+
+        // POST: CheckListItems/Delete/5
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(long id)
+        {
+            var checkListItem = db.CheckListItems.Find(id);
+            db.CheckListItems.Remove(checkListItem);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                db.Dispose();
+            base.Dispose(disposing);
+        }
+    }
+}

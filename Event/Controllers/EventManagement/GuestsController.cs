@@ -38,8 +38,6 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: Guests/Create
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
-            ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name");
             return View();
         }
 
@@ -71,9 +69,6 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", guest.EventId);
-            ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name", guest.GuestListId);
             return View(guest);
         }
 
@@ -89,8 +84,6 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 return HttpNotFound();
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", guest.EventId);
-            ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name", guest.GuestListId);
             return View(guest);
         }
 
@@ -119,8 +112,6 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", guest.EventId);
-            ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name", guest.GuestListId);
             return View(guest);
         }
 

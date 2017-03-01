@@ -1,0 +1,28 @@
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@model Event.Data.Objects.Entities.CheckListItem
+    @{
+        var db = new CheckListDataContext();
+        long id = ViewBag.id;
+        var eventId = db.CheckLists.Find(id).EventId;
+      
+    }
+@using (Html.BeginForm("Create", "CheckListItems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+{
+    @Html.Hidden("EventId", eventId)
+    @Html.Hidden("CheckListId", id)
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="control-group">
+        @Html.LabelFor(model => model.Name, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Create" class="btn btn-default"/>
+        </div>
+    </div>
+}

@@ -1,133 +1,129 @@
 ﻿@model Event.Data.Objects.Entities.Prospect
-
 @{
-    Layout = null;
+    ViewBag.Title = "Edit";
+    ViewBag.Header = "Edit prospect";
+    Layout = "../Shared/_LayoutForm.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width"/>
-    <title>Edit</title>
-</head>
-<body>
-@using (Html.BeginForm())
+@section css{
+    <link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+}
+@using (Html.BeginForm("Edit", "Prospects", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Prospect</h4>
-        <hr/>
-        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-        @Html.HiddenFor(model => model.ProspectId)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-            </div>
+    @Html.HiddenFor(m=>m.ProspectId)
+    @Html.HiddenFor(m=>m.EventPlannerId)
+    @Html.HiddenFor(m=>m.CreatedBy)
+    @Html.HiddenFor(m=>m.DateCreated)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="control-group">
+        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "span8" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Color, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
-            </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.Color, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "span8 jscolor" } })
+            @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.DropDownList("EventTypeId", null, new {@class = "form-control"})
-                @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
-            </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new { @class = "control-label" })
+        <div class="controls">
+            @Html.DropDownList("EventTypeId", null, new { @class = "span8" })
+            @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TargetBudget, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
-            </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.TargetBudget, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.TargetBudget, new { htmlAttributes = new { @class = "span8" } })
+            @Html.ValidationMessageFor(model => model.TargetBudget, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartDate, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
-            </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.StartDate, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "span8 startDate", id = "startDate" } })
+            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartTime, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
-            </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "span8 endDate", id = "endDate" } })
+            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EndDate, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
-            </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.StartTime, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "span8 timepicker" } })
+            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EndTime, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndTime, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.EndTime, "", new {@class = "text-danger"})
-            </div>
+
+    <div class="control-group">
+        @Html.LabelFor(model => model.EndTime, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "span8 timepicker" } })
+            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
         </div>
+    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedBy, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedBy, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.CreatedBy, "", new {@class = "text-danger"})
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.DateCreated, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DateLastModified, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateLastModified, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.DateLastModified, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.LastModifiedBy, new {@class = "control-label col-md-2"})
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastModifiedBy, new {htmlAttributes = new {@class = "form-control"}})
-                @Html.ValidationMessageFor(model => model.LastModifiedBy, "", new {@class = "text-danger"})
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default"/>
-            </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
 }
+@section scripts
+{
+    <script src="~/Scripts/jscolor.min.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script type="text/javascript">
+        // init datepicker for start date
+        $('.startDate').datepicker();
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-</body>
-</html>
+        // init datepicker for start date
+        $('.endDate').datepicker();
+
+        // init datepicker for date
+        $('.startDate').datepicker({ 'endDate': new Date() });
+
+        // set start date of end date based on selected start date
+        $('.startDate')
+            .datepicker()
+            .on('changeDate',
+                function(e) {
+
+                    // apply selected date as start date for expiry
+                    $('.endDate').datepicker('setStartDate', e.date);
+                });
+        $('.timepicker')
+            .timepicker({
+                timeFormat: 'h:mm p',
+                interval: 30,
+                minTime: '00:00am',
+                maxTime: '11:59pm',
+                defaultTime: '10',
+                defaultDate: "2016-09-05",
+                startTime: '10:00',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true
+            });
+    </script>
+}

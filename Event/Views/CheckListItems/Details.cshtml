@@ -1,4 +1,4 @@
-﻿@model Event.Data.Objects.Entities.Task
+﻿@model Event.Data.Objects.Entities.CheckListItem
 
 @{
     Layout = null;
@@ -9,14 +9,21 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
+    <title>Details</title>
 </head>
 <body>
-    <h3>Are you sure you want to delete this?</h3>
     <div>
-        <h4>Task</h4>
+        <h4>CheckListItem</h4>
         <hr />
         <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CheckList.Name)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CheckList.Name)
+            </dd>
+    
             <dt>
                 @Html.DisplayNameFor(model => model.Event.Name)
             </dt>
@@ -34,11 +41,11 @@
             </dd>
     
             <dt>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Checked)
             </dt>
     
             <dd>
-                @Html.DisplayFor(model => model.Description)
+                @Html.DisplayFor(model => model.Checked)
             </dd>
     
             <dt>
@@ -74,15 +81,10 @@
             </dd>
     
         </dl>
-    
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-    
-            <div class="form-actions no-color">
-                <input type="submit" value="Delete" class="btn btn-default" /> |
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        }
     </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CheckListItemId }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
 </body>
 </html>

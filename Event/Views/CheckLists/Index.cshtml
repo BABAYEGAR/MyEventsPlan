@@ -1,15 +1,16 @@
 ﻿@using Event.Data.Objects.Entities
-@model IEnumerable<GuestList>
+@model IEnumerable<CheckList>
 @{
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "List of all my guest list";
+    ViewBag.TableHeader = "List of all my check list";
     Layout = "../Shared/_LayoutTable.cshtml";
-    var guestList = new GuestList();
+    var checkList = new CheckList();
+   
 }
 @section add {
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
-        Add Guest List
+        Add Check List
     </button>
 
     <!-- Modal -->
@@ -20,11 +21,12 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Add a guest list</h4>
+                    <h4 class="modal-title" id="myModalLabel">Add a check list</h4>
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateEventTypeModal", guestList);
+                        
+                        Html.RenderPartial("CreateCheckListModal", checkList);
                     }
                 </div>
             </div>
@@ -49,9 +51,9 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-default" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-danger" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CheckListId }, new { @class = "btn btn-xs btn-primary" })
+                    @Html.ActionLink("Items", "Index","CheckListItems", new { id = item.CheckListId }, new { @class = "btn btn-xs btn-default" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CheckListId }, new { @class = "btn btn-xs btn-danger" })
                 </td>
             </tr>
         }

@@ -1,0 +1,109 @@
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@model IEnumerable<CheckListItem>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "List of all my check list item";
+    Layout = "../Shared/_LayoutTable.cshtml";
+    var checkListItem = new CheckListItem();
+    var db = new CheckListItemDataContext();
+    long listId = ViewBag.id;
+}
+@if (TempData["item"] != null)
+{
+    if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+    {
+        <div class="alert alert-success alert-dismissable">@TempData["item"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+    {
+        <div class="alert alert-danger alert-dismissable">@TempData["item"]</div>
+    }
+    else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+    {
+        <div class="alert alert-info alert-dismissable">@TempData["item"]</div>
+    }
+}
+@using (Html.BeginForm("CheckItem", "CheckListItems", FormMethod.Post))
+{
+    @Html.Hidden("id", listId)
+    @Html.AntiForgeryToken()
+    <input type="submit" id="sumbitForm" value="Check Item(s)" class="btn btn-success icon-checker pull-right "/>
+@section add {
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Item
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a check list item</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+
+                        Html.RenderPartial("CreateCheckListItemModal", checkListItem);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+    <table class="datatable-1 table table-bordered table-striped display">
+        <thead>
+        <tr>
+            <th>
+                <input type="checkbox" id="check-all" class="flat">
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            var allMappings = db.CheckListItems.SingleOrDefault(
+                n =>
+                    (n.CheckListItemId == item.CheckListItemId) &&
+                    (n.CheckListId == item.CheckListId) && n.Checked);
+
+
+            <tr>
+                <td>
+                    @if (allMappings != null)
+                    {
+                        <a href="@Url.Action("UncheckItem", "CheckListItems", new {id = item.CheckListItemId})">
+                            <i class="icon-remove-circle"></i>
+                        </a>
+                    }
+                    else
+                    {
+                        <input type="checkbox" class="flat" name="table_records" value="@item.CheckListItemId">
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.CheckListItemId}, new {@class = "btn btn-xs btn-primary"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.CheckListItemId}, new {@class = "btn btn-xs btn-danger"})
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

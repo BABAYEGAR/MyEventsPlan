@@ -59,6 +59,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
                 {
                     prospect.CreatedBy = loggedinuser.AppUserId;
                     prospect.LastModifiedBy = loggedinuser.AppUserId;
+                    prospect.EventPlannerId = loggedinuser.EventPlannerId;
                 }
                 else
                 {
@@ -96,7 +97,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Prospect prospect)
+        public ActionResult Edit([Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,EventPlannerId,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Prospect prospect)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)

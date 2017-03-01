@@ -1,4 +1,4 @@
-﻿@model Event.Data.Objects.Entities.Task
+﻿@model Event.Data.Objects.Entities.CheckList
 
 @{
     Layout = null;
@@ -13,7 +13,7 @@
 </head>
 <body>
     <div>
-        <h4>Task</h4>
+        <h4>CheckList</h4>
         <hr />
         <dl class="dl-horizontal">
             <dt>
@@ -30,14 +30,6 @@
     
             <dd>
                 @Html.DisplayFor(model => model.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Description)
             </dd>
     
             <dt>
@@ -75,7 +67,7 @@
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.TaskId }) |
+        @Html.ActionLink("Edit", "Edit", new { id = Model.CheckListId }) |
         @Html.ActionLink("Back to List", "Index")
     </p>
 </body>

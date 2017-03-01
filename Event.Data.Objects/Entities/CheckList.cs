@@ -7,16 +7,13 @@ using System.Threading.Tasks;
 
 namespace Event.Data.Objects.Entities
 {
-    public class Task : Transport
+   public class CheckList : Transport
     {
-        public long TaskId { get; set; }
+        public  long CheckListId { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
         public long EventId { get; set; }
         [ForeignKey("EventId")]
         public Event Event { get; set; }
-        public long? EventPlannerId { get; set; }
-        [ForeignKey("EventPlannerId")]
-        public virtual EventPlanner EventPlanner { get; set; }
+        public IEnumerable<CheckListItem> CheckListItems { get; set; }
     }
 }

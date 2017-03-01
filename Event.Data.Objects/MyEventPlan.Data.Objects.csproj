@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Entities\Appointment.cs" />
     <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Entities\CheckListItem.cs" />
     <Compile Include="Entities\Contact.cs" />
     <Compile Include="Entities\ContactRole.cs" />
     <Compile Include="Entities\Event.cs" />
@@ -57,7 +58,7 @@
     <Compile Include="Entities\Prospect.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Staff.cs" />
-    <Compile Include="Entities\Task.cs" />
+    <Compile Include="Entities\CheckList.cs" />
     <Compile Include="Entities\Transport.cs" />
     <Compile Include="Entities\Vendor.cs" />
     <Compile Include="Entities\VendorService.cs" />

@@ -198,6 +198,8 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EventManagement\AppointmentsController.cs" />
     <Compile Include="Controllers\EventManagement\AppUsersController.cs" />
+    <Compile Include="Controllers\EventManagement\CheckListItemsController.cs" />
+    <Compile Include="Controllers\EventManagement\CheckListsController.cs" />
     <Compile Include="Controllers\EventManagement\ContactsController.cs" />
     <Compile Include="Controllers\EventManagement\EventPlannersController.cs" />
     <Compile Include="Controllers\EventManagement\EventsController.cs" />
@@ -205,7 +207,6 @@
     <Compile Include="Controllers\EventManagement\GuestListsController.cs" />
     <Compile Include="Controllers\EventManagement\GuestsController.cs" />
     <Compile Include="Controllers\EventManagement\StaffsController.cs" />
-    <Compile Include="Controllers\EventManagement\TasksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingManagement\EventVendorMappingsController.cs" />
@@ -1171,11 +1172,18 @@
     <Content Include="Views\GuestLists\Details.cshtml" />
     <Content Include="Views\GuestLists\Edit.cshtml" />
     <Content Include="Views\GuestLists\Index.cshtml" />
-    <Content Include="Views\Tasks\Create.cshtml" />
-    <Content Include="Views\Tasks\Delete.cshtml" />
-    <Content Include="Views\Tasks\Details.cshtml" />
-    <Content Include="Views\Tasks\Edit.cshtml" />
-    <Content Include="Views\Tasks\Index.cshtml" />
+    <Content Include="Views\Shared\CreateCheckListModal.cshtml" />
+    <Content Include="Views\CheckLists\Create.cshtml" />
+    <Content Include="Views\CheckLists\Delete.cshtml" />
+    <Content Include="Views\CheckLists\Details.cshtml" />
+    <Content Include="Views\CheckLists\Edit.cshtml" />
+    <Content Include="Views\CheckLists\Index.cshtml" />
+    <Content Include="Views\CheckListItems\Create.cshtml" />
+    <Content Include="Views\CheckListItems\Delete.cshtml" />
+    <Content Include="Views\CheckListItems\Details.cshtml" />
+    <Content Include="Views\CheckListItems\Edit.cshtml" />
+    <Content Include="Views\CheckListItems\Index.cshtml" />
+    <Content Include="Views\Shared\CreateCheckListItemModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

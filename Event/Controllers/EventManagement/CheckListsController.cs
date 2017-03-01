@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
@@ -12,56 +9,55 @@ using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
-    public class TasksController : Controller
+    public class CheckListsController : Controller
     {
-        private TaskDataContext db = new TaskDataContext();
+        private CheckListDataContext db = new CheckListDataContext();
 
-        // GET: Tasks
-        public ActionResult Index()
+        // GET: CheckLists
+        public ActionResult Index(long? id)
         {
-            var tasks = db.Tasks.Include(t => t.Event);
-            return View(tasks.ToList());
+            var checkLists = db.CheckLists.Where(n=>n.EventId == id).Include(c => c.Event);
+            ViewBag.id = id;
+            return View(checkLists.ToList());
         }
 
-        // GET: Tasks/Details/5
+        // GET: CheckLists/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Task task = db.Tasks.Find(id);
-            if (task == null)
+            CheckList checkList = db.CheckLists.Find(id);
+            if (checkList == null)
             {
                 return HttpNotFound();
             }
-            return View(task);
+            return View(checkList);
         }
 
-        // GET: Tasks/Create
+        // GET: CheckLists/Create
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
             return View();
         }
 
-        // POST: Tasks/Create
+        // POST: CheckLists/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TaskId,Name,Description,EventId")] Task task)
+        public ActionResult Create([Bind(Include = "CheckListId,Name,EventId")] CheckList checkList)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-                task.DateCreated = DateTime.Now;
-                task.DateLastModified = DateTime.Now;
+                checkList.DateCreated = DateTime.Now;
+                checkList.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
                 {
-                    task.LastModifiedBy = loggedinuser.AppUserId;
-                    task.CreatedBy = loggedinuser.AppUserId;
-                    task.EventPlannerId = loggedinuser.EventPlannerId;
+                    checkList.LastModifiedBy = loggedinuser.AppUserId;
+                    checkList.CreatedBy = loggedinuser.AppUserId;
                 }
                 else
                 {
@@ -69,45 +65,42 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Tasks.Add(task);
+                db.CheckLists.Add(checkList);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new {id = checkList.EventId});
             }
-
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", task.EventId);
-            return View(task);
+            return View(checkList);
         }
 
-        // GET: Tasks/Edit/5
+        // GET: CheckLists/Edit/5
         public ActionResult Edit(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Task task = db.Tasks.Find(id);
-            if (task == null)
+            CheckList checkList = db.CheckLists.Find(id);
+            if (checkList == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", task.EventId);
-            return View(task);
+            return View(checkList);
         }
 
-        // POST: Tasks/Edit/5
+        // POST: CheckLists/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TaskId,Name,Description,EventId,CreatedBy,DateCreated,EventPlannerId")] Task task)
+        public ActionResult Edit([Bind(Include = "CheckListId,Name,EventId,CreatedBy,DateCreated")] CheckList checkList)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-                task.DateLastModified = DateTime.Now;
+                checkList.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
                 {
-                    task.LastModifiedBy = loggedinuser.AppUserId;
+                    checkList.LastModifiedBy = loggedinuser.AppUserId;
                 }
                 else
                 {
@@ -115,36 +108,35 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(task).State = EntityState.Modified;
+                db.Entry(checkList).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", task.EventId);
-            return View(task);
+            return View(checkList);
         }
 
-        // GET: Tasks/Delete/5
+        // GET: CheckLists/Delete/5
         public ActionResult Delete(long? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Task task = db.Tasks.Find(id);
-            if (task == null)
+            CheckList checkList = db.CheckLists.Find(id);
+            if (checkList == null)
             {
                 return HttpNotFound();
             }
-            return View(task);
+            return View(checkList);
         }
 
-        // POST: Tasks/Delete/5
+        // POST: CheckLists/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Task task = db.Tasks.Find(id);
-            db.Tasks.Remove(task);
+            CheckList checkList = db.CheckLists.Find(id);
+            db.CheckLists.Remove(checkList);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
