@@ -15,21 +15,21 @@
                 <div class="span8">
                     <div class="row-fluid">
                         <div class="span12">
-                            <a href="@Url.Action("Index", "Appointments", new {id = Model.EventId})" class="btn-box medium span4">
+                            <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-calendar"></i><b>Appointments</b>
                             </a>
-                            <a href="@Url.Action("Index", "Vendors", new {id = Model.EventId})" class="btn-box medium span4">
+                            <a href="@Url.Action("Index", "Vendors")" class="btn-box medium span4">
                                 <i class="icon-user"></i><b>Vendors</b>
-                            </a><a href="@Url.Action("Index", "Staffs", new {id = Model.EventId})" class="btn-box medium span4">
+                            </a><a href="@Url.Action("Index", "Staffs")" class="btn-box medium span4">
                                 <i class="icon-user"></i><b>Staff</b>
                             </a>
                         </div>
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <a href="@Url.Action("Index","CheckLists",new {id = Model.EventId})" class="btn-box medium span4">
+                            <a href="@Url.Action("Index","CheckLists",new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-tasks"></i><b>Check List</b>
-                            </a><a href="#" class="btn-box medium span4">
+                            </a><a href="@Url.Action("Index","GuestLists",new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-list-ol"></i><b>Guest List</b>
                             </a><a href="#" class="btn-box medium span4">
                                 <i class="icon-sort-down"></i><b>

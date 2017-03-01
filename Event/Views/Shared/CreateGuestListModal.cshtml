@@ -1,8 +1,8 @@
-﻿@model Event.Data.Objects.Entities.CheckList
+﻿@model Event.Data.Objects.Entities.GuestList
     @{
         long eventId = ViewBag.eventId;
     }
-@using (Html.BeginForm("Create", "CheckLists", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Create", "GuestLists", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
 {
     @Html.Hidden("EventId", eventId)
     @Html.AntiForgeryToken()

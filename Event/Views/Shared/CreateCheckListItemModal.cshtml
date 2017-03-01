@@ -2,14 +2,14 @@
 @model Event.Data.Objects.Entities.CheckListItem
     @{
         var db = new CheckListDataContext();
-        long id = ViewBag.id;
-        var eventId = db.CheckLists.Find(id).EventId;
+        long checkListId = ViewBag.checkListId;
+        var eventId = db.CheckLists.Find(checkListId).EventId;
       
     }
 @using (Html.BeginForm("Create", "CheckListItems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
 {
     @Html.Hidden("EventId", eventId)
-    @Html.Hidden("CheckListId", id)
+    @Html.Hidden("CheckListId", checkListId)
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="control-group">

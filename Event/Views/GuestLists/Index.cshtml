@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateEventTypeModal", guestList);
+                        Html.RenderPartial("CreateGuestListModal", guestList);
                     }
                 </div>
             </div>
@@ -49,9 +49,9 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-primary" })
-                    @Html.ActionLink("Details", "Details", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-default" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-danger" })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-primary icon-pencil" })
+                    @Html.ActionLink("Guests List", "Index","Guests", new { guestListId = item.GuestListId }, new { @class = "btn btn-xs btn-default icon-list" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-danger icon-remove" })
                 </td>
             </tr>
         }

@@ -17,9 +17,10 @@ namespace MyEventPlan.Controllers.EventManagement
         private GuestListDataContext db = new GuestListDataContext();
 
         // GET: GuestLists
-        public ActionResult Index()
+        public ActionResult Index(long? eventId)
         {
-            var guestLists = db.GuestLists.Include(g => g.Event);
+            var guestLists = db.GuestLists.Where(n=>n.EventId == eventId).Include(g => g.Event);
+            ViewBag.eventId = eventId;
             return View(guestLists.ToList());
         }
 
@@ -41,7 +42,6 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: GuestLists/Create
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
             return View();
         }
 
@@ -61,7 +61,6 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     guestList.LastModifiedBy = loggedinuser.AppUserId;
                     guestList.CreatedBy = loggedinuser.AppUserId;
-                    guestList.EventPlannerId = loggedinuser.EventPlannerId;
                 }
                 else
                 {
@@ -71,10 +70,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.GuestLists.Add(guestList);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new {eventId = guestList.EventId});
             }
-
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", guestList.EventId);
             return View(guestList);
         }
 
@@ -90,7 +87,6 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 return HttpNotFound();
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", guestList.EventId);
             return View(guestList);
         }
 
@@ -99,7 +95,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GuestListId,Name,EventId,CreatedBy,DateCreated,EventPlannerId")] GuestList guestList)
+        public ActionResult Edit([Bind(Include = "GuestListId,Name,EventId,CreatedBy,DateCreated")] GuestList guestList)
         {
             if (ModelState.IsValid)
             {
@@ -117,9 +113,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(guestList).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { eventId = guestList.EventId });
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", guestList.EventId);
             return View(guestList);
         }
 

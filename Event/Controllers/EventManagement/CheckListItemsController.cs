@@ -14,11 +14,11 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly CheckListItemDataContext db = new CheckListItemDataContext();
 
         // GET: CheckListItems
-        public ActionResult Index(long? id)
+        public ActionResult Index(long? checkListId)
         {
             var checkListItems =
-                db.CheckListItems.Where(n => n.CheckListId == id).Include(c => c.CheckList).Include(c => c.Event);
-            ViewBag.id = id;
+                db.CheckListItems.Where(n => n.CheckListId == checkListId).Include(c => c.CheckList).Include(c => c.Event);
+            ViewBag.checkListId = checkListId;
             return View(checkListItems.ToList());
         }
 
@@ -40,7 +40,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var allMappings = db.CheckListItems.ToList();
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var checkListId = Convert.ToInt64(collectedValues["id"]);
+            var checkListId = Convert.ToInt64(collectedValues["checkListId"]);
             if (table_records != null)
             {
                 var length = table_records.Length;
@@ -72,9 +72,9 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 TempData["training"] = "no item has been selected!";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
-                return RedirectToAction("Index", new {id = checkListId});
+                return RedirectToAction("Index", new {checkListId = checkListId});
             }
-            return RedirectToAction("Index", new {id = checkListId});
+            return RedirectToAction("Index", new { checkListId = checkListId });
         }
 
         // GET: CheckListItems/Create
@@ -110,7 +110,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.CheckListItems.Add(checkListItem);
                 db.SaveChanges();
-                return RedirectToAction("Index", new {id = checkListItem.CheckListId});
+                return RedirectToAction("Index", new { checkListId = checkListItem.CheckListId });
             }
             return View(checkListItem);
         }
@@ -128,7 +128,7 @@ namespace MyEventPlan.Controllers.EventManagement
             if (loggedinuser != null) checkListItem.LastModifiedBy = loggedinuser.AppUserId;
             db.Entry(checkListItem).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index",new {id = checkListItem.CheckListId});
+            return RedirectToAction("Index", new { checkListId = checkListItem.CheckListId });
         }
 
         // GET: CheckListItems/Edit/5

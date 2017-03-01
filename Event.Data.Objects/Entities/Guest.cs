@@ -25,9 +25,5 @@ namespace Event.Data.Objects.Entities
         public long GuestListId { get; set; }
         [ForeignKey("GuestListId")]
         public GuestList GuestList { get; set; }
-        [DisplayName("Event Planner")]
-        public long? EventPlannerId { get; set; }
-        [ForeignKey("EventPlannerId")]
-        public virtual EventPlanner EventPlanner { get; set; }
     }
 }

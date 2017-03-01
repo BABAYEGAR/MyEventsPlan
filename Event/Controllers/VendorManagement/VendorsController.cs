@@ -16,7 +16,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         // GET: Vendors
         public ActionResult Index()
         {
-            var vendors = db.Vendors.Include(v => v.VendorService);
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var vendors = db.Vendors.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId).Include(v => v.VendorService);
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
             return View(vendors.ToList());
         }

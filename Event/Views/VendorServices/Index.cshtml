@@ -42,9 +42,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Scale)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
         <th>Action</th>
     </tr>
     </thead>
@@ -57,9 +54,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Scale)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-primary"})

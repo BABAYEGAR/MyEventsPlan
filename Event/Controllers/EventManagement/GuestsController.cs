@@ -14,9 +14,10 @@ namespace MyEventPlan.Controllers.EventManagement
         private GuestDataContext db = new GuestDataContext();
 
         // GET: Guests
-        public ActionResult Index()
+        public ActionResult Index(long? guestListId)
         {
-            var guests = db.Guests.Include(g => g.Event).Include(g => g.GuestList);
+            var guests = db.Guests.Where(n=>n.GuestListId == guestListId).Include(g => g.Event).Include(g => g.GuestList);
+            ViewBag.guestListId = guestListId;
             return View(guests.ToList());
         }
 
@@ -57,7 +58,6 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     guest.LastModifiedBy = loggedinuser.AppUserId;
                     guest.CreatedBy = loggedinuser.AppUserId;
-                    guest.EventPlannerId = loggedinuser.EventPlannerId;
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Guests.Add(guest);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new {guestListId = guest.GuestListId});
             }
             return View(guest);
         }

@@ -8,7 +8,7 @@
     Layout = "../Shared/_LayoutTable.cshtml";
     var checkListItem = new CheckListItem();
     var db = new CheckListItemDataContext();
-    long listId = ViewBag.id;
+    long listId = ViewBag.checkListId;
 }
 @if (TempData["item"] != null)
 {
@@ -27,7 +27,7 @@
 }
 @using (Html.BeginForm("CheckItem", "CheckListItems", FormMethod.Post))
 {
-    @Html.Hidden("id", listId)
+    @Html.Hidden("checkListId", listId)
     @Html.AntiForgeryToken()
     <input type="submit" id="sumbitForm" value="Check Item(s)" class="btn btn-success icon-checker pull-right "/>
 @section add {

@@ -16,10 +16,10 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly AppointmentDataContext _db = new AppointmentDataContext();
 
         // GET: Appointments
-        public ActionResult Index(long? id)
+        public ActionResult Index(long? eventId)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var appointments = _db.Appointments.Where(n=>n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId ).Include(a => a.Event);
+            var appointments = _db.Appointments.Where(n=>n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId ).Include(a => a.Event);
             return View(appointments.ToList());
         }
         // GET: Appointments

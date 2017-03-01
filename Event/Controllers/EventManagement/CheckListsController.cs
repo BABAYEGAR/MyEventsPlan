@@ -14,10 +14,10 @@ namespace MyEventPlan.Controllers.EventManagement
         private CheckListDataContext db = new CheckListDataContext();
 
         // GET: CheckLists
-        public ActionResult Index(long? id)
+        public ActionResult Index(long? eventId)
         {
-            var checkLists = db.CheckLists.Where(n=>n.EventId == id).Include(c => c.Event);
-            ViewBag.id = id;
+            var checkLists = db.CheckLists.Where(n=>n.EventId == eventId).Include(c => c.Event);
+            ViewBag.eventId = eventId;
             return View(checkLists.ToList());
         }
 
@@ -67,7 +67,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.CheckLists.Add(checkList);
                 db.SaveChanges();
-                return RedirectToAction("Index",new {id = checkList.EventId});
+                return RedirectToAction("Index",new {eventId = checkList.EventId});
             }
             return View(checkList);
         }
@@ -110,7 +110,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(checkList).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { eventId = checkList.EventId });
             }
             return View(checkList);
         }

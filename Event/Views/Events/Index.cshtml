@@ -28,9 +28,19 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
+            @if (item.StartDate > DateTime.Now)
+            {
+                <td style="color: green">
+                    @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>
+                </td>
+            }
+            else
+            {
+                <td style="color: red">
+                    @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-down"></i>
+                </td>
+            }
+
             <td>
                 @item.StartDate.ToShortDateString()
             </td>
@@ -38,7 +48,7 @@
                 @item.EndDate.ToShortDateString()
             </td>
             <td>
-                @Html.ActionLink("Open", "Details", new {id = item.EventId}, new {@class = "btn btn-xs btn-default icon-screenshot"})
+                @Html.ActionLink("Open", "Details", new {id = item.EventId}, new {@class = "btn btn-default icon-screenshot"})
             </td>
         </tr>
     }

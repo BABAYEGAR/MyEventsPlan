@@ -1184,6 +1184,9 @@
     <Content Include="Views\CheckListItems\Edit.cshtml" />
     <Content Include="Views\CheckListItems\Index.cshtml" />
     <Content Include="Views\Shared\CreateCheckListItemModal.cshtml" />
+    <Content Include="Views\Shared\CreateGuestListModal.cshtml" />
+    <Content Include="Views\Shared\CreateGuestModal.cshtml" />
+    <Content Include="Views\Shared\CreateContactModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
