@@ -1,0 +1,27 @@
+﻿@model Event.Data.Objects.Entities.News
+
+@{
+    ViewBag.Title = "Create";
+    ViewBag.Header = "Add a new guest";
+    Layout = "../Shared/_LayoutForm.cshtml";
+}
+@using (Html.BeginForm("Create", "News", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="media-body">
+        <div class="row-fluid">
+            <textarea class="span12" style="height: 70px; resize: none;"></textarea>
+        </div>
+        <div class="clearfix">
+            <input type="submit" value="Add News" class="btn btn-primary pull-right"/>
+            <input class="btn btn-small icon-camera shaded" rel="tooltip" data-placement="top" data-original-title="Upload a photo"/>
+            <a href="#" class="btn btn-small" rel="tooltip" data-placement="top" data-original-title="Upload a video">
+                <i class="icon-facetime-video shaded"></i>
+            </a>
+            <a href="#" class="btn btn-small" rel="tooltip" data-placement="top" data-original-title="Pin your location">
+                <i class="icon-map-marker shaded"></i>
+            </a>
+        </div>
+    </div>
+}

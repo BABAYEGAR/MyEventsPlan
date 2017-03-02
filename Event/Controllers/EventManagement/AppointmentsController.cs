@@ -19,6 +19,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Index(long? eventId)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            ViewBag.eventId = eventId;
             var appointments = _db.Appointments.Where(n=>n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId ).Include(a => a.Event);
             return View(appointments.ToList());
         }
@@ -69,9 +70,9 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Appointments/Create
-        public ActionResult Create()
+        public ActionResult Create(long? eventId)
         {
-            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name");
+            ViewBag.eventId = eventId;
             return View();
         }
 
@@ -105,10 +106,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 _db.SaveChanges();
                 TempData["appoint"] = "You have successfully booked an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new {eventId = appointment.EventId});
             }
-
-            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name", appointment.EventId);
             return View(appointment);
         }
 
@@ -120,7 +119,6 @@ namespace MyEventPlan.Controllers.EventManagement
             var appointment = _db.Appointments.Find(id);
             if (appointment == null)
                 return HttpNotFound();
-            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name", appointment.EventId);
             return View(appointment);
         }
 
@@ -152,9 +150,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 _db.SaveChanges();
                 TempData["appoint"] = "You have successfully modified an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { eventId = appointment.EventId });
             }
-            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name", appointment.EventId);
             return View(appointment);
         }
 

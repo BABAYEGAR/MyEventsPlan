@@ -46,5 +46,6 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<ContactRole> ContactRoles { get; set; }
         public IEnumerable<GuestList> GuestLists { get; set; }
         public IEnumerable<Guest> Guests { get; set; }
+        public IEnumerable<News> Newses { get; set; }
     }
 }

@@ -38,6 +38,8 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<Guest> Guests { get; set; }
         public virtual DbSet<CheckList> CheckLists { get; set; }
         public virtual DbSet<CheckListItem> CheckListItems { get; set; }
+        public virtual DbSet<Note> Notes { get; set; }
+        public virtual DbSet<Task> Tasks { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

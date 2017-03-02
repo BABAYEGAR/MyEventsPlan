@@ -11,6 +11,12 @@
                     <i class="menu-icon icon-dashboard"></i>Dashboard
                 </a>
             </li>
+            <li>
+                <a href="@Url.Action("MyNewsFeeds", "News")">
+                    <i class="menu-icon icon-bullhorn"></i>
+                    News Feed
+                </a>
+            </li>
             @if (role.ManageApplicationUser)
             {
                 <li>

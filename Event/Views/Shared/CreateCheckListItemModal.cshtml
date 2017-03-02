@@ -6,6 +6,9 @@
         var eventId = db.CheckLists.Find(checkListId).EventId;
       
     }
+@{
+    Layout = "../Shared/_LayoutModal.cshtml";
+}
 @using (Html.BeginForm("Create", "CheckListItems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
 {
     @Html.Hidden("EventId", eventId)

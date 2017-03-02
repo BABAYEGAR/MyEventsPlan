@@ -3,6 +3,7 @@
     public enum UploadType
     {
         ProfileImage,
+        NewsImage,
 
     }
 }

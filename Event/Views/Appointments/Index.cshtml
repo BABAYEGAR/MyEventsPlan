@@ -3,9 +3,10 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all " + Model.FirstOrDefault()?.Event.Name + " appointments";
     Layout = "../Shared/_LayoutTable.cshtml";
+    long eventId = ViewBag.eventId;
 }
 @section add {
-    @Html.ActionLink("Add Appointment", "Create", null, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
+    @Html.ActionLink("Add Appointment", "Create", new {eventId = eventId}, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
 }
 
 <table class="datatable-1 table table-bordered table-striped display">

@@ -1,4 +1,7 @@
 ﻿@model Event.Data.Objects.Entities.Staff
+@{
+    Layout = "../Shared/_LayoutModal.cshtml";
+}
 @using (Html.BeginForm("Create", "Staffs", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()

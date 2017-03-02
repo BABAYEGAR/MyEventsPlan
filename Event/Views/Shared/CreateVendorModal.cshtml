@@ -1,4 +1,7 @@
 ﻿@model Event.Data.Objects.Entities.Vendor
+@{
+    Layout = "../Shared/_LayoutModal.cshtml";
+}
 @using (Html.BeginForm("Create", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()

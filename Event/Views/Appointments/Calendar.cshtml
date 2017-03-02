@@ -101,10 +101,6 @@
                         selectable: true,
                         slotMinutes: 15,
                         events: '@Url.Action("GetMyAppointments", "Appointments")',
-                        eventClick: function(calEvent) {
-                            ShowEventPopup(calEvent);
-
-                        },
 
                         eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc) {
                             if (confirm("Confirm move?")) {

@@ -51,5 +51,8 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<GuestList> GuestLists { get; set; }
         public IEnumerable<CheckList> CheckLists { get; set; }
         public IEnumerable<CheckListItem> CheckListItems { get; set; }
+        public IEnumerable<Task> Tasks { get; set; }
+        public IEnumerable<Event> Events { get; set; }
+        public IEnumerable<News> Newses { get; set; }
     }
 }

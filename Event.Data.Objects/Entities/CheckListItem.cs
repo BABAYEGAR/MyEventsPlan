@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Event.Data.Objects.Entities
 {
    public class CheckListItem : Transport
     {
         public  long CheckListItemId { get; set; }
+        [Required]
         public string Name { get; set; }
         public bool Checked { get; set; }
         public long EventId { get; set; }

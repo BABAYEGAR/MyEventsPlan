@@ -5,6 +5,9 @@
     long guestListId = ViewBag.guestListId;
     var eventId = db.GuestLists.Find(guestListId).EventId;
 }
+@{
+    Layout = "../Shared/_LayoutModal.cshtml";
+}
 @using (Html.BeginForm("Create", "Guests", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()

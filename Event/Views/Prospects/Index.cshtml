@@ -6,8 +6,6 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all my propects";
     Layout = "../Shared/_LayoutTable.cshtml";
-    var prospects = new Prospect();
-    var _db = new EventDataContext();
 }
 @section add {
     @Html.ActionLink("Add Prospect", "Create", null, new { @class = "btn btn-primary btn-xs icon-plus pull-right" })
