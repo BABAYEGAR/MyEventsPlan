@@ -58,6 +58,7 @@
     <Compile Include="Encryption\Md5Ecryption.cs" />
     <Compile Include="Encryption\QueryStingEncoder.cs" />
     <Compile Include="Encryption\SerializeObject.cs" />
+    <Compile Include="Enum\NewsActionEnum.cs" />
     <Compile Include="Enum\TaskStausEnum.cs" />
     <Compile Include="Enum\UserAccountStatus.cs" />
     <Compile Include="Enum\EventStausEnum.cs" />

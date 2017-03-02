@@ -1,0 +1,37 @@
+﻿@using System.Linq
+@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@model News
+@{
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+    NewsActionDataContext dbc = new NewsActionDataContext();
+    var actionLikeCheck = dbc.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId && n.NewsId == Model.NewsId && n.Action == NewsActionEnum.Like.ToString());
+
+    var actionDisLikeCheck = dbc.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId && n.NewsId == Model.NewsId && n.Action == NewsActionEnum.Dislike.ToString());
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@if (loggedinuser != null)
+{
+if (actionLikeCheck == null)
+ {
+     @Ajax.ActionLink("Like", "LikeOrDislikeANews", "News", new {Id = Model.NewsId, like = NewsActionEnum.Like.ToString()}, new AjaxOptions
+     {
+         HttpMethod = "Post",
+         UpdateTargetId = "likeOrDislikeDiv"
+     }, new {@class = "btn btn-small icon-thumbs-up shaded"})
+ }
+if (actionDisLikeCheck == null)
+ {
+     @Ajax.ActionLink("Unlike", "LikeOrDislikeANews", "News", new {Id = Model.NewsId, dislike = NewsActionEnum.Dislike.ToString()}, new AjaxOptions
+     {
+         HttpMethod = "Post",
+         UpdateTargetId = "likeOrDislikeDiv"
+     }, new {@class = "btn btn-small icon-thumbs-down shaded"})
+ }
+    <a href="#" class="btn btn-small">
+        <i class="icon-retweet shaded"></i>
+        Repost
+    </a>
+}

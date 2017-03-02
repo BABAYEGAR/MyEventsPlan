@@ -49,6 +49,7 @@
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\Guest.cs" />
     <Compile Include="Entities\GuestList.cs" />
+    <Compile Include="Entities\NewsAction.cs" />
     <Compile Include="Entities\News.cs" />
     <Compile Include="Entities\Note.cs" />
     <Compile Include="Entities\StaffEventMapping.cs" />

@@ -40,6 +40,8 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<CheckListItem> CheckListItems { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
+        public virtual DbSet<News> Newses { get; set; }
+        public virtual DbSet<NewsAction> NewsActions { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

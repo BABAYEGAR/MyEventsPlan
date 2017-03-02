@@ -15,5 +15,7 @@ namespace Event.Data.Objects.Entities
         public long EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public EventPlanner EventPlanner { get; set; }
+        public long Likes { get; set; }
+        public long Dislike { get; set; }
     }
 }

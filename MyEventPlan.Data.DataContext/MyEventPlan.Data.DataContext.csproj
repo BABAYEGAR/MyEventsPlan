@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\NewsActionDataContext.cs" />
     <Compile Include="DataContext\NewsDataContext.cs" />
     <Compile Include="DataContext\TaskDataContext.cs" />
     <Compile Include="DataContext\NoteDataContext.cs" />
@@ -207,6 +208,14 @@
     <Compile Include="Migrations\201703021857048_migrate21.Designer.cs">
       <DependentUpon>201703021857048_migrate21.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703021947168_migrate22.cs" />
+    <Compile Include="Migrations\201703021947168_migrate22.Designer.cs">
+      <DependentUpon>201703021947168_migrate22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703022034354_migrate23.cs" />
+    <Compile Include="Migrations\201703022034354_migrate23.Designer.cs">
+      <DependentUpon>201703022034354_migrate23.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -322,6 +331,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703021857048_migrate21.resx">
       <DependentUpon>201703021857048_migrate21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703021947168_migrate22.resx">
+      <DependentUpon>201703021947168_migrate22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703022034354_migrate23.resx">
+      <DependentUpon>201703022034354_migrate23.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

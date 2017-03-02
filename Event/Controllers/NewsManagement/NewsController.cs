@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.Encryption;
 using MyEventPlan.Data.Service.Enum;
 using MyEventPlan.Data.Service.FileUploader;
 
@@ -14,6 +15,7 @@ namespace MyEventPlan.Controllers.NewsManagement
     public class NewsController : Controller
     {
         private NewsDataContext db = new NewsDataContext();
+        private EventDataContext dbc = new EventDataContext();
 
         // GET: News
         public ActionResult Index()
@@ -56,7 +58,7 @@ namespace MyEventPlan.Controllers.NewsManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NewsId,Title,Content,EventId")] News news)
+        public ActionResult Create([Bind(Include = "NewsId,Content")] News news)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             HttpPostedFileBase image = Request.Files["image"];
@@ -80,7 +82,7 @@ namespace MyEventPlan.Controllers.NewsManagement
                 }
                 db.Newses.Add(news);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("MyNewsFeeds");
             }
 
             ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
@@ -162,7 +164,56 @@ namespace MyEventPlan.Controllers.NewsManagement
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult LikeOrDislikeANews(long? id,string like,string dislike)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            News news = db.Newses.Find(id);
+            NewsAction newsAction = new NewsAction();
+            var actionLikeCheck = dbc.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId 
+            && n.NewsId == news.NewsId && n.Action == NewsActionEnum.Like.ToString());
 
+            var actionDisLikeCheck = dbc.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId 
+            && n.NewsId == news.NewsId && n.Action == NewsActionEnum.Dislike.ToString());
+            if (loggedinuser != null)
+            {
+                newsAction.NewsId = news.NewsId;
+                newsAction.AppUserId = loggedinuser.AppUserId;
+                newsAction.CreatedBy = loggedinuser.AppUserId;
+                newsAction.DateLastModified = DateTime.Now;
+                newsAction.DateCreated = DateTime.Now;
+                newsAction.LastModifiedBy = loggedinuser.AppUserId;
+            }
+            if (like != null)
+            {
+                news.Likes = news.Likes + 1;
+                newsAction.Action = NewsActionEnum.Like.ToString();
+                dislike = null;
+            }
+            if (dislike != null)
+            {
+                news.Dislike = news.Dislike + 1;
+                newsAction.Action = NewsActionEnum.Dislike.ToString();
+              
+            }
+            if (actionLikeCheck != null && like != null)
+            {
+                return PartialView("_LikeOrDislikePartial", news);
+            }
+            if (actionDisLikeCheck != null && dislike != null)
+            {
+                return PartialView("_LikeOrDislikePartial", news);
+            }
+            dbc.Entry(news).State = EntityState.Modified;
+            dbc.NewsActions.Add(newsAction);
+            dbc.SaveChanges();
+            return PartialView("_LikeOrDislikePartial", news);
+        }
+        [HttpGet]
+        public ActionResult ReloadCompleteView(long newsId)
+        {
+            News news = db.Newses.Find(newsId);
+            return PartialView("_LikeOrDislikePartial", news);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
