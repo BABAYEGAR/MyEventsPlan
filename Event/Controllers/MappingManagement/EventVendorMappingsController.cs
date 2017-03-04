@@ -166,7 +166,7 @@ namespace MyEventPlan.Controllers.MappingManagement
             var eventId = eventVendorMapping.EventId;
             _db.EventVendorMapping.Remove(eventVendorMapping);
             _db.SaveChanges();
-            return RedirectToAction("Index", new { id = eventId });
+            return RedirectToAction("Index", new {id = eventId});
         }
 
         protected override void Dispose(bool disposing)

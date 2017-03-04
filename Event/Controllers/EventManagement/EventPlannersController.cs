@@ -12,8 +12,8 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class EventPlannersController : Controller
     {
-        private EventPlannerDataContext db = new EventPlannerDataContext();
-        private AppUserDataContext dbc = new AppUserDataContext();
+        private readonly EventPlannerDataContext db = new EventPlannerDataContext();
+        private readonly AppUserDataContext dbc = new AppUserDataContext();
 
         // GET: EventPlanners
         public ActionResult Index()
@@ -26,14 +26,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlanner eventPlanner = db.EventPlanners.Find(id);
+            var eventPlanner = db.EventPlanners.Find(id);
             if (eventPlanner == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventPlanner);
         }
 
@@ -49,7 +45,9 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventPlannerId,Firstname,Lastname,Email,Mobile,ConfirmPassword,Password")] EventPlanner eventPlanner ,FormCollection collectedValues)
+        public ActionResult Create(
+            [Bind(Include = "EventPlannerId,Firstname,Lastname,Email,Mobile,ConfirmPassword,Password")] EventPlanner
+                eventPlanner, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +59,7 @@ namespace MyEventPlan.Controllers.EventManagement
 
                 //create app user
                 var appuser = new AppUser();
-               
+
                 appuser.Email = eventPlanner.Email;
                 appuser.Password = eventPlanner.Password;
                 appuser.Firstname = eventPlanner.Firstname;
@@ -77,7 +75,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     TempData["planner"] = "The email already exist, try another email!";
                     TempData["notificationtype"] = NotificationType.Error.ToString();
-                    return RedirectToAction("Create",eventPlanner);
+                    return RedirectToAction("Create", eventPlanner);
                 }
                 db.EventPlanners.Add(eventPlanner);
                 db.SaveChanges();
@@ -91,7 +89,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 dbc.SaveChanges();
                 TempData["login"] = "You have successfully signed up to PlanMyLeave type!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Login","Account");
+                return RedirectToAction("Login", "Account");
             }
 
             return View(eventPlanner);
@@ -101,14 +99,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlanner eventPlanner = db.EventPlanners.Find(id);
+            var eventPlanner = db.EventPlanners.Find(id);
             if (eventPlanner == null)
-            {
                 return HttpNotFound();
-            }
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", eventPlanner.RoleId);
             return View(eventPlanner);
         }
@@ -118,7 +112,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventPlannerId,Firstname,Lastname,Email,Mobile,RoleId")] EventPlanner eventPlanner)
+        public ActionResult Edit(
+            [Bind(Include = "EventPlannerId,Firstname,Lastname,Email,Mobile,RoleId")] EventPlanner eventPlanner)
         {
             if (ModelState.IsValid)
             {
@@ -133,23 +128,20 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlanner eventPlanner = db.EventPlanners.Find(id);
+            var eventPlanner = db.EventPlanners.Find(id);
             if (eventPlanner == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventPlanner);
         }
 
         // POST: EventPlanners/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            EventPlanner eventPlanner = db.EventPlanners.Find(id);
+            var eventPlanner = db.EventPlanners.Find(id);
             db.EventPlanners.Remove(eventPlanner);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -158,9 +150,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

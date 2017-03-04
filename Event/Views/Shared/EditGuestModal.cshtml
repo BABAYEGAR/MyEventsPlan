@@ -1,12 +1,11 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.Guest
+﻿@model Event.Data.Objects.Entities.Guest
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Edit", "Guests", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m=>m.GuestId)
+    @Html.HiddenFor(m => m.GuestId)
     @Html.HiddenFor(m => m.GuestListId)
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.HiddenFor(m => m.DateCreated)

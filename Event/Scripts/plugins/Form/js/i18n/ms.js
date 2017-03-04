@@ -9,16 +9,16 @@
                 errorLoading: function() { return"Keputusan tidak berjaya dimuatkan." },
                 inputTooLong: function(e) {
                     var t = e.input.length - e.maximum;
-                    return"Sila hapuskan " + t + " aksara"
+                    return"Sila hapuskan " + t + " aksara";
                 },
                 inputTooShort: function(e) {
                     var t = e.minimum - e.input.length;
-                    return"Sila masukkan " + t + " atau lebih aksara"
+                    return"Sila masukkan " + t + " atau lebih aksara";
                 },
                 loadingMore: function() { return"Sedang memuatkan keputusan…" },
                 maximumSelected: function(e) { return"Anda hanya boleh memilih " + e.maximum + " pilihan" },
                 noResults: function() { return"Tiada padanan yang ditemui" },
                 searching: function() { return"Mencari…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

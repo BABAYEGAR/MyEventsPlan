@@ -5,7 +5,6 @@
     ViewBag.TableHeader = "List of all my check list";
     Layout = "../Shared/_LayoutTable.cshtml";
     var checkList = new CheckList();
-   
 }
 @section add {
     <!-- Button trigger modal -->
@@ -25,7 +24,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        
+
                         Html.RenderPartial("CreateCheckListModal", checkList);
                     }
                 </div>
@@ -37,27 +36,27 @@
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">
         <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.CheckListId }, new { @class = "btn btn-xs btn-primary" })
-                        @Html.ActionLink("Items", "Index", "CheckListItems", new { checkListId = item.CheckListId }, new { @class = "btn btn-xs btn-default" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.CheckListId }, new { @class = "btn btn-xs btn-danger" })
-                    </td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.CheckListId}, new {@class = "btn btn-xs btn-primary"})
+                    @Html.ActionLink("Items", "Index", "CheckListItems", new {checkListId = item.CheckListId}, new {@class = "btn btn-xs btn-default"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.CheckListId}, new {@class = "btn btn-xs btn-danger"})
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
-    </div>
+</div>

@@ -2,7 +2,7 @@
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Edit", "GuestLists", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Edit", "GuestLists", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.HiddenFor(m => m.GuestListId)
     @Html.HiddenFor(m => m.CreatedBy)

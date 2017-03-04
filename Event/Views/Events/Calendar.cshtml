@@ -29,11 +29,11 @@
     <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet"/>
     <link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
 }
-@Html.ActionLink("Add Event", "Create", "Appointments", new { }, new { @class = "btn btn-default icon-plus pull-right" })
+@Html.ActionLink("Add Event", "Create", "Appointments", new {}, new {@class = "btn btn-default icon-plus pull-right"})
 
 
-<br />
-<br />
+<br/>
+<br/>
 @if ((loggedinuser != null) && (role != null))
 {
     <!--/.span3-->
@@ -184,7 +184,7 @@
                         allDaySlot: false,
                         selectable: true,
                         slotMinutes: 15,
-                        eventColor: "#000000" ,
+                        eventColor: "#000000",
                         events: '@Url.Action("GetMyEvents", "Events")',
                         eventClick: function(calEvent) {
                             ShowEventPopup(calEvent);

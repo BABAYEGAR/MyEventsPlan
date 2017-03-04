@@ -1,9 +1,8 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.CheckListItem
+﻿@model Event.Data.Objects.Entities.CheckListItem
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Edit", "CheckListItems", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Edit", "CheckListItems", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.HiddenFor(m => m.CheckListItemId)
     @Html.HiddenFor(m => m.CheckListId)

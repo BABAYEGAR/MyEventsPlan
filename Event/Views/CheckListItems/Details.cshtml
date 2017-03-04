@@ -1,90 +1,82 @@
-﻿@model Event.Data.Objects.Entities.CheckListItem
-
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model CheckListItem
 @{
-    Layout = null;
+    ViewBag.Title = "View";
+    ViewBag.Header = "View check list item";
+    Layout = "../Shared/_LayoutForm.cshtml";
+    var userDb = new AppUserDataContext();
+    var role = Session["role"] as Role;
 }
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.CheckList.Name)
+    </dt>
 
-<!DOCTYPE html>
+    <dd>
+        @Html.DisplayFor(model => model.CheckList.Name)
+    </dd>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
-    <div>
-        <h4>CheckListItem</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.CheckList.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CheckList.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Event.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Checked)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Checked)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.CreatedBy)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateCreated)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateCreated)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DateLastModified)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DateLastModified)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.LastModifiedBy)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.LastModifiedBy)
-            </dd>
-    
-        </dl>
-    </div>
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.CheckListItemId }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</body>
-</html>
+    <dt>
+        @Html.DisplayNameFor(model => model.Event.Name)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Event.Name)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Checked)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Checked)
+    </dd>
+    @if ((role != null) && (role.Name == "Platform Administrator"))
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </dt>
+
+        <dd>
+            @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
+        </dd>
+    }
+
+</dl>
+<p>
+    @Html.ActionLink("Edit", "Edit", new {id = Model.CheckListItemId}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

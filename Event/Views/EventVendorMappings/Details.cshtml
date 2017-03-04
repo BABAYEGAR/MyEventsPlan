@@ -1,10 +1,12 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.EventVendorMapping
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model EventVendorMapping
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "Vendor Details";
     Layout = "../Shared/_LayoutForm.cshtml";
     var userDb = new AppUserDataContext();
+    var role = Session["role"] as Role;
 }
 <dl class="dl-horizontal">
     <dt>
@@ -30,38 +32,40 @@
     <dd>
         @Html.DisplayFor(model => model.Vendor.Name)
     </dd>
+    @if ((role != null) && (role.Name == "Platform Administrator"))
+    {
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.CreatedBy)
-    </dt>
-    <dd>
-        @userDb.AppUsers.Find(Model.CreatedBy).Firstname
-    </dd>
+        <dd>
+            @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
+        </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.DateCreated)
-    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.DateCreated)
-    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.DateLastModified)
-    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLastModified)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.DateLastModified)
-    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.DateLastModified)
+        </dd>
 
-    <dd>
-        @Html.DisplayNameFor(model => model.LastModifiedBy)
-    </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </dt>
 
-    <dd>
-        @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-    </dd>
-
+        <dd>
+            @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
+        </dd>
+    }
 </dl>
 
 

@@ -11,7 +11,7 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class EventTypesController : Controller
     {
-        private EventTypeDataContext db = new EventTypeDataContext();
+        private readonly EventTypeDataContext db = new EventTypeDataContext();
 
         // GET: EventTypes
         public ActionResult Index()
@@ -23,14 +23,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventType eventType = db.EventTypes.Find(id);
+            var eventType = db.EventTypes.Find(id);
             if (eventType == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventType);
         }
 
@@ -77,14 +73,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventType eventType = db.EventTypes.Find(id);
+            var eventType = db.EventTypes.Find(id);
             if (eventType == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventType);
         }
 
@@ -122,23 +114,20 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventType eventType = db.EventTypes.Find(id);
+            var eventType = db.EventTypes.Find(id);
             if (eventType == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventType);
         }
 
         // POST: EventTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            EventType eventType = db.EventTypes.Find(id);
+            var eventType = db.EventTypes.Find(id);
             db.EventTypes.Remove(eventType);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted an event type!";
@@ -149,9 +138,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

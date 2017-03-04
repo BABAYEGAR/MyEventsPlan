@@ -11,12 +11,13 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class GuestsController : Controller
     {
-        private GuestDataContext db = new GuestDataContext();
+        private readonly GuestDataContext db = new GuestDataContext();
 
         // GET: Guests
         public ActionResult Index(long? guestListId)
         {
-            var guests = db.Guests.Where(n=>n.GuestListId == guestListId).Include(g => g.Event).Include(g => g.GuestList);
+            var guests =
+                db.Guests.Where(n => n.GuestListId == guestListId).Include(g => g.Event).Include(g => g.GuestList);
             ViewBag.guestListId = guestListId;
             return View(guests.ToList());
         }
@@ -25,14 +26,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Guest guest = db.Guests.Find(id);
+            var guest = db.Guests.Find(id);
             if (guest == null)
-            {
                 return HttpNotFound();
-            }
             return View(guest);
         }
 
@@ -69,7 +66,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["guest"] = "You have successfully modified the guest!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {guestListId = guest.GuestListId});
+                return RedirectToAction("Index", new {guestListId = guest.GuestListId});
             }
             return View(guest);
         }
@@ -78,14 +75,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Guest guest = db.Guests.Find(id);
+            var guest = db.Guests.Find(id);
             if (guest == null)
-            {
                 return HttpNotFound();
-            }
             return View(guest);
         }
 
@@ -94,7 +87,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GuestId,Name,Email,PhoneNumber,EventId,GuestListId,EventPlannerId,CreatedBy,DateCreated")] Guest guest)
+        public ActionResult Edit(
+            [Bind(Include = "GuestId,Name,Email,PhoneNumber,EventId,GuestListId,EventPlannerId,CreatedBy,DateCreated")] Guest guest)
         {
             if (ModelState.IsValid)
             {
@@ -123,23 +117,20 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Guest guest = db.Guests.Find(id);
+            var guest = db.Guests.Find(id);
             if (guest == null)
-            {
                 return HttpNotFound();
-            }
             return View(guest);
         }
 
         // POST: Guests/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Guest guest = db.Guests.Find(id);
+            var guest = db.Guests.Find(id);
             db.Guests.Remove(guest);
             db.SaveChanges();
             TempData["guest"] = "You have successfully deleted the guest!";
@@ -150,9 +141,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

@@ -9,16 +9,16 @@
                 errorLoading: function() { return"Kunne ikke hente resultater." },
                 inputTooLong: function(e) {
                     var t = e.input.length - e.maximum;
-                    return"Vennligst fjern " + t + " tegn"
+                    return"Vennligst fjern " + t + " tegn";
                 },
                 inputTooShort: function(e) {
                     var t = e.minimum - e.input.length, n = "Vennligst skriv inn ";
-                    return t > 1 ? n += " flere tegn" : n += " tegn til", n
+                    return t > 1 ? n += " flere tegn" : n += " tegn til", n;
                 },
                 loadingMore: function() { return"Laster flere resultater…" },
                 maximumSelected: function(e) { return"Du kan velge maks " + e.maximum + " elementer" },
                 noResults: function() { return"Ingen treff" },
                 searching: function() { return"Søker…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

@@ -6,36 +6,36 @@
     Layout = "../Shared/_LayoutModal.cshtml";
     long eventId = ViewBag.eventId;
 }
-<link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-@using (Html.BeginForm("Create", "Tasks", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+<link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet"/>
+@using (Html.BeginForm("Create", "Tasks", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("EventId", eventId)
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="control-group">
-        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+        @Html.LabelFor(model => model.Name, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.Description, new { @class = "control-label" })
+        @Html.LabelFor(model => model.Description, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            @Html.TextAreaFor(model => model.Description, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.DueDate, new { @class = "control-label" })
+        @Html.LabelFor(model => model.DueDate, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.DueDate, new { htmlAttributes = new { @class = "span8 startDate" } })
-            @Html.ValidationMessageFor(model => model.DueDate, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.DueDate, new {htmlAttributes = new {@class = "span8 startDate"}})
+            @Html.ValidationMessageFor(model => model.DueDate, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Create Task" class="btn btn-default" />
+            <input type="submit" value="Create Task" class="btn btn-default"/>
         </div>
     </div>
 }
@@ -46,7 +46,7 @@
 <script src="~/Scripts/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript">
 
-        // init datepicker for date
-        $('.startDate').datepicker({ 'startDate': new Date() });
+    // init datepicker for date
+    $('.startDate').datepicker({ 'startDate': new Date() });
 
 </script>

@@ -2,11 +2,9 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
-using MyEventPlan.Data.Service.Encryption;
 using MyEventPlan.Data.Service.Enum;
 using MyEventPlan.Data.Service.FileUploader;
 
@@ -14,8 +12,8 @@ namespace MyEventPlan.Controllers.NewsManagement
 {
     public class NewsController : Controller
     {
-        private NewsDataContext db = new NewsDataContext();
-        private EventDataContext dbc = new EventDataContext();
+        private readonly NewsDataContext db = new NewsDataContext();
+        private readonly EventDataContext dbc = new EventDataContext();
 
         // GET: News
         public ActionResult Index()
@@ -23,26 +21,26 @@ namespace MyEventPlan.Controllers.NewsManagement
             var newses = db.Newses.Include(n => n.EventPlanner);
             return View(newses.ToList());
         }
+
         // GET: News
         public ActionResult MyNewsFeeds()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var newses = db.Newses.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId).Include(n => n.EventPlanner);
-            ViewBag.EventId = new SelectList(db.Event.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
-            return View("Index",newses.ToList());
+            var newses =
+                db.Newses.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(n => n.EventPlanner);
+            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+                "EventId", "Name");
+            return View("Index", newses.ToList());
         }
+
         // GET: News/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            News news = db.Newses.Find(id);
+            var news = db.Newses.Find(id);
             if (news == null)
-            {
                 return HttpNotFound();
-            }
             return View(news);
         }
 
@@ -61,10 +59,9 @@ namespace MyEventPlan.Controllers.NewsManagement
         public ActionResult Create([Bind(Include = "NewsId,Content")] News news)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            HttpPostedFileBase image = Request.Files["image"];
+            var image = Request.Files["image"];
             if (ModelState.IsValid)
             {
-                
                 news.DateCreated = DateTime.Now;
                 news.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
@@ -72,7 +69,9 @@ namespace MyEventPlan.Controllers.NewsManagement
                     news.LastModifiedBy = loggedinuser.AppUserId;
                     news.CreatedBy = loggedinuser.AppUserId;
                     if (loggedinuser.EventPlannerId != null) news.EventPlannerId = (long) loggedinuser.EventPlannerId;
-                    news.NewsImage = image != null && image.FileName != "" ? new FileUploader().UploadFile(image, UploadType.NewsImage) : null;
+                    news.NewsImage = (image != null) && (image.FileName != "")
+                        ? new FileUploader().UploadFile(image, UploadType.NewsImage)
+                        : null;
                 }
                 else
                 {
@@ -85,7 +84,8 @@ namespace MyEventPlan.Controllers.NewsManagement
                 return RedirectToAction("MyNewsFeeds");
             }
 
-            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
+            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+                "EventId", "Name");
             return View(news);
         }
 
@@ -94,15 +94,12 @@ namespace MyEventPlan.Controllers.NewsManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            News news = db.Newses.Find(id);
+            var news = db.Newses.Find(id);
             if (news == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
+            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+                "EventId", "Name");
             return View(news);
         }
 
@@ -111,19 +108,19 @@ namespace MyEventPlan.Controllers.NewsManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NewsId,Title,Content,NewsImage,EventPlannerId,EventId,CreatedBy,DateCreated")] News news)
+        public ActionResult Edit(
+            [Bind(Include = "NewsId,Title,Content,NewsImage,EventPlannerId,EventId,CreatedBy,DateCreated")] News news)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
-
                 news.DateCreated = DateTime.Now;
                 news.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
                 {
                     news.LastModifiedBy = loggedinuser.AppUserId;
                     news.CreatedBy = loggedinuser.AppUserId;
-                    if (loggedinuser.EventPlannerId != null) news.EventPlannerId = (long)loggedinuser.EventPlannerId;
+                    if (loggedinuser.EventPlannerId != null) news.EventPlannerId = (long) loggedinuser.EventPlannerId;
                 }
                 else
                 {
@@ -135,7 +132,8 @@ namespace MyEventPlan.Controllers.NewsManagement
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
+            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+                "EventId", "Name");
             return View(news);
         }
 
@@ -143,37 +141,37 @@ namespace MyEventPlan.Controllers.NewsManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            News news = db.Newses.Find(id);
+            var news = db.Newses.Find(id);
             if (news == null)
-            {
                 return HttpNotFound();
-            }
             return View(news);
         }
 
         // POST: News/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            News news = db.Newses.Find(id);
+            var news = db.Newses.Find(id);
             db.Newses.Remove(news);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-        public ActionResult LikeOrDislikeANews(long? id,string like,string dislike)
+
+        public ActionResult LikeOrDislikeANews(long? id, string like, string dislike)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            News news = db.Newses.Find(id);
-            NewsAction newsAction = new NewsAction();
-            var actionLikeCheck = dbc.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId 
-            && n.NewsId == news.NewsId && n.Action == NewsActionEnum.Like.ToString());
+            var news = db.Newses.Find(id);
+            var newsAction = new NewsAction();
+            var actionLikeCheck = dbc.NewsActions.SingleOrDefault(n => (n.AppUserId == loggedinuser.AppUserId)
+                                                                       && (n.NewsId == news.NewsId) &&
+                                                                       (n.Action == NewsActionEnum.Like.ToString()));
 
-            var actionDisLikeCheck = dbc.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId 
-            && n.NewsId == news.NewsId && n.Action == NewsActionEnum.Dislike.ToString());
+            var actionDisLikeCheck = dbc.NewsActions.SingleOrDefault(n => (n.AppUserId == loggedinuser.AppUserId)
+                                                                          && (n.NewsId == news.NewsId) &&
+                                                                          (n.Action == NewsActionEnum.Dislike.ToString()));
             if (loggedinuser != null)
             {
                 newsAction.NewsId = news.NewsId;
@@ -193,33 +191,28 @@ namespace MyEventPlan.Controllers.NewsManagement
             {
                 news.Dislike = news.Dislike + 1;
                 newsAction.Action = NewsActionEnum.Dislike.ToString();
-              
             }
-            if (actionLikeCheck != null && like != null)
-            {
+            if ((actionLikeCheck != null) && (like != null))
                 return PartialView("_LikeOrDislikePartial", news);
-            }
-            if (actionDisLikeCheck != null && dislike != null)
-            {
+            if ((actionDisLikeCheck != null) && (dislike != null))
                 return PartialView("_LikeOrDislikePartial", news);
-            }
             dbc.Entry(news).State = EntityState.Modified;
             dbc.NewsActions.Add(newsAction);
             dbc.SaveChanges();
             return PartialView("_LikeOrDislikePartial", news);
         }
+
         [HttpGet]
         public ActionResult ReloadCompleteView(long newsId)
         {
-            News news = db.Newses.Find(newsId);
+            var news = db.Newses.Find(newsId);
             return PartialView("_LikeOrDislikePartial", news);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

@@ -160,7 +160,7 @@ namespace MyEventPlan.Controllers.MappingManagement
             var eventId = staffEventMapping.EventId;
             db.StaffEventMapping.Remove(staffEventMapping);
             db.SaveChanges();
-            return RedirectToAction("Index", new { id = eventId });
+            return RedirectToAction("Index", new {id = eventId});
         }
 
         protected override void Dispose(bool disposing)

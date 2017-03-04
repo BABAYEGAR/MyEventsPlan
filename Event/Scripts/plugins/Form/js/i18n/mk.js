@@ -8,19 +8,19 @@
             return{
                 inputTooLong: function(e) {
                     var t = e.input.length - e.maximum, n = "Ве молиме внесете " + e.maximum + " помалку карактер";
-                    return e.maximum !== 1 && (n += "и"), n
+                    return e.maximum !== 1 && (n += "и"), n;
                 },
                 inputTooShort: function(e) {
                     var t = e.minimum - e.input.length, n = "Ве молиме внесете уште " + e.maximum + " карактер";
-                    return e.maximum !== 1 && (n += "и"), n
+                    return e.maximum !== 1 && (n += "и"), n;
                 },
                 loadingMore: function() { return"Вчитување резултати…" },
                 maximumSelected: function(e) {
                     var t = "Можете да изберете само " + e.maximum + " ставк";
-                    return e.maximum === 1 ? t += "а" : t += "и", t
+                    return e.maximum === 1 ? t += "а" : t += "и", t;
                 },
                 noResults: function() { return"Нема пронајдено совпаѓања" },
                 searching: function() { return"Пребарување…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

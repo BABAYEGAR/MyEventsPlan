@@ -11,12 +11,12 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class CheckListsController : Controller
     {
-        private CheckListDataContext db = new CheckListDataContext();
+        private readonly CheckListDataContext db = new CheckListDataContext();
 
         // GET: CheckLists
         public ActionResult Index(long? eventId)
         {
-            var checkLists = db.CheckLists.Where(n=>n.EventId == eventId).Include(c => c.Event);
+            var checkLists = db.CheckLists.Where(n => n.EventId == eventId).Include(c => c.Event);
             ViewBag.eventId = eventId;
             return View(checkLists.ToList());
         }
@@ -25,14 +25,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CheckList checkList = db.CheckLists.Find(id);
+            var checkList = db.CheckLists.Find(id);
             if (checkList == null)
-            {
                 return HttpNotFound();
-            }
             return View(checkList);
         }
 
@@ -67,7 +63,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.CheckLists.Add(checkList);
                 db.SaveChanges();
-                return RedirectToAction("Index",new {eventId = checkList.EventId});
+                return RedirectToAction("Index", new {eventId = checkList.EventId});
             }
             return View(checkList);
         }
@@ -76,14 +72,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CheckList checkList = db.CheckLists.Find(id);
+            var checkList = db.CheckLists.Find(id);
             if (checkList == null)
-            {
                 return HttpNotFound();
-            }
             return View(checkList);
         }
 
@@ -110,7 +102,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(checkList).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { eventId = checkList.EventId });
+                return RedirectToAction("Index", new {eventId = checkList.EventId});
             }
             return View(checkList);
         }
@@ -119,35 +111,30 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            CheckList checkList = db.CheckLists.Find(id);
+            var checkList = db.CheckLists.Find(id);
             if (checkList == null)
-            {
                 return HttpNotFound();
-            }
             return View(checkList);
         }
 
         // POST: CheckLists/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            CheckList checkList = db.CheckLists.Find(id);
-            long eventId = checkList.EventId;
+            var checkList = db.CheckLists.Find(id);
+            var eventId = checkList.EventId;
             db.CheckLists.Remove(checkList);
             db.SaveChanges();
-            return RedirectToAction("Index", new { eventId = eventId });
+            return RedirectToAction("Index", new {eventId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

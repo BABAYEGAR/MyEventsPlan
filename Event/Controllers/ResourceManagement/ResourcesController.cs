@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
@@ -14,13 +11,13 @@ namespace MyEventPlan.Controllers.ResourceManagement
 {
     public class ResourcesController : Controller
     {
-        private ResourceDataContext db = new ResourceDataContext();
+        private readonly ResourceDataContext db = new ResourceDataContext();
 
         // GET: Resources
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var resources = db.Resources.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
+            var resources = db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(resources.ToList());
         }
 
@@ -28,14 +25,10 @@ namespace MyEventPlan.Controllers.ResourceManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Resource resource = db.Resources.Find(id);
+            var resource = db.Resources.Find(id);
             if (resource == null)
-            {
                 return HttpNotFound();
-            }
             return View(resource);
         }
 
@@ -61,8 +54,8 @@ namespace MyEventPlan.Controllers.ResourceManagement
                 {
                     resource.CreatedBy = loggedinuser.AppUserId;
                     resource.LastModifiedBy = loggedinuser.AppUserId;
-                    if(loggedinuser.EventPlannerId != null)
-                    resource.EventPlannerId = (long)loggedinuser.EventPlannerId;
+                    if (loggedinuser.EventPlannerId != null)
+                        resource.EventPlannerId = (long) loggedinuser.EventPlannerId;
                 }
                 else
                 {
@@ -83,14 +76,11 @@ namespace MyEventPlan.Controllers.ResourceManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Resource resource = db.Resources.Find(id);
+            var resource = db.Resources.Find(id);
             if (resource == null)
-            {
                 return HttpNotFound();
-            };
+            ;
             return View(resource);
         }
 
@@ -99,7 +89,8 @@ namespace MyEventPlan.Controllers.ResourceManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ResourceId,Name,Quantity,EventPlannerId,CreatedBy,DateCreated")] Resource resource)
+        public ActionResult Edit(
+            [Bind(Include = "ResourceId,Name,Quantity,EventPlannerId,CreatedBy,DateCreated")] Resource resource)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -128,23 +119,20 @@ namespace MyEventPlan.Controllers.ResourceManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Resource resource = db.Resources.Find(id);
+            var resource = db.Resources.Find(id);
             if (resource == null)
-            {
                 return HttpNotFound();
-            }
             return View(resource);
         }
 
         // POST: Resources/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Resource resource = db.Resources.Find(id);
+            var resource = db.Resources.Find(id);
             db.Resources.Remove(resource);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the item in your inventory!";
@@ -155,9 +143,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

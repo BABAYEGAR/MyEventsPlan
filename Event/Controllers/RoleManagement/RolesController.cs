@@ -11,7 +11,7 @@ namespace MyEventPlan.Controllers.RoleManagement
 {
     public class RolesController : Controller
     {
-        private RoleDataContext db = new RoleDataContext();
+        private readonly RoleDataContext db = new RoleDataContext();
 
         // GET: Roles
         public ActionResult Index()
@@ -23,14 +23,10 @@ namespace MyEventPlan.Controllers.RoleManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Role role = db.Roles.Find(id);
+            var role = db.Roles.Find(id);
             if (role == null)
-            {
                 return HttpNotFound();
-            }
             return View(role);
         }
 
@@ -45,7 +41,11 @@ namespace MyEventPlan.Controllers.RoleManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals")] Role role)
+        public ActionResult Create(
+            [Bind(
+                 Include =
+                     "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals"
+             )] Role role)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -75,14 +75,10 @@ namespace MyEventPlan.Controllers.RoleManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Role role = db.Roles.Find(id);
+            var role = db.Roles.Find(id);
             if (role == null)
-            {
                 return HttpNotFound();
-            }
             return View(role);
         }
 
@@ -91,7 +87,11 @@ namespace MyEventPlan.Controllers.RoleManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals,CreatedBy,DateCreated")] Role role)
+        public ActionResult Edit(
+            [Bind(
+                 Include =
+                     "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals,CreatedBy,DateCreated"
+             )] Role role)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -118,23 +118,20 @@ namespace MyEventPlan.Controllers.RoleManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Role role = db.Roles.Find(id);
+            var role = db.Roles.Find(id);
             if (role == null)
-            {
                 return HttpNotFound();
-            }
             return View(role);
         }
 
         // POST: Roles/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Role role = db.Roles.Find(id);
+            var role = db.Roles.Find(id);
             db.Roles.Remove(role);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -143,9 +140,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

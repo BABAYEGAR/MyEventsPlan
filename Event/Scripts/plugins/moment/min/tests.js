@@ -74254,7 +74254,7 @@
                 });
                 moment.updateLocale("cal-2",
                 {
-        
+                
                 });
                 moment.locale("cal-2");
                 var anchor = moment.utc("2015-05-05T12:00:00", moment.ISO_8601);

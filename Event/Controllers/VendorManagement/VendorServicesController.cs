@@ -11,7 +11,7 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorServicesController : Controller
     {
-        private VendorServiceDataContext db = new VendorServiceDataContext();
+        private readonly VendorServiceDataContext db = new VendorServiceDataContext();
 
         // GET: VendorServices
         public ActionResult Index()
@@ -23,14 +23,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorService vendorService = db.VendorService.Find(id);
+            var vendorService = db.VendorService.Find(id);
             if (vendorService == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorService);
         }
 
@@ -45,7 +41,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorServiceId,ServiceName,Scale")] VendorService vendorService,FormCollection collectedValues)
+        public ActionResult Create([Bind(Include = "VendorServiceId,ServiceName,Scale")] VendorService vendorService,
+            FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +59,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                 {
                     TempData["login"] = "Your session has expired, Login again!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
-                    return RedirectToAction("Login","Account");
+                    return RedirectToAction("Login", "Account");
                 }
                 db.VendorService.Add(vendorService);
                 db.SaveChanges();
@@ -78,14 +75,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorService vendorService = db.VendorService.Find(id);
+            var vendorService = db.VendorService.Find(id);
             if (vendorService == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorService);
         }
 
@@ -94,7 +87,9 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VendorServiceId,ServiceName,CreatedBy,DateCreated")] VendorService vendorService,FormCollection collectedValues)
+        public ActionResult Edit(
+            [Bind(Include = "VendorServiceId,ServiceName,CreatedBy,DateCreated")] VendorService vendorService,
+            FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -124,23 +119,20 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorService vendorService = db.VendorService.Find(id);
+            var vendorService = db.VendorService.Find(id);
             if (vendorService == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorService);
         }
 
         // POST: VendorServices/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            VendorService vendorService = db.VendorService.Find(id);
+            var vendorService = db.VendorService.Find(id);
             db.VendorService.Remove(vendorService);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted a vendor service!";
@@ -151,9 +143,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

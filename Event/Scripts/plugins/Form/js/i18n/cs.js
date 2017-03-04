@@ -12,9 +12,9 @@
                 case 3:
                     return"tři";
                 case 4:
-                    return"čtyři"
+                    return"čtyři";
                 }
-                return""
+                return"";
             }
 
             return{
@@ -25,7 +25,7 @@
                         ? "Prosím zadejte o jeden znak méně"
                         : n <= 4
                         ? "Prosím zadejte o " + e(n, !0) + " znaky méně"
-                        : "Prosím zadejte o " + n + " znaků méně"
+                        : "Prosím zadejte o " + n + " znaků méně";
                 },
                 inputTooShort: function(t) {
                     var n = t.minimum - t.input.length;
@@ -33,7 +33,7 @@
                         ? "Prosím zadejte ještě jeden znak"
                         : n <= 4
                         ? "Prosím zadejte ještě další " + e(n, !0) + " znaky"
-                        : "Prosím zadejte ještě dalších " + n + " znaků"
+                        : "Prosím zadejte ještě dalších " + n + " znaků";
                 },
                 loadingMore: function() { return"Načítají se další výsledky…" },
                 maximumSelected: function(t) {
@@ -42,10 +42,10 @@
                         ? "Můžete zvolit jen jednu položku"
                         : n <= 4
                         ? "Můžete zvolit maximálně " + e(n, !1) + " položky"
-                        : "Můžete zvolit maximálně " + n + " položek"
+                        : "Můžete zvolit maximálně " + n + " položek";
                 },
                 noResults: function() { return"Nenalezeny žádné položky" },
                 searching: function() { return"Vyhledávání…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

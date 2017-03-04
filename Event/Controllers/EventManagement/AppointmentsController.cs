@@ -7,7 +7,6 @@ using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Calender;
 using MyEventPlan.Data.Service.Enum;
-using Event = Event.Data.Objects.Entities.Event;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -20,20 +19,25 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.eventId = eventId;
-            var appointments = _db.Appointments.Where(n=>n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId ).OrderByDescending(n=>n.StartDate).Include(a => a.Event);
+            var appointments =
+                _db.Appointments.Where(n => (n.EventId == eventId) && (n.EventPlannerId == loggedinuser.EventPlannerId))
+                    .OrderByDescending(n => n.StartDate)
+                    .Include(a => a.Event);
             return View(appointments.ToList());
         }
+
         // GET: Appointments
         public ActionResult Calendar()
         {
             return View();
         }
+
         //// GET: GetMyAppointments
         public JsonResult GetMyAppointments()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var appointments = new CalenderAppointment().LoadAllUserAppointments(loggedinuser?.EventPlannerId);
-            global::Event.Data.Objects.Entities.Event appoitmentEvent = null;
+            Event.Data.Objects.Entities.Event appoitmentEvent = null;
             foreach (var item in appointments)
             {
                 appoitmentEvent = _db.Event.Find(item.EventId);
@@ -54,10 +58,12 @@ namespace MyEventPlan.Controllers.EventManagement
             }
             return Json(appointments.ToArray(), JsonRequestBehavior.AllowGet);
         }
+
         public void UpdateEventAppoitments(int id, string newEventStart, string newEventEnd)
         {
             new CalenderAppointment().UpdateCalendarEventAppoitment(id, newEventStart, newEventEnd);
         }
+
         // GET: Appointments/Details/5
         public ActionResult Details(long? id)
         {
@@ -106,7 +112,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 _db.SaveChanges();
                 TempData["display"] = "You have successfully booked an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {eventId = appointment.EventId});
+                return RedirectToAction("Index", new {eventId = appointment.EventId});
             }
             return View(appointment);
         }
@@ -150,7 +156,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 _db.SaveChanges();
                 TempData["display"] = "You have successfully modified an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index", new { eventId = appointment.EventId });
+                return RedirectToAction("Index", new {eventId = appointment.EventId});
             }
             return View(appointment);
         }

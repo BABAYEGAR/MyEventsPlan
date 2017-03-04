@@ -1,11 +1,11 @@
 ﻿@model Event.Data.Objects.Entities.GuestList
-    @{
-        long eventId = ViewBag.eventId;
-    }
+@{
+    long eventId = ViewBag.eventId;
+}
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Create", "GuestLists", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Create", "GuestLists", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.Hidden("EventId", eventId)
     @Html.AntiForgeryToken()

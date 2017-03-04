@@ -1,25 +1,27 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Enum;
-using System;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
     public class EventResourceMappingsController : Controller
     {
-        private EventResourceMappingDataContext db = new EventResourceMappingDataContext();
+        private readonly EventResourceMappingDataContext db = new EventResourceMappingDataContext();
 
         // GET: EventResourceMappings
         public ActionResult Index(long? eventId)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var eventResourceMapping = db.EventResourceMapping.Where(n=>n.EventId == eventId).Include(e => e.Event).Include(e => e.Resource);
+            var eventResourceMapping =
+                db.EventResourceMapping.Where(n => n.EventId == eventId).Include(e => e.Event).Include(e => e.Resource);
             ViewBag.eventId = eventId;
-            ViewBag.ResourceId = new SelectList(db.Resources.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId ), "ResourceId", "Name");
+            ViewBag.ResourceId = new SelectList(
+                db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name");
             return View(eventResourceMapping.ToList());
         }
 
@@ -28,14 +30,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventResourceMapping eventResourceMapping = db.EventResourceMapping.Find(id);
+            var eventResourceMapping = db.EventResourceMapping.Find(id);
             if (eventResourceMapping == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventResourceMapping);
         }
 
@@ -50,7 +48,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventResourceMappingId,EventId,ResourceId")] EventResourceMapping eventResourceMapping)
+        public ActionResult Create(
+            [Bind(Include = "EventResourceMappingId,EventId,ResourceId")] EventResourceMapping eventResourceMapping)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -72,7 +71,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["resourcemap"] = "You have successfully added the resource to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index", new { eventId = eventResourceMapping.EventId });
+                return RedirectToAction("Index", new {eventId = eventResourceMapping.EventId});
             }
             return View(eventResourceMapping);
         }
@@ -82,16 +81,14 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventResourceMapping eventResourceMapping = db.EventResourceMapping.Find(id);
+            var eventResourceMapping = db.EventResourceMapping.Find(id);
             if (eventResourceMapping == null)
-            {
                 return HttpNotFound();
-            }
             ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", eventResourceMapping.EventId);
-            ViewBag.ResourceId = new SelectList(db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name", eventResourceMapping.ResourceId);
+            ViewBag.ResourceId = new SelectList(
+                db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name",
+                eventResourceMapping.ResourceId);
             return View(eventResourceMapping);
         }
 
@@ -100,7 +97,10 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventResourceMappingId,EventId,ResourceId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] EventResourceMapping eventResourceMapping)
+        public ActionResult Edit(
+            [Bind(
+                 Include =
+                     "EventResourceMappingId,EventId,ResourceId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] EventResourceMapping eventResourceMapping)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -120,9 +120,11 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["resourcemap"] = "You have successfully added the resource to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index", new { eventId = eventResourceMapping.EventId });
+                return RedirectToAction("Index", new {eventId = eventResourceMapping.EventId});
             }
-            ViewBag.ResourceId = new SelectList(db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name", eventResourceMapping.ResourceId);
+            ViewBag.ResourceId = new SelectList(
+                db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name",
+                eventResourceMapping.ResourceId);
             return View(eventResourceMapping);
         }
 
@@ -130,37 +132,32 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventResourceMapping eventResourceMapping = db.EventResourceMapping.Find(id);
+            var eventResourceMapping = db.EventResourceMapping.Find(id);
             if (eventResourceMapping == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventResourceMapping);
         }
 
         // POST: EventResourceMappings/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            EventResourceMapping eventResourceMapping = db.EventResourceMapping.Find(id);
-            long eventId = (long)eventResourceMapping.EventId;
+            var eventResourceMapping = db.EventResourceMapping.Find(id);
+            var eventId = (long) eventResourceMapping.EventId;
             db.EventResourceMapping.Remove(eventResourceMapping);
             db.SaveChanges();
             TempData["resourcemap"] = "You have successfully deleted the resource to the event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { eventId = eventId });
+            return RedirectToAction("Index", new {eventId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

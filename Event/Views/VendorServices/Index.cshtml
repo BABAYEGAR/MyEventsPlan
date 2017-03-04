@@ -36,33 +36,33 @@
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">
         <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ServiceName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Scale)
-                </th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ServiceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Scale)
+            </th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ServiceName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Scale)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.VendorServiceId }, new { @class = "btn btn-xs btn-primary" })
-                        @Html.ActionLink("Details", "Details", new { id = item.VendorServiceId }, new { @class = "btn btn-xs btn-default" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.VendorServiceId }, new { @class = "btn btn-xs btn-danger" })
-                    </td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Scale)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-primary"})
+                    @Html.ActionLink("Details", "Details", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-default"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-danger"})
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
-    </div>
+</div>

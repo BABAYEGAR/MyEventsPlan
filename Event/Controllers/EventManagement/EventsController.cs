@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -19,9 +18,13 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var events = _db.Event.OrderByDescending(n=>n.StartDate).Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            var events =
+                _db.Event.OrderByDescending(n => n.StartDate)
+                    .Include(n => n.EventType)
+                    .Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(events.ToList());
         }
+
         // GET: EventResourceMappings
         public ActionResult Resources(long? eventId)
         {
@@ -30,6 +33,7 @@ namespace MyEventPlan.Controllers.EventManagement
             ViewBag.eventId = eventId;
             return View(resources.ToList());
         }
+
         // GET: CheckItem
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -53,7 +57,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     }
                     else
                     {
-                        var eventResource = new EventResourceMapping()
+                        var eventResource = new EventResourceMapping
                         {
                             DateCreated = DateTime.Now,
                             CreatedBy = loggedinuser.AppUserId,
@@ -73,21 +77,24 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 TempData["display"] = "no item has been selected!";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
-                return RedirectToAction("Resources", new { eventId = eventId });
+                return RedirectToAction("Resources", new {eventId});
             }
-            return RedirectToAction("Resources", new { eventId = eventId });
+            return RedirectToAction("Resources", new {eventId});
         }
+
         // GET: CheckListItems/UncheckItem/5
-        public ActionResult RemoveItem(long? resourceId,long? eventId)
+        public ActionResult RemoveItem(long? resourceId, long? eventId)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var mapping = _db.EventResourceMapping.SingleOrDefault(n=>n.EventId == eventId && n.ResourceId == resourceId);
+            var mapping =
+                _db.EventResourceMapping.SingleOrDefault(n => (n.EventId == eventId) && (n.ResourceId == resourceId));
             _db.Entry(mapping).State = EntityState.Modified;
             _db.SaveChanges();
             TempData["resourcemap"] = "you have succesfully removed the item!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Resources", new { eventId = eventId });
+            return RedirectToAction("Resources", new {eventId});
         }
+
         // GET: Events
         public ActionResult Calendar()
         {
@@ -107,18 +114,19 @@ namespace MyEventPlan.Controllers.EventManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var events = new CalenderEvent().LoadAllUserEvents(loggedinuser?.EventPlannerId);
             var eventList = from e in events
-                            select new
-                            {
-                                id = e.EventId,
-                                title = e.Name + " " + (Convert.ToDateTime(e.EndTime) - Convert.ToDateTime(e.StartTime)) + " mins",
-                                start = e.StartDate,
-                                end = e.EndDate,
-                                color = e.Color,
-                                allDay = false
-                            };
+                select new
+                {
+                    id = e.EventId,
+                    title = e.Name + " " + (Convert.ToDateTime(e.EndTime) - Convert.ToDateTime(e.StartTime)) + " mins",
+                    start = e.StartDate,
+                    end = e.EndDate,
+                    color = e.Color,
+                    allDay = false
+                };
             var rows = eventList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);
         }
+
         // GET: Events/Details/5
         public ActionResult Details(long? id)
         {
@@ -129,16 +137,21 @@ namespace MyEventPlan.Controllers.EventManagement
                 return HttpNotFound();
             return View(@event);
         }
+
         public void UpdateEvent(int id, string newEventStart, string newEventEnd)
         {
             new CalenderEvent().UpdateCalendarEvent(id, newEventStart, newEventEnd);
         }
 
-        public bool CreateNewEvent(string title, string newEventStartDate,string newEventEndDate, string newEventStartTime,string newEventEndTime, string color, long budget,
+        public bool CreateNewEvent(string title, string newEventStartDate, string newEventEndDate,
+            string newEventStartTime, string newEventEndTime, string color, long budget,
             long plannerId, long type)
         {
-            try { new CalenderEvent().CreateNewEvent(title, newEventStartDate, newEventEndDate, newEventStartTime, newEventEndTime, color, budget,
-                plannerId, type);
+            try
+            {
+                new CalenderEvent().CreateNewEvent(title, newEventStartDate, newEventEndDate, newEventStartTime,
+                    newEventEndTime, color, budget,
+                    plannerId, type);
             }
             catch (Exception)
             {
@@ -165,7 +178,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var role = Session["role"] as Role;
             if (ModelState.IsValid)
             {
-                if (role != null && (loggedinuser != null && role.Name == "Event Planner"))
+                if ((role != null) && (loggedinuser != null) && (role.Name == "Event Planner"))
                 {
                     @event.CreatedBy = loggedinuser.AppUserId;
                     @event.DateCreated = DateTime.Now;
@@ -212,7 +225,7 @@ namespace MyEventPlan.Controllers.EventManagement
             [Bind(
                  Include =
                      "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,Status,EndDate,EndTime,CreatedBy,DateCreated"
-             )] Event.Data.Objects.Entities.Event @event,FormCollection collectedValues)
+             )] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)

@@ -8,16 +8,16 @@
             return{
                 inputTooLong: function(e) {
                     var t = e.input.length - e.maximum;
-                    return"Túl hosszú. " + t + " karakterrel több, mint kellene."
+                    return"Túl hosszú. " + t + " karakterrel több, mint kellene.";
                 },
                 inputTooShort: function(e) {
                     var t = e.minimum - e.input.length;
-                    return"Túl rövid. Még " + t + " karakter hiányzik."
+                    return"Túl rövid. Még " + t + " karakter hiányzik.";
                 },
                 loadingMore: function() { return"Töltés…" },
                 maximumSelected: function(e) { return"Csak " + e.maximum + " elemet lehet kiválasztani." },
                 noResults: function() { return"Nincs találat." },
                 searching: function() { return"Keresés…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

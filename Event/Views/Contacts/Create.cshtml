@@ -4,7 +4,7 @@
     ViewBag.Header = "Create a new contact";
     Layout = "../Shared/_LayoutForm.cshtml";
 }
-@using (Html.BeginForm("Create", "Contacts", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Create", "Contacts", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})

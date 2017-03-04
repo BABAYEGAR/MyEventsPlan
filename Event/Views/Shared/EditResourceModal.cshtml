@@ -5,7 +5,7 @@
 @using (Html.BeginForm("Edit", "Resources", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m=>m.ResourceId)
+    @Html.HiddenFor(m => m.ResourceId)
     @Html.HiddenFor(m => m.EventPlannerId)
     @Html.HiddenFor(m => m.DateCreated)
     @Html.HiddenFor(m => m.CreatedBy)

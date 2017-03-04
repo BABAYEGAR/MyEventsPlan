@@ -8,73 +8,73 @@
 }
 @section add {
     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
-    Add Contact
-</button>
+    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Contact
+    </button>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title" id="myModalLabel">Add a new contact</h4>
-            </div>
-            <div class="modal-body">
-                @{
-                    Html.RenderPartial("CreateContactModal", contact);
-                }
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new contact</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("CreateContactModal", contact);
+                    }
+                </div>
             </div>
         </div>
+
     </div>
 
-</div>
-
-    @Html.ActionLink("Import Contact(.csv)", "Create", null, new { @class = "btn btn-default btn-xs icon-download pull-right" })
+    @Html.ActionLink("Import Contact(.csv)", "Create", null, new {@class = "btn btn-default btn-xs icon-download pull-right"})
 }
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">
         <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayName("Name")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Mobile)
+            </th>
+
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayName("Name")
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Mobile)
-                </th>
-
-                <th>Action</th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @(item.Firstname + " " + item.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.ContactId}, new {@class = "btn btn-xs btn-primary"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.ContactId}, new {@class = "btn btn-xs btn-danger"})
+                </td>
             </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @(item.Firstname +" "+ item.Lastname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Mobile)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.ContactId }, new { @class = "btn btn-xs btn-primary" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ContactId }, new { @class = "btn btn-xs btn-danger" })
-                    </td>
-                </tr>
-            }
+        }
 
     </table>
-    </div>
+</div>

@@ -3,7 +3,7 @@
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Edit", "CheckLists", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Edit", "CheckLists", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.HiddenFor(m => m.CheckListId)
     @Html.HiddenFor(m => m.CreatedBy)

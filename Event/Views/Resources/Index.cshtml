@@ -5,7 +5,6 @@
     ViewBag.TableHeader = "List of all my resources";
     Layout = "../Shared/_LayoutTable.cshtml";
     var resource = new Resource();
-
 }
 @section add {
     <!-- Button trigger modal -->
@@ -36,57 +35,57 @@
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">
         <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Quantity)
-                </th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    <td>
-                        @*@Html.ActionLink("Edit", "Edit", new { id = item.ResourceId }, new { @class = "btn btn-xs btn-primary" })*@
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModalEdit">
-                            Edit
-                        </button>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id = item.ResourceId }, new { @class = "btn btn-xs btn-primary" })*@
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModalEdit">
+                        Edit
+                    </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">Edit resource item</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        @{
-                                            Html.RenderPartial("EditResourceModal", item);
-                                        }
-                                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Edit resource item</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @{
+                                        Html.RenderPartial("EditResourceModal", item);
+                                    }
                                 </div>
                             </div>
-
                         </div>
-                        @Html.ActionLink("Details", "Details", new { id = item.ResourceId }, new { @class = "btn btn-xs btn-default" })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.ResourceId }, new { @class = "btn btn-xs btn-danger" })
-                    </td>
-                </tr>
-                                            }
+
+                    </div>
+                    @Html.ActionLink("Details", "Details", new {id = item.ResourceId}, new {@class = "btn btn-xs btn-default"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.ResourceId}, new {@class = "btn btn-xs btn-danger"})
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
-    </div>
+</div>

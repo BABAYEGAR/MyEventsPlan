@@ -17,7 +17,7 @@
                         ? "Prosím, zadajte o jeden znak menej"
                         : n >= 2 && n <= 4
                         ? "Prosím, zadajte o " + e[n](!0) + " znaky menej"
-                        : "Prosím, zadajte o " + n + " znakov menej"
+                        : "Prosím, zadajte o " + n + " znakov menej";
                 },
                 inputTooShort: function(t) {
                     var n = t.minimum - t.input.length;
@@ -25,7 +25,7 @@
                         ? "Prosím, zadajte ešte jeden znak"
                         : n <= 4
                         ? "Prosím, zadajte ešte ďalšie " + e[n](!0) + " znaky"
-                        : "Prosím, zadajte ešte ďalších " + n + " znakov"
+                        : "Prosím, zadajte ešte ďalších " + n + " znakov";
                 },
                 loadingMore: function() { return"Loading more results…" },
                 maximumSelected: function(t) {
@@ -33,10 +33,10 @@
                         ? "Môžete zvoliť len jednu položku"
                         : t.maximum >= 2 && t.maximum <= 4
                         ? "Môžete zvoliť najviac " + e[t.maximum](!1) + " položky"
-                        : "Môžete zvoliť najviac " + t.maximum + " položiek"
+                        : "Môžete zvoliť najviac " + t.maximum + " položiek";
                 },
                 noResults: function() { return"Nenašli sa žiadne položky" },
                 searching: function() { return"Vyhľadávanie…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

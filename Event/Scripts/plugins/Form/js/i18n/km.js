@@ -9,19 +9,19 @@
                 errorLoading: function() { return"មិនអាចទាញយកទិន្នន័យ" },
                 inputTooLong: function(e) {
                     var t = e.input.length - e.maximum, n = "សូមលុបចេញ  " + t + " អក្សរ";
-                    return n
+                    return n;
                 },
                 inputTooShort: function(e) {
                     var t = e.minimum - e.input.length, n = "សូមបញ្ចូល" + t + " អក្សរ រឺ ច្រើនជាងនេះ";
-                    return n
+                    return n;
                 },
                 loadingMore: function() { return"កំពុងទាញយកទិន្នន័យបន្ថែម..." },
                 maximumSelected: function(e) {
                     var t = "អ្នកអាចជ្រើសរើសបានតែ " + e.maximum + " ជម្រើសប៉ុណ្ណោះ";
-                    return t
+                    return t;
                 },
                 noResults: function() { return"មិនមានលទ្ធផល" },
                 searching: function() { return"កំពុងស្វែងរក..." }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

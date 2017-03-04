@@ -8,19 +8,19 @@
             return{
                 inputTooLong: function(e) {
                     var t = e.input.length - e.maximum, n = "โปรดลบออก " + t + " ตัวอักษร";
-                    return n
+                    return n;
                 },
                 inputTooShort: function(e) {
                     var t = e.minimum - e.input.length, n = "โปรดพิมพ์เพิ่มอีก " + t + " ตัวอักษร";
-                    return n
+                    return n;
                 },
                 loadingMore: function() { return"กำลังค้นข้อมูลเพิ่ม…" },
                 maximumSelected: function(e) {
                     var t = "คุณสามารถเลือกได้ไม่เกิน " + e.maximum + " รายการ";
-                    return t
+                    return t;
                 },
                 noResults: function() { return"ไม่พบข้อมูล" },
                 searching: function() { return"กำลังค้นข้อมูล…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

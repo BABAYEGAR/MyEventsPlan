@@ -10,7 +10,7 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class AppUsersController : Controller
     {
-        private AppUserDataContext db = new AppUserDataContext();
+        private readonly AppUserDataContext db = new AppUserDataContext();
 
         // GET: AppUsers
         public ActionResult Index()
@@ -18,6 +18,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var appUsers = db.AppUsers.Include(a => a.EventPlanner).Include(a => a.Role);
             return View(appUsers.ToList());
         }
+
         // GET: EnableUser
         public ActionResult EnableUser(long? id)
         {
@@ -27,6 +28,7 @@ namespace MyEventPlan.Controllers.EventManagement
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         // GET: DisableUser
         public ActionResult DisableUser(long? id)
         {
@@ -36,18 +38,15 @@ namespace MyEventPlan.Controllers.EventManagement
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         // GET: AppUsers/Details/5
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AppUser appUser = db.AppUsers.Find(id);
+            var appUser = db.AppUsers.Find(id);
             if (appUser == null)
-            {
                 return HttpNotFound();
-            }
             return View(appUser);
         }
 
@@ -64,7 +63,11 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,EventPlannerId,ProfileImage,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] AppUser appUser)
+        public ActionResult Create(
+            [Bind(
+                 Include =
+                     "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,EventPlannerId,ProfileImage,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+             )] AppUser appUser)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +76,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname", appUser.EventPlannerId);
+            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname",
+                appUser.EventPlannerId);
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", appUser.RoleId);
             return View(appUser);
         }
@@ -82,15 +86,12 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AppUser appUser = db.AppUsers.Find(id);
+            var appUser = db.AppUsers.Find(id);
             if (appUser == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname", appUser.EventPlannerId);
+            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname",
+                appUser.EventPlannerId);
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", appUser.RoleId);
             return View(appUser);
         }
@@ -100,7 +101,11 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,EventPlannerId,ProfileImage,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] AppUser appUser)
+        public ActionResult Edit(
+            [Bind(
+                 Include =
+                     "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,EventPlannerId,ProfileImage,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+             )] AppUser appUser)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +113,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname", appUser.EventPlannerId);
+            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname",
+                appUser.EventPlannerId);
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", appUser.RoleId);
             return View(appUser);
         }
@@ -117,23 +123,20 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AppUser appUser = db.AppUsers.Find(id);
+            var appUser = db.AppUsers.Find(id);
             if (appUser == null)
-            {
                 return HttpNotFound();
-            }
             return View(appUser);
         }
 
         // POST: AppUsers/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            AppUser appUser = db.AppUsers.Find(id);
+            var appUser = db.AppUsers.Find(id);
             db.AppUsers.Remove(appUser);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -142,9 +145,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

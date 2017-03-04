@@ -11,13 +11,14 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorsController : Controller
     {
-        private VendorDataContext db = new VendorDataContext();
+        private readonly VendorDataContext db = new VendorDataContext();
 
         // GET: Vendors
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var vendors = db.Vendors.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId).Include(v => v.VendorService);
+            var vendors =
+                db.Vendors.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(v => v.VendorService);
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
             return View(vendors.ToList());
         }
@@ -26,14 +27,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Vendor vendor = db.Vendors.Find(id);
+            var vendor = db.Vendors.Find(id);
             if (vendor == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendor);
         }
 
@@ -49,7 +46,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorId,Name,Address,Email,Mobile,VendorServiceId,EventPlannerId")] Vendor vendor)
+        public ActionResult Create(
+            [Bind(Include = "VendorId,Name,Address,Email,Mobile,VendorServiceId,EventPlannerId")] Vendor vendor)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +73,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                 return RedirectToAction("Index");
             }
 
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", vendor.VendorServiceId);
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+                vendor.VendorServiceId);
             return View(vendor);
         }
 
@@ -83,15 +82,12 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Vendor vendor = db.Vendors.Find(id);
+            var vendor = db.Vendors.Find(id);
             if (vendor == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", vendor.VendorServiceId);
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+                vendor.VendorServiceId);
             return View(vendor);
         }
 
@@ -100,7 +96,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VendorId,Name,Address,Email,Mobile,VendorServiceId,CreatedBy,DateCreated,EventPlannerId")] Vendor vendor)
+        public ActionResult Edit(
+            [Bind(Include = "VendorId,Name,Address,Email,Mobile,VendorServiceId,CreatedBy,DateCreated,EventPlannerId")] Vendor vendor)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +120,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                 ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
                 return RedirectToAction("Index");
             }
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", vendor.VendorServiceId);
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+                vendor.VendorServiceId);
             return View(vendor);
         }
 
@@ -131,23 +129,20 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Vendor vendor = db.Vendors.Find(id);
+            var vendor = db.Vendors.Find(id);
             if (vendor == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendor);
         }
 
         // POST: Vendors/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Vendor vendor = db.Vendors.Find(id);
+            var vendor = db.Vendors.Find(id);
             db.Vendors.Remove(vendor);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -156,9 +151,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
@@ -14,12 +11,12 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class NotesController : Controller
     {
-        private NoteDataContext db = new NoteDataContext();
+        private readonly NoteDataContext db = new NoteDataContext();
 
         // GET: Notes
         public ActionResult Index(long? eventId)
         {
-            var notes = db.Notes.Where(n=>n.EventId == eventId).Include(n => n.Event);
+            var notes = db.Notes.Where(n => n.EventId == eventId).Include(n => n.Event);
             ViewBag.eventId = eventId;
             return View(notes.ToList());
         }
@@ -28,14 +25,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Note note = db.Notes.Find(id);
+            var note = db.Notes.Find(id);
             if (note == null)
-            {
                 return HttpNotFound();
-            }
             return View(note);
         }
 
@@ -72,7 +65,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully added a built in note!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {eventId = note.EventId});
+                return RedirectToAction("Index", new {eventId = note.EventId});
             }
             return View(note);
         }
@@ -81,14 +74,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Note note = db.Notes.Find(id);
+            var note = db.Notes.Find(id);
             if (note == null)
-            {
                 return HttpNotFound();
-            }
             return View(note);
         }
 
@@ -117,7 +106,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully modified the built in note!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {eventId = note.EventId});
+                return RedirectToAction("Index", new {eventId = note.EventId});
             }
             return View(note);
         }
@@ -126,37 +115,32 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Note note = db.Notes.Find(id);
+            var note = db.Notes.Find(id);
             if (note == null)
-            {
                 return HttpNotFound();
-            }
             return View(note);
         }
 
         // POST: Notes/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Note note = db.Notes.Find(id);
-            long eventId = note.EventId;
+            var note = db.Notes.Find(id);
+            var eventId = note.EventId;
             db.Notes.Remove(note);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the built in note!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { eventId = eventId });
+            return RedirectToAction("Index", new {eventId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

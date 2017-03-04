@@ -1,5 +1,4 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.Event
+﻿@model Event.Data.Objects.Entities.Event
 @{
     ViewBag.Title = "View";
     ViewBag.Header = Model.Name;
@@ -26,11 +25,11 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <a href="@Url.Action("Index","CheckLists",new {eventId = Model.EventId})" class="btn-box medium span4">
+                            <a href="@Url.Action("Index", "CheckLists", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-list-ul"></i><b>Check List</b>
-                            </a><a href="@Url.Action("Index","GuestLists",new {eventId = Model.EventId})" class="btn-box medium span4">
+                            </a><a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-list-ol"></i><b>Guest List</b>
-                            </a><a href="@Url.Action("Index","Notes",new {eventId = Model.EventId})" class="btn-box medium span4">
+                            </a><a href="@Url.Action("Index", "Notes", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-paper-clip"></i><b>
                                     Notes
                                 </b>
@@ -39,10 +38,10 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <a href="@Url.Action("Index","Tasks",new {eventId = Model.EventId})" class="btn-box medium span4">
+                            <a href="@Url.Action("Index", "Tasks", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-tasks"></i><b>Check List</b>
                             </a>
-                            <a href="@Url.Action("Resources","Events",new {eventId = Model.EventId})" class="btn-box medium span4">
+                            <a href="@Url.Action("Resources", "Events", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-cloud"></i><b>Resources</b>
                             </a>
                         </div>

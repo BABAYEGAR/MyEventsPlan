@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
@@ -14,12 +11,12 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class TasksController : Controller
     {
-        private TaskDataContext db = new TaskDataContext();
+        private readonly TaskDataContext db = new TaskDataContext();
 
         // GET: Tasks
         public ActionResult Index(long? eventId)
         {
-            var tasks = db.Tasks.Where(n=>n.EventId == eventId).Include(t => t.Event);
+            var tasks = db.Tasks.Where(n => n.EventId == eventId).Include(t => t.Event);
             ViewBag.eventId = eventId;
             return View(tasks.ToList());
         }
@@ -28,14 +25,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Task task = db.Tasks.Find(id);
+            var task = db.Tasks.Find(id);
             if (task == null)
-            {
                 return HttpNotFound();
-            }
             return View(task);
         }
 
@@ -74,7 +67,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["task"] = "Your have successfully added a new task!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {eventId = task.EventId});
+                return RedirectToAction("Index", new {eventId = task.EventId});
             }
             return View(task);
         }
@@ -83,14 +76,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Task task = db.Tasks.Find(id);
+            var task = db.Tasks.Find(id);
             if (task == null)
-            {
                 return HttpNotFound();
-            }
             return View(task);
         }
 
@@ -99,7 +88,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TaskId,Name,Description,EventId,CreatedBy,DateCreated,DueDate,Status")] Task task)
+        public ActionResult Edit(
+            [Bind(Include = "TaskId,Name,Description,EventId,CreatedBy,DateCreated,DueDate,Status")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -119,7 +109,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["task"] = "Your have successfully added a new task!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index", new { eventId = task.EventId });
+                return RedirectToAction("Index", new {eventId = task.EventId});
             }
             return View(task);
         }
@@ -128,23 +118,20 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Task task = db.Tasks.Find(id);
+            var task = db.Tasks.Find(id);
             if (task == null)
-            {
                 return HttpNotFound();
-            }
             return View(task);
         }
 
         // POST: Tasks/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Task task = db.Tasks.Find(id);
+            var task = db.Tasks.Find(id);
             db.Tasks.Remove(task);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -153,9 +140,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

@@ -106,10 +106,10 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageContacts, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ManageContacts, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageContacts)
-            @Html.ValidationMessageFor(model => model.ManageContacts, "", new { @class = "text-danger span8" })
+            @Html.ValidationMessageFor(model => model.ManageContacts, "", new {@class = "text-danger span8"})
         </div>
     </div>
 

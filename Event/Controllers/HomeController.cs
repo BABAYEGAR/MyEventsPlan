@@ -8,13 +8,14 @@ namespace MyEventPlan.Controllers
         {
             return View();
         }
+
         public ActionResult Dashboard()
         {
             return View();
         }
+
         public ActionResult ViewProfile()
         {
-
             return View();
         }
 

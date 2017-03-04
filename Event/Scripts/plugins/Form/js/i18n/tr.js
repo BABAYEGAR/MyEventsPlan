@@ -8,19 +8,19 @@
             return{
                 inputTooLong: function(e) {
                     var t = e.input.length - e.maximum, n = t + " karakter daha girmelisiniz";
-                    return n
+                    return n;
                 },
                 inputTooShort: function(e) {
                     var t = e.minimum - e.input.length, n = "En az " + t + " karakter daha girmelisiniz";
-                    return n
+                    return n;
                 },
                 loadingMore: function() { return"Daha fazla…" },
                 maximumSelected: function(e) {
                     var t = "Sadece " + e.maximum + " seçim yapabilirsiniz";
-                    return t
+                    return t;
                 },
                 noResults: function() { return"Sonuç bulunamadı" },
                 searching: function() { return"Aranıyor…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();

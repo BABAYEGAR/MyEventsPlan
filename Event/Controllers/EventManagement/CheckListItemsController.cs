@@ -17,7 +17,9 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Index(long? checkListId)
         {
             var checkListItems =
-                db.CheckListItems.Where(n => n.CheckListId == checkListId).Include(c => c.CheckList).Include(c => c.Event);
+                db.CheckListItems.Where(n => n.CheckListId == checkListId)
+                    .Include(c => c.CheckList)
+                    .Include(c => c.Event);
             ViewBag.checkListId = checkListId;
             return View(checkListItems.ToList());
         }
@@ -51,7 +53,7 @@ namespace MyEventPlan.Controllers.EventManagement
                         allMappings.Any(
                             n =>
                                 (n.CheckListItemId == id) &&
-                                (n.CheckListId == checkListId) && n.Checked == true))
+                                (n.CheckListId == checkListId) && n.Checked))
                     {
                     }
                     else
@@ -72,9 +74,9 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 TempData["item"] = "no item has been selected!";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
-                return RedirectToAction("Index", new {checkListId = checkListId});
+                return RedirectToAction("Index", new {checkListId});
             }
-            return RedirectToAction("Index", new { checkListId = checkListId });
+            return RedirectToAction("Index", new {checkListId});
         }
 
         // GET: CheckListItems/Create
@@ -110,10 +112,11 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.CheckListItems.Add(checkListItem);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { checkListId = checkListItem.CheckListId });
+                return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
             }
             return View(checkListItem);
         }
+
         // GET: CheckListItems/UncheckItem/5
         public ActionResult UncheckItem(long? id)
         {
@@ -128,7 +131,7 @@ namespace MyEventPlan.Controllers.EventManagement
             if (loggedinuser != null) checkListItem.LastModifiedBy = loggedinuser.AppUserId;
             db.Entry(checkListItem).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index", new { checkListId = checkListItem.CheckListId });
+            return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
         }
 
         // GET: CheckListItems/Edit/5
@@ -167,7 +170,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(checkListItem).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { checkListId = checkListItem.CheckListId });
+                return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
             }
             ViewBag.CheckListId = new SelectList(db.CheckLists, "CheckListId", "Name", checkListItem.CheckListId);
             ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", checkListItem.EventId);
@@ -192,10 +195,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             var checkListItem = db.CheckListItems.Find(id);
-            long checkListId = checkListItem.CheckListId;
+            var checkListId = checkListItem.CheckListId;
             db.CheckListItems.Remove(checkListItem);
             db.SaveChanges();
-            return RedirectToAction("Index", new { checkListId = checkListId });
+            return RedirectToAction("Index", new {checkListId});
         }
 
         protected override void Dispose(bool disposing)

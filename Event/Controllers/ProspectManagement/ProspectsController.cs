@@ -11,13 +11,16 @@ namespace MyEventPlan.Controllers.ProspectManagement
 {
     public class ProspectsController : Controller
     {
-        private ProspectDataContext db = new ProspectDataContext();
+        private readonly ProspectDataContext db = new ProspectDataContext();
 
         // GET: Prospects
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var prospects = db.Prospects.OrderByDescending(n=>n.StartDate).Include(p => p.EventType).Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
+            var prospects =
+                db.Prospects.OrderByDescending(n => n.StartDate)
+                    .Include(p => p.EventType)
+                    .Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(prospects.ToList());
         }
 
@@ -25,14 +28,10 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Prospect prospect = db.Prospects.Find(id);
+            var prospect = db.Prospects.Find(id);
             if (prospect == null)
-            {
                 return HttpNotFound();
-            }
             return View(prospect);
         }
 
@@ -48,7 +47,8 @@ namespace MyEventPlan.Controllers.ProspectManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Prospect prospect)
+        public ActionResult Create(
+            [Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Prospect prospect)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -71,20 +71,19 @@ namespace MyEventPlan.Controllers.ProspectManagement
                 db.Prospects.Add(prospect);
                 db.SaveChanges();
                 TempData["display"] = "You have successfully added a prospect!";
-                TempData["notificationtype"] = NotificationType.Success.ToString(); 
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
 
             ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
         }
+
         public ActionResult CancelProspect(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Prospect prospect = db.Prospects.Find(id);
+            var prospect = db.Prospects.Find(id);
             prospect.Status = ProspectStausEnum.Cancelled.ToString();
             db.Entry(prospect).State = EntityState.Modified;
             db.SaveChanges();
@@ -97,14 +96,10 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Prospect prospect = db.Prospects.Find(id);
+            var prospect = db.Prospects.Find(id);
             if (prospect == null)
-            {
                 return HttpNotFound();
-            }
             ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
         }
@@ -114,7 +109,11 @@ namespace MyEventPlan.Controllers.ProspectManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventPlannerId,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Prospect prospect)
+        public ActionResult Edit(
+            [Bind(
+                 Include =
+                     "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventPlannerId,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated"
+             )] Prospect prospect)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -123,7 +122,6 @@ namespace MyEventPlan.Controllers.ProspectManagement
                 if (loggedinuser != null)
                 {
                     prospect.LastModifiedBy = loggedinuser.AppUserId;
-
                 }
                 else
                 {
@@ -145,23 +143,20 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Prospect prospect = db.Prospects.Find(id);
+            var prospect = db.Prospects.Find(id);
             if (prospect == null)
-            {
                 return HttpNotFound();
-            }
             return View(prospect);
         }
 
         // POST: Prospects/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Prospect prospect = db.Prospects.Find(id);
+            var prospect = db.Prospects.Find(id);
             db.Prospects.Remove(prospect);
             db.SaveChanges();
             TempData["display"] = "You have deleted the prospect!";
@@ -172,9 +167,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

@@ -9,19 +9,19 @@
                 errorLoading: function() { return"Resultat kunde inte laddas." },
                 inputTooLong: function(e) {
                     var t = e.input.length - e.maximum, n = "Vänligen sudda ut " + t + " tecken";
-                    return n
+                    return n;
                 },
                 inputTooShort: function(e) {
                     var t = e.minimum - e.input.length, n = "Vänligen skriv in " + t + " eller fler tecken";
-                    return n
+                    return n;
                 },
                 loadingMore: function() { return"Laddar fler resultat…" },
                 maximumSelected: function(e) {
                     var t = "Du kan max välja " + e.maximum + " element";
-                    return t
+                    return t;
                 },
                 noResults: function() { return"Inga träffar" },
                 searching: function() { return"Söker…" }
-            }
-        }), { define: e.define, require: e.require }
+            };
+        }), { define: e.define, require: e.require };
 })();
