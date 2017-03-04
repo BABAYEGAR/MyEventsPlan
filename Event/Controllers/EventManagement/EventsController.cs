@@ -19,8 +19,74 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var events = _db.Event.Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            var events = _db.Event.OrderByDescending(n=>n.StartDate).Include(n => n.EventType).Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(events.ToList());
+        }
+        // GET: EventResourceMappings
+        public ActionResult Resources(long? eventId)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var resources = _db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            ViewBag.eventId = eventId;
+            return View(resources.ToList());
+        }
+        // GET: CheckItem
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddResources(int[] table_records, FormCollection collectedValues)
+        {
+            var allMappings = _db.EventResourceMapping.ToList();
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var eventId = Convert.ToInt64(collectedValues["EventId"]);
+            if (table_records != null)
+            {
+                var length = table_records.Length;
+                for (var i = 0; i < length; i++)
+                {
+                    var id = table_records[i];
+                    if (
+                        allMappings.Any(
+                            n =>
+                                (n.ResourceId == id) &&
+                                (n.EventId == eventId)))
+                    {
+                    }
+                    else
+                    {
+                        var eventResource = new EventResourceMapping()
+                        {
+                            DateCreated = DateTime.Now,
+                            CreatedBy = loggedinuser.AppUserId,
+                            DateLastModified = DateTime.Now,
+                            LastModifiedBy = loggedinuser.AppUserId,
+                            EventId = eventId,
+                            ResourceId = id
+                        };
+                        _db.EventResourceMapping.Add(eventResource);
+                        _db.SaveChanges();
+                        TempData["display"] = "you have succesfully added the item(s)!";
+                        TempData["notificationtype"] = NotificationType.Success.ToString();
+                    }
+                }
+            }
+            else
+            {
+                TempData["display"] = "no item has been selected!";
+                TempData["notificationtype"] = NotificationType.Error.ToString();
+                return RedirectToAction("Resources", new { eventId = eventId });
+            }
+            return RedirectToAction("Resources", new { eventId = eventId });
+        }
+        // GET: CheckListItems/UncheckItem/5
+        public ActionResult RemoveItem(long? resourceId,long? eventId)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var mapping = _db.EventResourceMapping.SingleOrDefault(n=>n.EventId == eventId && n.ResourceId == resourceId);
+            _db.Entry(mapping).State = EntityState.Modified;
+            _db.SaveChanges();
+            TempData["resourcemap"] = "you have succesfully removed the item!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Resources", new { eventId = eventId });
         }
         // GET: Events
         public ActionResult Calendar()
@@ -116,7 +182,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _db.Event.Add(@event);
                 _db.SaveChanges();
-                TempData["event"] = "You have successfully added an event!";
+                TempData["display"] = "You have successfully added an event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -164,7 +230,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _db.Entry(@event).State = EntityState.Modified;
                 _db.SaveChanges();
-                TempData["event"] = "You have successfully modified an event!";
+                TempData["display"] = "You have successfully modified an event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -192,7 +258,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var @event = _db.Event.Find(id);
             _db.Event.Remove(@event);
             _db.SaveChanges();
-            TempData["event"] = "You have successfully deleted an event!";
+            TempData["display"] = "You have successfully deleted an event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }

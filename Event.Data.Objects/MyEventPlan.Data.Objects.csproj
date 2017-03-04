@@ -47,11 +47,13 @@
     <Compile Include="Entities\Contact.cs" />
     <Compile Include="Entities\ContactRole.cs" />
     <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\EventResourceMapping.cs" />
     <Compile Include="Entities\Guest.cs" />
     <Compile Include="Entities\GuestList.cs" />
     <Compile Include="Entities\NewsAction.cs" />
     <Compile Include="Entities\News.cs" />
     <Compile Include="Entities\Note.cs" />
+    <Compile Include="Entities\Resource.cs" />
     <Compile Include="Entities\StaffEventMapping.cs" />
     <Compile Include="Entities\EventVendorMapping.cs" />
     <Compile Include="Entities\ProspectContactMapping.cs" />

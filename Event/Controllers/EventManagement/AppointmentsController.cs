@@ -20,7 +20,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.eventId = eventId;
-            var appointments = _db.Appointments.Where(n=>n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId ).Include(a => a.Event);
+            var appointments = _db.Appointments.Where(n=>n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId ).OrderByDescending(n=>n.StartDate).Include(a => a.Event);
             return View(appointments.ToList());
         }
         // GET: Appointments
@@ -104,7 +104,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _db.Appointments.Add(appointment);
                 _db.SaveChanges();
-                TempData["appoint"] = "You have successfully booked an appointment!";
+                TempData["display"] = "You have successfully booked an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index",new {eventId = appointment.EventId});
             }
@@ -148,7 +148,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _db.Entry(appointment).State = EntityState.Modified;
                 _db.SaveChanges();
-                TempData["appoint"] = "You have successfully modified an appointment!";
+                TempData["display"] = "You have successfully modified an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new { eventId = appointment.EventId });
             }

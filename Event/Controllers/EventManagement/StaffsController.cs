@@ -30,7 +30,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.Staff.SingleOrDefault(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StaffId == id));
             if (staff != null)
                 staff.Status = StaffStatus.Activated.ToString();
-            TempData["staff"] = "You have successfully activated the staff!";
+            TempData["display"] = "You have successfully activated the staff!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
 
             db.Entry(staff).State = EntityState.Modified;
@@ -45,7 +45,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.Staff.SingleOrDefault(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StaffId == id));
             if (staff != null)
                 staff.Status = StaffStatus.Deactivated.ToString();
-            TempData["staff"] = "You have successfully activated the staff!";
+            TempData["display"] = "You have successfully activated the staff!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
 
             db.Entry(staff).State = EntityState.Modified;
@@ -101,7 +101,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Staff.Add(staff);
                 db.SaveChanges();
-                TempData["staff"] = "You have successfully added a staff!";
+                TempData["display"] = "You have successfully added a staff!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -149,7 +149,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(staff).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["staff"] = "You have successfully modified a staff!";
+                TempData["display"] = "You have successfully modified a staff!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -177,7 +177,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var staff = db.Staff.Find(id);
             db.Staff.Remove(staff);
             db.SaveChanges();
-            TempData["staff"] = "You have successfully deleted a staff!";
+            TempData["display"] = "You have successfully deleted a staff!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }

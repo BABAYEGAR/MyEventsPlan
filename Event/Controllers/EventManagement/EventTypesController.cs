@@ -65,7 +65,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.EventTypes.Add(eventType);
                 db.SaveChanges();
-                TempData["eventType"] = "You have successfully added an event type!";
+                TempData["display"] = "You have successfully added an event type!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -111,7 +111,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(eventType).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["eventType"] = "You have successfully edit an event type!";
+                TempData["display"] = "You have successfully edit an event type!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -141,7 +141,7 @@ namespace MyEventPlan.Controllers.EventManagement
             EventType eventType = db.EventTypes.Find(id);
             db.EventTypes.Remove(eventType);
             db.SaveChanges();
-            TempData["eventType"] = "You have successfully deleted an event type!";
+            TempData["display"] = "You have successfully deleted an event type!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }

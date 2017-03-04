@@ -67,6 +67,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Guests.Add(guest);
                 db.SaveChanges();
+                TempData["guest"] = "You have successfully modified the guest!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index",new {guestListId = guest.GuestListId});
             }
             return View(guest);
@@ -110,6 +112,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(guest).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["guest"] = "You have successfully modified the guest!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
             return View(guest);
@@ -138,6 +142,8 @@ namespace MyEventPlan.Controllers.EventManagement
             Guest guest = db.Guests.Find(id);
             db.Guests.Remove(guest);
             db.SaveChanges();
+            TempData["guest"] = "You have successfully deleted the guest!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 

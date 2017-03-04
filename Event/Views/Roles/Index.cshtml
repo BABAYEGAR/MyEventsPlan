@@ -4,29 +4,31 @@
     ViewBag.TableHeader = "List of all roles and priviledges";
     Layout = "../Shared/_LayoutTable.cshtml";
 }
-<table class="datatable-1 table table-bordered table-striped display">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
+<div class="table-responsive">
+    <table class="datatable-1 table table-bordered table-striped display">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
 
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.RoleId}, new {@class = "btn btn-xs btn-primary"})
-                @Html.ActionLink("Details", "Details", new {id = item.RoleId}, new {@class = "btn btn-xs btn-default"})
-                @Html.ActionLink("Delete", "Delete", new {id = item.RoleId}, new {@class = "btn btn-xs btn-danger"})
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.RoleId }, new { @class = "btn btn-xs btn-primary" })
+                        @Html.ActionLink("Details", "Details", new { id = item.RoleId }, new { @class = "btn btn-xs btn-default" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.RoleId }, new { @class = "btn btn-xs btn-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>

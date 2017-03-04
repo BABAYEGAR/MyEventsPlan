@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace Event.Data.Objects.Entities
     public class News :  Transport
     {
         public long NewsId { get; set; }
+        [Required]
         public string Content { get; set; }
         public string NewsImage { get; set; }
         public long EventPlannerId { get; set; }

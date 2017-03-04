@@ -38,6 +38,7 @@ namespace Event.Data.Objects.Entities
         public long? EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public virtual EventPlanner EventPlanner { get; set; }
+        public string Status { get; set; }
 
     }
 }

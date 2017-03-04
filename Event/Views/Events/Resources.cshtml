@@ -1,0 +1,59 @@
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@model IEnumerable<Resource>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "Add Resources";
+    Layout = "../Shared/_LayoutTable.cshtml";
+    var db = new EventResourceMappingDataContext();
+    long eventId = ViewBag.eventId;
+}
+
+@using (Html.BeginForm("AddResources", "Events", FormMethod.Post))
+{
+    @Html.Hidden("EventId", eventId)
+    @Html.AntiForgeryToken()
+    <input type="submit" id="sumbitForm" value="Add Item(s)" class="btn btn-success icon-checker pull-right " />
+    <table class="datatable-1 table table-bordered table-striped display">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" id="check-all" class="flat">
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var allMappings = db.EventResourceMapping.SingleOrDefault(
+                    n =>
+                        (n.ResourceId == item.ResourceId) &&
+                        (n.EventId == eventId));
+
+
+                <tr>
+                    <td>
+                        @if (allMappings != null)
+                        {
+                            <a href="@Url.Action("RemoveItem", new {resourceId = item.ResourceId,eventId = eventId})">
+                                <i class="icon-remove-circle"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <input type="checkbox" class="flat" name="table_records" value="@item.ResourceId">
+                        }
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\EventResourceMappingDataContext.cs" />
+    <Compile Include="DataContext\ResourceDataContext.cs" />
     <Compile Include="DataContext\NewsActionDataContext.cs" />
     <Compile Include="DataContext\NewsDataContext.cs" />
     <Compile Include="DataContext\TaskDataContext.cs" />
@@ -216,6 +218,18 @@
     <Compile Include="Migrations\201703022034354_migrate23.Designer.cs">
       <DependentUpon>201703022034354_migrate23.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703031951022_migrate24.cs" />
+    <Compile Include="Migrations\201703031951022_migrate24.Designer.cs">
+      <DependentUpon>201703031951022_migrate24.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703032147186_migrate25.cs" />
+    <Compile Include="Migrations\201703032147186_migrate25.Designer.cs">
+      <DependentUpon>201703032147186_migrate25.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703032336068_migrate26.cs" />
+    <Compile Include="Migrations\201703032336068_migrate26.Designer.cs">
+      <DependentUpon>201703032336068_migrate26.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -337,6 +351,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703022034354_migrate23.resx">
       <DependentUpon>201703022034354_migrate23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703031951022_migrate24.resx">
+      <DependentUpon>201703031951022_migrate24.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703032147186_migrate25.resx">
+      <DependentUpon>201703032147186_migrate25.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703032336068_migrate26.resx">
+      <DependentUpon>201703032336068_migrate26.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,26 +4,27 @@
     ViewBag.TableHeader = "List of all users";
     Layout = "../Shared/_LayoutTable.cshtml";
 }
-<table class="datatable-1 table table-bordered table-striped display" >
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayName("Role")
-        </th>
-        <th>
-            @Html.DisplayName("Name")
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Mobile)
-        </th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
+<div class="table-responsive">
+    <table class="datatable-1 table table-bordered table-striped display">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayName("Role")
+                </th>
+                <th>
+                    @Html.DisplayName("Name")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Mobile)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
     {
         <tr>
             <td>
@@ -43,5 +44,6 @@
             </td>
         </tr>
     }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>

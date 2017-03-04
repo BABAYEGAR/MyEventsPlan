@@ -32,28 +32,30 @@
 
     </div>
 }
-<table class="datatable-1 table table-bordered table-striped display">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive">
+    <table class="datatable-1 table table-bordered table-striped display">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-primary icon-pencil" })
-                    @Html.ActionLink("Guests List", "Index","Guests", new { guestListId = item.GuestListId }, new { @class = "btn btn-xs btn-default icon-list" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-danger icon-remove" })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>Action</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-primary icon-pencil" })
+                        @Html.ActionLink("Guests List", "Index", "Guests", new { guestListId = item.GuestListId }, new { @class = "btn btn-xs btn-default icon-list" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.GuestListId }, new { @class = "btn btn-xs btn-danger icon-remove" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>

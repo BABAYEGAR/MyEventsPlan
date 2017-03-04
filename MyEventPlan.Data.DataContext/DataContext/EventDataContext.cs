@@ -42,6 +42,8 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<News> Newses { get; set; }
         public virtual DbSet<NewsAction> NewsActions { get; set; }
+        public virtual DbSet<Resource> Resources { get; set; }
+        public virtual DbSet<EventResourceMapping> EventResourceMapping { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

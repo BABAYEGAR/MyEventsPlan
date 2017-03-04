@@ -70,7 +70,7 @@ namespace MyEventPlan.Controllers.EventManagement
             }
             else
             {
-                TempData["training"] = "no item has been selected!";
+                TempData["item"] = "no item has been selected!";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
                 return RedirectToAction("Index", new {checkListId = checkListId});
             }
@@ -167,7 +167,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(checkListItem).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { checkListId = checkListItem.CheckListId });
             }
             ViewBag.CheckListId = new SelectList(db.CheckLists, "CheckListId", "Name", checkListItem.CheckListId);
             ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", checkListItem.EventId);
@@ -192,9 +192,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             var checkListItem = db.CheckListItems.Find(id);
+            long checkListId = checkListItem.CheckListId;
             db.CheckListItems.Remove(checkListItem);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { checkListId = checkListId });
         }
 
         protected override void Dispose(bool disposing)

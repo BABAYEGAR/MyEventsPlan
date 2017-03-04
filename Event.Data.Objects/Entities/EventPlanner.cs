@@ -26,6 +26,7 @@ namespace Event.Data.Objects.Entities
         public string Mobile { get; set; }
         [Required]
         [PasswordPropertyText]
+        [Compare("ConfirmPassword")]
         public string Password { get; set; }
         [DisplayName("Confirm Pasword")]
         [Required]
@@ -47,5 +48,6 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<GuestList> GuestLists { get; set; }
         public IEnumerable<Guest> Guests { get; set; }
         public IEnumerable<News> Newses { get; set; }
+        public IEnumerable<Resource> Resources { get; set; }
     }
 }

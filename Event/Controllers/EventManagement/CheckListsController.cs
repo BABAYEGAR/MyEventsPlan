@@ -136,9 +136,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             CheckList checkList = db.CheckLists.Find(id);
+            long eventId = checkList.EventId;
             db.CheckLists.Remove(checkList);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { eventId = eventId });
         }
 
         protected override void Dispose(bool disposing)

@@ -70,6 +70,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.GuestLists.Add(guestList);
                 db.SaveChanges();
+                TempData["display"] = "You have successfully added a new guest list!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index",new {eventId = guestList.EventId});
             }
             return View(guestList);
@@ -113,6 +115,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(guestList).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["display"] = "You have successfully modified the guest list!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new { eventId = guestList.EventId });
             }
             return View(guestList);
@@ -139,9 +143,12 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             GuestList guestList = db.GuestLists.Find(id);
+            long eventId = guestList.EventId;
             db.GuestLists.Remove(guestList);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            TempData["display"] = "You have successfully deleted the guest list!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Index", new { eventId = guestList.EventId });
         }
 
         protected override void Dispose(bool disposing)

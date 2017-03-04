@@ -5,7 +5,8 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m=>m.NoteId)
     @Html.HiddenFor(m=>m.EventId)
-    @Html.HiddenFor(m=>m.NoteId)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.DateCreated)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="control-group">
         @Html.LabelFor(model => model.Title, new { @class = "control-label" })
@@ -23,7 +24,7 @@
     </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Update Note" class="btn btn-default" />
+            <input type="submit" value="Update" class="btn btn-default" />
         </div>
     </div>
 }

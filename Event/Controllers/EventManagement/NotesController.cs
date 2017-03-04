@@ -70,7 +70,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Notes.Add(note);
                 db.SaveChanges();
-                TempData["note"] = "You have successfully added a built in note!";
+                TempData["display"] = "You have successfully added a built in note!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index",new {eventId = note.EventId});
             }
@@ -115,7 +115,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(note).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["note"] = "You have successfully modified the built in note!";
+                TempData["display"] = "You have successfully modified the built in note!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index",new {eventId = note.EventId});
             }
@@ -143,9 +143,12 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             Note note = db.Notes.Find(id);
+            long eventId = note.EventId;
             db.Notes.Remove(note);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            TempData["display"] = "You have successfully deleted the built in note!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Index", new { eventId = eventId });
         }
 
         protected override void Dispose(bool disposing)

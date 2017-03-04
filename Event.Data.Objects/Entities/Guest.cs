@@ -18,6 +18,7 @@ namespace Event.Data.Objects.Entities
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
         public long EventId { get; set; }
         [ForeignKey("EventId")]

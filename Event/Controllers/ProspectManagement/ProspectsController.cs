@@ -17,7 +17,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var prospects = db.Prospects.Include(p => p.EventType).Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
+            var prospects = db.Prospects.OrderByDescending(n=>n.StartDate).Include(p => p.EventType).Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(prospects.ToList());
         }
 
@@ -60,6 +60,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
                     prospect.CreatedBy = loggedinuser.AppUserId;
                     prospect.LastModifiedBy = loggedinuser.AppUserId;
                     prospect.EventPlannerId = loggedinuser.EventPlannerId;
+                    prospect.Status = ProspectStausEnum.Active.ToString();
                 }
                 else
                 {
@@ -69,11 +70,27 @@ namespace MyEventPlan.Controllers.ProspectManagement
                 }
                 db.Prospects.Add(prospect);
                 db.SaveChanges();
+                TempData["display"] = "You have successfully added a prospect!";
+                TempData["notificationtype"] = NotificationType.Success.ToString(); 
                 return RedirectToAction("Index");
             }
 
             ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
+        }
+        public ActionResult CancelProspect(long? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Prospect prospect = db.Prospects.Find(id);
+            prospect.Status = ProspectStausEnum.Cancelled.ToString();
+            db.Entry(prospect).State = EntityState.Modified;
+            db.SaveChanges();
+            TempData["display"] = "You have successfully cancelled the prospect!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Index");
         }
 
         // GET: Prospects/Edit/5
@@ -97,7 +114,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,EventPlannerId,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Prospect prospect)
+        public ActionResult Edit([Bind(Include = "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventPlannerId,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated")] Prospect prospect)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -116,6 +133,8 @@ namespace MyEventPlan.Controllers.ProspectManagement
                 }
                 db.Entry(prospect).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["display"] = "You have successfully modified the prospect!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
             ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
@@ -145,6 +164,8 @@ namespace MyEventPlan.Controllers.ProspectManagement
             Prospect prospect = db.Prospects.Find(id);
             db.Prospects.Remove(prospect);
             db.SaveChanges();
+            TempData["display"] = "You have deleted the prospect!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 

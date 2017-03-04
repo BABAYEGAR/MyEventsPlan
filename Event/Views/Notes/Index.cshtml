@@ -32,28 +32,31 @@
 
     </div>
 }
-<table class="datatable-1 table table-bordered table-striped display">
-    <thead>
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.NoteId}, new {@class = "btn btn-xs btn-primary"})
-                @Html.ActionLink("Details", "Details", new {id = item.NoteId}, new {@class = "btn btn-xs btn-default"})
-                @Html.ActionLink("Delete", "Delete", new {id = item.NoteId}, new {@class = "btn btn-xs btn-danger"})
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="datatable-1 table table-bordered table-striped display">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+
+                        @Html.ActionLink("Edit", "Edit", new { id = item.NoteId }, new { @class = "btn btn-xs btn-primary" })
+                        @Html.ActionLink("Details", "Details", new { id = item.NoteId }, new { @class = "btn btn-xs btn-default" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.NoteId }, new { @class = "btn btn-xs btn-danger" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>

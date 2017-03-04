@@ -1,56 +1,22 @@
 ﻿@model Event.Data.Objects.Entities.Contact
 @{
-    ViewBag.Title = "Edit";
-    ViewBag.Header = "Create a new contact";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Edit", "Contacts", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="control-group">
-        @Html.LabelFor(model => model.Title, new { @class = "control-label" })
-        <div class="controls">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>
 
-    <div class="control-group">
-        @Html.LabelFor(model => model.Firstname, new { @class = "control-label" })
-        <div class="controls">
-            @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <a href="@Url.Action("Index")"><span aria-hidden="true">&times;</span></a>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit Staff</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EditContactModal", Model);
+                }
+            </div>
+            </div>
         </div>
     </div>
-
-    <div class="control-group">
-        @Html.LabelFor(model => model.Lastname, new { @class = "control-label" })
-        <div class="controls">
-            @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="control-group">
-        @Html.LabelFor(model => model.Email, new { @class = "control-label" })
-        <div class="controls">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="control-group">
-        @Html.LabelFor(model => model.Mobile, new { @class = "control-label" })
-        <div class="controls">
-            @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="control-group">
-        <div class="controls">
-            <input type="submit" value="Add Contact" class="btn btn-default" />
-        </div>
-    </div>
-}

@@ -66,7 +66,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                 }
                 db.VendorService.Add(vendorService);
                 db.SaveChanges();
-                TempData["service"] = "You have successfully added a vendor service!";
+                TempData["display"] = "You have successfully added a vendor service!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -113,7 +113,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                 }
                 db.Entry(vendorService).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["service"] = "You have successfully modified a vendor service!";
+                TempData["display"] = "You have successfully modified a vendor service!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -143,7 +143,7 @@ namespace MyEventPlan.Controllers.VendorManagement
             VendorService vendorService = db.VendorService.Find(id);
             db.VendorService.Remove(vendorService);
             db.SaveChanges();
-            TempData["service"] = "You have successfully deleted a vendor service!";
+            TempData["display"] = "You have successfully deleted a vendor service!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }

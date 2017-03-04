@@ -62,7 +62,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Contact.Add(contact);
                 db.SaveChanges();
-                TempData["contact"] = "You have successfully added a contact!";
+                TempData["display"] = "You have successfully added a contact!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
@@ -103,6 +103,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 db.Entry(contact).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["display"] = "You have successfully modified the contact!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
             return View(contact);
@@ -131,6 +133,8 @@ namespace MyEventPlan.Controllers.EventManagement
             Contact contact = db.Contact.Find(id);
             db.Contact.Remove(contact);
             db.SaveChanges();
+            TempData["display"] = "You have successfully deleted the contact!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
 

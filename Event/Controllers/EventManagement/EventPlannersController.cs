@@ -54,7 +54,7 @@ namespace MyEventPlan.Controllers.EventManagement
             if (ModelState.IsValid)
             {
                 var password = new Md5Ecryption().ConvertStringToMd5Hash(collectedValues["ConfirmPassword"]);
-                var role = db.Roles.SingleOrDefault(m => m.Name == "Event Planner");
+                var role = db.Roles.FirstOrDefault(m => m.Name == "Event Planner");
                 eventPlanner.RoleId = role?.RoleId;
                 eventPlanner.Password = password;
                 eventPlanner.ConfirmPassword = password;
@@ -84,7 +84,7 @@ namespace MyEventPlan.Controllers.EventManagement
 
 
                 appuser.EventPlannerId = eventPlanner.EventPlannerId;
-                appuser.Role = eventPlanner.Role;
+                appuser.RoleId = eventPlanner.RoleId;
 
 
                 dbc.AppUsers.Add(appuser);

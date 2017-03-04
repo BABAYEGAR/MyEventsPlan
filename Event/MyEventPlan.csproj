@@ -202,6 +202,7 @@
     <Compile Include="Controllers\EventManagement\CheckListsController.cs" />
     <Compile Include="Controllers\EventManagement\ContactsController.cs" />
     <Compile Include="Controllers\EventManagement\EventPlannersController.cs" />
+    <Compile Include="Controllers\EventManagement\EventResourceMappingsController.cs" />
     <Compile Include="Controllers\EventManagement\EventsController.cs" />
     <Compile Include="Controllers\EventManagement\EventTypesController.cs" />
     <Compile Include="Controllers\EventManagement\GuestListsController.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Controllers\MappingManagement\StaffEventMappingsController.cs" />
     <Compile Include="Controllers\NewsManagement\NewsController.cs" />
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
+    <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorServicesController.cs" />
@@ -1195,7 +1197,6 @@
     <Content Include="Views\Appointments\Details.cshtml" />
     <Content Include="Views\Appointments\Edit.cshtml" />
     <Content Include="Views\Appointments\Index.cshtml" />
-    <Content Include="Views\Events\CreateModal.cshtml" />
     <Content Include="Views\Shared\_LayoutModal.cshtml" />
     <Content Include="Views\Contacts\Create.cshtml" />
     <Content Include="Views\Contacts\Delete.cshtml" />
@@ -1251,6 +1252,26 @@
     <Content Include="Views\Shared\CreateNews.cshtml" />
     <Content Include="Views\Shared\_LayoutNews.cshtml" />
     <Content Include="Views\News\_LikeOrDislikePartial.cshtml" />
+    <Content Include="Views\Resources\Create.cshtml" />
+    <Content Include="Views\Resources\Delete.cshtml" />
+    <Content Include="Views\Resources\Details.cshtml" />
+    <Content Include="Views\Resources\Edit.cshtml" />
+    <Content Include="Views\Resources\Index.cshtml" />
+    <Content Include="Views\Shared\CreateResourceModal.cshtml" />
+    <Content Include="Views\Shared\EditResourceModal.cshtml" />
+    <Content Include="Views\Shared\EditGuestModal.cshtml" />
+    <Content Include="Views\Shared\EditGuestListModal.cshtml" />
+    <Content Include="Views\Shared\EditVendorModal.cshtml" />
+    <Content Include="Views\Shared\EditStaffModal.cshtml" />
+    <Content Include="Views\Shared\EditContactModal.cshtml" />
+    <Content Include="Views\Shared\EditCheckListItemModal.cshtml" />
+    <Content Include="Views\Shared\EditCheckListModal.cshtml" />
+    <Content Include="Views\EventResourceMappings\Create.cshtml" />
+    <Content Include="Views\EventResourceMappings\Delete.cshtml" />
+    <Content Include="Views\EventResourceMappings\Details.cshtml" />
+    <Content Include="Views\EventResourceMappings\Edit.cshtml" />
+    <Content Include="Views\EventResourceMappings\Index.cshtml" />
+    <Content Include="Views\Events\Resources.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
