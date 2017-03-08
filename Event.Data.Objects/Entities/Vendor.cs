@@ -17,12 +17,19 @@ namespace Event.Data.Objects.Entities
         [Required]
         public string Mobile { get; set; }
         [Required]
+        public string BusinessName { get; set; }
+        [Required]
+        public string BusinessContact { get; set; }
+        [Required]
         public  long? VendorServiceId { get; set; }
         [ForeignKey("VendorServiceId")]
         public virtual VendorService VendorService { get; set; }
         public long? EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public virtual EventPlanner EventPlanner { get; set; }
+        public long? LocationId { get; set; }
+        [ForeignKey("LocationId")]
+        public virtual Location Location { get; set; }
 
         public  IEnumerable<EventVendorMapping> EventVendorMappings { get; set; }
     }

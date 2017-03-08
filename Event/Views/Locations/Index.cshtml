@@ -1,0 +1,60 @@
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<Location>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "List of all locations";
+    Layout = "../Shared/_LayoutTable.cshtml";
+    var locations = new Location();
+}
+@section add {
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Location
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new location</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+
+                        Html.RenderPartial("CreateLocationModal", locations);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<div class="table-responsive">
+    <table class="datatable-1 table table-bordered table-striped display">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.LocationId }, new { @class = "btn btn-xs btn-default" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

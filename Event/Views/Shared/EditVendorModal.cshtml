@@ -2,7 +2,7 @@
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Create", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Edit", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})

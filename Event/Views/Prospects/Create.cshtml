@@ -24,7 +24,7 @@
     <div class="control-group">
         @Html.LabelFor(model => model.Color, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor"}})
+            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor {valueElement:null" } })
             @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
         </div>
     </div>

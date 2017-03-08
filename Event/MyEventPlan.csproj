@@ -218,6 +218,7 @@
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
+    <Compile Include="Controllers\VendorManagement\LocationsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorServicesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -230,6 +231,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -449,6 +451,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="event.xml" />
+    <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -1272,6 +1275,12 @@
     <Content Include="Views\EventResourceMappings\Edit.cshtml" />
     <Content Include="Views\EventResourceMappings\Index.cshtml" />
     <Content Include="Views\Events\Resources.cshtml" />
+    <Content Include="Views\Locations\Create.cshtml" />
+    <Content Include="Views\Locations\Delete.cshtml" />
+    <Content Include="Views\Locations\Details.cshtml" />
+    <Content Include="Views\Locations\Edit.cshtml" />
+    <Content Include="Views\Locations\Index.cshtml" />
+    <Content Include="Views\Shared\CreateLocationModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

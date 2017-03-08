@@ -96,6 +96,12 @@
                     <a href="@Url.Action("Index", "VendorServices")"><i class="menu-icon icon-bold"></i> Vendor Services </a>
                 </li>
             }
+            @if (role.ManageVendorServices)
+            {
+                <li>
+                    <a href="@Url.Action("Index", "Locations")"><i class="menu-icon icon-map-marker"></i> Location </a>
+                </li>
+            }
             <li>
                 <a href="@Url.Action("Index", "Resources")"><i class="menu-icon icon-cloud"></i>Resources </a>
             </li>

@@ -50,6 +50,7 @@
     <Compile Include="Entities\EventResourceMapping.cs" />
     <Compile Include="Entities\Guest.cs" />
     <Compile Include="Entities\GuestList.cs" />
+    <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\NewsAction.cs" />
     <Compile Include="Entities\News.cs" />
     <Compile Include="Entities\Note.cs" />
