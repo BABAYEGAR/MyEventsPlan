@@ -11,6 +11,7 @@ namespace Event.Data.Objects.Entities
         public string Name { get; set; }
         [Required]
         public string Address { get; set; }
+        public string Image { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }

@@ -356,8 +356,11 @@
     <Content Include="Content\Dashboard\datatables.net\js\jquery.dataTables.js" />
     <Content Include="Content\Dashboard\datatables.net\js\jquery.dataTables.min.js" />
     <Content Include="Content\Dashboard\datatables.net\License.txt" />
+    <Content Include="Content\Dashboard\images\1272.jpg" />
     <Content Include="Content\Dashboard\images\bg.png" />
+    <Content Include="Content\Dashboard\images\download.jpg" />
     <Content Include="Content\Dashboard\images\icons\css\font-awesome.css" />
+    <Content Include="Content\Dashboard\images\images.jpg" />
     <Content Include="Content\Dashboard\images\img.jpg" />
     <Content Include="Content\Dashboard\images\jquery-ui\picker.png" />
     <Content Include="Content\Dashboard\images\user.png" />
@@ -1254,7 +1257,7 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Shared\CreateNews.cshtml" />
     <Content Include="Views\Shared\_LayoutNews.cshtml" />
-    <Content Include="Views\News\_LikeOrDislikePartial.cshtml" />
+    <Content Include="Views\Shared\_LikeOrDislikePartial.cshtml" />
     <Content Include="Views\Resources\Create.cshtml" />
     <Content Include="Views\Resources\Delete.cshtml" />
     <Content Include="Views\Resources\Details.cshtml" />
@@ -1281,6 +1284,8 @@
     <Content Include="Views\Locations\Edit.cshtml" />
     <Content Include="Views\Locations\Index.cshtml" />
     <Content Include="Views\Shared\CreateLocationModal.cshtml" />
+    <Content Include="Views\Shared\_LayoutVendors.cshtml" />
+    <Content Include="Views\Vendors\ListOfVendors.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

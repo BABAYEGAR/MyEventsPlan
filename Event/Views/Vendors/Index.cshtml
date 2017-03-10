@@ -7,13 +7,14 @@
     var vendor = new Vendor();
 }
 @section add {
+@Html.ActionLink("List Of vendors", "ListOfVendors", new { }, new { @class = "btn btn-xs btn-primary" })
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+    @*<button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
         Add vendor
-    </button>
+    </button>*@
 
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -31,7 +32,7 @@
             </div>
         </div>
 
-    </div>
+    </div>*@
 }
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">

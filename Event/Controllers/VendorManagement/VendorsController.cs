@@ -33,6 +33,12 @@ namespace MyEventPlan.Controllers.VendorManagement
                 return HttpNotFound();
             return View(vendor);
         }
+        // GET: Vendors/ListOfVendors
+        public ActionResult ListOfVendors()
+        {
+            return View(db.Vendors.Include(n=>n.Location));
+        }
+
 
         // GET: Vendors/Create
         public ActionResult Create()

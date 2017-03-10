@@ -4,6 +4,7 @@
     {
         ProfileImage,
         NewsImage,
+        vendorImage,
 
     }
 }
