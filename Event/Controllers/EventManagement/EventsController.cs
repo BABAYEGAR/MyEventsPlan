@@ -100,14 +100,6 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             return View();
         }
-
-        // GET: EventsModal
-        public ActionResult CreateModal()
-        {
-            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
-            return View();
-        }
-
         //// GET: Events
         public JsonResult GetMyEvents()
         {
@@ -117,7 +109,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 select new
                 {
                     id = e.EventId,
-                    title = e.Name + " " + (Convert.ToDateTime(e.EndTime) - Convert.ToDateTime(e.StartTime)) + " mins",
+                    title = e.Name + " " + (Convert.ToDateTime(e.StartDate.ToShortTimeString()) - Convert.ToDateTime(e.EndDate.ToShortTimeString())) + " mins",
                     start = e.StartDate,
                     end = e.EndDate,
                     color = e.Color,
@@ -135,6 +127,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var @event = _db.Event.Find(id);
             if (@event == null)
                 return HttpNotFound();
+            Session["event"] = @event;
             return View(@event);
         }
 
@@ -172,7 +165,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Event.Data.Objects.Entities.Event @event)
+            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,EndDate")] Event.Data.Objects.Entities.Event @event,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
@@ -186,6 +179,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.LastModifiedBy = loggedinuser.AppUserId;
                     @event.Status = EventStausEnum.New.ToString();
                     @event.EventPlannerId = loggedinuser.EventPlannerId;
+                    @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                    @event.EndTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                 }
                 else
                 {

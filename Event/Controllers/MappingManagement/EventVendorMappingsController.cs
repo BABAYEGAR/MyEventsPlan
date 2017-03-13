@@ -168,7 +168,36 @@ namespace MyEventPlan.Controllers.MappingManagement
             _db.SaveChanges();
             return RedirectToAction("Index", new {id = eventId});
         }
-
+        public ActionResult AddVendorToEvent(long? vendorId, long eventId)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            EventVendorMapping eventVendorMapping = new EventVendorMapping();
+            if (ModelState.IsValid)
+            {
+                eventVendorMapping.DateCreated = DateTime.Now;
+                eventVendorMapping.DateLastModified = DateTime.Now;
+                if (loggedinuser != null)
+                {
+                    eventVendorMapping.CreatedBy = loggedinuser.AppUserId;
+                    eventVendorMapping.LastModifiedBy = loggedinuser.AppUserId;
+                    eventVendorMapping.EventPlannerId = loggedinuser.EventPlannerId;
+                    eventVendorMapping.VendorId = vendorId;
+                    eventVendorMapping.EventId = eventId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
+                _db.EventVendorMapping.Add(eventVendorMapping);
+                _db.SaveChanges();
+                TempData["display"] = "You have successfully assigned the vendor to the event!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("ListOfVendors","Vendors");
+            }
+            return View(eventVendorMapping);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

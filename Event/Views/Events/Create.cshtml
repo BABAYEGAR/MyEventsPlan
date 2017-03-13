@@ -5,8 +5,9 @@
     Layout = "../Shared/_LayoutForm.cshtml";
 }
 @section css{
-<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
 }
 @using (Html.BeginForm("Create", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
@@ -23,7 +24,7 @@
     <div class="control-group">
         @Html.LabelFor(model => model.Color, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor {valueElement:null}" } })
+            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor",id = "color"}})
             @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
         </div>
     </div>
@@ -47,34 +48,17 @@
     <div class="control-group">
         @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "span8 startDate",id = "datetimepicker6" } })
+            @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "span8", id = "datetimepicker6"}})
             @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
         @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8 endDate",id = "datetimepicker7" } })
+            @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "datetimepicker7"}})
             @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
         </div>
     </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.StartTime, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.StartTime, new {htmlAttributes = new {@class = "span8 timepicker"}})
-            @Html.ValidationMessageFor(model => model.StartTime, "", new {@class = "text-danger"})
-        </div>
-    </div>
-
-
-    <div class="control-group">
-        @Html.LabelFor(model => model.EndTime, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.EndTime, new {htmlAttributes = new {@class = "span8 timepicker"}})
-            @Html.ValidationMessageFor(model => model.EndTime, "", new {@class = "text-danger"})
-        </div>
-    </div>
-
 
     <div class="control-group">
         <div class="controls">
@@ -84,21 +68,28 @@
 }
 @section scripts
 {
-<script src="~/Scripts/moment.min.js"></script>
-<script src="~/Scripts/bootstrap-datetimepicker.js"></script>
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
     <script src="~/Scripts/jscolor.min.js"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#datetimepicker6').datetimepicker();
-        $('#datetimepicker7').datetimepicker({
-            useCurrent: false //Important! See issue #1075
-        });
-        $("#datetimepicker6").on("dp.change", function (e) {
-            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
-        });
-        $("#datetimepicker7").on("dp.change", function (e) {
-            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
-        });
-    });
-</script>
+    <script type="text/javascript">
+        jQuery('#datetimepicker6')
+            .datetimepicker({
+                format:'m-d-Y h:i',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: @DateTime.Now.ToShortDateString(),
+                    });
+                },
+            });
+        jQuery('#datetimepicker7')
+         .datetimepicker({
+             format:'m-d-Y h:i',
+             onShow: function (ct) {
+                 this.setOptions({
+                     minDate: jQuery('#datetimepicker6').val() ? jQuery('#datetimepicker6').val() : false
+                 });
+             },
+         });
+ 
+    </script>
 }

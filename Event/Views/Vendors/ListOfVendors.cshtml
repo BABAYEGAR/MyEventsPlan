@@ -1,119 +1,211 @@
-﻿@model IEnumerable<Event.Data.Objects.Entities.Vendor>
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model IEnumerable<Vendor>
 @{
     ViewBag.Title = "List";
     ViewBag.Header = "List of all vendors";
     Layout = "../Shared/_LayoutVendors.cshtml";
+    var categories = new VendorServiceDataContext();
+    var location = new LocationDataContext();
+    var mapping = new EventVendorMappingDataContext();
+    var vendorCategories = categories.VendorService.ToList();
+    var vendorLocations = location.Locations.ToList();
+    var events = Session["event"] as Event;
+    var vendor = new Vendor();
 }
-<div class="module-option clearfix">
-    <form>
-        <div class="input-append pull-left">
-            <input type="text" class="span3" placeholder="Filter by name...">
-            <button type="submit" class="btn">
-                <i class="icon-search"></i>
-            </button>
-        </div>
-    </form>
-    <div class="btn-group pull-right" data-toggle="buttons-radio">
-        <button type="button" class="btn">
-            All
-        </button>
-        <button type="button" class="btn">
-            Male
-        </button>
-        <button type="button" class="btn">
-            Female
-        </button>
-    </div>
-</div>
-<div class="module-body">
- 
+@section header{
+    <div class="header-bottom">
+        <!--header-bottom-->
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="mainmenu pull-left">
+                        <ul class="nav navbar-nav collapse navbar-collapse">
+                            <li class="dropdown">
+                                <a href="#" class="active">App Navigation<i class="fa fa-angle-down"></i></a>
+                                <ul role="menu" class="sub-menu">
+                                    <li>
+                                        <a href="@Url.Action("Index", "Events")" class="active">Event Dashboard</a>
+                                    </li>
+                                </ul>
 
-        @foreach (var item in Model)
-        {
-            <div class="row-fluid">
+                            </li>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary btn-xs icon-plus" data-toggle="modal" data-target="#myModal">
+                                Add vendor
+                            </button>
 
-                @{ int index = Model.ToList().IndexOf(item); };
-                @if (index % 2 == 1)
-                {
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">Add a new vendor</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @{
 
-                <div class="span6">
-                    <div class="media user">
-                        <a class="media-avatar pull-left" href="#">
-                            <img src="~/UploadedFiles/vendorImage/@item.Image">
-                        </a>
-                        <div class="media-body">
-                            <h3 class="media-title">
-                                @item.BusinessName
-                            </h3>
-                            <p>
-                                <small class="muted">@item.Location.Name</small>
-                            </p>
-                            <div class="media-option btn-group shaded-icon">
-                                <button class="btn btn-small">
-                                    <i class="icon-envelope"></i>
-                                </button>
-                                <button class="btn btn-small">
-                                    <i class="icon-share-alt"></i>
-                                </button>
+                                                Html.RenderPartial("CreateVendorModal", vendor);
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
+                        </ul>
                     </div>
                 </div>
-                }
-                @if (index % 2 == 0)
-                {
-                    <div class="span6">
-                        <div class="media user">
-                            <a class="media-avatar pull-left" href="#">
-                                <img src="~/UploadedFiles/vendorImage/@item.Image">
-                            </a>
-                            <div class="media-body">
-                                <h3 class="media-title">
-                                    @item.BusinessName
-                                </h3>
-                                <p>
-                                    <small class="muted">@item.Location.Name</small>
-                                </p>
-                                <div class="media-option btn-group shaded-icon">
-                                    <button class="btn btn-small">
-                                        <i class="icon-envelope"></i>
-                                    </button>
-                                    <button class="btn btn-small">
-                                        <i class="icon-share-alt"></i>
-                                    </button>
+                <div class="col-sm-3">
+                    <div class="search_box pull-right">
+                        <input type="text" placeholder="Search"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="left-sidebar">
+                    <h2>Category</h2>
+                    <div class="panel-group category-products" id="accordian">
+                        <!--category-productsr-->
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordian" href="#womens">
+                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        Vendor Categories
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="womens" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        @foreach (var item in vendorCategories)
+                                        {
+                                            <li>
+                                                e
+                                                <a href="">@item.ServiceName</a>
+                                            </li>
+                                        }
+                                    </ul>
                                 </div>
                             </div>
                         </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordian" href="#location">
+                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                        Locations
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="location" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ul>
+                                        @foreach (var item in vendorLocations)
+                                        {
+                                            <li>
+                                                e
+                                                <a href="">@item.Name</a>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--/category-productsr-->
+
+                    <div class="price-range">
+                        <!--price-range-->
+                        <h2>Price Range</h2>
+                        <div class="well">
+                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br/>
+                            <b>$ 0</b> <b class="pull-right">$ 600</b>
+                        </div>
                     </div>
+                    <!--/price-range-->
 
-                }
+                </div>
             </div>
-        }
 
-
-
-    <br/>
-    <div class="pagination pagination-centered">
-        <ul>
-            <li>
-                <a href="#">
-                    <i class="icon-double-angle-left"></i>
-                </a>
-            </li>
-            <li>
-                <a href="#">1</a>
-            </li>
-            <li>
-                <a href="#">2</a>
-            </li>
-            <li>
-                <a href="#">3</a>
-            </li>
-            <li>
-                <a href="#">
-                    <i class="icon-double-angle-right"></i>
-                </a>
-            </li>
-        </ul>
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <!--features_items-->
+                    <h2 class="title text-center">List Of Vendors</h2>
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="~/Content/VendorCss/images/shop/product12.jpg" alt=""/>
+                                        <h2>@item.BusinessName</h2>
+                                        <p>@item.Location.Name</p>
+                                        @if ((events != null) && mapping.EventVendorMapping.Any(n => (n.VendorId == item.VendorId) && (n.EventId == events.EventId)))
+                                        {
+                                            <a href="@if (events != null)
+                                                     {
+                                                         @Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventid = events.EventId})
+                                                     }" class="btn btn-default add-to-cart">
+                                                <i class="fa fa-trash-o"></i>Remove Vendor
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@if (events != null)
+                                                     {
+                                                         @Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventid = events.EventId})
+                                                     }" class="btn btn-default add-to-cart">
+                                                <i class="fa fa-plus-square-o"></i>Add to event
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li>
+                                            <a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="fa fa-plus-square"></i>Add to compare</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <ul class="pagination">
+                        <li class="active">
+                            <a href="">1</a>
+                        </li>
+                        <li>
+                            <a href="">2</a>
+                        </li>
+                        <li>
+                            <a href="">3</a>
+                        </li>
+                        <li>
+                            <a href="">&raquo;</a>
+                        </li>
+                    </ul>
+                </div><!--features_items-->
+            </div>
+        </div>
     </div>
-</div>
+</section>

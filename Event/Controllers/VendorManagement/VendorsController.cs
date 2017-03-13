@@ -36,6 +36,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         // GET: Vendors/ListOfVendors
         public ActionResult ListOfVendors()
         {
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
             return View(db.Vendors.Include(n=>n.Location));
         }
 

@@ -26,14 +26,16 @@ namespace Event.Data.Objects.Entities
         public long TargetBudget { get; set; }
         [Required]
         [DisplayName("Start Date")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime StartDate { get; set; }
-        [Required]
         [DisplayName("Start Time")]
         public string StartTime { get; set; }
         [Required]
         [DisplayName("End Date")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime EndDate { get; set; }
-        [Required]
         [DisplayName("End Time")]
         public string EndTime { get; set; }
         [DisplayName("Event Planner")]

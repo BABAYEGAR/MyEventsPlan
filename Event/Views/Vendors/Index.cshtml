@@ -7,32 +7,8 @@
     var vendor = new Vendor();
 }
 @section add {
-@Html.ActionLink("List Of vendors", "ListOfVendors", new { }, new { @class = "btn btn-xs btn-primary" })
-    <!-- Button trigger modal -->
-    @*<button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
-        Add vendor
-    </button>*@
+@Html.ActionLink("View List Of vendors", "ListOfVendors", new { }, new { @class = "btn btn-xs btn-primary pull-right" })
 
-    <!-- Modal -->
-    @*<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Add a new vendor</h4>
-                </div>
-                <div class="modal-body">
-                    @{
-
-                        Html.RenderPartial("CreateVendorModal", vendor);
-                    }
-                </div>
-            </div>
-        </div>
-
-    </div>*@
 }
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">
