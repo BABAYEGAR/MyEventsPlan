@@ -40,13 +40,11 @@
                     @item.EndDate.ToShortDateString()
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new {id = item.ProspectId}, new {@class = "btn btn-xs btn-primary"})
+                    @Html.ActionLink("Open", "Details", new { id = item.ProspectId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
                     @if (item.Status == ProspectStausEnum.Active.ToString())
                     {
                         @Html.ActionLink("Cancel", "CancelProspect", new {id = item.ProspectId}, new {@class = "btn btn-xs btn-warning"})
                     }
-                    @Html.ActionLink("Details", "Details", new {id = item.ProspectId}, new {@class = "btn btn-xs btn-default"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.ProspectId}, new {@class = "btn btn-xs btn-danger"})
                 </td>
             </tr>
         }

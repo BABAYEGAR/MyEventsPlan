@@ -200,6 +200,7 @@
     <Compile Include="Controllers\EventManagement\AppUsersController.cs" />
     <Compile Include="Controllers\EventManagement\CheckListItemsController.cs" />
     <Compile Include="Controllers\EventManagement\CheckListsController.cs" />
+    <Compile Include="Controllers\EventManagement\ClientsController.cs" />
     <Compile Include="Controllers\EventManagement\ContactsController.cs" />
     <Compile Include="Controllers\EventManagement\EventPlannersController.cs" />
     <Compile Include="Controllers\EventManagement\EventResourceMappingsController.cs" />
@@ -1364,6 +1365,17 @@
     <Content Include="Views\Shared\CreateLocationModal.cshtml" />
     <Content Include="Views\Shared\_LayoutVendors.cshtml" />
     <Content Include="Views\Vendors\ListOfVendors.cshtml" />
+    <Content Include="Views\Vendors\Register.cshtml" />
+    <Content Include="Views\Shared\_PartialVendorSideBar.cshtml" />
+    <Content Include="Views\Vendors\VendorDetails.cshtml" />
+    <Content Include="Views\Vendors\AllVendors.cshtml" />
+    <Content Include="Views\Clients\Create.cshtml" />
+    <Content Include="Views\Clients\Delete.cshtml" />
+    <Content Include="Views\Clients\Details.cshtml" />
+    <Content Include="Views\Clients\Edit.cshtml" />
+    <Content Include="Views\Clients\Index.cshtml" />
+    <Content Include="Views\Shared\CreateClientModal.cshtml" />
+    <Content Include="Views\Shared\EditClientModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

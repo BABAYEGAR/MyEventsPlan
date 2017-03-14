@@ -50,9 +50,8 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new {id = item.GuestListId}, new {@class = "btn btn-xs btn-primary icon-pencil"})
+                    @Html.ActionLink("Open", "Details", new { id = item.GuestListId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
                     @Html.ActionLink("Guests List", "Index", "Guests", new {guestListId = item.GuestListId}, new {@class = "btn btn-xs btn-default icon-list"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.GuestListId}, new {@class = "btn btn-xs btn-danger icon-remove"})
                 </td>
             </tr>
         }

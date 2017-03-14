@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\ClientDataContext.cs" />
     <Compile Include="DataContext\EventResourceMappingDataContext.cs" />
     <Compile Include="DataContext\LocationDataContext.cs" />
     <Compile Include="DataContext\ResourceDataContext.cs" />
@@ -243,6 +244,34 @@
     <Compile Include="Migrations\201703102125263_migrate29.Designer.cs">
       <DependentUpon>201703102125263_migrate29.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703131144060_migrate31.cs" />
+    <Compile Include="Migrations\201703131144060_migrate31.Designer.cs">
+      <DependentUpon>201703131144060_migrate31.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703131230144_migrate32.cs" />
+    <Compile Include="Migrations\201703131230144_migrate32.Designer.cs">
+      <DependentUpon>201703131230144_migrate32.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703131434073_migrate33.cs" />
+    <Compile Include="Migrations\201703131434073_migrate33.Designer.cs">
+      <DependentUpon>201703131434073_migrate33.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703140130583_migrate35.cs" />
+    <Compile Include="Migrations\201703140130583_migrate35.Designer.cs">
+      <DependentUpon>201703140130583_migrate35.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703140209188_migrate36.cs" />
+    <Compile Include="Migrations\201703140209188_migrate36.Designer.cs">
+      <DependentUpon>201703140209188_migrate36.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703140238421_migrate37.cs" />
+    <Compile Include="Migrations\201703140238421_migrate37.Designer.cs">
+      <DependentUpon>201703140238421_migrate37.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703140243110_migrate38.cs" />
+    <Compile Include="Migrations\201703140243110_migrate38.Designer.cs">
+      <DependentUpon>201703140243110_migrate38.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -382,6 +411,27 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703102125263_migrate29.resx">
       <DependentUpon>201703102125263_migrate29.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703131144060_migrate31.resx">
+      <DependentUpon>201703131144060_migrate31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703131230144_migrate32.resx">
+      <DependentUpon>201703131230144_migrate32.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703131434073_migrate33.resx">
+      <DependentUpon>201703131434073_migrate33.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703140130583_migrate35.resx">
+      <DependentUpon>201703140130583_migrate35.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703140209188_migrate36.resx">
+      <DependentUpon>201703140209188_migrate36.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703140238421_migrate37.resx">
+      <DependentUpon>201703140238421_migrate37.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703140243110_migrate38.resx">
+      <DependentUpon>201703140243110_migrate38.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

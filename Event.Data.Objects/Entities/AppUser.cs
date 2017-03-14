@@ -30,11 +30,18 @@ namespace Event.Data.Objects.Entities
         public long? EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public virtual EventPlanner EventPlanner { get; set; }
+        public long? VendorId { get; set; }
+        [ForeignKey("VendorId")]
+        public virtual Vendor Vendor { get; set; }
         public long? StaffId { get; set; }
         [ForeignKey("StaffId")]
         public virtual Staff Staff { get; set; }
+        public long? ClientId { get; set; }
+        [ForeignKey("ClientId")]
+        public virtual Client Client { get; set; }
         public string ProfileImage { get; set; }
         public string Status { get; set; }
+        public bool Verified { get; set; }
         public string DisplayName
      => Firstname + " " + Lastname;
 

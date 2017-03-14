@@ -81,8 +81,7 @@
                         </div>
 
                     </div>
-                    @Html.ActionLink("Details", "Details", new {id = item.ResourceId}, new {@class = "btn btn-xs btn-default"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.ResourceId}, new {@class = "btn btn-xs btn-danger"})
+                    @Html.ActionLink("Open", "Details", new { id = item.ResourceId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
                 </td>
             </tr>
         }

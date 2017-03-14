@@ -27,17 +27,20 @@
 
                 <ul class="nav pull-right">
 
-                    <li>
-                        <a href="@Url.Action("Create", "EventPlanners")">
+                    <li class="nav-user dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Sign Up
+                            <b class="caret"></b>
                         </a>
-                    </li>
-
-
-                    <li>
-                        <a href="#">
-                            Forgot your password?
-                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="@Url.Action("Register", "Vendors")">Become a Vendor</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="@Url.Action("Create", "EventPlanners")">Become an Event Planner</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div><!-- /.nav-collapse -->

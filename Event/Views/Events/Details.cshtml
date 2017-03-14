@@ -16,7 +16,7 @@
                             <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-calendar"></i><b>Appointments</b>
                             </a>
-                            <a href="@Url.Action("Index", "Vendors")" class="btn-box medium span4">
+                            <a href="@Url.Action("Index", "EventVendorMappings",new {id = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-user"></i><b>Vendors</b>
                             </a><a href="@Url.Action("Index", "Staffs")" class="btn-box medium span4">
                                 <i class="icon-user"></i><b>Staff</b>
@@ -44,47 +44,12 @@
                             <a href="@Url.Action("Resources", "Events", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-cloud"></i><b>Resources</b>
                             </a>
+                            <a href="@Url.Action("Index", "Clients", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                <i class="icon-user"></i><b>Client</b>
+                            </a>
                         </div>
                     </div>
                 </div>
-                @*<ul class="widget widget-usage unstyled span4">
-                    <li>
-                        <p>
-                            <strong>Windows 8</strong> <span class="pull-right small muted">78%</span>
-                        </p>
-                        <div class="progress tight">
-                            <div class="bar" style="width: 78%;">
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <p>
-                            <strong>Mac</strong> <span class="pull-right small muted">56%</span>
-                        </p>
-                        <div class="progress tight">
-                            <div class="bar bar-success" style="width: 56%;">
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <p>
-                            <strong>Linux</strong> <span class="pull-right small muted">44%</span>
-                        </p>
-                        <div class="progress tight">
-                            <div class="bar bar-warning" style="width: 44%;">
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <p>
-                            <strong>iPhone</strong> <span class="pull-right small muted">67%</span>
-                        </p>
-                        <div class="progress tight">
-                            <div class="bar bar-danger" style="width: 67%;">
-                            </div>
-                        </div>
-                    </li>
-                </ul>*@
             </div>
         </div>
     </div>

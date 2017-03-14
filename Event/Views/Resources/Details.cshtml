@@ -60,7 +60,29 @@
         </dd>
     }
 </dl>
-<p>
-    @Html.ActionLink("Edit", "Edit", new {id = Model.ResourceId}) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
+    Edit Resource
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit resource</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EditResourceModal", Model);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+@Html.ActionLink("Delete", "Delete", new { id = Model.ResourceId }, new { @class = "btn btn-danger icon-trash" })
+@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })

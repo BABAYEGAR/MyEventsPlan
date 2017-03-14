@@ -20,8 +20,14 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
         /// <returns></returns>
         public AppUser AuthenticateAppUserLogin(string email, string password)
         {
-            var hashPassword = new Md5Ecryption().ConvertStringToMd5Hash(password.Trim());
-            var user = _db.AppUsers.SingleOrDefault(n=>n.Email == email && n.Password == hashPassword);
+            AppUser user = new AppUser();
+            user = _db.AppUsers.SingleOrDefault(n => n.Email == email);
+            var hashPassword = user != null && new Hashing().ValidatePassword(password,user.Password);
+            if (hashPassword)
+            {
+                return user;
+            }
+            
             return user;
         }
         /// <summary>

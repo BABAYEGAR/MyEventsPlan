@@ -51,9 +51,7 @@
                 </td>
                 <td>
 
-                    @Html.ActionLink("Edit", "Edit", new {id = item.NoteId}, new {@class = "btn btn-xs btn-primary"})
-                    @Html.ActionLink("Details", "Details", new {id = item.NoteId}, new {@class = "btn btn-xs btn-default"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.NoteId}, new {@class = "btn btn-xs btn-danger"})
+                    @Html.ActionLink("Open", "Details", new { id = item.NoteId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
                 </td>
             </tr>
         }

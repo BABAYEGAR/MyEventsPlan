@@ -39,7 +39,7 @@
                     @item.EndDate.ToShortDateString()
                 </td>
                 <td>
-                    @Html.ActionLink("View", "Details", new {id = item.AppointmentId}, new {@class = "btn btn-xs btn-default icon-screenshot"})
+                    @Html.ActionLink("Open", "Details", new { id = item.EventId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
                     @Html.ActionLink("Remove", "Delete", new {id = item.AppointmentId}, new {@class = "btn btn-xs btn-danger icon-remove"})
                 </td>
             </tr>

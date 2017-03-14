@@ -1,0 +1,183 @@
+﻿@using System.Data.Entity
+@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using WebGrease.Css.Extensions
+@model Vendor
+@{
+    ViewBag.Title = "List";
+    ViewBag.Header = "List of all vendors";
+    Layout = "../Shared/_LayoutVendors.cshtml";
+    var mapping = new EventVendorMappingDataContext();
+    var events = Session["event"] as Event;
+    var vendor = new Vendor();
+    var carosalList = mapping.Vendors.Take(3).Include(n=>n.Location);
+    var nextCarousalList = mapping.Vendors;
+    List<Vendor> finalCarousalList = new List<Vendor>();
+    foreach (var item in nextCarousalList)
+    {
+        foreach (var items in carosalList)
+        {
+            if (item.VendorId != items.VendorId)
+            {
+                finalCarousalList.Add(item);
+            }
+        }
+
+
+    }
+
+}
+<section>
+<div class="container">
+<div class="row">
+@{
+    Html.RenderPartial("_PartialVendorSideBar");
+}
+<div class="col-sm-9 padding-right">
+<div class="product-details">
+    <!--product-details-->
+    <div class="col-sm-7">
+        <div class="view-product">
+            <img src="~/Content/VendorCss/images/product-details/1.jpg" alt=""/>
+            @if ((events != null) && mapping.EventVendorMapping.Any(n => (n.VendorId == Model.VendorId) && (n.EventId == events.EventId)))
+            {
+                <a href="@Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = Model.VendorId, eventid = events.EventId})" class="btn btn-default add-to-cart">
+                    <i class="fa fa-trash-o"></i>Remove Vendor
+                </a>
+            }
+            else
+            {
+                <a href="@if (events != null)
+                         {
+                             @Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = Model.VendorId, eventid = events.EventId})
+                         }" class="btn btn-default add-to-cart">
+                    <i class="fa fa-plus-square-o"></i>Add to event
+                </a>
+            }
+        </div>
+        <div id="similar-product" class="carousel slide" data-ride="carousel">
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <a href="">
+                        <img src="~/Content/VendorCss/images/product-details/similar1.jpg" alt="">
+                    </a>
+                    <a href="">
+                        <img src="~/Content/VendorCss/images/product-details/similar2.jpg" alt="">
+                    </a>
+                    <a href="">
+                        <img src="~/Content/VendorCss/images/product-details/similar3.jpg" alt="">
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Controls -->
+            <a class="left item-control" href="#similar-product" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="right item-control" href="#similar-product" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+
+    </div>
+</div><!--/product-details-->
+
+<div class="category-tab shop-details-tab">
+<!--category-tab-->
+<div class="col-sm-12">
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#reviews" data-toggle="tab">Profile</a>
+        </li>
+    </ul>
+</div>
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="reviews">
+        <div class="col-sm-12">
+            <ul>
+                <li>
+                    <a href=""><i class="fa fa-user"></i>@Model.BusinessName</a>
+                </li>
+                <li>
+                    <a href=""><i class="fa fa-stack-exchange"></i>@Model.VendorService.ServiceName</a>
+                </li>
+            </ul>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+    </div>
+
+</div>
+</div>
+<div class="recommended_items">
+    <!--recommended_items-->
+    <h2 class="title text-center">recommended items</h2>
+
+    <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="item active">
+                @foreach (var item in carosalList)
+                {
+                    <div class="col-sm-4">
+                        <div class="product-image-wrapper">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <a href="@Url.Action("VendorDetails", new {id = item.VendorId})">
+                                        <img src="~/Content/VendorCss/images/shop/product12.jpg" alt="" />
+                                    </a>
+                                    <h2>@item.BusinessName</h2>
+                                    <p>
+                                        @if (item.Location != null)
+                                        {
+                                            @item.Location.Name
+                                        }
+                                    </p>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+                <div class="item">
+                    @foreach (var item in finalCarousalList.Take(3))
+                    {
+                        <div class="col-sm-4">
+                            <div class="product-image-wrapper">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <a href="@Url.Action("VendorDetails", new {id = item.VendorId})">
+                                            <img src="~/Content/VendorCss/images/shop/product12.jpg" alt="" />
+                                        </a>
+                                        <h2>@item.BusinessName</h2>
+                                        <p>
+                                            @if (item.Location != null)
+                                            {
+                                                @item.Location.Name
+                                            }
+                                        </p>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    </div>
+               
+        </div>
+        <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+            <i class="fa fa-angle-left"></i>
+        </a>
+        <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+            <i class="fa fa-angle-right"></i>
+        </a>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</section>

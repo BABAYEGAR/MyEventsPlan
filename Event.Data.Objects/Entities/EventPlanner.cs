@@ -49,5 +49,6 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<Guest> Guests { get; set; }
         public IEnumerable<News> Newses { get; set; }
         public IEnumerable<Resource> Resources { get; set; }
+        public IEnumerable<Client> Clients { get; set; }
     }
 }

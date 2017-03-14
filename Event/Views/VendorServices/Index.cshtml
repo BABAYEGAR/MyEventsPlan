@@ -57,9 +57,7 @@
                     @Html.DisplayFor(modelItem => item.Scale)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-primary"})
-                    @Html.ActionLink("Details", "Details", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-default"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.VendorServiceId}, new {@class = "btn btn-xs btn-danger"})
+                    @Html.ActionLink("Open", "Details", new { id = item.VendorServiceId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
                 </td>
             </tr>
         }

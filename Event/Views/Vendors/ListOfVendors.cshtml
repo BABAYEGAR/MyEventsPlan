@@ -5,11 +5,9 @@
     ViewBag.Title = "List";
     ViewBag.Header = "List of all vendors";
     Layout = "../Shared/_LayoutVendors.cshtml";
-    var categories = new VendorServiceDataContext();
-    var location = new LocationDataContext();
+
     var mapping = new EventVendorMappingDataContext();
-    var vendorCategories = categories.VendorService.ToList();
-    var vendorLocations = location.Locations.ToList();
+
     var events = Session["event"] as Event;
     var vendor = new Vendor();
 }
@@ -33,41 +31,25 @@
                                 <a href="#" class="active">App Navigation<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li>
-                                        <a href="@Url.Action("Index", "Events")" class="active">Event Dashboard</a>
+                                        <a href="@Url.Action("Index", "Events")">Event Dashboard</a>
+                                    </li>
+                                    <li>
+                                        <a href="@if (events != null)
+                                                 {
+                                                     @Url.Action("Index", "EventVendorMappings",new {id = events.EventId})
+                                                 }">Vendors</a>
                                     </li>
                                 </ul>
 
                             </li>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary btn-xs icon-plus" data-toggle="modal" data-target="#myModal">
-                                Add vendor
-                            </button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            <h4 class="modal-title" id="myModalLabel">Add a new vendor</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            @{
-
-                                                Html.RenderPartial("CreateVendorModal", vendor);
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
                         </ul>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
+                   
+
                         <input type="text" placeholder="Search"/>
                     </div>
                 </div>
@@ -78,70 +60,33 @@
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <div class="left-sidebar">
-                    <h2>Category</h2>
-                    <div class="panel-group category-products" id="accordian">
-                        <!--category-productsr-->
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordian" href="#womens">
-                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                        Vendor Categories
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="womens" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <ul>
-                                        @foreach (var item in vendorCategories)
-                                        {
-                                            <li>
-                                                e
-                                                <a href="">@item.ServiceName</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordian" href="#location">
-                                        <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                        Locations
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="location" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <ul>
-                                        @foreach (var item in vendorLocations)
-                                        {
-                                            <li>
-                                                e
-                                                <a href="">@item.Name</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!--/category-productsr-->
+            @{
+                Html.RenderPartial("_PartialVendorSideBar");
+            }
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary btn-md icon-plus" data-toggle="modal" data-target="#myModal">
+                Add vendor
+            </button>
 
-                    <div class="price-range">
-                        <!--price-range-->
-                        <h2>Price Range</h2>
-                        <div class="well">
-                            <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2"><br/>
-                            <b>$ 0</b> <b class="pull-right">$ 600</b>
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Add a new vendor</h4>
+                        </div>
+                        <div class="modal-body">
+                            @{
+
+                                Html.RenderPartial("CreateVendorModal", vendor);
+                            }
                         </div>
                     </div>
-                    <!--/price-range-->
-
                 </div>
+
             </div>
 
             <div class="col-sm-9 padding-right">
@@ -154,15 +99,14 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img src="~/Content/VendorCss/images/shop/product12.jpg" alt=""/>
+                                        <a href="@Url.Action("VendorDetails", new {id = item.VendorId})">
+                                            <img src="~/Content/VendorCss/images/shop/product12.jpg" alt=""/>
+                                        </a>
                                         <h2>@item.BusinessName</h2>
                                         <p>@item.Location.Name</p>
                                         @if ((events != null) && mapping.EventVendorMapping.Any(n => (n.VendorId == item.VendorId) && (n.EventId == events.EventId)))
                                         {
-                                            <a href="@if (events != null)
-                                                     {
-                                                         @Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventid = events.EventId})
-                                                     }" class="btn btn-default add-to-cart">
+                                            <a href="@Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventid = events.EventId})" class="btn btn-default add-to-cart">
                                                 <i class="fa fa-trash-o"></i>Remove Vendor
                                             </a>
                                         }
@@ -190,6 +134,8 @@
                             </div>
                         </div>
                     }
+                    <br/>
+                    <br/>
                     <ul class="pagination">
                         <li class="active">
                             <a href="">1</a>

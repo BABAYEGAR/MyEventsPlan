@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Encryption;
 using MyEventPlan.Data.Service.Enum;
 
@@ -56,12 +57,11 @@ namespace MyEventPlan.Controllers.EventManagement
                 eventPlanner.RoleId = role?.RoleId;
                 eventPlanner.Password = password;
                 eventPlanner.ConfirmPassword = password;
-
                 //create app user
                 var appuser = new AppUser();
 
                 appuser.Email = eventPlanner.Email;
-                appuser.Password = eventPlanner.Password;
+                appuser.Password = new Hashing().HashPassword(eventPlanner.Password);
                 appuser.Firstname = eventPlanner.Firstname;
                 appuser.Lastname = eventPlanner.Lastname;
                 appuser.Mobile = eventPlanner.Mobile;
@@ -69,6 +69,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 appuser.DateLastModified = DateTime.Now;
                 appuser.LastModifiedBy = null;
                 appuser.CreatedBy = null;
+                appuser.Verified = false;
 
                 var checkeventPlanner = db.EventPlanners.SingleOrDefault(n => n.Email == eventPlanner.Email);
                 if (checkeventPlanner != null)

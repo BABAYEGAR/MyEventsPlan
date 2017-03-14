@@ -42,14 +42,13 @@ namespace MyEventPlan.Data.Service.Calender
                 if (rec != null)
                 {
                     DateTime dateTimeStart = DateTime.Parse(newEventStart, null,
-                       DateTimeStyles.RoundtripKind).ToLocalTime(); // and convert offset to localtime
-                    rec.StartDate = dateTimeStart;
-                    if (!String.IsNullOrEmpty(newEventEnd))
-                    {
-                        TimeSpan span = DateTime.Parse(newEventEnd, null,
-                           DateTimeStyles.RoundtripKind).ToLocalTime() - dateTimeStart;
+                       DateTimeStyles.RoundtripKind).ToLocalTime();
 
-                    }
+                    TimeSpan timeDifference = rec.EndDate - rec.StartDate;
+                        rec.EndDate = dateTimeStart.Add(timeDifference);
+                    rec.StartDate = dateTimeStart;
+                  
+
                     ent.Entry(rec).State = EntityState.Modified;
                     ent.SaveChanges();
                 }

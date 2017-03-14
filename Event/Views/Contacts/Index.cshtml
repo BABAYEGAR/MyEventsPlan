@@ -70,8 +70,7 @@
                     @Html.DisplayFor(modelItem => item.Mobile)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new {id = item.ContactId}, new {@class = "btn btn-xs btn-primary"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.ContactId}, new {@class = "btn btn-xs btn-danger"})
+                    @Html.ActionLink("Open", "Details", new { id = item.ContactId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
                 </td>
             </tr>
         }
