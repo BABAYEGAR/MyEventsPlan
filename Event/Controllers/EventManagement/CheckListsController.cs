@@ -54,6 +54,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     checkList.LastModifiedBy = loggedinuser.AppUserId;
                     checkList.CreatedBy = loggedinuser.AppUserId;
+                    checkList.Status = ChecklistStatusEnum.Incomplete.ToString();
                 }
                 else
                 {
@@ -84,7 +85,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CheckListId,Name,EventId,CreatedBy,DateCreated")] CheckList checkList)
+        public ActionResult Edit([Bind(Include = "CheckListId,Status,Name,EventId,CreatedBy,DateCreated")] CheckList checkList)
         {
             if (ModelState.IsValid)
             {

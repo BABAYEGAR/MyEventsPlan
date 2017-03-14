@@ -1,0 +1,165 @@
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.DateTimeHelper
+@model IEnumerable<Message>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "Sent Messages";
+    Layout = "../Shared/_LayoutMessage.cshtml";
+    var appUserDb = new AppUserDataContext();
+    var messageDb = new MessageDataContext();
+    var message = new Message();
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+    long unreadMessages = messageDb.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false).ToList().Count;
+}
+<div class="span9">
+    <div class="content">
+        <div class="module message">
+            <div class="module-head">
+                <h3>
+                    Message
+                </h3>
+            </div>
+            <div class="module-option clearfix">
+                <div class="pull-left">
+                    <div class="btn-group">
+                        <button class="btn">
+                            Inbox
+                        </button>
+                        <button class="btn dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="@Url.Action("Index")">Inbox(@unreadMessages)</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("SentMessages")">Sent</a>
+                            </li>
+                            <li>
+                                <a href="#">Draft(2)</a>
+                            </li>
+                            <li>
+                                <a href="#">Trash</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">Settings</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        Compose Individual
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">Send a one-one message</h4>
+                                </div>
+                                <div class="modal-body">
+                                    @{
+                                        Html.RenderPartial("CreateOneOnOneMessageModal", message);
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="module-body table">
+                <table class="table table-message">
+                    <tbody>
+                    <tr class="heading">
+                        <td class="cell-check">
+                            <input type="checkbox" class="inbox-checkbox">
+                        </td>
+                        <td class="cell-icon"></td>
+                        <td class="cell-author hidden-phone hidden-tablet">
+                            Recipient
+                        </td>
+                        <td class="cell-title">
+                            Subject
+                        </td>
+                        <td class="cell-icon hidden-phone hidden-tablet"></td>
+                        <td class="cell-time align-right">
+                            Date
+                        </td>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        if (item.Read == false)
+                        {
+                            <tr class="read starred">
+                                <td class="cell-check">
+                                    <input type="checkbox" class="inbox-checkbox">
+                                </td>
+                                <td class="cell-icon">
+                                    <i class="icon-star"></i>
+                                </td>
+                                <td class="cell-author hidden-phone hidden-tablet">
+                                    @(appUserDb.AppUsers.Find(item.AppUserId).DisplayName)
+                                </td>
+                                <td class="cell-title">
+                                    @item.Subject
+                                </td>
+                                @if (item.AttachedFile != null)
+                                {
+                                    <td class="cell-icon hidden-phone hidden-tablet">
+                                        <i class="icon-paper-clip-no"></i>
+                                    </td>
+                                }
+                                <td class="cell-time align-right">
+                                    @{
+                                        new DateTimeCalculator().TimeAgo(item.DateCreated);
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr class="read">
+                                <td class="cell-check">
+                                    <input type="checkbox" class="inbox-checkbox">
+                                </td>
+                                <td class="cell-icon">
+                                    <i class="icon-star"></i>
+                                </td>
+                                <td class="cell-author hidden-phone hidden-tablet">
+                                    @(appUserDb.AppUsers.Find(item.AppUserId).DisplayName)
+                                </td>
+                                <td class="cell-title">
+                                    @item.Subject
+                                </td>
+                                @if (item.AttachedFile != null)
+                                {
+                                    <td class="cell-icon hidden-phone hidden-tablet">
+                                        <i class="icon-paper-clip"></i>
+                                    </td>
+                                }
+                                <td class="cell-time align-right">
+                                    @{
+                                        new DateTimeCalculator().TimeAgo(item.DateCreated);
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="module-foot">
+            </div>
+        </div>
+    </div>
+    <!--/.content-->
+</div>
+<!--/.span9-->

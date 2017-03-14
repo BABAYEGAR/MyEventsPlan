@@ -84,5 +84,6 @@
     </div>
 
 </div>
+@Html.ActionLink("List Items", "Index", "CheckListItems", new { checkListId = Model.CheckListId }, new { @class = "btn btn-xs btn-default icon-list" })
 @Html.ActionLink("Delete", "Delete", new { id = Model.CheckListId }, new { @class = "btn btn-danger icon-trash" })
 @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })

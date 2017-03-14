@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Event.Data.Objects.Entities
@@ -42,6 +43,7 @@ namespace Event.Data.Objects.Entities
         public string ProfileImage { get; set; }
         public string Status { get; set; }
         public bool Verified { get; set; }
+        public  IEnumerable<Message> Messages { get; set; }
         public string DisplayName
      => Firstname + " " + Lastname;
 

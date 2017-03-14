@@ -45,6 +45,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
             <th>Action</th>
         </tr>
         </thead>
@@ -62,32 +65,11 @@
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
-
-                    <button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModalEdit">
-                        Edit
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                    <h4 class="modal-title" id="myModalLabel">Edit Guest</h4>
-                                </div>
-                                <div class="modal-body">
-                                    @{
-                                        Html.RenderPartial("EditGuestModal", item);
-                                    }
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
                     @Html.ActionLink("Open", "Details", new { id = item.GuestId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
+              
                 </td>
             </tr>
         }

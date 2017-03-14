@@ -13,6 +13,7 @@ namespace Event.Data.Objects.Entities
         public  long CheckListId { get; set; }
         [Required]
         public string Name { get; set; }
+        public string Status { get; set; }
         public long EventId { get; set; }
         [ForeignKey("EventId")]
         public Event Event { get; set; }

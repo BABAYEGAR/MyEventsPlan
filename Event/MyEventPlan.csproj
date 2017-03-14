@@ -215,6 +215,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingManagement\EventVendorMappingsController.cs" />
     <Compile Include="Controllers\MappingManagement\StaffEventMappingsController.cs" />
+    <Compile Include="Controllers\MessageManagement\MessagesController.cs" />
     <Compile Include="Controllers\NewsManagement\NewsController.cs" />
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
@@ -361,6 +362,9 @@
     <Content Include="Content\Dashboard\images\bg.png" />
     <Content Include="Content\Dashboard\images\download.jpg" />
     <Content Include="Content\Dashboard\images\icons\css\font-awesome.css" />
+    <Content Include="Content\Dashboard\images\image1.jpg" />
+    <Content Include="Content\Dashboard\images\image2.jpg" />
+    <Content Include="Content\Dashboard\images\image3.jpg" />
     <Content Include="Content\Dashboard\images\images.jpg" />
     <Content Include="Content\Dashboard\images\img.jpg" />
     <Content Include="Content\Dashboard\images\jquery-ui\picker.png" />
@@ -1376,6 +1380,14 @@
     <Content Include="Views\Clients\Index.cshtml" />
     <Content Include="Views\Shared\CreateClientModal.cshtml" />
     <Content Include="Views\Shared\EditClientModal.cshtml" />
+    <Content Include="Views\Shared\_LayoutMessage.cshtml" />
+    <Content Include="Views\Messages\Create.cshtml" />
+    <Content Include="Views\Messages\Delete.cshtml" />
+    <Content Include="Views\Messages\Details.cshtml" />
+    <Content Include="Views\Messages\Edit.cshtml" />
+    <Content Include="Views\Messages\Index.cshtml" />
+    <Content Include="Views\Messages\SentMessages.cshtml" />
+    <Content Include="Views\Shared\CreateOneOnOneMessageModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

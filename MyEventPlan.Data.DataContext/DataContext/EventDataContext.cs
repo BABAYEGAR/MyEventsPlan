@@ -46,6 +46,10 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<EventResourceMapping> EventResourceMapping { get; set; }
         public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<MessageGroup> MessageGroups { get; set; }
+        public virtual DbSet<MessageGroupMember> MessageGroupMembers { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

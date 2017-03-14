@@ -52,6 +52,9 @@
     <Compile Include="Entities\Guest.cs" />
     <Compile Include="Entities\GuestList.cs" />
     <Compile Include="Entities\Location.cs" />
+    <Compile Include="Entities\Message.cs" />
+    <Compile Include="Entities\MessageGroup.cs" />
+    <Compile Include="Entities\MessageGroupMember.cs" />
     <Compile Include="Entities\NewsAction.cs" />
     <Compile Include="Entities\News.cs" />
     <Compile Include="Entities\Note.cs" />

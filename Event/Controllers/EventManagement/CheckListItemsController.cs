@@ -12,6 +12,7 @@ namespace MyEventPlan.Controllers.EventManagement
     public class CheckListItemsController : Controller
     {
         private readonly CheckListItemDataContext db = new CheckListItemDataContext();
+        private readonly CheckListDataContext dbc = new CheckListDataContext();
 
         // GET: CheckListItems
         public ActionResult Index(long? checkListId)
@@ -64,6 +65,15 @@ namespace MyEventPlan.Controllers.EventManagement
                         if (loggedinuser != null) item.LastModifiedBy = loggedinuser.AppUserId;
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
+
+                        var allItems = dbc.CheckListItems.Where(n=>n.CheckListId == checkListId);
+                        var checkList = dbc.CheckLists.Find(checkListId);
+                        if (allItems.All(n => n.Checked))
+                        {
+                            checkList.Status = ChecklistStatusEnum.Completed.ToString();
+                            dbc.Entry(checkList).State = EntityState.Modified;
+                            dbc.SaveChanges();
+                        }
 
                         TempData["item"] = "you have succesfully check the item(s)!";
                         TempData["notificationtype"] = NotificationType.Success.ToString();

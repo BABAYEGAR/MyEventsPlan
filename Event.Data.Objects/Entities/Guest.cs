@@ -20,6 +20,7 @@ namespace Event.Data.Objects.Entities
         [Required]
         [DisplayName("Phone Number")]
         public string PhoneNumber { get; set; }
+        public string Status { get; set; }
         public long EventId { get; set; }
         [ForeignKey("EventId")]
         public Event Event { get; set; }

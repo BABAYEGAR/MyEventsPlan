@@ -59,10 +59,13 @@
     <Compile Include="Calender\CalenderAppointment.cs" />
     <Compile Include="Calender\CalenderEvent.cs" />
     <Compile Include="Configuration\Config.cs" />
+    <Compile Include="DateTimeHelper\DateTimeCalculator.cs" />
     <Compile Include="EmailService\MailerDaemon.cs" />
     <Compile Include="Encryption\Md5Ecryption.cs" />
     <Compile Include="Encryption\QueryStingEncoder.cs" />
     <Compile Include="Encryption\SerializeObject.cs" />
+    <Compile Include="Enum\GuestStatusEnum.cs" />
+    <Compile Include="Enum\ChecklistStatusEnum.cs" />
     <Compile Include="Enum\ProspectStausEnum.cs" />
     <Compile Include="Enum\NewsActionEnum.cs" />
     <Compile Include="Enum\TaskStausEnum.cs" />

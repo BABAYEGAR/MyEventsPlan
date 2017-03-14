@@ -20,12 +20,16 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
         /// <returns></returns>
         public AppUser AuthenticateAppUserLogin(string email, string password)
         {
-            AppUser user = new AppUser();
+            AppUser user = null;
             user = _db.AppUsers.SingleOrDefault(n => n.Email == email);
             var hashPassword = user != null && new Hashing().ValidatePassword(password,user.Password);
             if (hashPassword)
             {
                 return user;
+            }
+            else
+            {
+                user = null;
             }
             
             return user;

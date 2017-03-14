@@ -3,6 +3,15 @@
     ViewBag.Title = "Log in";
     Layout = "../Shared/_LayoutLogin.cshtml";
 }
+<style>
+    .wrapper {
+        background: url('../../Content/Dashboard/images/image2.jpg')  no-repeat 0px 0px;
+        background-size: cover;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+    }
+</style>
 @using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-vertical"}))
 {
     @Html.AntiForgeryToken()
