@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, r) {
     !function() {
         function e(e, r, t, a) {
@@ -28,9 +28,9 @@
             case"y":
                 return"egy" + (a || r ? " év" : " éve");
             case"yy":
-                return n + (a || r ? " év" : " éve")
+                return n + (a || r ? " év" : " éve");
             }
-            return""
+            return"";
         }
 
         function t(e) { return(e ? "" : "[múlt] ") + "[" + a[this.day()] + "] LT[-kor]" }
@@ -83,7 +83,7 @@
                 ordinal: "%d.",
                 week: { dow: 1, doy: 4 }
             });
-        return n
+        return n;
     }(), e.fullCalendar.datepickerLocale("hu",
         "hu",
         {
@@ -91,7 +91,10 @@
             prevText: "vissza",
             nextText: "előre",
             currentText: "ma",
-            monthNames: ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"],
+            monthNames: [
+                "Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember",
+                "Október", "November", "December"
+            ],
             monthNamesShort: ["Jan", "Feb", "Már", "Ápr", "Máj", "Jún", "Júl", "Aug", "Szep", "Okt", "Nov", "Dec"],
             dayNames: ["Vasárnap", "Hétfő", "Kedd", "Szerda", "Csütörtök", "Péntek", "Szombat"],
             dayNamesShort: ["Vas", "Hét", "Ked", "Sze", "Csü", "Pén", "Szo"],
@@ -108,5 +111,5 @@
         allDayText: "Egész nap",
         eventLimitText: "további",
         noEventsMessage: "Nincs megjeleníthető események"
-    })
+    });
 });

@@ -14,16 +14,16 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.Body, new { @class = "control-label" })
+        @Html.LabelFor(model => model.Body, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextAreaFor(model => model.Body, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
+            @Html.TextAreaFor(model => model.Body, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Body, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
         @Html.LabelFor(model => model.AppUserId, "Receipient", new {@class = "control-label"})
         <div class="controls">
-            @Html.DropDownListFor(m=>m.AppUserId, null, new {@class = "span8"})
+            @Html.DropDownListFor(m => m.AppUserId, null, new {@class = "span8"})
             @Html.ValidationMessageFor(model => model.AppUserId, "", new {@class = "text-danger"})
         </div>
     </div>

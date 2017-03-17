@@ -4,7 +4,16 @@
     ViewBag.Header = Model.Name;
     Layout = "../Shared/_LayoutForm.cshtml";
 }
-<!--/.span3-->
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index")">My Events</a>
+        </li>
+        <li class="breadcrumb-item icon-pencil">
+            <a class="btn btn-primary" href="@Url.Action("Edit", new {id = Model.EventId})">Edit Event</a>
+        </li>
+    </ol>
+}
 
 <div class="btn-controls">
     <div class="btn-box-row row-fluid">
@@ -16,9 +25,9 @@
                             <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-calendar"></i><b>Appointments</b>
                             </a>
-                            <a href="@Url.Action("Index", "EventVendorMappings",new {id = Model.EventId})" class="btn-box medium span4">
+                            <a href="@Url.Action("Index", "EventVendorMappings", new {id = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-user"></i><b>Vendors</b>
-                            </a><a href="@Url.Action("Index", "Staffs")" class="btn-box medium span4">
+                            </a><a href="@Url.Action("Index", "StaffEventMappings", new {id = Model.EventId})" class="btn-box medium span4">
                                 <i class="icon-user"></i><b>Staff</b>
                             </a>
                         </div>

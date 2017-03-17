@@ -1,12 +1,12 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, i) {
     !function() {
         function e(e, i, t) {
             var a = { mm: "minute", hh: "ore", dd: "zile", MM: "luni", yy: "ani" }, r = " ";
-            return(e % 100 >= 20 || e >= 100 && e % 100 === 0) && (r = " de "), e + r + a[t]
+            return(e % 100 >= 20 || e >= 100 && e % 100 === 0) && (r = " de "), e + r + a[t];
         }
 
         var t = i.defineLocale("ro",
@@ -51,7 +51,7 @@
             },
             week: { dow: 1, doy: 7 }
         });
-        return t
+        return t;
     }(), e.fullCalendar.datepickerLocale("ro",
         "ro",
         {
@@ -59,7 +59,10 @@
             prevText: "&#xAB; Luna precedentă",
             nextText: "Luna următoare &#xBB;",
             currentText: "Azi",
-            monthNames: ["Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie", "Octombrie", "Noiembrie", "Decembrie"],
+            monthNames: [
+                "Ianuarie", "Februarie", "Martie", "Aprilie", "Mai", "Iunie", "Iulie", "August", "Septembrie",
+                "Octombrie", "Noiembrie", "Decembrie"
+            ],
             monthNamesShort: ["Ian", "Feb", "Mar", "Apr", "Mai", "Iun", "Iul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             dayNames: ["Duminică", "Luni", "Marţi", "Miercuri", "Joi", "Vineri", "Sâmbătă"],
             dayNamesShort: ["Dum", "Lun", "Mar", "Mie", "Joi", "Vin", "Sâm"],
@@ -83,5 +86,5 @@
         allDayText: "Toată ziua",
         eventLimitText: function(e) { return"+alte " + e },
         noEventsMessage: "Nu există evenimente de afișat"
-    })
+    });
 });

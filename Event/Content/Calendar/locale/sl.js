@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         function e(e, a, r, t) {
@@ -42,7 +42,7 @@
             case"yy":
                 return n += 1 === e
                     ? a || t ? "leto" : "letom"
-                    : 2 === e ? a || t ? "leti" : "letoma" : e < 5 ? a || t ? "leta" : "leti" : a || t ? "let" : "leti"
+                    : 2 === e ? a || t ? "leti" : "letoma" : e < 5 ? a || t ? "leta" : "leti" : a || t ? "let" : "leti";
             }
         }
 
@@ -78,7 +78,7 @@
                     case 2:
                     case 4:
                     case 5:
-                        return"[v] dddd [ob] LT"
+                        return"[v] dddd [ob] LT";
                     }
                 },
                 lastDay: "[včeraj ob] LT",
@@ -94,7 +94,7 @@
                     case 2:
                     case 4:
                     case 5:
-                        return"[prejšnji] dddd [ob] LT"
+                        return"[prejšnji] dddd [ob] LT";
                     }
                 },
                 sameElse: "L"
@@ -118,7 +118,7 @@
             ordinal: "%d.",
             week: { dow: 1, doy: 7 }
         });
-        return r
+        return r;
     }(), e.fullCalendar.datepickerLocale("sl",
         "sl",
         {
@@ -126,7 +126,10 @@
             prevText: "&#x3C;Prejšnji",
             nextText: "Naslednji&#x3E;",
             currentText: "Trenutni",
-            monthNames: ["Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "Avgust", "September", "Oktober", "November", "December"],
+            monthNames: [
+                "Januar", "Februar", "Marec", "April", "Maj", "Junij", "Julij", "Avgust", "September", "Oktober",
+                "November", "December"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
             dayNames: ["Nedelja", "Ponedeljek", "Torek", "Sreda", "Četrtek", "Petek", "Sobota"],
             dayNamesShort: ["Ned", "Pon", "Tor", "Sre", "Čet", "Pet", "Sob"],
@@ -143,5 +146,5 @@
         allDayText: "Ves dan",
         eventLimitText: "več",
         noEventsMessage: "Ni dogodkov za prikaz"
-    })
+    });
 });

@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, n) {
     !function() {
         function e(e) { return e > 1 && e < 5 && 1 !== ~~(e / 10) }
@@ -30,7 +30,7 @@
             case"y":
                 return t || s ? "rok" : "rokem";
             case"yy":
-                return t || s ? a + (e(n) ? "roky" : "let") : a + "lety"
+                return t || s ? a + (e(n) ? "roky" : "let") : a + "lety";
             }
         }
 
@@ -43,17 +43,17 @@
                 monthsParse: function(e, n) {
                     var t, r = [];
                     for (t = 0; t < 12; t++) r[t] = new RegExp("^" + e[t] + "$|^" + n[t] + "$", "i");
-                    return r
+                    return r;
                 }(r, s),
                 shortMonthsParse: function(e) {
                     var n, t = [];
                     for (n = 0; n < 12; n++) t[n] = new RegExp("^" + e[n] + "$", "i");
-                    return t
+                    return t;
                 }(s),
                 longMonthsParse: function(e) {
                     var n, t = [];
                     for (n = 0; n < 12; n++) t[n] = new RegExp("^" + e[n] + "$", "i");
-                    return t
+                    return t;
                 }(r),
                 weekdays: "neděle_pondělí_úterý_středa_čtvrtek_pátek_sobota".split("_"),
                 weekdaysShort: "ne_po_út_st_čt_pá_so".split("_"),
@@ -84,7 +84,7 @@
                         case 5:
                             return"[v pátek v] LT";
                         case 6:
-                            return"[v sobotu v] LT"
+                            return"[v sobotu v] LT";
                         }
                     },
                     lastDay: "[včera v] LT",
@@ -101,7 +101,7 @@
                         case 5:
                             return"[minulý] dddd [v] LT";
                         case 6:
-                            return"[minulou sobotu v] LT"
+                            return"[minulou sobotu v] LT";
                         }
                     },
                     sameElse: "L"
@@ -125,7 +125,7 @@
                 ordinal: "%d.",
                 week: { dow: 1, doy: 4 }
             });
-        return a
+        return a;
     }(), e.fullCalendar.datepickerLocale("cs",
         "cs",
         {
@@ -133,7 +133,10 @@
             prevText: "&#x3C;Dříve",
             nextText: "Později&#x3E;",
             currentText: "Nyní",
-            monthNames: ["leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen", "listopad", "prosinec"],
+            monthNames: [
+                "leden", "únor", "březen", "duben", "květen", "červen", "červenec", "srpen", "září", "říjen",
+                "listopad", "prosinec"
+            ],
             monthNamesShort: ["led", "úno", "bře", "dub", "kvě", "čer", "čvc", "srp", "zář", "říj", "lis", "pro"],
             dayNames: ["neděle", "pondělí", "úterý", "středa", "čtvrtek", "pátek", "sobota"],
             dayNamesShort: ["ne", "po", "út", "st", "čt", "pá", "so"],
@@ -150,5 +153,5 @@
         allDayText: "Celý den",
         eventLimitText: function(e) { return"+další: " + e },
         noEventsMessage: "Žádné akce k zobrazení"
-    })
+    });
 });

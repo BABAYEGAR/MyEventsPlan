@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         var e = {
@@ -67,11 +67,11 @@
                 ordinalParse: /\d{1,2}-(ші|шы)/,
                 ordinal: function(t) {
                     var a = t % 10, d = t >= 100 ? 100 : null;
-                    return t + (e[t] || e[a] || e[d])
+                    return t + (e[t] || e[a] || e[d]);
                 },
                 week: { dow: 1, doy: 7 }
             });
-        return a
+        return a;
     }(), e.fullCalendar.datepickerLocale("kk",
         "kk",
         {
@@ -79,7 +79,10 @@
             prevText: "&#x3C;Алдыңғы",
             nextText: "Келесі&#x3E;",
             currentText: "Бүгін",
-            monthNames: ["Қаңтар", "Ақпан", "Наурыз", "Сәуір", "Мамыр", "Маусым", "Шілде", "Тамыз", "Қыркүйек", "Қазан", "Қараша", "Желтоқсан"],
+            monthNames: [
+                "Қаңтар", "Ақпан", "Наурыз", "Сәуір", "Мамыр", "Маусым", "Шілде", "Тамыз", "Қыркүйек", "Қазан",
+                "Қараша", "Желтоқсан"
+            ],
             monthNamesShort: ["Қаң", "Ақп", "Нау", "Сәу", "Мам", "Мау", "Шіл", "Там", "Қыр", "Қаз", "Қар", "Жел"],
             dayNames: ["Жексенбі", "Дүйсенбі", "Сейсенбі", "Сәрсенбі", "Бейсенбі", "Жұма", "Сенбі"],
             dayNamesShort: ["жкс", "дсн", "ссн", "срс", "бсн", "жма", "снб"],
@@ -96,5 +99,5 @@
         allDayText: "Күні бойы",
         eventLimitText: function(e) { return"+ тағы " + e },
         noEventsMessage: "Көрсету үшін оқиғалар жоқ"
-    })
+    });
 });

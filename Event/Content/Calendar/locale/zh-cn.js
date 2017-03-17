@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         var e = t.defineLocale("zh-cn",
@@ -27,11 +27,11 @@
             meridiemHour: function(e, t) {
                 return 12 === e && (e = 0), "凌晨" === t || "早上" === t || "上午" === t
                     ? e
-                    : "下午" === t || "晚上" === t ? e + 12 : e >= 11 ? e : e + 12
+                    : "下午" === t || "晚上" === t ? e + 12 : e >= 11 ? e : e + 12;
             },
             meridiem: function(e, t, n) {
                 var r = 100 * e + t;
-                return r < 600 ? "凌晨" : r < 900 ? "早上" : r < 1130 ? "上午" : r < 1230 ? "中午" : r < 1800 ? "下午" : "晚上"
+                return r < 600 ? "凌晨" : r < 900 ? "早上" : r < 1130 ? "上午" : r < 1230 ? "中午" : r < 1800 ? "下午" : "晚上";
             },
             calendar: {
                 sameDay: function() { return 0 === this.minutes() ? "[今天]Ah[点整]" : "[今天]LT" },
@@ -43,7 +43,7 @@
                         .diff(e, "days") >=
                         7
                         ? "[下]"
-                        : "[本]", 0 === this.minutes() ? n + "dddAh点整" : n + "dddAh点mm"
+                        : "[本]", 0 === this.minutes() ? n + "dddAh点整" : n + "dddAh点mm";
                 },
                 lastWeek: function() {
                     var e, n;
@@ -51,7 +51,7 @@
                         .unix() <
                         e.unix()
                         ? "[上]"
-                        : "[本]", 0 === this.minutes() ? n + "dddAh点整" : n + "dddAh点mm"
+                        : "[本]", 0 === this.minutes() ? n + "dddAh点整" : n + "dddAh点mm";
                 },
                 sameElse: "LL"
             },
@@ -68,7 +68,7 @@
                 case"W":
                     return e + "周";
                 default:
-                    return e
+                    return e;
                 }
             },
             relativeTime: {
@@ -88,7 +88,7 @@
             },
             week: { dow: 1, doy: 4 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("zh-cn",
         "zh-CN",
         {
@@ -113,5 +113,5 @@
         allDayText: "全天",
         eventLimitText: function(e) { return"另外 " + e + " 个" },
         noEventsMessage: "没有事件显示"
-    })
+    });
 });

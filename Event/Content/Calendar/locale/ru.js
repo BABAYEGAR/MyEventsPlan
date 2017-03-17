@@ -1,14 +1,14 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         function e(e, t) {
             var d = e.split("_");
             return t % 10 === 1 && t % 100 !== 11
                 ? d[0]
-                : t % 10 >= 2 && t % 10 <= 4 && (t % 100 < 10 || t % 100 >= 20) ? d[1] : d[2]
+                : t % 10 >= 2 && t % 10 <= 4 && (t % 100 < 10 || t % 100 >= 20) ? d[1] : d[2];
         }
 
         function d(t, d, r) {
@@ -19,7 +19,7 @@
                 MM: "месяц_месяца_месяцев",
                 yy: "год_года_лет"
             };
-            return"m" === r ? d ? "минута" : "минуту" : t + " " + e(_[r], +t)
+            return"m" === r ? d ? "минута" : "минуту" : t + " " + e(_[r], +t);
         }
 
         var r = [
@@ -31,7 +31,8 @@
                 months: {
                     format: "января_февраля_марта_апреля_мая_июня_июля_августа_сентября_октября_ноября_декабря"
                         .split("_"),
-                    standalone: "январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь".split("_")
+                    standalone: "январь_февраль_март_апрель_май_июнь_июль_август_сентябрь_октябрь_ноябрь_декабрь"
+                        .split("_")
                 },
                 monthsShort: {
                     format: "янв._февр._мар._апр._мая_июня_июля_авг._сент._окт._нояб._дек.".split("_"),
@@ -79,7 +80,7 @@
                         case 3:
                         case 5:
                         case 6:
-                            return"[В следующую] dddd [в] LT"
+                            return"[В следующую] dddd [в] LT";
                         }
                     },
                     lastWeek: function(e) {
@@ -94,7 +95,7 @@
                         case 3:
                         case 5:
                         case 6:
-                            return"[В прошлую] dddd [в] LT"
+                            return"[В прошлую] dddd [в] LT";
                         }
                     },
                     sameElse: "L"
@@ -130,12 +131,12 @@
                     case"W":
                         return e + "-я";
                     default:
-                        return e
+                        return e;
                     }
                 },
                 week: { dow: 1, doy: 7 }
             });
-        return _
+        return _;
     }(), e.fullCalendar.datepickerLocale("ru",
         "ru",
         {
@@ -143,7 +144,10 @@
             prevText: "&#x3C;Пред",
             nextText: "След&#x3E;",
             currentText: "Сегодня",
-            monthNames: ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+            monthNames: [
+                "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь",
+                "Декабрь"
+            ],
             monthNamesShort: ["Янв", "Фев", "Мар", "Апр", "Май", "Июн", "Июл", "Авг", "Сен", "Окт", "Ноя", "Дек"],
             dayNames: ["воскресенье", "понедельник", "вторник", "среда", "четверг", "пятница", "суббота"],
             dayNamesShort: ["вск", "пнд", "втр", "срд", "чтв", "птн", "сбт"],
@@ -160,5 +164,5 @@
         allDayText: "Весь день",
         eventLimitText: function(e) { return"+ ещё " + e },
         noEventsMessage: "Нет событий для отображения"
-    })
+    });
 });

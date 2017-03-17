@@ -701,9 +701,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     text-shadow: 1px 1px 2px #ddd, 0 0 0 #000, 0 0 1px #fff
 }
 
-.modal-backdrop, .modal-backdrop.fade.in {
-    opacity: .4
-}
+.modal-backdrop, .modal-backdrop.fade.in { opacity: .4 }
 
 .accordion-group {
     -moz-border-radius: 3px;
@@ -818,7 +816,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 
 .media.user:hover .media-avatar {
     background: #fff;
-    border-color: #bbb;	
+    border-color: #bbb;
 }
 
 .progress {
@@ -1063,7 +1061,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     color: #767676;
-    padding: 10px 15px;	
+    padding: 10px 15px;
 }
 
 .module-head h3 {
@@ -1178,7 +1176,7 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
     -moz-border-radius: 0 0 2px 2px;
     -webkit-border-radius: 0 0 2px 2px;
     background: #f5f5f5;
-    border-radius: 0 0 2px 2px;	
+    border-radius: 0 0 2px 2px;
 }
 
 .stream-author {

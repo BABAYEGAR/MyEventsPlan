@@ -195,7 +195,7 @@
     function matchCellWidths(els) {
         var maxInnerWidth = 0;
 
-        els.find(" > *")
+        els.find(" > ")
             .each(function(i, innerEl) {
                 var innerWidth = $(innerEl).outerWidth();
                 if (innerWidth > maxInnerWidth) {
@@ -3594,7 +3594,7 @@ options:
                     this.dayDragListener.startInteraction(ev,
                     {
                         //distance: 5, // needs more work if we want dayClick to fire correctly
-			
+                    
                     });
                 }
             },

@@ -66,7 +66,7 @@ namespace MyEventPlan.Controllers.EventManagement
                         db.Entry(item).State = EntityState.Modified;
                         db.SaveChanges();
 
-                        var allItems = dbc.CheckListItems.Where(n=>n.CheckListId == checkListId);
+                        var allItems = dbc.CheckListItems.Where(n => n.CheckListId == checkListId);
                         var checkList = dbc.CheckLists.Find(checkListId);
                         if (allItems.All(n => n.Checked))
                         {

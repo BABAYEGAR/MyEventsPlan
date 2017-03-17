@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         function e(e) { return e > 1 && e < 5 }
@@ -30,7 +30,7 @@
             case"y":
                 return r || n ? "rok" : "rokom";
             case"yy":
-                return r || n ? o + (e(t) ? "roky" : "rokov") : o + "rokmi"
+                return r || n ? o + (e(t) ? "roky" : "rokov") : o + "rokmi";
             }
         }
 
@@ -68,7 +68,7 @@
                         case 5:
                             return"[v piatok o] LT";
                         case 6:
-                            return"[v sobotu o] LT"
+                            return"[v sobotu o] LT";
                         }
                     },
                     lastDay: "[včera o] LT",
@@ -85,7 +85,7 @@
                         case 5:
                             return"[minulý] dddd [o] LT";
                         case 6:
-                            return"[minulú sobotu o] LT"
+                            return"[minulú sobotu o] LT";
                         }
                     },
                     sameElse: "L"
@@ -109,7 +109,7 @@
                 ordinal: "%d.",
                 week: { dow: 1, doy: 4 }
             });
-        return o
+        return o;
     }(), e.fullCalendar.datepickerLocale("sk",
         "sk",
         {
@@ -117,7 +117,10 @@
             prevText: "&#x3C;Predchádzajúci",
             nextText: "Nasledujúci&#x3E;",
             currentText: "Dnes",
-            monthNames: ["január", "február", "marec", "apríl", "máj", "jún", "júl", "august", "september", "október", "november", "december"],
+            monthNames: [
+                "január", "február", "marec", "apríl", "máj", "jún", "júl", "august", "september", "október",
+                "november", "december"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Máj", "Jún", "Júl", "Aug", "Sep", "Okt", "Nov", "Dec"],
             dayNames: ["nedeľa", "pondelok", "utorok", "streda", "štvrtok", "piatok", "sobota"],
             dayNamesShort: ["Ned", "Pon", "Uto", "Str", "Štv", "Pia", "Sob"],
@@ -134,5 +137,5 @@
         allDayText: "Celý deň",
         eventLimitText: function(e) { return"+ďalšie: " + e },
         noEventsMessage: "Žiadne akcie na zobrazenie"
-    })
+    });
 });

@@ -8,6 +8,22 @@
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
 }
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Details", "Events", new {id = Model.EventId})">Event Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})">Event Guest-Lists</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Guests", new {guestListId = Model.GuestListId})">Guest-List</a>
+        </li>
+    </ol>
+}
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.Event.Name)
@@ -84,12 +100,11 @@
     }
 </dl>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger"/> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger icon-trash"/>
+    </div>
+}

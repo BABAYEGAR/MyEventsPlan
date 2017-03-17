@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Event.Data.Objects.Entities
@@ -10,6 +11,8 @@ namespace Event.Data.Objects.Entities
         public string Title { get; set; }
         [Required]
         public string Content { get; set; }
+        [DisplayName("Share with Client")]
+        public bool ShowToClient { get; set; }
 
         public long EventId { get; set; }
         [ForeignKey("EventId")]

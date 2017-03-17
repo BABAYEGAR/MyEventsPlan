@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         var e = t.defineLocale("ja",
@@ -38,7 +38,7 @@
                 case"DDD":
                     return e + "日";
                 default:
-                    return e
+                    return e;
                 }
             },
             relativeTime: {
@@ -57,7 +57,7 @@
                 yy: "%d年"
             }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("ja",
         "ja",
         {
@@ -82,5 +82,5 @@
         allDayText: "終日",
         eventLimitText: function(e) { return"他 " + e + " 件" },
         noEventsMessage: "イベントが表示されないように"
-    })
+    });
 });

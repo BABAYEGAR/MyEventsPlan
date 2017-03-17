@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, o) {
     !function() {
         var e = o.defineLocale("gl",
@@ -13,14 +13,42 @@
             weekdaysShort: "dom._lun._mar._mér._xov._ven._sáb.".split("_"),
             weekdaysMin: "do_lu_ma_mé_xo_ve_sá".split("_"),
             weekdaysParseExact: !0,
-            longDateFormat: { LT: "H:mm", LTS: "H:mm:ss", L: "DD/MM/YYYY", LL: "D [de] MMMM [de] YYYY", LLL: "D [de] MMMM [de] YYYY H:mm", LLLL: "dddd, D [de] MMMM [de] YYYY H:mm" },
-            calendar: { sameDay: function() { return"[hoxe " + (1 !== this.hours() ? "ás" : "á") + "] LT" }, nextDay: function() { return"[mañá " + (1 !== this.hours() ? "ás" : "á") + "] LT" }, nextWeek: function() { return"dddd [" + (1 !== this.hours() ? "ás" : "a") + "] LT" }, lastDay: function() { return"[onte " + (1 !== this.hours() ? "á" : "a") + "] LT" }, lastWeek: function() { return"[o] dddd [pasado " + (1 !== this.hours() ? "ás" : "a") + "] LT" }, sameElse: "L" },
-            relativeTime: { future: function(e) { return 0 === e.indexOf("un") ? "n" + e : "en " + e }, past: "hai %s", s: "uns segundos", m: "un minuto", mm: "%d minutos", h: "unha hora", hh: "%d horas", d: "un día", dd: "%d días", M: "un mes", MM: "%d meses", y: "un ano", yy: "%d anos" },
+            longDateFormat: {
+                LT: "H:mm",
+                LTS: "H:mm:ss",
+                L: "DD/MM/YYYY",
+                LL: "D [de] MMMM [de] YYYY",
+                LLL: "D [de] MMMM [de] YYYY H:mm",
+                LLLL: "dddd, D [de] MMMM [de] YYYY H:mm"
+            },
+            calendar: {
+                sameDay: function() { return"[hoxe " + (1 !== this.hours() ? "ás" : "á") + "] LT" },
+                nextDay: function() { return"[mañá " + (1 !== this.hours() ? "ás" : "á") + "] LT" },
+                nextWeek: function() { return"dddd [" + (1 !== this.hours() ? "ás" : "a") + "] LT" },
+                lastDay: function() { return"[onte " + (1 !== this.hours() ? "á" : "a") + "] LT" },
+                lastWeek: function() { return"[o] dddd [pasado " + (1 !== this.hours() ? "ás" : "a") + "] LT" },
+                sameElse: "L"
+            },
+            relativeTime: {
+                future: function(e) { return 0 === e.indexOf("un") ? "n" + e : "en " + e },
+                past: "hai %s",
+                s: "uns segundos",
+                m: "un minuto",
+                mm: "%d minutos",
+                h: "unha hora",
+                hh: "%d horas",
+                d: "un día",
+                dd: "%d días",
+                M: "un mes",
+                MM: "%d meses",
+                y: "un ano",
+                yy: "%d anos"
+            },
             ordinalParse: /\d{1,2}º/,
             ordinal: "%dº",
             week: { dow: 1, doy: 4 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("gl",
         "gl",
         {
@@ -28,7 +56,10 @@
             prevText: "&#x3C;Ant",
             nextText: "Seg&#x3E;",
             currentText: "Hoxe",
-            monthNames: ["Xaneiro", "Febreiro", "Marzo", "Abril", "Maio", "Xuño", "Xullo", "Agosto", "Setembro", "Outubro", "Novembro", "Decembro"],
+            monthNames: [
+                "Xaneiro", "Febreiro", "Marzo", "Abril", "Maio", "Xuño", "Xullo", "Agosto", "Setembro", "Outubro",
+                "Novembro", "Decembro"
+            ],
             monthNamesShort: ["Xan", "Feb", "Mar", "Abr", "Mai", "Xuñ", "Xul", "Ago", "Set", "Out", "Nov", "Dec"],
             dayNames: ["Domingo", "Luns", "Martes", "Mércores", "Xoves", "Venres", "Sábado"],
             dayNamesShort: ["Dom", "Lun", "Mar", "Mér", "Xov", "Ven", "Sáb"],
@@ -45,5 +76,5 @@
         allDayHtml: "Todo<br/>o día",
         eventLimitText: "máis",
         noEventsMessage: "Non hai eventos para amosar"
-    })
+    });
 });

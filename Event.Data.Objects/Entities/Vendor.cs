@@ -14,7 +14,6 @@ namespace Event.Data.Objects.Entities
         public string Password { get; set; }
         [PasswordPropertyText]
         [DisplayName("Confirm Password")]
-        [Compare("Password")]
         public string ConfirmPassword { get; set; }
         [Required]
         public string Address { get; set; }

@@ -8,6 +8,17 @@
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
 }
+<ol class="breadcrumb">
+    <li class="breadcrumb-item">
+        <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="@Url.Action("Index", "EventTypes")">Event Types</a>
+    </li>
+    <li class="breadcrumb-item">
+        <a href="@Url.Action("Details", "EventTypes", new {id = Model.EventTypeId})">@Model.Name Details</a>
+    </li>
+</ol>
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.Name)
@@ -54,7 +65,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
         <input type="submit" value="Delete" class="btn btn-danger"/>
 
     </div>

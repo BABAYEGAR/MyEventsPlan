@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         var e = a.defineLocale("ca",
@@ -47,11 +47,11 @@
             ordinalParse: /\d{1,2}(r|n|t|è|a)/,
             ordinal: function(e, a) {
                 var t = 1 === e ? "r" : 2 === e ? "n" : 3 === e ? "r" : 4 === e ? "t" : "è";
-                return"w" !== a && "W" !== a || (t = "a"), e + t
+                return"w" !== a && "W" !== a || (t = "a"), e + t;
             },
             week: { dow: 1, doy: 4 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("ca",
         "ca",
         {
@@ -59,7 +59,10 @@
             prevText: "Anterior",
             nextText: "Següent",
             currentText: "Avui",
-            monthNames: ["gener", "febrer", "març", "abril", "maig", "juny", "juliol", "agost", "setembre", "octubre", "novembre", "desembre"],
+            monthNames: [
+                "gener", "febrer", "març", "abril", "maig", "juny", "juliol", "agost", "setembre", "octubre",
+                "novembre", "desembre"
+            ],
             monthNamesShort: ["gen", "feb", "març", "abr", "maig", "juny", "jul", "ag", "set", "oct", "nov", "des"],
             dayNames: ["diumenge", "dilluns", "dimarts", "dimecres", "dijous", "divendres", "dissabte"],
             dayNamesShort: ["dg", "dl", "dt", "dc", "dj", "dv", "ds"],
@@ -76,5 +79,5 @@
         allDayText: "Tot el dia",
         eventLimitText: "més",
         noEventsMessage: "No hi ha esdeveniments per mostrar"
-    })
+    });
 });

@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         function e(e) { return e instanceof Function || "[object Function]" === Object.prototype.toString.call(e) }
@@ -15,7 +15,7 @@
             months: function(e, t) {
                 return/D/.test(t.substring(0, t.indexOf("MMMM")))
                     ? this._monthsGenitiveEl[e.month()]
-                    : this._monthsNominativeEl[e.month()]
+                    : this._monthsNominativeEl[e.month()];
             },
             monthsShort: "Ιαν_Φεβ_Μαρ_Απρ_Μαϊ_Ιουν_Ιουλ_Αυγ_Σεπ_Οκτ_Νοε_Δεκ".split("_"),
             weekdays: "Κυριακή_Δευτέρα_Τρίτη_Τετάρτη_Πέμπτη_Παρασκευή_Σάββατο".split("_"),
@@ -42,14 +42,14 @@
                     case 6:
                         return"[το προηγούμενο] dddd [{}] LT";
                     default:
-                        return"[την προηγούμενη] dddd [{}] LT"
+                        return"[την προηγούμενη] dddd [{}] LT";
                     }
                 },
                 sameElse: "L"
             },
             calendar: function(t, n) {
                 var a = this._calendarEl[t], o = n && n.hours();
-                return e(a) && (a = a.apply(n)), a.replace("{}", o % 12 === 1 ? "στη" : "στις")
+                return e(a) && (a = a.apply(n)), a.replace("{}", o % 12 === 1 ? "στη" : "στις");
             },
             relativeTime: {
                 future: "σε %s",
@@ -70,7 +70,7 @@
             ordinal: "%dη",
             week: { dow: 1, doy: 4 }
         });
-        return n
+        return n;
     }(), e.fullCalendar.datepickerLocale("el",
         "el",
         {
@@ -78,7 +78,10 @@
             prevText: "Προηγούμενος",
             nextText: "Επόμενος",
             currentText: "Σήμερα",
-            monthNames: ["Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"],
+            monthNames: [
+                "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος", "Ιούνιος", "Ιούλιος", "Αύγουστος",
+                "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"
+            ],
             monthNamesShort: ["Ιαν", "Φεβ", "Μαρ", "Απρ", "Μαι", "Ιουν", "Ιουλ", "Αυγ", "Σεπ", "Οκτ", "Νοε", "Δεκ"],
             dayNames: ["Κυριακή", "Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή", "Σάββατο"],
             dayNamesShort: ["Κυρ", "Δευ", "Τρι", "Τετ", "Πεμ", "Παρ", "Σαβ"],
@@ -95,5 +98,5 @@
         allDayText: "Ολοήμερο",
         eventLimitText: "περισσότερα",
         noEventsMessage: "Δεν υπάρχουν γεγονότα για να εμφανιστεί"
-    })
+    });
 });

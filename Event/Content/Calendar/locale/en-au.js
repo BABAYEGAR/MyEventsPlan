@@ -1,7 +1,7 @@
 !function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         var e = a.defineLocale("en-au",
@@ -46,11 +46,11 @@
             ordinal: function(e) {
                 var a = e % 10,
                     r = 1 === ~~(e % 100 / 10) ? "th" : 1 === a ? "st" : 2 === a ? "nd" : 3 === a ? "rd" : "th";
-                return e + r
+                return e + r;
             },
             week: { dow: 1, doy: 4 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("en-au",
         "en-AU",
         {
@@ -58,7 +58,10 @@
             prevText: "Prev",
             nextText: "Next",
             currentText: "Today",
-            monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+            monthNames: [
+                "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+                "November", "December"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             dayNamesShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
@@ -69,5 +72,5 @@
             isRTL: !1,
             showMonthAfterYear: !1,
             yearSuffix: ""
-        }), e.fullCalendar.locale("en-au")
+        }), e.fullCalendar.locale("en-au");
 });

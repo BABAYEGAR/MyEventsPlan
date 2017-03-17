@@ -12,14 +12,15 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class ClientsController : Controller
     {
-        private ClientDataContext db = new ClientDataContext();
-        private EventDataContext dbc = new EventDataContext();
+        private readonly ClientDataContext db = new ClientDataContext();
+        private readonly EventDataContext dbc = new EventDataContext();
 
         // GET: Clients
         public ActionResult Index()
         {
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
-            var clients = db.Clients.Where(n=>n.EventId == events.EventId).Include(c => c.Event).Include(c => c.EventPlanner);
+            var clients =
+                db.Clients.Where(n => n.EventId == events.EventId).Include(c => c.Event).Include(c => c.EventPlanner);
             return View(clients.ToList());
         }
 
@@ -27,21 +28,18 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.Clients.Find(id);
+            var client = db.Clients.Find(id);
             if (client == null)
-            {
                 return HttpNotFound();
-            }
             return View(client);
         }
+
         // GET: Clients/Details/5
         public ActionResult CreateLoginAccessForClient(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            Client client = db.Clients.Find(id);
+            var client = db.Clients.Find(id);
             var appUser = new AppUser();
             appUser.Firstname = client.Name;
             appUser.Lastname = client.Name;
@@ -62,7 +60,7 @@ namespace MyEventPlan.Controllers.EventManagement
             dbc.SaveChanges();
             TempData["display"] = "The login credentials has been successfully sent to the clients email!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { id = client.EventId });
+            return RedirectToAction("Index", new {id = client.EventId});
         }
 
         // GET: Clients/Create
@@ -102,7 +100,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully added a new client!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {id  = client.EventId});
+                return RedirectToAction("Index", new {id = client.EventId});
             }
             return View(client);
         }
@@ -111,14 +109,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.Clients.Find(id);
+            var client = db.Clients.Find(id);
             if (client == null)
-            {
                 return HttpNotFound();
-            }
             return View(client);
         }
 
@@ -127,7 +121,9 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ClientId,Name,Password,Email,Mobile,EventPlannerId,EventId,CreatedBy,DateCreated")] Client client)
+        public ActionResult Edit(
+            [Bind(Include = "ClientId,Name,Password,Email,Mobile,EventPlannerId,EventId,CreatedBy,DateCreated")] Client
+                client)
         {
             if (ModelState.IsValid)
             {
@@ -148,7 +144,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 return RedirectToAction("Index");
             }
             ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", client.EventId);
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname", client.EventPlannerId);
+            ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname",
+                client.EventPlannerId);
             return View(client);
         }
 
@@ -156,23 +153,20 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Client client = db.Clients.Find(id);
+            var client = db.Clients.Find(id);
             if (client == null)
-            {
                 return HttpNotFound();
-            }
             return View(client);
         }
 
         // POST: Clients/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Client client = db.Clients.Find(id);
+            var client = db.Clients.Find(id);
             db.Clients.Remove(client);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -181,9 +175,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

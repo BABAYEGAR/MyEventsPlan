@@ -5,10 +5,28 @@
     ViewBag.TableHeader = "List of all event types";
     Layout = "../Shared/_LayoutTable.cshtml";
     var vendor = new Vendor();
+    var events =
+        Session["event"] as Event;
 }
 @section add {
-@Html.ActionLink("View List Of vendors", "ListOfVendors", new { }, new { @class = "btn btn-xs btn-primary pull-right" })
+    @Html.ActionLink("View List Of vendors", "ListOfVendors", new {}, new {@class = "btn btn-xs btn-primary pull-right"})
 
+}
+
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@if (events != null)
+                     {
+                         @Url.Action("Details", "Events", new {id = events.EventId})
+                     }">
+                Event Dashboard
+            </a>
+        </li>
+    </ol>
 }
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">

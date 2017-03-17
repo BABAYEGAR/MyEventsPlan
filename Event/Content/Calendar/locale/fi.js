@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         function e(e, a, t, i) {
@@ -32,9 +32,9 @@
             case"y":
                 return i ? "vuoden" : "vuosi";
             case"yy":
-                n = i ? "vuoden" : "vuotta"
+                n = i ? "vuoden" : "vuotta";
             }
-            return n = u(e, i) + " " + n
+            return n = u(e, i) + " " + n;
         }
 
         function u(e, a) { return e < 10 ? a ? i[e] : t[e] : e }
@@ -49,14 +49,46 @@
                 weekdays: "sunnuntai_maanantai_tiistai_keskiviikko_torstai_perjantai_lauantai".split("_"),
                 weekdaysShort: "su_ma_ti_ke_to_pe_la".split("_"),
                 weekdaysMin: "su_ma_ti_ke_to_pe_la".split("_"),
-                longDateFormat: { LT: "HH.mm", LTS: "HH.mm.ss", L: "DD.MM.YYYY", LL: "Do MMMM[ta] YYYY", LLL: "Do MMMM[ta] YYYY, [klo] HH.mm", LLLL: "dddd, Do MMMM[ta] YYYY, [klo] HH.mm", l: "D.M.YYYY", ll: "Do MMM YYYY", lll: "Do MMM YYYY, [klo] HH.mm", llll: "ddd, Do MMM YYYY, [klo] HH.mm" },
-                calendar: { sameDay: "[tänään] [klo] LT", nextDay: "[huomenna] [klo] LT", nextWeek: "dddd [klo] LT", lastDay: "[eilen] [klo] LT", lastWeek: "[viime] dddd[na] [klo] LT", sameElse: "L" },
-                relativeTime: { future: "%s päästä", past: "%s sitten", s: e, m: e, mm: e, h: e, hh: e, d: e, dd: e, M: e, MM: e, y: e, yy: e },
+                longDateFormat: {
+                    LT: "HH.mm",
+                    LTS: "HH.mm.ss",
+                    L: "DD.MM.YYYY",
+                    LL: "Do MMMM[ta] YYYY",
+                    LLL: "Do MMMM[ta] YYYY, [klo] HH.mm",
+                    LLLL: "dddd, Do MMMM[ta] YYYY, [klo] HH.mm",
+                    l: "D.M.YYYY",
+                    ll: "Do MMM YYYY",
+                    lll: "Do MMM YYYY, [klo] HH.mm",
+                    llll: "ddd, Do MMM YYYY, [klo] HH.mm"
+                },
+                calendar: {
+                    sameDay: "[tänään] [klo] LT",
+                    nextDay: "[huomenna] [klo] LT",
+                    nextWeek: "dddd [klo] LT",
+                    lastDay: "[eilen] [klo] LT",
+                    lastWeek: "[viime] dddd[na] [klo] LT",
+                    sameElse: "L"
+                },
+                relativeTime: {
+                    future: "%s päästä",
+                    past: "%s sitten",
+                    s: e,
+                    m: e,
+                    mm: e,
+                    h: e,
+                    hh: e,
+                    d: e,
+                    dd: e,
+                    M: e,
+                    MM: e,
+                    y: e,
+                    yy: e
+                },
                 ordinalParse: /\d{1,2}\./,
                 ordinal: "%d.",
                 week: { dow: 1, doy: 4 }
             });
-        return n
+        return n;
     }(), e.fullCalendar.datepickerLocale("fi",
         "fi",
         {
@@ -64,8 +96,13 @@
             prevText: "&#xAB;Edellinen",
             nextText: "Seuraava&#xBB;",
             currentText: "Tänään",
-            monthNames: ["Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu", "Heinäkuu", "Elokuu", "Syyskuu", "Lokakuu", "Marraskuu", "Joulukuu"],
-            monthNamesShort: ["Tammi", "Helmi", "Maalis", "Huhti", "Touko", "Kesä", "Heinä", "Elo", "Syys", "Loka", "Marras", "Joulu"],
+            monthNames: [
+                "Tammikuu", "Helmikuu", "Maaliskuu", "Huhtikuu", "Toukokuu", "Kesäkuu", "Heinäkuu", "Elokuu", "Syyskuu",
+                "Lokakuu", "Marraskuu", "Joulukuu"
+            ],
+            monthNamesShort: [
+                "Tammi", "Helmi", "Maalis", "Huhti", "Touko", "Kesä", "Heinä", "Elo", "Syys", "Loka", "Marras", "Joulu"
+            ],
             dayNamesShort: ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"],
             dayNames: ["Sunnuntai", "Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai"],
             dayNamesMin: ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"],
@@ -81,5 +118,5 @@
         allDayText: "Koko päivä",
         eventLimitText: "lisää",
         noEventsMessage: "Ei tapahtumia näytettäviä"
-    })
+    });
 });

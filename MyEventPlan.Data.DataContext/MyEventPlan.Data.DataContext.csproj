@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\SettingDataContext.cs" />
     <Compile Include="DataContext\MessageGroupMemberDataContext.cs" />
     <Compile Include="DataContext\MessageGroupDataContext.cs" />
     <Compile Include="DataContext\MessageDataContext.cs" />
@@ -303,6 +304,18 @@
     <Compile Include="Migrations\201703142113476_migrate46.Designer.cs">
       <DependentUpon>201703142113476_migrate46.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703161907407_migrate47.cs" />
+    <Compile Include="Migrations\201703161907407_migrate47.Designer.cs">
+      <DependentUpon>201703161907407_migrate47.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703162212527_migrate48.cs" />
+    <Compile Include="Migrations\201703162212527_migrate48.Designer.cs">
+      <DependentUpon>201703162212527_migrate48.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703162322133_migrate49.cs" />
+    <Compile Include="Migrations\201703162322133_migrate49.Designer.cs">
+      <DependentUpon>201703162322133_migrate49.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -484,6 +497,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703142113476_migrate46.resx">
       <DependentUpon>201703142113476_migrate46.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703161907407_migrate47.resx">
+      <DependentUpon>201703161907407_migrate47.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703162212527_migrate48.resx">
+      <DependentUpon>201703162212527_migrate48.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703162322133_migrate49.resx">
+      <DependentUpon>201703162322133_migrate49.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

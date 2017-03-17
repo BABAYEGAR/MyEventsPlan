@@ -168,10 +168,11 @@ namespace MyEventPlan.Controllers.MappingManagement
             _db.SaveChanges();
             return RedirectToAction("Index", new {id = eventId});
         }
+
         public ActionResult AddVendorToEvent(long? vendorId, long eventId)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            EventVendorMapping eventVendorMapping = new EventVendorMapping();
+            var eventVendorMapping = new EventVendorMapping();
             if (ModelState.IsValid)
             {
                 eventVendorMapping.DateCreated = DateTime.Now;
@@ -194,10 +195,11 @@ namespace MyEventPlan.Controllers.MappingManagement
                 _db.SaveChanges();
                 TempData["display"] = "You have successfully assigned the vendor to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("ListOfVendors","Vendors");
+                return RedirectToAction("ListOfVendors", "Vendors");
             }
             return View(eventVendorMapping);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

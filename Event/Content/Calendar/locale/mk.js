@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         var e = t.defineLocale("mk",
@@ -34,7 +34,7 @@
                     case 2:
                     case 4:
                     case 5:
-                        return"[Изминатиот] dddd [во] LT"
+                        return"[Изминатиот] dddd [во] LT";
                     }
                 },
                 sameElse: "L"
@@ -63,11 +63,11 @@
                     ? e + "-ен"
                     : a > 10 && a < 20
                     ? e + "-ти"
-                    : 1 === t ? e + "-ви" : 2 === t ? e + "-ри" : 7 === t || 8 === t ? e + "-ми" : e + "-ти"
+                    : 1 === t ? e + "-ви" : 2 === t ? e + "-ри" : 7 === t || 8 === t ? e + "-ми" : e + "-ти";
             },
             week: { dow: 1, doy: 7 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("mk",
         "mk",
         {
@@ -75,7 +75,10 @@
             prevText: "&#x3C;",
             nextText: "&#x3E;",
             currentText: "Денес",
-            monthNames: ["Јануари", "Февруари", "Март", "Април", "Мај", "Јуни", "Јули", "Август", "Септември", "Октомври", "Ноември", "Декември"],
+            monthNames: [
+                "Јануари", "Февруари", "Март", "Април", "Мај", "Јуни", "Јули", "Август", "Септември", "Октомври",
+                "Ноември", "Декември"
+            ],
             monthNamesShort: ["Јан", "Фев", "Мар", "Апр", "Мај", "Јун", "Јул", "Авг", "Сеп", "Окт", "Ное", "Дек"],
             dayNames: ["Недела", "Понеделник", "Вторник", "Среда", "Четврток", "Петок", "Сабота"],
             dayNamesShort: ["Нед", "Пон", "Вто", "Сре", "Чет", "Пет", "Саб"],
@@ -92,5 +95,5 @@
         allDayText: "Цел ден",
         eventLimitText: function(e) { return"+повеќе " + e },
         noEventsMessage: "Нема настани за прикажување"
-    })
+    });
 });

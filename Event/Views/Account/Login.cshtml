@@ -5,11 +5,11 @@
 }
 <style>
     .wrapper {
-        background: url('../../Content/Dashboard/images/image2.jpg')  no-repeat 0px 0px;
-        background-size: cover;
-        -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
+        -webkit-background-size: cover;
+        background: url('../../Content/Dashboard/images/image2.png') no-repeat 0px 0px;
+        background-size: cover;
     }
 </style>
 @using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-vertical"}))
@@ -36,11 +36,13 @@
     <div class="module-foot">
         <div class="control-group">
             <div class="controls clearfix">
-                <button type="submit" class="btn btn-primary pull-right">Login</button>
+
                 <label class="checkbox">
                     @Html.CheckBoxFor(m => m.RememberMe) Remember me
+                    <a class="pull-right">Forgot Password?</a>
                 </label>
             </div>
         </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
     </div>
 }

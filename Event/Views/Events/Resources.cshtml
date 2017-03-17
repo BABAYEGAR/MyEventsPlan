@@ -1,13 +1,30 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model IEnumerable<Event.Data.Objects.Entities.Resource>
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model IEnumerable<Resource>
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Add Resources";
     Layout = "../Shared/_LayoutTable.cshtml";
     var db = new EventResourceMappingDataContext();
     long eventId = ViewBag.eventId;
+    var events = Session["event"] as Event;
 }
+@section links{
 
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@if (events != null)
+                     {
+                         @Url.Action("Details", "Events", new {id = events.EventId})
+                     }">
+                Event Dashboard
+            </a>
+        </li>
+    </ol>
+}
 @using (Html.BeginForm("AddResources", "Events", FormMethod.Post))
 {
     @Html.Hidden("EventId", eventId)

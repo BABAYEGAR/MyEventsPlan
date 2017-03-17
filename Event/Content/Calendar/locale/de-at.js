@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         function e(e, t, n, a) {
@@ -15,7 +15,7 @@
                 y: ["ein Jahr", "einem Jahr"],
                 yy: [e + " Jahre", e + " Jahren"]
             };
-            return t ? r[n][0] : r[n][1]
+            return t ? r[n][0] : r[n][1];
         }
 
         var n = t.defineLocale("de-at",
@@ -62,7 +62,7 @@
             ordinal: "%d.",
             week: { dow: 1, doy: 4 }
         });
-        return n
+        return n;
     }(), e.fullCalendar.datepickerLocale("de-at",
         "de",
         {
@@ -70,7 +70,10 @@
             prevText: "&#x3C;Zurück",
             nextText: "Vor&#x3E;",
             currentText: "Heute",
-            monthNames: ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+            monthNames: [
+                "Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober",
+                "November", "Dezember"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
             dayNames: ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"],
             dayNamesShort: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"],
@@ -87,5 +90,5 @@
         allDayText: "Ganztägig",
         eventLimitText: function(e) { return"+ weitere " + e },
         noEventsMessage: "Keine Ereignisse anzuzeigen"
-    })
+    });
 });

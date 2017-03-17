@@ -1,10 +1,27 @@
 ﻿@using Event.Data.Objects.Entities
 @model IEnumerable<GuestList>
 @{
+    var events = Session["event"] as Event;
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all my guest list";
     Layout = "../Shared/_LayoutTable.cshtml";
     var guestList = new GuestList();
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@if (events != null)
+                     {
+                         @Url.Action("Details", "Events", new {id = events.EventId})
+                     }">
+                Event Dashboard
+            </a>
+        </li>
+    </ol>
 }
 @section add {
     <!-- Button trigger modal -->
@@ -50,8 +67,8 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Open", "Details", new { id = item.GuestListId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
-              
+                    @Html.ActionLink("Open", "Details", new {id = item.GuestListId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+
                 </td>
             </tr>
         }

@@ -44,6 +44,7 @@ namespace Event.Data.Objects.Entities
         public string Status { get; set; }
         public bool Verified { get; set; }
         public  IEnumerable<Message> Messages { get; set; }
+        public  IEnumerable<Setting> Settings { get; set; }
         public string DisplayName
      => Firstname + " " + Lastname;
 

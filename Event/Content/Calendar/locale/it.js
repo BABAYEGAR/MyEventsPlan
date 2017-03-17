@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         var e = a.defineLocale("it",
@@ -30,7 +30,7 @@
                     case 0:
                         return"[la scorsa] dddd [alle] LT";
                     default:
-                        return"[lo scorso] dddd [alle] LT"
+                        return"[lo scorso] dddd [alle] LT";
                     }
                 },
                 sameElse: "L"
@@ -54,7 +54,7 @@
             ordinal: "%dº",
             week: { dow: 1, doy: 4 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("it",
         "it",
         {
@@ -62,7 +62,10 @@
             prevText: "&#x3C;Prec",
             nextText: "Succ&#x3E;",
             currentText: "Oggi",
-            monthNames: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
+            monthNames: [
+                "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre",
+                "Ottobre", "Novembre", "Dicembre"
+            ],
             monthNamesShort: ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"],
             dayNames: ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
             dayNamesShort: ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"],
@@ -79,5 +82,5 @@
         allDayHtml: "Tutto il<br/>giorno",
         eventLimitText: function(e) { return"+altri " + e },
         noEventsMessage: "Non ci sono eventi da visualizzare"
-    })
+    });
 });

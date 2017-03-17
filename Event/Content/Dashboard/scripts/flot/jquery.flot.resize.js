@@ -33,29 +33,29 @@ plots, you can just fix the size of their placeholders.
     $.event.special[j] = {
         setup: function() {
             if (!e[f] && this[k]) {
-                return false
+                return false;
             }
             var l = $(this);
             a = a.add(l);
             $.data(this, d, { w: l.width(), h: l.height() });
             if (a.length === 1) {
-                g()
+                g();
             }
         },
         teardown: function() {
             if (!e[f] && this[k]) {
-                return false
+                return false;
             }
             var l = $(this);
             a = a.not(l);
             l.removeData(d);
             if (!a.length) {
-                clearTimeout(i)
+                clearTimeout(i);
             }
         },
         add: function(l) {
             if (!e[f] && this[k]) {
-                return false
+                return false;
             }
             var n;
 
@@ -63,15 +63,15 @@ plots, you can just fix the size of their placeholders.
                 var q = $(this), r = $.data(this, d);
                 r.w = o !== c ? o : q.width();
                 r.h = p !== c ? p : q.height();
-                n.apply(this, arguments)
+                n.apply(this, arguments);
             }
 
             if ($.isFunction(l)) {
                 n = l;
-                return m
+                return m;
             } else {
                 n = l.handler;
-                l.handler = m
+                l.handler = m;
             }
         }
     };
@@ -81,12 +81,12 @@ plots, you can just fix the size of their placeholders.
                 a.each(function() {
                     var n = $(this), m = n.width(), l = n.height(), o = $.data(this, d);
                     if (m !== o.w || l !== o.h) {
-                        n.trigger(j, [o.w = m, o.h = l])
+                        n.trigger(j, [o.w = m, o.h = l]);
                     }
                 });
-                g()
+                g();
             },
-            e[b])
+            e[b]);
     }
 })(jQuery, this);
 

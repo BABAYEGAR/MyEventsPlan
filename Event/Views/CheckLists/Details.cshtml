@@ -8,6 +8,19 @@
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
 }
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Details", "Events", new {id = Model.EventId})">Event Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "CheckLists", new {eventId = Model.EventId})">Event Check-Lists</a>
+        </li>
+    </ol>
+}
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.Event.Name)
@@ -84,6 +97,5 @@
     </div>
 
 </div>
-@Html.ActionLink("List Items", "Index", "CheckListItems", new { checkListId = Model.CheckListId }, new { @class = "btn btn-xs btn-default icon-list" })
-@Html.ActionLink("Delete", "Delete", new { id = Model.CheckListId }, new { @class = "btn btn-danger icon-trash" })
-@Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+@Html.ActionLink("List Items", "Index", "CheckListItems", new {checkListId = Model.CheckListId}, new {@class = "btn btn-xs btn-default icon-list"})
+@Html.ActionLink("Delete", "Delete", new {id = Model.CheckListId}, new {@class = "btn btn-danger icon-trash"})

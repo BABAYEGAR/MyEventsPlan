@@ -1,11 +1,11 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         function e(e, t, s) {
-            return s ? t % 10 === 1 && t % 100 !== 11 ? e[2] : e[3] : t % 10 === 1 && t % 100 !== 11 ? e[0] : e[1]
+            return s ? t % 10 === 1 && t % 100 !== 11 ? e[2] : e[3] : t % 10 === 1 && t % 100 !== 11 ? e[0] : e[1];
         }
 
         function s(t, s, a) { return t + " " + e(i[a], t, s) }
@@ -35,14 +35,42 @@
                 weekdaysShort: "Sv_P_O_T_C_Pk_S".split("_"),
                 weekdaysMin: "Sv_P_O_T_C_Pk_S".split("_"),
                 weekdaysParseExact: !0,
-                longDateFormat: { LT: "HH:mm", LTS: "HH:mm:ss", L: "DD.MM.YYYY.", LL: "YYYY. [gada] D. MMMM", LLL: "YYYY. [gada] D. MMMM, HH:mm", LLLL: "YYYY. [gada] D. MMMM, dddd, HH:mm" },
-                calendar: { sameDay: "[Šodien pulksten] LT", nextDay: "[Rīt pulksten] LT", nextWeek: "dddd [pulksten] LT", lastDay: "[Vakar pulksten] LT", lastWeek: "[Pagājušā] dddd [pulksten] LT", sameElse: "L" },
-                relativeTime: { future: "pēc %s", past: "pirms %s", s: n, m: a, mm: s, h: a, hh: s, d: a, dd: s, M: a, MM: s, y: a, yy: s },
+                longDateFormat: {
+                    LT: "HH:mm",
+                    LTS: "HH:mm:ss",
+                    L: "DD.MM.YYYY.",
+                    LL: "YYYY. [gada] D. MMMM",
+                    LLL: "YYYY. [gada] D. MMMM, HH:mm",
+                    LLLL: "YYYY. [gada] D. MMMM, dddd, HH:mm"
+                },
+                calendar: {
+                    sameDay: "[Šodien pulksten] LT",
+                    nextDay: "[Rīt pulksten] LT",
+                    nextWeek: "dddd [pulksten] LT",
+                    lastDay: "[Vakar pulksten] LT",
+                    lastWeek: "[Pagājušā] dddd [pulksten] LT",
+                    sameElse: "L"
+                },
+                relativeTime: {
+                    future: "pēc %s",
+                    past: "pirms %s",
+                    s: n,
+                    m: a,
+                    mm: s,
+                    h: a,
+                    hh: s,
+                    d: a,
+                    dd: s,
+                    M: a,
+                    MM: s,
+                    y: a,
+                    yy: s
+                },
                 ordinalParse: /\d{1,2}\./,
                 ordinal: "%d.",
                 week: { dow: 1, doy: 4 }
             });
-        return d
+        return d;
     }(), e.fullCalendar.datepickerLocale("lv",
         "lv",
         {
@@ -50,7 +78,10 @@
             prevText: "Iepr.",
             nextText: "Nāk.",
             currentText: "Šodien",
-            monthNames: ["Janvāris", "Februāris", "Marts", "Aprīlis", "Maijs", "Jūnijs", "Jūlijs", "Augusts", "Septembris", "Oktobris", "Novembris", "Decembris"],
+            monthNames: [
+                "Janvāris", "Februāris", "Marts", "Aprīlis", "Maijs", "Jūnijs", "Jūlijs", "Augusts", "Septembris",
+                "Oktobris", "Novembris", "Decembris"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Mai", "Jūn", "Jūl", "Aug", "Sep", "Okt", "Nov", "Dec"],
             dayNames: ["svētdiena", "pirmdiena", "otrdiena", "trešdiena", "ceturtdiena", "piektdiena", "sestdiena"],
             dayNamesShort: ["svt", "prm", "otr", "tre", "ctr", "pkt", "sst"],
@@ -67,5 +98,5 @@
         allDayText: "Visu dienu",
         eventLimitText: function(e) { return"+vēl " + e },
         noEventsMessage: "Nav notikumu, lai parādītu"
-    })
+    });
 });

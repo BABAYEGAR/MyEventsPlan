@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         function e(e) { return e % 10 < 5 && e % 10 > 1 && ~~(e / 10) % 10 !== 1 }
@@ -20,7 +20,7 @@
             case"MM":
                 return r + (e(t) ? "miesiące" : "miesięcy");
             case"yy":
-                return r + (e(t) ? "lata" : "lat")
+                return r + (e(t) ? "lata" : "lat");
             }
         }
 
@@ -33,7 +33,7 @@
                 months: function(e, t) {
                     return"" === t
                         ? "(" + r[e.month()] + "|" + a[e.month()] + ")"
-                        : /D MMMM/.test(t) ? r[e.month()] : a[e.month()]
+                        : /D MMMM/.test(t) ? r[e.month()] : a[e.month()];
                 },
                 monthsShort: "sty_lut_mar_kwi_maj_cze_lip_sie_wrz_paź_lis_gru".split("_"),
                 weekdays: "niedziela_poniedziałek_wtorek_środa_czwartek_piątek_sobota".split("_"),
@@ -61,7 +61,7 @@
                         case 6:
                             return"[W zeszłą sobotę o] LT";
                         default:
-                            return"[W zeszły] dddd [o] LT"
+                            return"[W zeszły] dddd [o] LT";
                         }
                     },
                     sameElse: "L"
@@ -85,7 +85,7 @@
                 ordinal: "%d.",
                 week: { dow: 1, doy: 4 }
             });
-        return n
+        return n;
     }(), e.fullCalendar.datepickerLocale("pl",
         "pl",
         {
@@ -93,7 +93,10 @@
             prevText: "&#x3C;Poprzedni",
             nextText: "Następny&#x3E;",
             currentText: "Dziś",
-            monthNames: ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"],
+            monthNames: [
+                "Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień",
+                "Październik", "Listopad", "Grudzień"
+            ],
             monthNamesShort: ["Sty", "Lu", "Mar", "Kw", "Maj", "Cze", "Lip", "Sie", "Wrz", "Pa", "Lis", "Gru"],
             dayNames: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
             dayNamesShort: ["Nie", "Pn", "Wt", "Śr", "Czw", "Pt", "So"],
@@ -110,5 +113,5 @@
         allDayText: "Cały dzień",
         eventLimitText: "więcej",
         noEventsMessage: "Brak wydarzeń do wyświetlenia"
-    })
+    });
 });

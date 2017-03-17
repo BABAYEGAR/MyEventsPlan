@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, n) {
     !function() {
         function e(e, n, r, t) {
@@ -12,17 +12,17 @@
                 M: ["ee Mount", "engem Mount"],
                 y: ["ee Joer", "engem Joer"]
             };
-            return n ? a[r][0] : a[r][1]
+            return n ? a[r][0] : a[r][1];
         }
 
         function r(e) {
             var n = e.substr(0, e.indexOf(" "));
-            return a(n) ? "a " + e : "an " + e
+            return a(n) ? "a " + e : "an " + e;
         }
 
         function t(e) {
             var n = e.substr(0, e.indexOf(" "));
-            return a(n) ? "viru " + e : "virun " + e
+            return a(n) ? "viru " + e : "virun " + e;
         }
 
         function a(e) {
@@ -31,13 +31,13 @@
             if (e < 10) return 4 <= e && e <= 7;
             if (e < 100) {
                 var n = e % 10, r = e / 10;
-                return a(0 === n ? r : n)
+                return a(0 === n ? r : n);
             }
             if (e < 1e4) {
                 for (; e >= 10;) e /= 10;
-                return a(e)
+                return a(e);
             }
-            return e /= 1e3, a(e)
+            return e /= 1e3, a(e);
         }
 
         var u = n.defineLocale("lb",
@@ -69,7 +69,7 @@
                     case 4:
                         return"[Leschten] dddd [um] LT";
                     default:
-                        return"[Leschte] dddd [um] LT"
+                        return"[Leschte] dddd [um] LT";
                     }
                 }
             },
@@ -92,7 +92,7 @@
             ordinal: "%d.",
             week: { dow: 1, doy: 4 }
         });
-        return u
+        return u;
     }(), e.fullCalendar.datepickerLocale("lb",
         "lb",
         {
@@ -100,7 +100,10 @@
             prevText: "Zréck",
             nextText: "Weider",
             currentText: "Haut",
-            monthNames: ["Januar", "Februar", "Mäerz", "Abrëll", "Mee", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"],
+            monthNames: [
+                "Januar", "Februar", "Mäerz", "Abrëll", "Mee", "Juni", "Juli", "August", "September", "Oktober",
+                "November", "Dezember"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mäe", "Abr", "Mee", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
             dayNames: ["Sonndeg", "Méindeg", "Dënschdeg", "Mëttwoch", "Donneschdeg", "Freideg", "Samschdeg"],
             dayNamesShort: ["Son", "Méi", "Dën", "Mët", "Don", "Fre", "Sam"],
@@ -117,5 +120,5 @@
         allDayText: "Ganzen Dag",
         eventLimitText: "méi",
         noEventsMessage: "Nee Evenementer ze affichéieren"
-    })
+    });
 });

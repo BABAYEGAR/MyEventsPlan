@@ -1,14 +1,14 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         function e(e, t) {
             var _ = e.split("_");
             return t % 10 === 1 && t % 100 !== 11
                 ? _[0]
-                : t % 10 >= 2 && t % 10 <= 4 && (t % 100 < 10 || t % 100 >= 20) ? _[1] : _[2]
+                : t % 10 >= 2 && t % 10 <= 4 && (t % 100 < 10 || t % 100 >= 20) ? _[1] : _[2];
         }
 
         function _(t, _, n) {
@@ -19,7 +19,7 @@
                 MM: "місяць_місяці_місяців",
                 yy: "рік_роки_років"
             };
-            return"m" === n ? _ ? "хвилина" : "хвилину" : "h" === n ? _ ? "година" : "годину" : t + " " + e(a[n], +t)
+            return"m" === n ? _ ? "хвилина" : "хвилину" : "h" === n ? _ ? "година" : "годину" : t + " " + e(a[n], +t);
         }
 
         function n(e, t) {
@@ -28,8 +28,10 @@
                     accusative: "неділю_понеділок_вівторок_середу_четвер_п’ятницю_суботу".split("_"),
                     genitive: "неділі_понеділка_вівторка_середи_четверга_п’ятниці_суботи".split("_")
                 },
-            n = /(\[[ВвУу]\]) ?dddd/.test(t) ? "accusative" : /\[?(?:минулої|наступної)? ?\] ?dddd/.test(t) ? "genitive" : "nominative";
-            return _[n][e.day()]
+                n = /(\[[ВвУу]\]) ?dddd/.test(t)
+                    ? "accusative"
+                    : /\[?(?:минулої|наступної)? ?\] ?dddd/.test(t) ? "genitive" : "nominative";
+            return _[n][e.day()];
         }
 
         function a(e) { return function() { return e + "о" + (11 === this.hours() ? "б" : "") + "] LT" } }
@@ -39,7 +41,9 @@
             months: {
                 format: "січня_лютого_березня_квітня_травня_червня_липня_серпня_вересня_жовтня_листопада_грудня"
                     .split("_"),
-                standalone: "січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень".split("_")
+                standalone:
+                    "січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень"
+                        .split("_")
             },
             monthsShort: "січ_лют_бер_квіт_трав_черв_лип_серп_вер_жовт_лист_груд".split("_"),
             weekdays: n,
@@ -68,7 +72,7 @@
                     case 1:
                     case 2:
                     case 4:
-                        return a("[Минулого] dddd [").call(this)
+                        return a("[Минулого] dddd [").call(this);
                     }
                 },
                 sameElse: "L"
@@ -103,12 +107,12 @@
                 case"D":
                     return e + "-го";
                 default:
-                    return e
+                    return e;
                 }
             },
             week: { dow: 1, doy: 7 }
         });
-        return r
+        return r;
     }(), e.fullCalendar.datepickerLocale("uk",
         "uk",
         {
@@ -116,7 +120,10 @@
             prevText: "&#x3C;",
             nextText: "&#x3E;",
             currentText: "Сьогодні",
-            monthNames: ["Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень", "Жовтень", "Листопад", "Грудень"],
+            monthNames: [
+                "Січень", "Лютий", "Березень", "Квітень", "Травень", "Червень", "Липень", "Серпень", "Вересень",
+                "Жовтень", "Листопад", "Грудень"
+            ],
             monthNamesShort: ["Січ", "Лют", "Бер", "Кві", "Тра", "Чер", "Лип", "Сер", "Вер", "Жов", "Лис", "Гру"],
             dayNames: ["неділя", "понеділок", "вівторок", "середа", "четвер", "п’ятниця", "субота"],
             dayNamesShort: ["нед", "пнд", "вів", "срд", "чтв", "птн", "сбт"],
@@ -133,5 +140,5 @@
         allDayText: "Увесь день",
         eventLimitText: function(e) { return"+ще " + e + "..." },
         noEventsMessage: "Немає подій для відображення"
-    })
+    });
 });

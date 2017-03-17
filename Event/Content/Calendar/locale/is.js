@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, r) {
     !function() {
         function e(e) { return e % 100 === 11 || e % 10 !== 1 }
@@ -30,7 +30,7 @@
             case"y":
                 return a || n ? "ár" : "ári";
             case"yy":
-                return e(r) ? t + (a || n ? "ár" : "árum") : t + (a || n ? "ár" : "ári")
+                return e(r) ? t + (a || n ? "ár" : "árum") : t + (a || n ? "ár" : "ári");
             }
         }
 
@@ -76,7 +76,7 @@
             ordinal: "%d.",
             week: { dow: 1, doy: 4 }
         });
-        return u
+        return u;
     }(), e.fullCalendar.datepickerLocale("is",
         "is",
         {
@@ -84,9 +84,14 @@
             prevText: "&#x3C; Fyrri",
             nextText: "Næsti &#x3E;",
             currentText: "Í dag",
-            monthNames: ["Janúar", "Febrúar", "Mars", "Apríl", "Maí", "Júní", "Júlí", "Ágúst", "September", "Október", "Nóvember", "Desember"],
+            monthNames: [
+                "Janúar", "Febrúar", "Mars", "Apríl", "Maí", "Júní", "Júlí", "Ágúst", "September", "Október",
+                "Nóvember", "Desember"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maí", "Jún", "Júl", "Ágú", "Sep", "Okt", "Nóv", "Des"],
-            dayNames: ["Sunnudagur", "Mánudagur", "Þriðjudagur", "Miðvikudagur", "Fimmtudagur", "Föstudagur", "Laugardagur"],
+            dayNames: [
+                "Sunnudagur", "Mánudagur", "Þriðjudagur", "Miðvikudagur", "Fimmtudagur", "Föstudagur", "Laugardagur"
+            ],
             dayNamesShort: ["Sun", "Mán", "Þri", "Mið", "Fim", "Fös", "Lau"],
             dayNamesMin: ["Su", "Má", "Þr", "Mi", "Fi", "Fö", "La"],
             weekHeader: "Vika",
@@ -101,5 +106,5 @@
         allDayHtml: "Allan<br/>daginn",
         eventLimitText: "meira",
         noEventsMessage: "Engir viðburðir til að sýna"
-    })
+    });
 });

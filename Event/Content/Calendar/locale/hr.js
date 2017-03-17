@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         function e(e, a, t) {
@@ -20,7 +20,7 @@
             case"MM":
                 return n += 1 === e ? "mjesec" : 2 === e || 3 === e || 4 === e ? "mjeseca" : "mjeseci";
             case"yy":
-                return n += 1 === e ? "godina" : 2 === e || 3 === e || 4 === e ? "godine" : "godina"
+                return n += 1 === e ? "godina" : 2 === e || 3 === e || 4 === e ? "godine" : "godina";
             }
         }
 
@@ -30,7 +30,9 @@
                 format:
                     "siječnja_veljače_ožujka_travnja_svibnja_lipnja_srpnja_kolovoza_rujna_listopada_studenoga_prosinca"
                         .split("_"),
-                standalone: "siječanj_veljača_ožujak_travanj_svibanj_lipanj_srpanj_kolovoz_rujan_listopad_studeni_prosinac".split("_")
+                standalone:
+                    "siječanj_veljača_ožujak_travanj_svibanj_lipanj_srpanj_kolovoz_rujan_listopad_studeni_prosinac"
+                        .split("_")
             },
             monthsShort: "sij._velj._ožu._tra._svi._lip._srp._kol._ruj._lis._stu._pro.".split("_"),
             monthsParseExact: !0,
@@ -61,7 +63,7 @@
                     case 2:
                     case 4:
                     case 5:
-                        return"[u] dddd [u] LT"
+                        return"[u] dddd [u] LT";
                     }
                 },
                 lastDay: "[jučer u] LT",
@@ -76,7 +78,7 @@
                     case 2:
                     case 4:
                     case 5:
-                        return"[prošli] dddd [u] LT"
+                        return"[prošli] dddd [u] LT";
                     }
                 },
                 sameElse: "L"
@@ -100,7 +102,7 @@
             ordinal: "%d.",
             week: { dow: 1, doy: 7 }
         });
-        return t
+        return t;
     }(), e.fullCalendar.datepickerLocale("hr",
         "hr",
         {
@@ -108,7 +110,10 @@
             prevText: "&#x3C;",
             nextText: "&#x3E;",
             currentText: "Danas",
-            monthNames: ["Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan", "Listopad", "Studeni", "Prosinac"],
+            monthNames: [
+                "Siječanj", "Veljača", "Ožujak", "Travanj", "Svibanj", "Lipanj", "Srpanj", "Kolovoz", "Rujan",
+                "Listopad", "Studeni", "Prosinac"
+            ],
             monthNamesShort: ["Sij", "Velj", "Ožu", "Tra", "Svi", "Lip", "Srp", "Kol", "Ruj", "Lis", "Stu", "Pro"],
             dayNames: ["Nedjelja", "Ponedjeljak", "Utorak", "Srijeda", "Četvrtak", "Petak", "Subota"],
             dayNamesShort: ["Ned", "Pon", "Uto", "Sri", "Čet", "Pet", "Sub"],
@@ -125,5 +130,5 @@
         allDayText: "Cijeli dan",
         eventLimitText: function(e) { return"+ još " + e },
         noEventsMessage: "Nema događaja za prikaz"
-    })
+    });
 });

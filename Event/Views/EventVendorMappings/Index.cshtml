@@ -6,14 +6,30 @@
     ViewBag.TableHeader = "List of all vedors assigned to " + events?.Name + "!";
     Layout = "../Shared/_LayoutTable.cshtml";
     var mapping = new EventVendorMapping();
-
 }
 @section add {
     @if (events != null)
     {
-        @Html.ActionLink("Add vendors", "ListOfVendors","Vendors",null, new { @class = "btn btn-xs btn-primary pull-right" })
+        @Html.ActionLink("Add vendors", "ListOfVendors", "Vendors", null, new {@class = "btn btn-xs btn-primary pull-right"})
     }
 
+
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@if (events != null)
+                     {
+                         @Url.Action("Details", "Events", new {id = events.EventId})
+                     }">
+                Event Dashboard
+            </a>
+        </li>
+    </ol>
 }
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">

@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         var e = t.defineLocale("bg",
@@ -34,7 +34,7 @@
                     case 2:
                     case 4:
                     case 5:
-                        return"[В изминалия] dddd [в] LT"
+                        return"[В изминалия] dddd [в] LT";
                     }
                 },
                 sameElse: "L"
@@ -63,11 +63,11 @@
                     ? e + "-ен"
                     : a > 10 && a < 20
                     ? e + "-ти"
-                    : 1 === t ? e + "-ви" : 2 === t ? e + "-ри" : 7 === t || 8 === t ? e + "-ми" : e + "-ти"
+                    : 1 === t ? e + "-ви" : 2 === t ? e + "-ри" : 7 === t || 8 === t ? e + "-ми" : e + "-ти";
             },
             week: { dow: 1, doy: 7 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("bg",
         "bg",
         {
@@ -76,7 +76,10 @@
             nextText: "напред&#x3E;",
             nextBigText: "&#x3E;&#x3E;",
             currentText: "днес",
-            monthNames: ["Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври", "Ноември", "Декември"],
+            monthNames: [
+                "Януари", "Февруари", "Март", "Април", "Май", "Юни", "Юли", "Август", "Септември", "Октомври",
+                "Ноември", "Декември"
+            ],
             monthNamesShort: ["Яну", "Фев", "Мар", "Апр", "Май", "Юни", "Юли", "Авг", "Сеп", "Окт", "Нов", "Дек"],
             dayNames: ["Неделя", "Понеделник", "Вторник", "Сряда", "Четвъртък", "Петък", "Събота"],
             dayNamesShort: ["Нед", "Пон", "Вто", "Сря", "Чет", "Пет", "Съб"],
@@ -93,5 +96,5 @@
         allDayText: "Цял ден",
         eventLimitText: function(e) { return"+още " + e },
         noEventsMessage: "Няма събития за показване"
-    })
+    });
 });

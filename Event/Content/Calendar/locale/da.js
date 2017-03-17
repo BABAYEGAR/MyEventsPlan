@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         var e = a.defineLocale("da",
@@ -11,14 +11,42 @@
             weekdays: "søndag_mandag_tirsdag_onsdag_torsdag_fredag_lørdag".split("_"),
             weekdaysShort: "søn_man_tir_ons_tor_fre_lør".split("_"),
             weekdaysMin: "sø_ma_ti_on_to_fr_lø".split("_"),
-            longDateFormat: { LT: "HH:mm", LTS: "HH:mm:ss", L: "DD/MM/YYYY", LL: "D. MMMM YYYY", LLL: "D. MMMM YYYY HH:mm", LLLL: "dddd [d.] D. MMMM YYYY HH:mm" },
-            calendar: { sameDay: "[I dag kl.] LT", nextDay: "[I morgen kl.] LT", nextWeek: "dddd [kl.] LT", lastDay: "[I går kl.] LT", lastWeek: "[sidste] dddd [kl] LT", sameElse: "L" },
-            relativeTime: { future: "om %s", past: "%s siden", s: "få sekunder", m: "et minut", mm: "%d minutter", h: "en time", hh: "%d timer", d: "en dag", dd: "%d dage", M: "en måned", MM: "%d måneder", y: "et år", yy: "%d år" },
+            longDateFormat: {
+                LT: "HH:mm",
+                LTS: "HH:mm:ss",
+                L: "DD/MM/YYYY",
+                LL: "D. MMMM YYYY",
+                LLL: "D. MMMM YYYY HH:mm",
+                LLLL: "dddd [d.] D. MMMM YYYY HH:mm"
+            },
+            calendar: {
+                sameDay: "[I dag kl.] LT",
+                nextDay: "[I morgen kl.] LT",
+                nextWeek: "dddd [kl.] LT",
+                lastDay: "[I går kl.] LT",
+                lastWeek: "[sidste] dddd [kl] LT",
+                sameElse: "L"
+            },
+            relativeTime: {
+                future: "om %s",
+                past: "%s siden",
+                s: "få sekunder",
+                m: "et minut",
+                mm: "%d minutter",
+                h: "en time",
+                hh: "%d timer",
+                d: "en dag",
+                dd: "%d dage",
+                M: "en måned",
+                MM: "%d måneder",
+                y: "et år",
+                yy: "%d år"
+            },
             ordinalParse: /\d{1,2}\./,
             ordinal: "%d.",
             week: { dow: 1, doy: 4 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("da",
         "da",
         {
@@ -26,7 +54,10 @@
             prevText: "&#x3C;Forrige",
             nextText: "Næste&#x3E;",
             currentText: "Idag",
-            monthNames: ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"],
+            monthNames: [
+                "Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober",
+                "November", "December"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
             dayNames: ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag"],
             dayNamesShort: ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør"],
@@ -43,5 +74,5 @@
         allDayText: "Hele dagen",
         eventLimitText: "flere",
         noEventsMessage: "Ingen arrangementer at vise"
-    })
+    });
 });

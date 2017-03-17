@@ -23,6 +23,13 @@
         </div>
     </div>
     <div class="control-group">
+        @Html.LabelFor(model => model.ShowToClient, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.ShowToClient, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.ShowToClient, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
         <div class="controls">
             <input type="submit" value="Update" class="btn btn-default"/>
         </div>

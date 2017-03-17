@@ -17,10 +17,10 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.LocationId, "Location", new { @class = "control-label" })
+        @Html.LabelFor(model => model.LocationId, "Location", new {@class = "control-label"})
         <div class="controls">
-            @Html.DropDownListFor(m => m.LocationId, null, new { @class = "span8" })
-            @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(m => m.LocationId, null, new {@class = "span8"})
+            @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
         </div>
     </div>
 
@@ -70,19 +70,20 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.Password, new { @class = "control-label" })
+        @Html.LabelFor(model => model.Password, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label" })
+        @Html.LabelFor(model => model.ConfirmPassword, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
         </div>
-    </div><div class="control-group">
+    </div>
+    <div class="control-group">
         <div class="controls">
             <input type="submit" value="Create" class="btn btn-default"/>
         </div>

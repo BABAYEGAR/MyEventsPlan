@@ -26,29 +26,32 @@
                         </button>
                     </div>
                     <div class="mainmenu pull-left">
-                        <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li class="dropdown">
-                                <a href="#" class="active">App Navigation<i class="fa fa-angle-down"></i></a>
-                                <ul role="menu" class="sub-menu">
-                                    <li>
-                                        <a href="@Url.Action("Index", "Events")">Event Dashboard</a>
-                                    </li>
-                                    <li>
-                                        <a href="@if (events != null)
-                                                 {
-                                                     @Url.Action("Index", "EventVendorMappings",new {id = events.EventId})
-                                                 }">Vendors</a>
-                                    </li>
-                                </ul>
-
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="@Url.Action("Index", "Events")">My Events</a>
                             </li>
+                            <li class="breadcrumb-item">
+                                <a href="@if (events != null)
+                                         {
+                                             @Url.Action("Details", "Events", new {id = events.EventId})
+                                         }">
+                                    Event Dashboard
+                                </a>
+                            </li><li class="breadcrumb-item">
+                                <a href="@if (events != null)
+                                         {
+                                             @Url.Action("Index", "EventVendorMappings", new {id = events.EventId})
+                                         }">
+                                    Event Vendors
+                                </a>
+                            </li>
+                        </ol>
 
-                        </ul>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
-                   
+
 
                         <input type="text" placeholder="Search"/>
                     </div>

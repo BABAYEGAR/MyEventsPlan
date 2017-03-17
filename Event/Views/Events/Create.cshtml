@@ -24,7 +24,7 @@
     <div class="control-group">
         @Html.LabelFor(model => model.Color, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor",id = "color"}})
+            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor", id = "color"}})
             @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
         </div>
     </div>
@@ -74,7 +74,7 @@
     <script type="text/javascript">
         jQuery('#datetimepicker6')
             .datetimepicker({
-                format:'m-d-Y h:i',
+                format: 'm-d-Y h:i',
                 onShow: function(ct) {
                     this.setOptions({
                         minDate: @DateTime.Now.ToShortDateString(),
@@ -82,14 +82,14 @@
                 },
             });
         jQuery('#datetimepicker7')
-         .datetimepicker({
-             format:'m-d-Y h:i',
-             onShow: function (ct) {
-                 this.setOptions({
-                     minDate: jQuery('#datetimepicker6').val() ? jQuery('#datetimepicker6').val() : false
-                 });
-             },
-         });
- 
+            .datetimepicker({
+                format: 'm-d-Y h:i',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: jQuery('#datetimepicker6').val() ? jQuery('#datetimepicker6').val() : false
+                    });
+                },
+            });
+
     </script>
 }

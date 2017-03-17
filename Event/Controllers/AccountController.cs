@@ -371,6 +371,7 @@ namespace MyEventPlan.Controllers
         {
             Session["myeventplanloggedinuser"] = null;
             Session["role"] = null;
+            Session["event"] = null;
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }

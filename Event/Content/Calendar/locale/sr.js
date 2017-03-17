@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         var e = {
@@ -17,7 +17,7 @@
                 correctGrammaticalCase: function(e, a) { return 1 === e ? a[0] : e >= 2 && e <= 4 ? a[1] : a[2] },
                 translate: function(a, t, r) {
                     var n = e.words[r];
-                    return 1 === r.length ? t ? n[0] : n[1] : a + " " + e.correctGrammaticalCase(a, n)
+                    return 1 === r.length ? t ? n[0] : n[1] : a + " " + e.correctGrammaticalCase(a, n);
                 }
             },
             t = a.defineLocale("sr",
@@ -52,7 +52,7 @@
                         case 2:
                         case 4:
                         case 5:
-                            return"[u] dddd [u] LT"
+                            return"[u] dddd [u] LT";
                         }
                     },
                     lastDay: "[juče u] LT",
@@ -62,7 +62,7 @@
                             "[prošle] [srede] [u] LT", "[prošlog] [četvrtka] [u] LT", "[prošlog] [petka] [u] LT",
                             "[prošle] [subote] [u] LT"
                         ];
-                        return e[this.day()]
+                        return e[this.day()];
                     },
                     sameElse: "L"
                 },
@@ -85,7 +85,7 @@
                 ordinal: "%d.",
                 week: { dow: 1, doy: 7 }
             });
-        return t
+        return t;
     }(), e.fullCalendar.datepickerLocale("sr",
         "sr",
         {
@@ -93,7 +93,10 @@
             prevText: "&#x3C;",
             nextText: "&#x3E;",
             currentText: "Данас",
-            monthNames: ["Јануар", "Фебруар", "Март", "Април", "Мај", "Јун", "Јул", "Август", "Септембар", "Октобар", "Новембар", "Децембар"],
+            monthNames: [
+                "Јануар", "Фебруар", "Март", "Април", "Мај", "Јун", "Јул", "Август", "Септембар", "Октобар", "Новембар",
+                "Децембар"
+            ],
             monthNamesShort: ["Јан", "Феб", "Мар", "Апр", "Мај", "Јун", "Јул", "Авг", "Сеп", "Окт", "Нов", "Дец"],
             dayNames: ["Недеља", "Понедељак", "Уторак", "Среда", "Четвртак", "Петак", "Субота"],
             dayNamesShort: ["Нед", "Пон", "Уто", "Сре", "Чет", "Пет", "Суб"],
@@ -110,5 +113,5 @@
         allDayText: "Цео дан",
         eventLimitText: function(e) { return"+ још " + e },
         noEventsMessage: "Нема догађаја за приказ"
-    })
+    });
 });

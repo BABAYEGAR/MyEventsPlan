@@ -1,7 +1,7 @@
 !function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         var e = a.defineLocale("en-ie",
@@ -46,10 +46,10 @@
             ordinal: function(e) {
                 var a = e % 10,
                     t = 1 === ~~(e % 100 / 10) ? "th" : 1 === a ? "st" : 2 === a ? "nd" : 3 === a ? "rd" : "th";
-                return e + t
+                return e + t;
             },
             week: { dow: 1, doy: 4 }
         });
-        return e
-    }(), e.fullCalendar.locale("en-ie")
+        return e;
+    }(), e.fullCalendar.locale("en-ie");
 });

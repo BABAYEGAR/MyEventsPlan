@@ -59,6 +59,7 @@
     <Compile Include="Entities\News.cs" />
     <Compile Include="Entities\Note.cs" />
     <Compile Include="Entities\Resource.cs" />
+    <Compile Include="Entities\Setting.cs" />
     <Compile Include="Entities\StaffEventMapping.cs" />
     <Compile Include="Entities\EventVendorMapping.cs" />
     <Compile Include="Entities\ProspectContactMapping.cs" />

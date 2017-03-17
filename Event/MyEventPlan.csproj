@@ -238,6 +238,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\BreadCumb.css" />
     <Content Include="Content\Calendar\fullcalendar.css" />
     <Content Include="Content\Calendar\fullcalendar.js" />
     <Content Include="Content\Calendar\fullcalendar.min.css" />
@@ -364,6 +365,7 @@
     <Content Include="Content\Dashboard\images\icons\css\font-awesome.css" />
     <Content Include="Content\Dashboard\images\image1.jpg" />
     <Content Include="Content\Dashboard\images\image2.jpg" />
+    <Content Include="Content\Dashboard\images\image2.png" />
     <Content Include="Content\Dashboard\images\image3.jpg" />
     <Content Include="Content\Dashboard\images\images.jpg" />
     <Content Include="Content\Dashboard\images\img.jpg" />
@@ -1388,6 +1390,9 @@
     <Content Include="Views\Messages\Index.cshtml" />
     <Content Include="Views\Messages\SentMessages.cshtml" />
     <Content Include="Views\Shared\CreateOneOnOneMessageModal.cshtml" />
+    <Content Include="Views\Shared\EditEventTypeModal.cshtml" />
+    <Content Include="Views\Shared\EditVendorServiceModal.cshtml" />
+    <Content Include="Views\Shared\EditLocationModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

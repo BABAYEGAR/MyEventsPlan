@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         var e = t.defineLocale("zh-tw",
@@ -27,11 +27,11 @@
             meridiemHour: function(e, t) {
                 return 12 === e && (e = 0), "凌晨" === t || "早上" === t || "上午" === t
                     ? e
-                    : "中午" === t ? e >= 11 ? e : e + 12 : "下午" === t || "晚上" === t ? e + 12 : void 0
+                    : "中午" === t ? e >= 11 ? e : e + 12 : "下午" === t || "晚上" === t ? e + 12 : void 0;
             },
             meridiem: function(e, t, a) {
                 var d = 100 * e + t;
-                return d < 600 ? "凌晨" : d < 900 ? "早上" : d < 1130 ? "上午" : d < 1230 ? "中午" : d < 1800 ? "下午" : "晚上"
+                return d < 600 ? "凌晨" : d < 900 ? "早上" : d < 1130 ? "上午" : d < 1230 ? "中午" : d < 1800 ? "下午" : "晚上";
             },
             calendar: {
                 sameDay: "[今天]LT",
@@ -54,7 +54,7 @@
                 case"W":
                     return e + "週";
                 default:
-                    return e
+                    return e;
                 }
             },
             relativeTime: {
@@ -73,7 +73,7 @@
                 yy: "%d 年"
             }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("zh-tw",
         "zh-TW",
         {
@@ -98,5 +98,5 @@
         allDayText: "全天",
         eventLimitText: "更多",
         noEventsMessage: "没有事件显示"
-    })
+    });
 });

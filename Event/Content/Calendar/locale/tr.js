@@ -1,7 +1,7 @@
 ﻿!function(a) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], a)
-        : "object" == typeof exports ? module.exports = a(require("jquery"), require("moment")) : a(jQuery, moment)
+        : "object" == typeof exports ? module.exports = a(require("jquery"), require("moment")) : a(jQuery, moment);
 }(function(a, e) {
     !function() {
         var a = {
@@ -66,11 +66,11 @@
                 ordinal: function(e) {
                     if (0 === e) return e + "'ıncı";
                     var t = e % 10, n = e % 100 - t, i = e >= 100 ? 100 : null;
-                    return e + (a[t] || a[n] || a[i])
+                    return e + (a[t] || a[n] || a[i]);
                 },
                 week: { dow: 1, doy: 7 }
             });
-        return t
+        return t;
     }(), a.fullCalendar.datepickerLocale("tr",
         "tr",
         {
@@ -78,7 +78,10 @@
             prevText: "&#x3C;geri",
             nextText: "ileri&#x3e",
             currentText: "bugün",
-            monthNames: ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"],
+            monthNames: [
+                "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım",
+                "Aralık"
+            ],
             monthNamesShort: ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"],
             dayNames: ["Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi"],
             dayNamesShort: ["Pz", "Pt", "Sa", "Ça", "Pe", "Cu", "Ct"],
@@ -95,5 +98,5 @@
         allDayText: "Tüm gün",
         eventLimitText: "daha fazla",
         noEventsMessage: "Herhangi bir etkinlik görüntülemek için"
-    })
+    });
 });

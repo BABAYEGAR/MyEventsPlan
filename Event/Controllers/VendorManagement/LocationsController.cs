@@ -11,7 +11,7 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class LocationsController : Controller
     {
-        private LocationDataContext db = new LocationDataContext();
+        private readonly LocationDataContext db = new LocationDataContext();
 
         // GET: Locations
         public ActionResult Index()
@@ -23,14 +23,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Location location = db.Locations.Find(id);
+            var location = db.Locations.Find(id);
             if (location == null)
-            {
                 return HttpNotFound();
-            }
             return View(location);
         }
 
@@ -77,14 +73,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Location location = db.Locations.Find(id);
+            var location = db.Locations.Find(id);
             if (location == null)
-            {
                 return HttpNotFound();
-            }
             return View(location);
         }
 
@@ -122,23 +114,20 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Location location = db.Locations.Find(id);
+            var location = db.Locations.Find(id);
             if (location == null)
-            {
                 return HttpNotFound();
-            }
             return View(location);
         }
 
         // POST: Locations/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Location location = db.Locations.Find(id);
+            var location = db.Locations.Find(id);
             db.Locations.Remove(location);
             db.SaveChanges();
             TempData["display"] = "You have successfully the location!";
@@ -149,9 +138,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

@@ -1,9 +1,6 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.Vendor
+﻿@model Event.Data.Objects.Entities.Vendor
 @{
-        Layout = "../Shared/_LayoutModal.cshtml";
-        EventDataContext dbc = new EventDataContext();
-    ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
+    Layout = "../Shared/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Create", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
@@ -18,27 +15,27 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+        @Html.LabelFor(model => model.Address, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Address, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.LocationId, "Location", new { @class = "control-label" })
+        @Html.LabelFor(model => model.LocationId, "Location", new {@class = "control-label"})
         <div class="controls">
-            @Html.DropDownListFor(m => m.LocationId, null, new { @class = "span8" })
-            @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(m => m.LocationId, null, new {@class = "span8"})
+            @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.VendorServiceId, "Vendor Service", new { @class = "control-label" })
+        @Html.LabelFor(model => model.VendorServiceId, "Vendor Service", new {@class = "control-label"})
         <div class="controls">
-            @Html.DropDownListFor(m => m.VendorServiceId, null, new { @class = "span8" })
-            @Html.ValidationMessageFor(model => model.VendorServiceId, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(m => m.VendorServiceId, null, new {@class = "span8"})
+            @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
         </div>
     </div>
- 
+
 
     <div class="control-group">
         @Html.LabelFor(model => model.Email, new {@class = "control-label"})
@@ -56,30 +53,30 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.BusinessName, new { @class = "control-label" })
+        @Html.LabelFor(model => model.BusinessName, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.BusinessName, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.BusinessName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.BusinessName, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.BusinessName, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.BusinessContact, new { @class = "control-label" })
+        @Html.LabelFor(model => model.BusinessContact, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.BusinessContact, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.BusinessContact, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.BusinessContact, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.BusinessContact, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.About, new { @class = "control-label" })
+        @Html.LabelFor(model => model.About, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextAreaFor(model => model.About, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
+            @Html.TextAreaFor(model => model.About, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.About, "", new {@class = "text-danger"})
         </div>
     </div>
 
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Create" class="btn btn-default"/>
+            <input type="submit" value="Create Vendor" class="btn btn-default"/>
         </div>
     </div>
 }

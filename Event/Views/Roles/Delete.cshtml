@@ -4,6 +4,20 @@
     ViewBag.Header = "Delete event type";
     Layout = "../Shared/_LayoutForm.cshtml";
 }
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Roles")">Roles & Priviledges</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Details", "Roles", new {id = Model.RoleId})">@Model.Name role Details</a>
+        </li>
+    </ol>
+}
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.Name)
@@ -139,7 +153,6 @@
     @Html.AntiForgeryToken()
 
     <div class="form-actions no-color">
-        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
         <input type="submit" value="Delete" class="btn btn-danger"/>
 
     </div>

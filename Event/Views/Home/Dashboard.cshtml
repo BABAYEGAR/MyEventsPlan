@@ -28,12 +28,24 @@
             </p>
         </a>
     }
-    @if (role.ManageApplicationUser)
+    @if (role.Name == "Platform Administrator")
     {
         <a href="#" class="btn-box big span4">
             <i class="icon-user"></i><b>15</b>
             <p class="text-muted">
                 New Users
+            </p>
+        </a>
+        <a href="#" class="btn-box big span4">
+            <i class="icon-user"></i><b>15</b>
+            <p class="text-muted">
+                Event Planners
+            </p>
+        </a>
+        <a href="#" class="btn-box big span4">
+            <i class="icon-user"></i><b>15</b>
+            <p class="text-muted">
+                Vendors
             </p>
         </a>
     }
@@ -52,12 +64,12 @@
             <div class="span8">
                 <div class="row-fluid">
                     <div class="span12">
-                        <a href="@Url.Action("Index","Messages")" class="btn-box small span4">
+                        <a href="@Url.Action("Index", "Messages")" class="btn-box small span4">
                             <i class="icon-envelope"></i><b>Messages</b>
                         </a><a href="#" class="btn-box small span4">
                             <i class="icon-group"></i><b>Clients</b>
                         </a><a href="#" class="btn-box small span4">
-                            <i class="icon-exchange"></i><b>Expenses</b>
+                            <i class="icon-briefcase"></i><b>Packages</b>
                         </a>
                     </div>
                 </div>

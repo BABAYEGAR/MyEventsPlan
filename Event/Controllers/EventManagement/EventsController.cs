@@ -100,6 +100,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             return View();
         }
+
         //// GET: Events
         public JsonResult GetMyEvents()
         {
@@ -109,7 +110,10 @@ namespace MyEventPlan.Controllers.EventManagement
                 select new
                 {
                     id = e.EventId,
-                    title = e.Name + " " + (Convert.ToDateTime(e.StartDate.ToShortTimeString()) - Convert.ToDateTime(e.EndDate.ToShortTimeString())) + " mins",
+                    title =
+                    e.Name + " " +
+                    (Convert.ToDateTime(e.StartDate.ToShortTimeString()) -
+                     Convert.ToDateTime(e.EndDate.ToShortTimeString())) + " mins",
                     start = e.StartDate,
                     end = e.EndDate,
                     color = e.Color,
@@ -165,7 +169,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,EndDate")] Event.Data.Objects.Entities.Event @event,FormCollection collectedValues)
+            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,EndDate")] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
@@ -219,7 +223,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,Status,EndDate,EndTime,CreatedBy,DateCreated"
+                     "EventId,Name,Color,EventTypeId,TargetBudget,EventPlannerId,StartDate,Status,EndDate,CreatedBy,DateCreated"
              )] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -229,6 +233,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 if (loggedinuser != null)
                 {
                     @event.LastModifiedBy = loggedinuser.AppUserId;
+                    @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                    @event.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
                 }
                 else
                 {

@@ -8,6 +8,19 @@
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
 }
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Details", "Events", new {id = Model.EventId})">Event Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})">Event Appointment(s)</a>
+        </li>
+    </ol>
+}
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.Event.Name)
@@ -67,8 +80,5 @@
         </dd>
     }
 </dl>
-
-
-<p>
-    @Html.ActionLink("Back to List", "Index", new {id = Model.EventId}, new {@class = "btn btn-default"})
-</p>
+@Html.ActionLink("Edit", "Edit", new {id = Model.AppointmentId}, new {@class = "btn btn-primary icon-pencil"})
+@Html.ActionLink("Delete", "Delete", new {id = Model.AppointmentId}, new {@class = "btn btn-danger icon-trash"})

@@ -5,12 +5,12 @@
 @using (Html.BeginForm("Edit", "Clients", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m=>m.ClientId)
-    @Html.HiddenFor(m=>m.EventPlannerId)
-    @Html.HiddenFor(m=>m.EventId)
-    @Html.HiddenFor(m=>m.CreatedBy)
-    @Html.HiddenFor(m=>m.DateCreated)
-    @Html.HiddenFor(m=>m.Password)
+    @Html.HiddenFor(m => m.ClientId)
+    @Html.HiddenFor(m => m.EventPlannerId)
+    @Html.HiddenFor(m => m.EventId)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.DateCreated)
+    @Html.HiddenFor(m => m.Password)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="control-group">
         @Html.LabelFor(model => model.Name, new {@class = "control-label"})

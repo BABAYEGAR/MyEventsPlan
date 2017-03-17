@@ -8,72 +8,83 @@
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
 }
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Event.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Event.Name)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EventPlanner.Firstname)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Mobile)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Mobile)
-            </dd>
-    
-        </dl>
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
-            Edit Client
-        </button>
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Details", "Events", new {id = Model.EventId})">Event Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Clients", new {eventId = Model.EventId})">Event Client(s)</a>
+        </li>
+    </ol>
+}
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Event.Name)
+    </dt>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">Edit client</h4>
-                    </div>
-                    <div class="modal-body">
-                        @{
-                            Html.RenderPartial("EditClientModal", Model);
-                        }
-                    </div>
-                </div>
+    <dd>
+        @Html.DisplayFor(model => model.Event.Name)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.EventPlanner.Firstname)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Mobile)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Mobile)
+    </dd>
+
+</dl>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
+    Edit Client
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit client</h4>
             </div>
-
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EditClientModal", Model);
+                }
+            </div>
         </div>
-        @Html.ActionLink("Generate Login Access", "CreateLoginAccessForClient", new { id = Model.ClientId },new {@class = "btn btn-warning btn-xs icon-user"})
-@Html.ActionLink("Delete", "Index", new { id = Model.ClientId }, new { @class = "btn btn-danger icon-trash" })
-        @Html.ActionLink("Back to list", "Index", null,new {@class = "btn btn-default btn-xs"}) 
+    </div>
 
+</div>
+@Html.ActionLink("Generate Login Access", "CreateLoginAccessForClient", new {id = Model.ClientId}, new {@class = "btn btn-warning btn-xs icon-user"})
+@Html.ActionLink("Delete", "Index", new {id = Model.ClientId}, new {@class = "btn btn-danger icon-trash"})

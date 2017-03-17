@@ -163,6 +163,19 @@ namespace MyEventPlan.Controllers.MappingManagement
             return RedirectToAction("Index", new {id = eventId});
         }
 
+        // POST: StaffEventMappings/Delete/5
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult UnassignStaff(long id)
+        {
+            var staffEventMapping = db.StaffEventMapping.Find(id);
+            var eventId = staffEventMapping.EventId;
+            db.StaffEventMapping.Remove(staffEventMapping);
+            db.SaveChanges();
+            return RedirectToAction("Index", new {id = eventId});
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

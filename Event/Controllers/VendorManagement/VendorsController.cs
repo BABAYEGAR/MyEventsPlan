@@ -76,7 +76,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Create()
         {
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-            ViewBag.VendorServiceId = new SelectList(dbc.Locations, "LocationId", "Name");
+            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
             return View();
         }
 
@@ -106,7 +106,6 @@ namespace MyEventPlan.Controllers.VendorManagement
                 if (events != null) vendor.EventId = events.EventId;
                 vendor.Password = new Hashing().HashPassword("password");
                 vendor.ConfirmPassword = new Hashing().HashPassword("password");
-                
             }
             else
             {
@@ -126,7 +125,7 @@ namespace MyEventPlan.Controllers.VendorManagement
             mapping.DateLastModified = DateTime.Now;
             mapping.LastModifiedBy = loggedinuser.AppUserId;
             mapping.CreatedBy = loggedinuser.AppUserId;
-            
+
             dbc.EventVendorMappings.Add(mapping);
             dbc.SaveChanges();
             TempData["vendor"] = "You have successfully added a vendor to your event!";

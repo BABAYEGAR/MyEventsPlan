@@ -6,6 +6,19 @@
     Layout = "../Shared/_LayoutForm.cshtml";
     var userDb = new AppUserDataContext();
 }
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Details", "Events", new {id = Model.EventId})">Event Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "StaffEventMappings", new {id = Model.EventId})">Event Staff</a>
+        </li>
+    </ol>
+}
 <dl class="dl-horizontal">
     <dt>
         @Html.DisplayNameFor(model => model.Event.Name)
@@ -28,44 +41,23 @@
     </dt>
 
     <dd>
-        @(Model.Staff.Firstname + " " + Model.Staff.Firstname)
+        @(Model.Staff.Firstname + " " + Model.Staff.Lastname)
     </dd>
-
     <dt>
-        @Html.DisplayNameFor(model => model.CreatedBy)
+        @Html.DisplayName("Mobile")
     </dt>
 
     <dd>
-        @userDb.AppUsers.Find(Model.CreatedBy).Firstname
+        @Html.DisplayFor(model => model.Staff.Mobile)
     </dd>
-
     <dt>
-        @Html.DisplayNameFor(model => model.DateCreated)
+        @Html.DisplayName("Email")
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.DateCreated)
+        @Html.DisplayFor(model => model.Staff.Email)
     </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.DateLastModified)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.DateLastModified)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.LastModifiedBy)
-    </dt>
-
-    <dd>
-        @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-    </dd>
 
 </dl>
-
-
-<p>
-    @Html.ActionLink("Back to List", "Index", new {id = Model.EventId}, new {@class = "btn btn-default"})
-</p>
+@Html.ActionLink("Unassign", "Delete", new {id = Model.StaffEventMappingId}, new {@class = "btn btn-xs btn-danger icon-trash"})

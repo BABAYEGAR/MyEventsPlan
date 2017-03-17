@@ -1,7 +1,7 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment)
+        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         var e = a.defineLocale("sv",
@@ -47,11 +47,11 @@
             ordinalParse: /\d{1,2}(e|a)/,
             ordinal: function(e) {
                 var a = e % 10, r = 1 === ~~(e % 100 / 10) ? "e" : 1 === a ? "a" : 2 === a ? "a" : "e";
-                return e + r
+                return e + r;
             },
             week: { dow: 1, doy: 4 }
         });
-        return e
+        return e;
     }(), e.fullCalendar.datepickerLocale("sv",
         "sv",
         {
@@ -59,7 +59,10 @@
             prevText: "&#xAB;Förra",
             nextText: "Nästa&#xBB;",
             currentText: "Idag",
-            monthNames: ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober", "November", "December"],
+            monthNames: [
+                "Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September", "Oktober",
+                "November", "December"
+            ],
             monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
             dayNamesShort: ["Sön", "Mån", "Tis", "Ons", "Tor", "Fre", "Lör"],
             dayNames: ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"],
@@ -76,5 +79,5 @@
         allDayText: "Heldag",
         eventLimitText: "till",
         noEventsMessage: "Inga händelser att visa"
-    })
+    });
 });

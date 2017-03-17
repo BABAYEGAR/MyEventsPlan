@@ -48,7 +48,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,StartTime,EndDate,EndTime")] Prospect prospect)
+            [Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,EndDate")] Prospect prospect,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -61,6 +61,8 @@ namespace MyEventPlan.Controllers.ProspectManagement
                     prospect.LastModifiedBy = loggedinuser.AppUserId;
                     prospect.EventPlannerId = loggedinuser.EventPlannerId;
                     prospect.Status = ProspectStausEnum.Active.ToString();
+                    prospect.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                    prospect.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
                 }
                 else
                 {
@@ -112,8 +114,8 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventPlannerId,StartDate,StartTime,EndDate,EndTime,CreatedBy,DateCreated"
-             )] Prospect prospect)
+                     "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventPlannerId,StartDate,EndDate,CreatedBy,DateCreated"
+             )] Prospect prospect,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -122,6 +124,8 @@ namespace MyEventPlan.Controllers.ProspectManagement
                 if (loggedinuser != null)
                 {
                     prospect.LastModifiedBy = loggedinuser.AppUserId;
+                    prospect.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                    prospect.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
                 }
                 else
                 {

@@ -43,7 +43,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "NoteId,Title,Content,EventId")] Note note)
+        public ActionResult Create([Bind(Include = "NoteId,Title,Content,ShowToClient,EventId")] Note note)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "NoteId,Title,Content,EventId,CreatedBy,DateCreated")] Note note)
+        public ActionResult Edit(
+            [Bind(Include = "NoteId,Title,Content,ShowToClient,EventId,CreatedBy,DateCreated")] Note note)
         {
             if (ModelState.IsValid)
             {

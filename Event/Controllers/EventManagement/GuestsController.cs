@@ -32,6 +32,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 return HttpNotFound();
             return View(guest);
         }
+
         // GET: Guests/GuestAttending/5
         public ActionResult GuestAttending(long? id)
         {
@@ -39,8 +40,9 @@ namespace MyEventPlan.Controllers.EventManagement
             guest.Status = GuestStatusEnum.Attending.ToString();
             db.Entry(guest).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index",new { guestListId  = guest.GuestListId});
+            return RedirectToAction("Index", new {guestListId = guest.GuestListId});
         }
+
         // GET: Guests/GuestNotAttending/5
         public ActionResult GuestNotAttending(long? id)
         {
@@ -48,8 +50,9 @@ namespace MyEventPlan.Controllers.EventManagement
             guest.Status = GuestStatusEnum.NotAttending.ToString();
             db.Entry(guest).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index", new { guestListId = guest.GuestListId });
+            return RedirectToAction("Index", new {guestListId = guest.GuestListId});
         }
+
         // GET: Guests/Create
         public ActionResult Create()
         {

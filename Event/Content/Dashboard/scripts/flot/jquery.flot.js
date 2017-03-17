@@ -38,21 +38,21 @@
         G.a = D != null ? D : 1;
         G.add = function(J, I) {
             for (var H = 0; H < J.length; ++H) {
-                G[J.charAt(H)] += I
+                G[J.charAt(H)] += I;
             }
-            return G.normalize()
+            return G.normalize();
         };
         G.scale = function(J, I) {
             for (var H = 0; H < J.length; ++H) {
-                G[J.charAt(H)] *= I
+                G[J.charAt(H)] *= I;
             }
-            return G.normalize()
+            return G.normalize();
         };
         G.toString = function() {
             if (G.a >= 1) {
-                return"rgb(" + [G.r, G.g, G.b].join(",") + ")"
+                return"rgb(" + [G.r, G.g, G.b].join(",") + ")";
             } else {
-                return"rgba(" + [G.r, G.g, G.b, G.a].join(",") + ")"
+                return"rgba(" + [G.r, G.g, G.b, G.a].join(",") + ")";
             }
         };
         G.normalize = function() {
@@ -62,54 +62,54 @@
             G.g = H(0, parseInt(G.g), 255);
             G.b = H(0, parseInt(G.b), 255);
             G.a = H(0, G.a, 1);
-            return G
+            return G;
         };
         G.clone = function() { return B.color.make(G.r, G.b, G.g, G.a) };
-        return G.normalize()
+        return G.normalize();
     };
     B.color.extract = function(D, C) {
         var E;
         do {
             E = D.css(C).toLowerCase();
             if (E != "" && E != "transparent") {
-                break
+                break;
             }
-            D = D.parent()
+            D = D.parent();
         } while (!B.nodeName(D.get(0), "body"));
         if (E == "rgba(0, 0, 0, 0)") {
-            E = "transparent"
+            E = "transparent";
         }
-        return B.color.parse(E)
+        return B.color.parse(E);
     };
     B.color.parse = function(F) {
         var E, C = B.color.make;
         if (E = /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(F)) {
-            return C(parseInt(E[1], 10), parseInt(E[2], 10), parseInt(E[3], 10))
+            return C(parseInt(E[1], 10), parseInt(E[2], 10), parseInt(E[3], 10));
         }
         if (E = /rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]+(?:\.[0-9]+)?)\s*\)/
             .exec(F)) {
-            return C(parseInt(E[1], 10), parseInt(E[2], 10), parseInt(E[3], 10), parseFloat(E[4]))
+            return C(parseInt(E[1], 10), parseInt(E[2], 10), parseInt(E[3], 10), parseFloat(E[4]));
         }
         if (E = /rgb\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*\)/
             .exec(F)) {
-            return C(parseFloat(E[1]) * 2.55, parseFloat(E[2]) * 2.55, parseFloat(E[3]) * 2.55)
+            return C(parseFloat(E[1]) * 2.55, parseFloat(E[2]) * 2.55, parseFloat(E[3]) * 2.55);
         }
         if (E =
             /rgba\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\s*\)/.exec(F)) {
-            return C(parseFloat(E[1]) * 2.55, parseFloat(E[2]) * 2.55, parseFloat(E[3]) * 2.55, parseFloat(E[4]))
+            return C(parseFloat(E[1]) * 2.55, parseFloat(E[2]) * 2.55, parseFloat(E[3]) * 2.55, parseFloat(E[4]));
         }
         if (E = /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/.exec(F)) {
-            return C(parseInt(E[1], 16), parseInt(E[2], 16), parseInt(E[3], 16))
+            return C(parseInt(E[1], 16), parseInt(E[2], 16), parseInt(E[3], 16));
         }
         if (E = /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/.exec(F)) {
-            return C(parseInt(E[1] + E[1], 16), parseInt(E[2] + E[2], 16), parseInt(E[3] + E[3], 16))
+            return C(parseInt(E[1] + E[1], 16), parseInt(E[2] + E[2], 16), parseInt(E[3] + E[3], 16));
         }
         var D = B.trim(F).toLowerCase();
         if (D == "transparent") {
-            return C(255, 255, 255, 0)
+            return C(255, 255, 255, 0);
         } else {
             E = A[D] || [0, 0, 0];
-            return C(E[0], E[1], E[2])
+            return C(E[0], E[1], E[2]);
         }
     };
     var A = {
@@ -156,7 +156,7 @@
         silver: [192, 192, 192],
         white: [255, 255, 255],
         yellow: [255, 255, 0]
-    }
+    };
 })(jQuery);
 
 // the actual Flot code
