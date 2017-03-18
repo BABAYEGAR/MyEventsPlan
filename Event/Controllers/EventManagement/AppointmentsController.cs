@@ -88,7 +88,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "AppointmentId,Name,EventId,StartDate,StartTime,EndDate,EndTime,Location,Notes")] Appointment appointment)
+            [Bind(Include = "AppointmentId,Name,EventId,StartDate,EndDate,Location,Notes")] Appointment appointment,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
@@ -101,6 +101,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     appointment.DateLastModified = DateTime.Now;
                     appointment.LastModifiedBy = loggedinuser.AppUserId;
                     appointment.EventPlannerId = loggedinuser.EventPlannerId;
+                    appointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                    appointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
                 }
                 else
                 {
@@ -110,7 +112,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _db.Appointments.Add(appointment);
                 _db.SaveChanges();
-                TempData["display"] = "You have successfully booked an appointment!";
+                TempData["display"] = "You have successfully added an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = appointment.EventId});
             }
@@ -136,7 +138,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "AppointmentId,Name,EventId,StartDate,StartTime,EndDate,EndTime,Location,Notes,EventPlannerId")] Appointment appointment)
+                     "AppointmentId,Name,EventId,StartDate,EndDate,Location,Notes,EventPlannerId")] Appointment appointment, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -145,6 +147,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 if (loggedinuser != null)
                 {
                     appointment.LastModifiedBy = loggedinuser.AppUserId;
+                    appointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                    appointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
                 }
                 else
                 {

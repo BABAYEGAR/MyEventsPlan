@@ -382,6 +382,16 @@
     <Content Include="Content\DateTimePicker\jquery.datetimepicker.full.min.js" />
     <Content Include="Content\DateTimePicker\jquery.datetimepicker.min.css" />
     <Content Include="Content\DateTimePicker\jquery.datetimepicker.min.js" />
+    <Content Include="Content\Email\img\bulletproof-buttons.jpg" />
+    <Content Include="Content\Email\img\campaign-monitor-logo.jpg" />
+    <Content Include="Content\Email\img\fluid-images.jpg" />
+    <Content Include="Content\Email\img\fluid-structure.jpg" />
+    <Content Include="Content\Email\img\line-graph.jpg" />
+    <Content Include="Content\Email\img\litmus-logo.jpg" />
+    <Content Include="Content\Email\img\logo.jpg" />
+    <Content Include="Content\Email\img\mailchimp-logo.jpg" />
+    <Content Include="Content\Email\img\media-queries.jpg" />
+    <Content Include="Content\Email\img\responsive-email.jpg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\monthly.css" />
     <Content Include="Content\PageLoader\css\jquery-loading.css" />
@@ -515,6 +525,7 @@
     <Content Include="Content\VendorCss\images\home\sale.png" />
     <Content Include="Content\VendorCss\images\home\searchicon.png" />
     <Content Include="Content\VendorCss\images\home\shipping.jpg" />
+    <Content Include="Content\VendorCss\images\home\wdwdqd.png" />
     <Content Include="Content\VendorCss\images\product-details\1.jpg" />
     <Content Include="Content\VendorCss\images\product-details\new.jpg" />
     <Content Include="Content\VendorCss\images\product-details\rating.png" />
@@ -538,6 +549,10 @@
     <Content Include="Content\VendorCss\js\jquery.scrollUp.min.js" />
     <Content Include="Content\VendorCss\js\main.js" />
     <Content Include="Content\VendorCss\js\price-range.js" />
+    <Content Include="EmailTemplates\ClientLogin.html" />
+    <Content Include="EmailTemplates\NewVendor.html" />
+    <Content Include="EmailTemplates\NewEventPlanner.html" />
+    <Content Include="EmailTemplates\GuestStatus.html" />
     <Content Include="event.xml" />
     <Content Include="Scripts\bootstrap-datetimepicker.js" />
     <Content Include="Scripts\jquery.js" />
@@ -650,6 +665,7 @@
     <Content Include="Content\Dashboard\datatables.net-buttons-bs\.bower.json" />
     <Content Include="Content\Dashboard\datatables.net-buttons-bs\bower.json" />
     <Content Include="Content\Dashboard\datatables.net-buttons-bs\Readme.md" />
+    <Content Include="Content\Email\img\email-images.zip" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1393,6 +1409,8 @@
     <Content Include="Views\Shared\EditEventTypeModal.cshtml" />
     <Content Include="Views\Shared\EditVendorServiceModal.cshtml" />
     <Content Include="Views\Shared\EditLocationModal.cshtml" />
+    <Content Include="Views\Account\PasswordReset.cshtml" />
+    <Content Include="Views\Account\VerifyEmail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

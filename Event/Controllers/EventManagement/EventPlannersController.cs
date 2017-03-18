@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
+using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Encryption;
 using MyEventPlan.Data.Service.Enum;
 
@@ -37,7 +38,6 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: EventPlanners/Create
         public ActionResult Create()
         {
-            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name");
             return View();
         }
 
@@ -57,6 +57,12 @@ namespace MyEventPlan.Controllers.EventManagement
                 eventPlanner.RoleId = role?.RoleId;
                 eventPlanner.Password = password;
                 eventPlanner.ConfirmPassword = password;
+                if (dbc.AppUsers.Any(n => n.Email == eventPlanner.Email))
+                {
+                    TempData["display"] = "The email entered already exist! Try another one!";
+                    TempData["notificationtype"] = NotificationType.Error.ToString();
+                    return View(eventPlanner);
+                }
                 //create app user
                 var appuser = new AppUser();
 
@@ -88,6 +94,8 @@ namespace MyEventPlan.Controllers.EventManagement
 
                 dbc.AppUsers.Add(appuser);
                 dbc.SaveChanges();
+
+                new MailerDaemon().NewEventPlanner(eventPlanner, appuser.AppUserId);
                 TempData["login"] = "You have successfully signed up to PlanMyLeave type!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Login", "Account");

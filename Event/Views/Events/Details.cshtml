@@ -12,6 +12,9 @@
         <li class="breadcrumb-item icon-pencil">
             <a class="btn btn-primary" href="@Url.Action("Edit", new {id = Model.EventId})">Edit Event</a>
         </li>
+        <li class="breadcrumb-item icon-pencil">
+            <a class="btn btn-success" href="@Url.Action("Create","Appointments", new {eventId = Model.EventId})">Add Appointment</a>
+        </li>
     </ol>
 }
 

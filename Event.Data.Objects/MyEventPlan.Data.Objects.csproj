@@ -58,6 +58,8 @@
     <Compile Include="Entities\NewsAction.cs" />
     <Compile Include="Entities\News.cs" />
     <Compile Include="Entities\Note.cs" />
+    <Compile Include="Entities\Notification.cs" />
+    <Compile Include="Entities\PasswordReset.cs" />
     <Compile Include="Entities\Resource.cs" />
     <Compile Include="Entities\Setting.cs" />
     <Compile Include="Entities\StaffEventMapping.cs" />

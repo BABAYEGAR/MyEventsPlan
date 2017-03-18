@@ -14,50 +14,6 @@ namespace MyEventPlan.Data.Service.EmailService
         ///     This method sends an email containing a username and password to a newly created user
         /// </summary>
         /// <param name="user"></param>
-        public void NewUser(AppUser user)
-        {
-            var message = new MailMessage
-            {
-                From = new MailAddress(Config.SupportEmailAddress),
-                Subject = "New User Details",
-                Priority = MailPriority.High,
-                SubjectEncoding = Encoding.UTF8,
-                Body = GetEmailBody_NewUserCreated(user),
-                IsBodyHtml = true
-            };
-            //message.To.Add(Config.DevEmailAddress);
-            message.To.Add(user.Email);
-            try
-            {
-                new SmtpClient().Send(message);
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-        }
-
-        /// <summary>
-        ///     Html page content for the new user email
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        private static string GetEmailBody_NewUserCreated(AppUser user)
-        {
-            return
-                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewUserCreated.html")).ReadToEnd()
-                    .Replace("DISPLAYNAME", user.Firstname)
-                    .Replace("USERNAME", user.Email)
-                    .Replace("PASSWORD", user.Password)
-                    .Replace("URL", "http://10.10.15.77/bhuinfo/Account/Login")
-                    .Replace("ROLE", user.Firstname)
-                    .Replace("FROM", Config.SupportEmailAddress);
-        }
-
-        /// <summary>
-        ///     This method sends an email containing a username and password to a newly created user
-        /// </summary>
-        /// <param name="user"></param>
         public void ResetUserPassword(AppUser user)
         {
             var message = new MailMessage();
@@ -140,7 +96,8 @@ namespace MyEventPlan.Data.Service.EmailService
         ///     This method sends an email containing a username and password to a newly created user
         /// </summary>
         /// <param name="vendor"></param>
-        public void NewVendor(Vendor vendor)
+        /// <param name="userId"></param>
+        public void NewVendor(Vendor vendor,long userId)
         {
             var message = new MailMessage
             {
@@ -148,7 +105,7 @@ namespace MyEventPlan.Data.Service.EmailService
                 Subject = "New Vendor",
                 Priority = MailPriority.High,
                 SubjectEncoding = Encoding.UTF8,
-                Body = GetEmailBody_NewVendorCreated(vendor),
+                Body = GetEmailBody_NewVendorCreated(vendor,userId),
                 IsBodyHtml = true
             };
             //message.To.Add(Config.DevEmailAddress);
@@ -167,18 +124,22 @@ namespace MyEventPlan.Data.Service.EmailService
         ///     Html page content for the new user email
         /// </summary>
         /// <param name="vendor"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        private static string GetEmailBody_NewVendorCreated(Vendor vendor)
+        private static string GetEmailBody_NewVendorCreated(Vendor vendor,long userId)
         {
             return
-                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewUserCreated.html")).ReadToEnd();
+           new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewVendor.html")).ReadToEnd()
+                    .Replace("DISPLAYNAME", vendor.BusinessName)
+                    .Replace("AppUserId", userId.ToString());
         }
 
         /// <summary>
         ///     This method sends an email containing a username and password to a newly created user
         /// </summary>
         /// <param name="eventPlanner"></param>
-        public void NewEventPlanner(EventPlanner eventPlanner)
+        /// <param name="userId"></param>
+        public void NewEventPlanner(EventPlanner eventPlanner,long userId)
         {
             var message = new MailMessage
             {
@@ -186,7 +147,7 @@ namespace MyEventPlan.Data.Service.EmailService
                 Subject = "New Event Planner",
                 Priority = MailPriority.High,
                 SubjectEncoding = Encoding.UTF8,
-                Body = GetEmailBody_NewEventPlannerCreated(eventPlanner),
+                Body = GetEmailBody_NewEventPlannerCreated(eventPlanner,userId),
                 IsBodyHtml = true
             };
             //message.To.Add(Config.DevEmailAddress);
@@ -205,18 +166,22 @@ namespace MyEventPlan.Data.Service.EmailService
         ///     Html page content for the new user email
         /// </summary>
         /// <param name="eventPlanner"></param>
+        /// <param name="userId"></param>
         /// <returns></returns>
-        private static string GetEmailBody_NewEventPlannerCreated(EventPlanner eventPlanner)
+        private static string GetEmailBody_NewEventPlannerCreated(EventPlanner eventPlanner,long userId)
         {
             return
-                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewUserCreated.html")).ReadToEnd();
+                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewEventPlanner.html")).ReadToEnd()
+                         .Replace("DISPLAYNAME", eventPlanner.Firstname + " "+ eventPlanner.Lastname)
+                    .Replace("AppUserId", userId.ToString());
         }
 
         /// <summary>
         ///     This method sends an email containing a username and password to a newly created user
         /// </summary>
         /// <param name="guest"></param>
-        public void NewVendor(Guest guest)
+        /// <param name="eventName"></param>
+        public void NewGuest(Guest guest,string eventName)
         {
             var message = new MailMessage
             {
@@ -224,7 +189,7 @@ namespace MyEventPlan.Data.Service.EmailService
                 Subject = "Event Invitation",
                 Priority = MailPriority.High,
                 SubjectEncoding = Encoding.UTF8,
-                Body = GetEmailBody_GuestStatusCreated(guest),
+                Body = GetEmailBody_GuestStatusCreated(guest,eventName),
                 IsBodyHtml = true
             };
             //message.To.Add(Config.DevEmailAddress);
@@ -243,18 +208,23 @@ namespace MyEventPlan.Data.Service.EmailService
         ///     Html page content for the new user email
         /// </summary>
         /// <param name="guest"></param>
+        /// <param name="eventName"></param>
         /// <returns></returns>
-        private static string GetEmailBody_GuestStatusCreated(Guest guest)
+        private static string GetEmailBody_GuestStatusCreated(Guest guest,string eventName)
         {
             return
-                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewUserCreated.html")).ReadToEnd();
+                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/GuestStatus.html")).ReadToEnd()
+                    .Replace("EventName", eventName)
+                    .Replace("GuestId", guest.GuestId.ToString());
         }
 
         /// <summary>
         ///     This method sends an email containing a username and password to a newly created user
         /// </summary>
         /// <param name="client"></param>
-        public void NewClientLogin(Client client)
+        /// <param name="userId"></param>
+        /// <param name="eventName"></param>
+        public void NewClientLogin(Client client,long userId, string eventName)
         {
             var message = new MailMessage
             {
@@ -262,7 +232,7 @@ namespace MyEventPlan.Data.Service.EmailService
                 Subject = "Client Login-Access",
                 Priority = MailPriority.High,
                 SubjectEncoding = Encoding.UTF8,
-                Body = GetEmailBody_ClientLoginCreated(client),
+                Body = GetEmailBody_ClientLoginCreated(userId, eventName),
                 IsBodyHtml = true
             };
             //message.To.Add(Config.DevEmailAddress);
@@ -280,12 +250,15 @@ namespace MyEventPlan.Data.Service.EmailService
         /// <summary>
         ///     Html page content for the new user email
         /// </summary>
-        /// <param name="client"></param>
+        /// <param name="userId"></param>
+        /// <param name="eventName"></param>
         /// <returns></returns>
-        private static string GetEmailBody_ClientLoginCreated(Client client)
+        private static string GetEmailBody_ClientLoginCreated(long userId,string eventName)
         {
             return
-                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewUserCreated.html")).ReadToEnd();
+                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/ClientLogin.html")).ReadToEnd()
+                .Replace("EventName", eventName)
+                    .Replace("AppUserId", userId.ToString());
         }
     }
 }

@@ -6,12 +6,14 @@ using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Enum;
+using Event = Event.Data.Objects.Entities.Event;
 
 namespace MyEventPlan.Controllers.ProspectManagement
 {
     public class ProspectsController : Controller
     {
         private readonly ProspectDataContext db = new ProspectDataContext();
+        private readonly EventDataContext dbc = new EventDataContext();
 
         // GET: Prospects
         public ActionResult Index()
@@ -72,6 +74,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
                 }
                 db.Prospects.Add(prospect);
                 db.SaveChanges();
+
                 TempData["display"] = "You have successfully added a prospect!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -80,13 +83,50 @@ namespace MyEventPlan.Controllers.ProspectManagement
             ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
         }
+        // GET: Prospects/Details/5
+        public ActionResult ConvertProspectToEvent(long? id)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var prospect = db.Prospects.Find(id);
+            if (prospect == null)
+                return HttpNotFound();
+            var events = new global::Event.Data.Objects.Entities.Event();
+            events.EventPlannerId = prospect.EventPlannerId;
+            events.Name = prospect.Name;
+            events.Color = prospect.Color;
+            events.StartDate = prospect.StartDate;
+            events.EndDate = prospect.EndDate;
+            events.StartTime = prospect.StartTime;
+            events.EndTime = prospect.EndTime;
+            events.TargetBudget = prospect.TargetBudget;
+            if (loggedinuser != null)
+            {
+                events.CreatedBy = loggedinuser.AppUserId;
+                events.LastModifiedBy = loggedinuser.AppUserId;
+            }
+            events.DateCreated = DateTime.Now;
+            events.DateLastModified = DateTime.Now;
+            events.Status = EventStausEnum.New.ToString();
+            dbc.Event.Add(events);
+            dbc.SaveChanges();
+            db.Prospects.Remove(prospect);
+            db.SaveChanges();
 
+            TempData["display"] = "You have successfully converted the prospect to an event!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Index");
+        }
         public ActionResult CancelProspect(long? id)
         {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var prospect = db.Prospects.Find(id);
             prospect.Status = ProspectStausEnum.Cancelled.ToString();
+            prospect.DateLastModified = DateTime.Now;
+            if (loggedinuser != null) prospect.LastModifiedBy = loggedinuser.AppUserId;
             db.Entry(prospect).State = EntityState.Modified;
             db.SaveChanges();
             TempData["display"] = "You have successfully cancelled the prospect!";

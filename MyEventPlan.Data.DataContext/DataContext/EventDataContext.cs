@@ -50,6 +50,8 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<MessageGroup> MessageGroups { get; set; }
         public virtual DbSet<MessageGroupMember> MessageGroupMembers { get; set; }
         public virtual DbSet<Setting> Settings { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
+        public virtual DbSet<PasswordReset> PasswordResets { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

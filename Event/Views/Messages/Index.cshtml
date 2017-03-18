@@ -93,6 +93,9 @@
                         <td class="cell-time align-right">
                             Date
                         </td>
+                        <td class="cell-time align-right">
+                            Action
+                        </td>
                     </tr>
                     @foreach (var item in Model)
                     {
@@ -122,6 +125,9 @@
                                         new DateTimeCalculator().TimeAgo(item.DateCreated);
                                     }
                                 </td>
+                                <td class="cell-time align-right">
+                                    @Html.ActionLink("Open", "Details", new { id = item.MessageId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
+                                </td>
                             </tr>
                         }
                         else
@@ -149,6 +155,9 @@
                                     @{
                                         new DateTimeCalculator().TimeAgo(item.DateCreated);
                                     }
+                                </td>
+                                <td class="cell-time align-right">
+                                    @Html.ActionLink("Open", "Details", new { id = item.MessageId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
                                 </td>
                             </tr>
                         }

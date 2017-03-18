@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Event;
+using Event.Data.Objects.Entities;
 using Event.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -17,6 +20,7 @@ namespace MyEventPlan.Controllers
     public class AccountController : Controller
     {
         private readonly AppUserDataContext db = new AppUserDataContext();
+        private readonly PasswordResetDataContext dbc = new PasswordResetDataContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -41,6 +45,85 @@ namespace MyEventPlan.Controllers
             get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set { _userManager = value; }
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult VerifyEmail()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult VerifyEmail(FormCollection collectedValues)
+        {
+            var email = collectedValues["Email"];
+            var user = db.AppUsers.SingleOrDefault(n => n.Email == email);
+
+            Session["myeventplanloggedinuser"] = user;
+            if (user != null) Session["role"] = user.Role;
+
+
+            var reset = new PasswordReset();
+            Random generator = new Random();
+            long number = Convert.ToInt64(generator.Next(0, 1000000).ToString("D6"));
+
+
+            if (user != null)
+                reset.Email = user.Email;
+            reset.Code = number;
+            Session["reset"] = reset;
+
+
+            TempData["display"] = "Your email has been successfully verified. Change your password!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("PasswordReset", "Account");
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult VerifyAccount(long id)
+        {
+            var user = db.AppUsers.Find(id);
+            user.Verified = true;
+            db.Entry(user).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Dashboard", "Home");
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult PasswordReset()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult PasswordReset(FormCollection collectedValues)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var reset = Session["reset"] as PasswordReset;
+            var password = collectedValues["ConfirmPassword"];
+            if (loggedinuser != null)
+            {
+                var user = db.AppUsers.Find(loggedinuser.AppUserId);
+                if (reset != null) user.Password = new Hashing().HashPassword(password);
+                db.Entry(user).State = EntityState.Modified;
+              
+            }
+            if (reset != null)
+            {
+                reset.Password = password;
+                reset.ConfirmPassword = new Hashing().HashPassword(password);
+                reset.Date = DateTime.Now;
+                dbc.PasswordResets.Add(reset);
+            }
+            db.SaveChanges();
+            dbc.SaveChanges();
+
+            Session["myeventplanloggedinuser"] = null;
+            Session["reset"] = null;
+
+            TempData["login"] = "Welcome Back! You have successfully changed your password.. Login to continue!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Login", "Account");
+        }
 
         //
         // GET: /Account/Login
@@ -50,7 +133,7 @@ namespace MyEventPlan.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-
+  
         //
         // POST: /Account/Login
         [HttpPost]
@@ -63,29 +146,19 @@ namespace MyEventPlan.Controllers
             var user = new AuthenticationFactory().AuthenticateAppUserLogin(model.Email, model.Password);
             if (user != null)
             {
-                Session["myeventplanloggedinuser"] = user;
-                Session["role"] = user.Role;
-                return RedirectToAction("Dashboard", "Home");
+                if (user.Verified)
+                {
+                    Session["myeventplanloggedinuser"] = user;
+                    Session["role"] = user.Role;
+                    return RedirectToAction("Dashboard", "Home");
+                }
+                TempData["login"] = "Verify your account from your email and try again!";
+                TempData["notificationtype"] = NotificationType.Error.ToString();
+                return View(model);
             }
             TempData["login"] = "Inavlid email/password, Try again!";
             TempData["notificationtype"] = NotificationType.Error.ToString();
             return View(model);
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            //switch (result)
-            //{
-            //    case SignInStatus.Success:
-            //        return RedirectToLocal(returnUrl);
-            //    case SignInStatus.LockedOut:
-            //        return View("Lockout");
-            //    case SignInStatus.RequiresVerification:
-            //        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-            //    case SignInStatus.Failure:
-            //    default:
-            //        ModelState.AddModelError("", "Invalid login attempt.");
-            //        return View(model);
-            //}
         }
 
         //
@@ -240,7 +313,7 @@ namespace MyEventPlan.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code.ToString(), model.Password);
             if (result.Succeeded)
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             AddErrors(result);

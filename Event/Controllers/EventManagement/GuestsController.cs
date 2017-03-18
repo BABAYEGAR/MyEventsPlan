@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -52,6 +53,25 @@ namespace MyEventPlan.Controllers.EventManagement
             db.SaveChanges();
             return RedirectToAction("Index", new {guestListId = guest.GuestListId});
         }
+        // GET: Guests/GuestAttending/5
+        public ActionResult LoggedInGuestAttending(long? id)
+        {
+            var guest = db.Guests.Find(id);
+            guest.Status = GuestStatusEnum.Attending.ToString();
+            db.Entry(guest).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index", new { guestListId = guest.GuestListId });
+        }
+
+        // GET: Guests/GuestNotAttending/5
+        public ActionResult LoggedInGuestNotAttending(long? id)
+        {
+            var guest = db.Guests.Find(id);
+            guest.Status = GuestStatusEnum.NotAttending.ToString();
+            db.Entry(guest).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Index", new { guestListId = guest.GuestListId });
+        }
 
         // GET: Guests/Create
         public ActionResult Create()
@@ -84,7 +104,10 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Guests.Add(guest);
                 db.SaveChanges();
-                TempData["guest"] = "You have successfully modified the guest!";
+               
+                var eventName = db.Event.Find(guest.EventId);
+                new MailerDaemon().NewGuest(guest,eventName.Name);
+                TempData["display"] = "You have successfully added the guest!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {guestListId = guest.GuestListId});
             }
@@ -126,7 +149,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(guest).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["guest"] = "You have successfully modified the guest!";
+                TempData["display"] = "You have successfully modified the guest!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }

@@ -184,7 +184,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.Status = EventStausEnum.New.ToString();
                     @event.EventPlannerId = loggedinuser.EventPlannerId;
                     @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
-                    @event.EndTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                    @event.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
                 }
                 else
                 {

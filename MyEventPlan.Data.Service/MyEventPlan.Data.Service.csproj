@@ -64,6 +64,7 @@
     <Compile Include="Encryption\Md5Ecryption.cs" />
     <Compile Include="Encryption\QueryStingEncoder.cs" />
     <Compile Include="Encryption\SerializeObject.cs" />
+    <Compile Include="Enum\AppNotificationType.cs" />
     <Compile Include="Enum\GuestStatusEnum.cs" />
     <Compile Include="Enum\ChecklistStatusEnum.cs" />
     <Compile Include="Enum\ProspectStausEnum.cs" />

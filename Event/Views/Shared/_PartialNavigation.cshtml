@@ -1,13 +1,52 @@
-﻿@{
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@{
+
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+    var dbc = new NotificationDataContext();
+    var userNotifications = dbc.Notifications.Where(n => n.AppUserId == loggedinuser.AppUserId);
 }
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
                 <i class="icon-reorder shaded"></i>
-            </a><a class="brand" href="@Url.Action("Index", "Home")">MyEventPlanner </a>
+            </a><a class="brand" href="@Url.Action("Index", "Home")">MyEvenPlan</a>
             <div class="nav-collapse collapse navbar-inverse-collapse">
                 <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="icon-bell"></i><b class="label green pull-right">
+                                @userNotifications.Where(n => n.Read == false).ToList().Count
+                            </b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach (var item in userNotifications.Take(5))
+                            {
+                                if (item.NotificationType == AppNotificationType.Message.ToString())
+                                {
+                                    if (item.Read)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Details", "Messages", new {id = item.NotificationKey})">@item.Message</a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li style="font-weight: bold;">
+                                            <a href="@Url.Action("Details", "Messages", new {id = item.NotificationKey,notificationId = item.NotificationId})">@item.Message</a>
+                                        </li>
+                                    }
+
+                                    <li class="divider"></li>
+                                }
+                            }
+                            <li>
+                                <a href="#" style="font-weight: bolder">See all notifications</a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="nav-user dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="~/Content/Dashboard/images/user.png" class="nav-avatar"/>

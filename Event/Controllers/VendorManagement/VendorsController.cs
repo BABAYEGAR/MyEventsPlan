@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
+using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.VendorManagement
@@ -91,6 +92,9 @@ namespace MyEventPlan.Controllers.VendorManagement
                      "VendorId,Name,Address,Email,Mobile,LocationId,About,VendorServiceId,BusinessName,BusinessContact"
              )] Vendor vendor)
         {
+            var allUsers = dbc.AppUsers;
+
+
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             vendor.DateCreated = DateTime.Now;
@@ -100,12 +104,21 @@ namespace MyEventPlan.Controllers.VendorManagement
             vendor.ImageThree = "131329580750710796.jpg";
             if (loggedinuser != null)
             {
-                vendor.LastModifiedBy = loggedinuser.AppUserId;
-                vendor.CreatedBy = loggedinuser.AppUserId;
-                vendor.EventPlannerId = loggedinuser.EventPlannerId;
-                if (events != null) vendor.EventId = events.EventId;
-                vendor.Password = new Hashing().HashPassword("password");
-                vendor.ConfirmPassword = new Hashing().HashPassword("password");
+                var userExist = allUsers.Any(n => n.Email == vendor.Email);
+                if (userExist)
+                {
+                    TempData["display"] = "The email entered already exist! Try another one!";
+                    TempData["notificationtype"] = NotificationType.Error.ToString();
+                }
+                else
+                {
+                    vendor.LastModifiedBy = loggedinuser.AppUserId;
+                    vendor.CreatedBy = loggedinuser.AppUserId;
+                    vendor.EventPlannerId = loggedinuser.EventPlannerId;
+                    if (events != null) vendor.EventId = events.EventId;
+                    vendor.Password = new Hashing().HashPassword("password");
+                    vendor.ConfirmPassword = new Hashing().HashPassword("password");
+                }
             }
             else
             {
@@ -128,7 +141,7 @@ namespace MyEventPlan.Controllers.VendorManagement
 
             dbc.EventVendorMappings.Add(mapping);
             dbc.SaveChanges();
-            TempData["vendor"] = "You have successfully added a vendor to your event!";
+            TempData["display"] = "You have successfully added a vendor to your event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("ListOfVendors");
         }
@@ -150,17 +163,19 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Register(
             [Bind(
                  Include =
-                     "VendorId,Name,Address,Email,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
+                     "VendorId,Name,About,Address,Email,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
              )] Vendor vendor)
         {
+            var role = dbc.Roles.FirstOrDefault(m => m.Name == "Vendor");
             if (ModelState.IsValid)
             {
                 vendor.DateCreated = DateTime.Now;
                 vendor.DateLastModified = DateTime.Now;
 
-                if (db.Vendors.Any(n => n.Email == vendor.Email))
+
+                if (dbc.AppUsers.Any(n => n.Email == vendor.Email))
                 {
-                    TempData["outterform"] = "A vendor exist with the same email, Try again!";
+                    TempData["outterform"] = "The email entered already exist! Try another one!";
                     TempData["notificationtype"] = NotificationType.Error.ToString();
                     return View(vendor);
                 }
@@ -183,10 +198,13 @@ namespace MyEventPlan.Controllers.VendorManagement
                 appUser.VendorId = vendor.VendorId;
                 appUser.Mobile = vendor.Mobile;
                 appUser.Verified = false;
+                if (role != null) appUser.RoleId = role.RoleId;
                 appUser.Password = new Hashing().HashPassword(vendor.Password);
                 dbc.AppUsers.Add(appUser);
                 dbc.SaveChanges();
-                TempData["login"] = "You have successfully registered as a vendor! Verify access in your email to login";
+                new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
+                TempData["login"] =
+                    "You have successfully registered as a vendor! Verify access in your email to login";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Login", "Account");
             }

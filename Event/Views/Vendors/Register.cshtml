@@ -1,6 +1,6 @@
 ﻿@model Event.Data.Objects.Entities.Vendor
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Register";
     ViewBag.Header = "Vendor Registration";
     Layout = "../Shared/_LayoutOutterForm.cshtml";
 }
@@ -63,23 +63,30 @@
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.VendorServiceId, "VendorService", new {@class = "control-label"})
+        @Html.LabelFor(model => model.VendorServiceId, "Vendor Service", new {@class = "control-label"})
         <div class="controls">
             @Html.DropDownListFor(m => m.VendorServiceId, null, new {@class = "span8"})
             @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
+        @Html.LabelFor(model => model.About, new { @class = "control-label" })
+        <div class="controls">
+            @Html.TextAreaFor(model => model.About, new { htmlAttributes = new { @class = "span8" } })
+            @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="control-group">
         @Html.LabelFor(model => model.Password, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Password, new {htmlAttributes = new {@class = "span8"}})
+            @Html.PasswordFor(model => model.Password, new {htmlAttributes = new {@class = "span8"}})
             @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
         @Html.LabelFor(model => model.ConfirmPassword, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {@class = "span8"}})
+            @Html.PasswordFor(model => model.ConfirmPassword, new {htmlAttributes = new {@class = "span8"}})
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
         </div>
     </div>

@@ -47,13 +47,6 @@
                             </li>
                         </ul>
                     </li>
-
-
-                    <li>
-                        <a href="#">
-                            Forgot your password?
-                        </a>
-                    </li>
                 </ul>
             </div><!-- /.nav-collapse -->
         </div>
@@ -73,19 +66,19 @@
                         </div>
                         <div class="module-body">
 
-                            @if (TempData["eventtype"] != null)
+                            @if (TempData["display"] != null)
                             {
                                 if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
                                 {
-                                    <div class="alert alert-success alert-dismissable">@TempData["eventtype"]</div>
+                                    <div class="alert alert-success alert-dismissable">@TempData["display"]</div>
                                 }
                                 else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
                                 {
-                                    <div class="alert alert-danger alert-dismissable">@TempData["eventtype"]</div>
+                                    <div class="alert alert-danger alert-dismissable">@TempData["display"]</div>
                                 }
                                 else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
                                 {
-                                    <div class="alert alert-info alert-dismissable">@TempData["eventtype"]</div>
+                                    <div class="alert alert-info alert-dismissable">@TempData["display"]</div>
                                 }
                             }
 

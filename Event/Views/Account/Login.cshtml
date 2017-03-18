@@ -39,7 +39,7 @@
 
                 <label class="checkbox">
                     @Html.CheckBoxFor(m => m.RememberMe) Remember me
-                    <a class="pull-right">Forgot Password?</a>
+                    <a href="@Url.Action("VerifyEmail")" class="pull-right">Forgot Password?</a>
                 </label>
             </div>
         </div>

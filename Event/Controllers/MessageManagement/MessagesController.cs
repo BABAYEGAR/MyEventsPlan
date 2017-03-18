@@ -12,6 +12,7 @@ namespace MyEventPlan.Controllers.MessageManagement
     public class MessagesController : Controller
     {
         private readonly MessageDataContext db = new MessageDataContext();
+        private readonly NotificationDataContext dbc = new NotificationDataContext();
 
         // GET: Messages
         public ActionResult Index()
@@ -42,13 +43,18 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: Messages/Details/5
-        public ActionResult Details(long? id)
+        public ActionResult Details(long? id,long? notificationId)
         {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var message = db.Messages.Find(id);
-            if (message == null)
-                return HttpNotFound();
+            var notification = dbc.Notifications.Find(notificationId);
+            notification.Read = true;
+            notification.DateLastModified = DateTime.Now;
+            if (loggedinuser != null) notification.LastModifiedBy = loggedinuser.AppUserId;
+            dbc.Entry(notification).State = EntityState.Modified;
+            dbc.SaveChanges();
             return View(message);
         }
 
@@ -88,6 +94,20 @@ namespace MyEventPlan.Controllers.MessageManagement
                 }
                 db.Messages.Add(message);
                 db.SaveChanges();
+                var notification = new Notification();
+                notification.AppUserId = message.AppUserId;
+                notification.Message = "Platform message from "+loggedinuser.DisplayName +"!";
+                notification.NotificationKey = message.MessageId;
+                notification.DateCreated = DateTime.Now;
+                notification.CreatedBy = loggedinuser.AppUserId;
+                notification.Read = false;
+                notification.DateLastModified = DateTime.Now;
+                notification.LastModifiedBy = loggedinuser.AppUserId;
+                notification.NotificationType = AppNotificationType.Message.ToString();
+                dbc.Notifications.Add(notification);
+                dbc.SaveChanges();
+                TempData["display"] = "Your platform message has been sent successfully!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index");
             }
 

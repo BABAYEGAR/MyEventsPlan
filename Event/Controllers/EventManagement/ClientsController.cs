@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
+using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -39,6 +40,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult CreateLoginAccessForClient(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var client = db.Clients.Find(id);
             var appUser = new AppUser();
             appUser.Firstname = client.Name;
@@ -58,6 +60,7 @@ namespace MyEventPlan.Controllers.EventManagement
             }
             dbc.AppUsers.Add(appUser);
             dbc.SaveChanges();
+            new MailerDaemon().NewClientLogin(client, appUser.AppUserId,events.Name);
             TempData["display"] = "The login credentials has been successfully sent to the clients email!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new {id = client.EventId});
