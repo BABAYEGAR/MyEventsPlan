@@ -19,8 +19,8 @@ namespace MyEventPlan.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly AppUserDataContext db = new AppUserDataContext();
-        private readonly PasswordResetDataContext dbc = new PasswordResetDataContext();
+        private readonly AppUserDataContext _db = new AppUserDataContext();
+        private readonly PasswordResetDataContext _dbc = new PasswordResetDataContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -56,23 +56,9 @@ namespace MyEventPlan.Controllers
         public ActionResult VerifyEmail(FormCollection collectedValues)
         {
             var email = collectedValues["Email"];
-            var user = db.AppUsers.SingleOrDefault(n => n.Email == email);
+            var user = _db.AppUsers.SingleOrDefault(n => n.Email == email);
 
             Session["myeventplanloggedinuser"] = user;
-            if (user != null) Session["role"] = user.Role;
-
-
-            var reset = new PasswordReset();
-            Random generator = new Random();
-            long number = Convert.ToInt64(generator.Next(0, 1000000).ToString("D6"));
-
-
-            if (user != null)
-                reset.Email = user.Email;
-            reset.Code = number;
-            Session["reset"] = reset;
-
-
             TempData["display"] = "Your email has been successfully verified. Change your password!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("PasswordReset", "Account");
@@ -81,10 +67,10 @@ namespace MyEventPlan.Controllers
         [AllowAnonymous]
         public ActionResult VerifyAccount(long id)
         {
-            var user = db.AppUsers.Find(id);
+            var user = _db.AppUsers.Find(id);
             user.Verified = true;
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
+            _db.Entry(user).State = EntityState.Modified;
+            _db.SaveChanges();
             return RedirectToAction("Dashboard", "Home");
         }
         [HttpGet]
@@ -98,28 +84,28 @@ namespace MyEventPlan.Controllers
         public ActionResult PasswordReset(FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var reset = Session["reset"] as PasswordReset;
+
+            var reset = new PasswordReset();
             var password = collectedValues["ConfirmPassword"];
             if (loggedinuser != null)
             {
-                var user = db.AppUsers.Find(loggedinuser.AppUserId);
-                if (reset != null) user.Password = new Hashing().HashPassword(password);
-                db.Entry(user).State = EntityState.Modified;
+                var user = _db.AppUsers.Find(loggedinuser.AppUserId);
+                user.Password = new Hashing().HashPassword(password);
+                _db.Entry(user).State = EntityState.Modified;
               
             }
-            if (reset != null)
-            {
-                reset.Password = password;
+            Random generator = new Random();
+            long number = Convert.ToInt64(generator.Next(0, 1000000).ToString("D6"));
+            reset.Password = password;
                 reset.ConfirmPassword = new Hashing().HashPassword(password);
                 reset.Date = DateTime.Now;
-                dbc.PasswordResets.Add(reset);
-            }
-            db.SaveChanges();
-            dbc.SaveChanges();
+            reset.Code = number;
+            if (loggedinuser != null) reset.Email = loggedinuser.Email;
+            _dbc.PasswordResets.Add(reset);
+            _db.SaveChanges();
+            _dbc.SaveChanges();
 
             Session["myeventplanloggedinuser"] = null;
-            Session["reset"] = null;
-
             TempData["login"] = "Welcome Back! You have successfully changed your password.. Login to continue!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Login", "Account");

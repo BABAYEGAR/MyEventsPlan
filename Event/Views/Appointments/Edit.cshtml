@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet" />
 }
-@using (Html.BeginForm("Create", "Appointments", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("Edit", "Appointments", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("EventId", eventId)
@@ -58,7 +58,7 @@
 
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Update" class="btn btn-default" />
         </div>
     </div>
 }

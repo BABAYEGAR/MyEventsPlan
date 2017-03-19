@@ -20,9 +20,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         public virtual DbSet<AppUser> AppUsers { get; set; }
-        public virtual DbSet<Event.Data.Objects.Entities.Event> Event { get; set; }
         public virtual DbSet<PasswordReset> PasswordResets { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

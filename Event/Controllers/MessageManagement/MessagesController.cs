@@ -22,7 +22,7 @@ namespace MyEventPlan.Controllers.MessageManagement
                 db.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId)
                     .Include(m => m.AppUser)
                     .Include(m => m.MessageGroup);
-            ViewBag.AppUserId = new SelectList(db.AppUsers.Where(n => n.AppUserId != loggedinuser.AppUserId),
+            ViewBag.AppUserId = new SelectList(db.AppUsers.Where(n => n.AppUserId != loggedinuser.AppUserId && n.AppUserId != 4),
                 "AppUserId", "DisplayName");
             ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name");
             return View(messages.ToList());
