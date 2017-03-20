@@ -1,12 +1,11 @@
 ﻿@using Event.Data.Objects.Entities
 @using MyEventPlan.Data.DataContext.DataContext
-@model Client
+@model Budget
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View check list";
+    var events = Session["event"] as Event;
+    ViewBag.Header = "View Budget";
     Layout = "../Shared/_LayoutForm.cshtml";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
 }
 @section links{
     <ol class="breadcrumb">
@@ -17,54 +16,70 @@
             <a href="@Url.Action("Details", "Events", new {id = Model.EventId})">Event Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="@Url.Action("Index", "Clients", new {eventId = Model.EventId})">Event Client(s)</a>
+            <a href="@Url.Action("Index", "Budgets", new {id = Model.EventId})">Event Budget(s)</a>
         </li>
     </ol>
 }
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.Event.Name)
-    </dt>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.Name)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.Event.Name)
-    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Event.Name)
+        </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
-    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.EventPlanner.Firstname)
-    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ItemName)
+        </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.Name)
-    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.EstimatedAmount)
+        </dt>
 
-    <dd>
-        @Html.DisplayFor(model => model.Name)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.Email)
-    </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstimatedAmount)
+        </dd>
 
-    <dd>
-        @Html.DisplayFor(model => model.Email)
-    </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NegotiatedAmount)
+        </dt>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.Mobile)
-    </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NegotiatedAmount)
+        </dd>
 
-    <dd>
-        @Html.DisplayFor(model => model.Mobile)
-    </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActualAmount)
+        </dt>
 
-</dl>
+        <dd>
+            @Html.DisplayFor(model => model.ActualAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaidTillDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaidTillDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AmountStillDue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AmountStillDue)
+        </dd>
+    </dl>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
-    Edit Client
+    Edit Budget
 </button>
 
 <!-- Modal -->
@@ -75,21 +90,20 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Edit Client</h4>
+                <h4 class="modal-title" id="myModalLabel">Edit Budget</h4>
             </div>
             <div class="modal-body">
                 @{
-                    Html.RenderPartial("EditClientModal", Model);
+                    Html.RenderPartial("EditBudgetModal", Model);
                 }
             </div>
         </div>
     </div>
 
 </div>
-@Html.ActionLink("Generate Login Access", "CreateLoginAccessForClient", new {id = Model.ClientId}, new {@class = "btn btn-warning btn-xs icon-user"})
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
-    Delete Client
+    Delete Budget
 </button>
 
 <!-- Modal -->
@@ -100,14 +114,14 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel1">Delete Client</h4>
+                <h4 class="modal-title" id="myModalLabel1">Delete Budget</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Delete", "Clients", new { id = Model.ClientId }))
+                @using (Html.BeginForm("Delete", "Budgets", new { id = Model.BudgetId ,eventId = Model.EventId}))
                 {
                     @Html.AntiForgeryToken()
                     <p>
-                        Are you sure you want to delete the client?
+                        Are you sure you want to delete the budget?
                     </p>
                     <div class="form-actions no-color">
                         <input type="submit" value="Delete" class="btn btn-danger pull-right" />

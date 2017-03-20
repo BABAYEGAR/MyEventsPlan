@@ -40,6 +40,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult CreateLoginAccessForClient(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var role = dbc.Roles.SingleOrDefault(n => n.Name == "Client");
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var client = db.Clients.Find(id);
             var appUser = new AppUser();
@@ -47,20 +48,21 @@ namespace MyEventPlan.Controllers.EventManagement
             appUser.Lastname = client.Name;
             appUser.Email = client.Email;
             appUser.Mobile = client.Mobile;
-            appUser.RoleId = 4;
-            appUser.Password = client.Password;
+            if (role != null) appUser.RoleId = role.RoleId;
             appUser.DateLastModified = DateTime.Now;
             appUser.DateCreated = DateTime.Now;
+            appUser.Password = new Hashing().HashPassword("Password");
             if (loggedinuser != null)
             {
                 appUser.CreatedBy = loggedinuser.AppUserId;
                 appUser.LastModifiedBy = loggedinuser.AppUserId;
                 appUser.ClientId = id;
-                appUser.EventPlannerId = loggedinuser.EventPlannerId;
+                appUser.ProfileImage = "131329580750710796.jpg";
+                appUser.Verified = false;
             }
             dbc.AppUsers.Add(appUser);
             dbc.SaveChanges();
-            new MailerDaemon().NewClientLogin(client, appUser.AppUserId,events.Name);
+            if (events != null) new MailerDaemon().NewClientLogin(client, appUser.AppUserId,events.Name);
             TempData["display"] = "The login credentials has been successfully sent to the clients email!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new {id = client.EventId});
@@ -91,7 +93,6 @@ namespace MyEventPlan.Controllers.EventManagement
                     client.LastModifiedBy = loggedinuser.AppUserId;
                     client.CreatedBy = loggedinuser.AppUserId;
                     client.EventPlannerId = loggedinuser.EventPlannerId;
-                    client.Password = new Hashing().HashPassword("password");
                 }
                 else
                 {

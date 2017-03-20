@@ -52,6 +52,8 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<Setting> Settings { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<PasswordReset> PasswordResets { get; set; }
+        public virtual DbSet<Budget> Budgets { get; set; }
+        public virtual DbSet<Invoice> Invoices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

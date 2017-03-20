@@ -67,7 +67,7 @@
                 Html.RenderPartial("_PartialVendorSideBar");
             }
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-md icon-plus" data-toggle="modal" data-target="#myModal">
+            <button type="button" class="btn btn-primary btn-md fa fa-plus-circle pull-right" data-toggle="modal" data-target="#myModal">
                 Add vendor
             </button>
 
@@ -109,7 +109,7 @@
                                         <p>@item.Location.Name</p>
                                         @if ((events != null) && mapping.EventVendorMapping.Any(n => (n.VendorId == item.VendorId) && (n.EventId == events.EventId)))
                                         {
-                                            <a href="@Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventid = events.EventId})" class="btn btn-default add-to-cart">
+                                            <a href="@Url.Action("RemoveVendorFromEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventId = events.EventId})" class="btn btn-danger add-to-cart">
                                                 <i class="fa fa-trash-o"></i>Remove Vendor
                                             </a>
                                         }
@@ -117,8 +117,8 @@
                                         {
                                             <a href="@if (events != null)
                                                      {
-                                                         @Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventid = events.EventId})
-                                                     }" class="btn btn-default add-to-cart">
+                                                         @Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventId = events.EventId})
+                                                     }" class="btn btn-primary add-to-cart">
                                                 <i class="fa fa-plus-square-o"></i>Add to event
                                             </a>
                                         }
@@ -127,10 +127,10 @@
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
                                         <li>
-                                            <a href=""><i class="fa fa-plus-square"></i>Add to wishlist</a>
+                                            <a href=""><i class="fa fa-user"></i>Profile</a>
                                         </li>
                                         <li>
-                                            <a href=""><i class="fa fa-plus-square"></i>Add to compare</a>
+                                            <a href=""><i class="fa fa-star-half-full"></i>Review</a>
                                         </li>
                                     </ul>
                                 </div>

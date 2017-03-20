@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EventManagement\AppointmentsController.cs" />
     <Compile Include="Controllers\EventManagement\AppUsersController.cs" />
+    <Compile Include="Controllers\EventManagement\BudgetsController.cs" />
     <Compile Include="Controllers\EventManagement\CheckListItemsController.cs" />
     <Compile Include="Controllers\EventManagement\CheckListsController.cs" />
     <Compile Include="Controllers\EventManagement\ClientsController.cs" />
@@ -217,6 +218,7 @@
     <Compile Include="Controllers\MappingManagement\StaffEventMappingsController.cs" />
     <Compile Include="Controllers\MessageManagement\MessagesController.cs" />
     <Compile Include="Controllers\NewsManagement\NewsController.cs" />
+    <Compile Include="Controllers\PaymentManagement\InvoicesController.cs" />
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
@@ -1412,6 +1414,20 @@
     <Content Include="Views\Account\PasswordReset.cshtml" />
     <Content Include="Views\Account\VerifyEmail.cshtml" />
     <Content Include="Views\Shared\AssignResourcesToEvent.cshtml" />
+    <Content Include="Views\Budgets\Create.cshtml" />
+    <Content Include="Views\Budgets\Delete.cshtml" />
+    <Content Include="Views\Budgets\Details.cshtml" />
+    <Content Include="Views\Budgets\Edit.cshtml" />
+    <Content Include="Views\Budgets\Index.cshtml" />
+    <Content Include="Views\Shared\CreateBudgetModal.cshtml" />
+    <Content Include="Views\Shared\EditBudgetModal.cshtml" />
+    <Content Include="Views\Invoices\Create.cshtml" />
+    <Content Include="Views\Invoices\Delete.cshtml" />
+    <Content Include="Views\Invoices\Details.cshtml" />
+    <Content Include="Views\Invoices\Edit.cshtml" />
+    <Content Include="Views\Invoices\Index.cshtml" />
+    <Content Include="Views\Shared\CreateInvoiceModal.cshtml" />
+    <Content Include="Views\Shared\EditInvoiceModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

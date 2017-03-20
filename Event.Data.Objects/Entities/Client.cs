@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,9 +11,6 @@ namespace Event.Data.Objects.Entities
 
         [Required]
         public string Name { get; set; }
-
-        [PasswordPropertyText]
-        public string Password { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -29,5 +27,6 @@ namespace Event.Data.Objects.Entities
 
         [ForeignKey("EventId")]
         public virtual Event Event { get; set; }
+        public IEnumerable<Invoice> Invoices { get; set; }
     }
 }

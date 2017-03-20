@@ -155,7 +155,14 @@ namespace MyEventPlan.Controllers.MappingManagement
                 return HttpNotFound();
             return View(eventVendorMapping);
         }
-
+        // POST: EventVendorMappings/Delete/5
+        public ActionResult RemoveVendorFromEvent(long? vendorId, long? eventId)
+        {
+            var eventVendorMapping = _db.EventVendorMapping.SingleOrDefault(n => n.EventId == eventId && n.VendorId == vendorId );
+            _db.EventVendorMapping.Remove(eventVendorMapping);
+            _db.SaveChanges();
+            return RedirectToAction("Index", new { id = eventId });
+        }
         // POST: EventVendorMappings/Delete/5
         [HttpPost]
         [ActionName("Delete")]
@@ -197,7 +204,7 @@ namespace MyEventPlan.Controllers.MappingManagement
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("ListOfVendors", "Vendors");
             }
-            return View(eventVendorMapping);
+            return RedirectToAction("ListOfVendors", "Vendors");
         }
 
         protected override void Dispose(bool disposing)

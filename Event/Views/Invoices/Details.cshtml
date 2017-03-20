@@ -1,0 +1,108 @@
+﻿@model Event.Data.Objects.Entities.Invoice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Invoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventPlanner.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.InvoiceNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.InvoiceNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DueDate)
+        </dd>
+    </dl>
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
+    Edit Guest
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit Invoice</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EditInvoiceModal", Model);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+    Delete Invoice
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete Invoice</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Delete", "Invoices", new { id = Model.InvoiceId }))
+                {
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to delete the guest?
+                    </p>
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

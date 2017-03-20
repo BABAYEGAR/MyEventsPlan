@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\InvoiceDataContext.cs" />
+    <Compile Include="DataContext\BudgetDataContext.cs" />
     <Compile Include="DataContext\PasswordResetDataContext.cs" />
     <Compile Include="DataContext\NotificationDataContext.cs" />
     <Compile Include="DataContext\SettingDataContext.cs" />
@@ -118,6 +120,22 @@
     <Compile Include="Migrations\201703201020250_migrate9.Designer.cs">
       <DependentUpon>201703201020250_migrate9.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703201452089_migrate10.cs" />
+    <Compile Include="Migrations\201703201452089_migrate10.Designer.cs">
+      <DependentUpon>201703201452089_migrate10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703201816163_migrate11.cs" />
+    <Compile Include="Migrations\201703201816163_migrate11.Designer.cs">
+      <DependentUpon>201703201816163_migrate11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703201817210_migrate12.cs" />
+    <Compile Include="Migrations\201703201817210_migrate12.Designer.cs">
+      <DependentUpon>201703201817210_migrate12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703202142290_migrate13.cs" />
+    <Compile Include="Migrations\201703202142290_migrate13.Designer.cs">
+      <DependentUpon>201703202142290_migrate13.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -158,6 +176,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703201020250_migrate9.resx">
       <DependentUpon>201703201020250_migrate9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703201452089_migrate10.resx">
+      <DependentUpon>201703201452089_migrate10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703201816163_migrate11.resx">
+      <DependentUpon>201703201816163_migrate11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703201817210_migrate12.resx">
+      <DependentUpon>201703201817210_migrate12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703202142290_migrate13.resx">
+      <DependentUpon>201703202142290_migrate13.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

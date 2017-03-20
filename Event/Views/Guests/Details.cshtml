@@ -112,7 +112,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Edit guest</h4>
+                <h4 class="modal-title" id="myModalLabel">Edit Guest</h4>
             </div>
             <div class="modal-body">
                 @{
@@ -127,7 +127,7 @@
 @Html.ActionLink("Not Attending", "GuestNotAttending", new {id = Model.GuestId}, new {@class = "btn btn-danger btn-xs icon-off"})
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
-    Delete
+    Delete Guest
 </button>
 
 <!-- Modal -->
@@ -138,7 +138,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel1">Delete check-list-item</h4>
+                <h4 class="modal-title" id="myModalLabel1">Delete Guest</h4>
             </div>
             <div class="modal-body">
                 @using (Html.BeginForm("Delete", "Guests", new { id = Model.GuestId }))

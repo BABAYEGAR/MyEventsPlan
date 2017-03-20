@@ -1,0 +1,108 @@
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<Budget>
+@{
+    ViewBag.Title = "List";
+    var events = Session["event"] as Event;
+    ViewBag.TableHeader = "List of budgets for "+ events?.Name+"!";
+    Layout = "../Shared/_LayoutTable.cshtml";
+    var budget = new Budget();
+
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@if (events != null)
+                     {
+                         @Url.Action("Details", "Events", new {id = events.EventId})
+                     }">
+                Event Dashboard
+            </a>
+        </li>
+    </ol>
+}
+@section add {
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Budget
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new budget</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("CreateBudgetModal",budget);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<div class="table-responsive">
+    <table class="datatable-1 table table-bordered table-striped display">
+        <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstimatedAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NegotiatedAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaidTillDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountStillDue)
+            </th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstimatedAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NegotiatedAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActualAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PaidTillDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AmountStillDue)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Open", "Details", new { id = item.BudgetId }, new { @class = "btn btn-lg btn-default icon-folder-open" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

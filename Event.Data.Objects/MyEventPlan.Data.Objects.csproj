@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Entities\Appointment.cs" />
     <Compile Include="Entities\AppUser.cs" />
+    <Compile Include="Entities\Budget.cs" />
     <Compile Include="Entities\CheckListItem.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Contact.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Entities\EventResourceMapping.cs" />
     <Compile Include="Entities\Guest.cs" />
     <Compile Include="Entities\GuestList.cs" />
+    <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\Message.cs" />
     <Compile Include="Entities\MessageGroup.cs" />

@@ -67,6 +67,16 @@
                                 </a>
                             </div>
                         </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <a href="@Url.Action("Index", "Budgets", new {id = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-money"></i><b>Budget</b>
+                                </a>
+                                <a href="@Url.Action("Index", "EventResourceMappings", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-cloud"></i><b>Invoice</b>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 }
                 @if (loggedinuser?.EventPlannerId != null && eventPlaner?.Type == EventPlannerTypeEnum.Individual.ToString())

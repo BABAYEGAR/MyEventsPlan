@@ -76,7 +76,7 @@
                 <h4 class="modal-title" id="myModalLabel1">Unassign Staff From Event</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Delete", "CheckListItems", new { id = Model.StaffEventMappingId }))
+                @using (Html.BeginForm("UnassignStaff", "StaffEventMappings", new { id = Model.StaffEventMappingId }))
                 {
                     @Html.AntiForgeryToken()
                     <p>

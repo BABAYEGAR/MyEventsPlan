@@ -89,7 +89,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Create(
             [Bind(
                  Include =
-                     "VendorId,Name,Address,Email,Mobile,LocationId,About,VendorServiceId,BusinessName,BusinessContact"
+                     "VendorId,Name,Address,Email,Mobile,MinimumPrice,LocationId,About,VendorServiceId,BusinessName,BusinessContact"
              )] Vendor vendor)
         {
             var allUsers = dbc.AppUsers;
@@ -163,7 +163,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Register(
             [Bind(
                  Include =
-                     "VendorId,Name,About,Address,Email,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
+                     "VendorId,Name,About,Address,Email,MinimumPrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
              )] Vendor vendor)
         {
             var role = dbc.Roles.FirstOrDefault(m => m.Name == "Vendor");

@@ -17,8 +17,9 @@ namespace Event.Data.Objects.Entities
         public string ConfirmPassword { get; set; }
         [Required]
         public string Address { get; set; }
-        [Required]
         public string About { get; set; }
+        [Required]
+        public long MinimumPrice { get; set; }
         public string ImageOne { get; set; }
          public string ImageTwo { get; set; }
         public string ImageThree { get; set; }
