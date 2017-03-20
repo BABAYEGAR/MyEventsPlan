@@ -59,25 +59,26 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Client.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InvoiceName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InvoiceNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DueDate)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Open", "Details", new { id = item.InvoiceId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
-                    </td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Client.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DueDate)
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "Details", new {id = item.InvoiceId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+                </td>
+            </tr>
+        }
         </tbody>
-    </table></div>
+    </table>
+</div>

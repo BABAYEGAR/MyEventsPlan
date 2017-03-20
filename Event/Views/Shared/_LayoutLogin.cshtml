@@ -11,10 +11,10 @@
     <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600" rel="stylesheet">
 </head>
 <body>
-    @{
-        var individual = EventPlannerTypeEnum.Individual.ToString();
-        var organization = EventPlannerTypeEnum.Organization.ToString();
-    }
+@{
+    var individual = EventPlannerTypeEnum.Individual.ToString();
+    var organization = EventPlannerTypeEnum.Organization.ToString();
+}
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -41,11 +41,11 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="@Url.Action("Create", "EventPlanners",new {type = individual })">Become an Event Planner (Individual)</a>
+                                <a href="@Url.Action("Create", "EventPlanners", new {type = individual})">Become an Event Planner (Individual)</a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="@Url.Action("Create", "EventPlanners",new {type = organization})">Become an Event Planner (Organization)</a>
+                                <a href="@Url.Action("Create", "EventPlanners", new {type = organization})">Become an Event Planner (Organization)</a>
                             </li>
                         </ul>
                     </li>

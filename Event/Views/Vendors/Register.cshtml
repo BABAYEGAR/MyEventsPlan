@@ -70,17 +70,17 @@
         </div>
     </div>
     <div class="control-group">
-        @Html.LabelFor(model => model.About, new { @class = "control-label" })
+        @Html.LabelFor(model => model.About, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextAreaFor(model => model.About, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
+            @Html.TextAreaFor(model => model.About, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.About, "", new {@class = "text-danger"})
         </div>
-    </div>   
-     <div class="control-group">
-        @Html.LabelFor(model => model.MinimumPrice, new { @class = "control-label" })
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.MinimumPrice, new {@class = "control-label"})
         <div class="controls">
-            @Html.TextAreaFor(model => model.MinimumPrice, new { htmlAttributes = new { @class = "span8" } })
-            @Html.ValidationMessageFor(model => model.MinimumPrice, "", new { @class = "text-danger" })
+            @Html.TextAreaFor(model => model.MinimumPrice, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.MinimumPrice, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">

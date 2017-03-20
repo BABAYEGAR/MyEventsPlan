@@ -9,7 +9,7 @@
 @using (Html.BeginForm("Create", "EventPlanners", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
-    @Html.Hidden("Type",type)
+    @Html.Hidden("Type", type)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="control-group">
         @Html.LabelFor(model => model.Firstname, new {@class = "control-label"})
@@ -43,24 +43,24 @@
     if (type == EventPlannerTypeEnum.Organization.ToString())
     {
         <div class="control-group">
-            @Html.LabelFor(model => model.LocationId, "Location", new { @class = "control-label" })
+            @Html.LabelFor(model => model.LocationId, "Location", new {@class = "control-label"})
             <div class="controls">
-                @Html.DropDownListFor(m => m.LocationId, null, new { @class = "span8" })
-                @Html.ValidationMessageFor(model => model.LocationId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.LocationId, null, new {@class = "span8"})
+                @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="control-group">
-            @Html.LabelFor(model => model.BusinessName, new { @class = "control-label" })
+            @Html.LabelFor(model => model.BusinessName, new {@class = "control-label"})
             <div class="controls">
-                @Html.EditorFor(model => model.BusinessName, new { htmlAttributes = new { @class = "span8", placeholder = "Enter your buisness name" } })
-                @Html.ValidationMessageFor(model => model.BusinessName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.BusinessName, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your buisness name"}})
+                @Html.ValidationMessageFor(model => model.BusinessName, "", new {@class = "text-danger"})
             </div>
         </div>
         <div class="control-group">
-            @Html.LabelFor(model => model.BusinessContact, new { @class = "control-label" })
+            @Html.LabelFor(model => model.BusinessContact, new {@class = "control-label"})
             <div class="controls">
-                @Html.EditorFor(model => model.BusinessContact, new { htmlAttributes = new { @class = "span8", placeholder = "Enter your business contact" } })
-                @Html.ValidationMessageFor(model => model.BusinessContact, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.BusinessContact, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your business contact"}})
+                @Html.ValidationMessageFor(model => model.BusinessContact, "", new {@class = "text-danger"})
             </div>
         </div>
     }

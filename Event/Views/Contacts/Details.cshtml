@@ -145,14 +145,14 @@
                 <h4 class="modal-title" id="myModalLabel1">Delete contact</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Delete", "Contacts", new { id = Model.ContactId }))
+                @using (Html.BeginForm("Delete", "Contacts", new {id = Model.ContactId}))
                 {
                     @Html.AntiForgeryToken()
                     <p>
                         Are you sure you want to delete the contact?
                     </p>
                     <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
                     </div>
                 }
             </div>

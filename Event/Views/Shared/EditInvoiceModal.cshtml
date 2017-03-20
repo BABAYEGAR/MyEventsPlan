@@ -5,16 +5,16 @@
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
     var db = new InvoiceDataContext();
     ViewBag.ClientId = new SelectList(db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
-        "ClientId", "Name",Model.ClientId);
+        "ClientId", "Name", Model.ClientId);
     Layout = "../Shared/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Edit", "Invoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m=>m.InvoiceId)
-    @Html.HiddenFor(m=>m.DateCreated)
-    @Html.HiddenFor(m=>m.CreatedBy)
-    @Html.HiddenFor(m=>m.EventPlannerId)
+    @Html.HiddenFor(m => m.InvoiceId)
+    @Html.HiddenFor(m => m.DateCreated)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.EventPlannerId)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="control-group">
         @Html.LabelFor(model => model.InvoiceName, new {@class = "control-label"})

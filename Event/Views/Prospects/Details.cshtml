@@ -126,10 +126,10 @@
 @Html.ActionLink("Edit", "Edit", new {id = Model.ProspectId}, new {@class = "btn btn-primary icon-pencil"})
 @if (Model.Status == ProspectStausEnum.Active.ToString())
 {
-    @Html.ActionLink("Cancel", "CancelProspect", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-warning icon-remove"}) 
+    @Html.ActionLink("Cancel", "CancelProspect", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-warning icon-remove"})
 }
 |
-@Html.ActionLink("Convert Prospect to event", "ConvertProspectToEvent", new { id = Model.ProspectId }, new { @class = "btn btn-xs btn-success" })
+@Html.ActionLink("Convert Prospect to event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-success"})
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
     Delete
@@ -146,14 +146,14 @@
                 <h4 class="modal-title" id="myModalLabel1">Delete Prospect</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Delete", "CheckListItems", new { id = Model.ProspectId }))
+                @using (Html.BeginForm("Delete", "CheckListItems", new {id = Model.ProspectId}))
                 {
                     @Html.AntiForgeryToken()
                     <p>
                         Are you sure you want to delete the prospect?
                     </p>
                     <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
                     </div>
                 }
             </div>

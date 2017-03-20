@@ -4,20 +4,20 @@
     ViewBag.Header = "Email Verification";
     Layout = "../Shared/_LayoutOutterForm.cshtml";
 }
-@using (Html.BeginForm("VerifyEmail", "Account", FormMethod.Post, new { @class = "form-horizontal row-fluid" }))
+@using (Html.BeginForm("VerifyEmail", "Account", FormMethod.Post, new {@class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.ValidationSummary("", new {@class = "text-danger"})
     <div class="control-group">
-        @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+        @Html.LabelFor(model => model.Email, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "span8"} })
-            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Verify Email" class="btn btn-default" />
+            <input type="submit" value="Verify Email" class="btn btn-default"/>
         </div>
     </div>
 }

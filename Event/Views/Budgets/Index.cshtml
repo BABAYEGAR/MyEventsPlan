@@ -3,10 +3,9 @@
 @{
     ViewBag.Title = "List";
     var events = Session["event"] as Event;
-    ViewBag.TableHeader = "List of budgets for "+ events?.Name+"!";
+    ViewBag.TableHeader = "List of budgets for " + events?.Name + "!";
     Layout = "../Shared/_LayoutTable.cshtml";
     var budget = new Budget();
-
 }
 @section links{
 
@@ -42,7 +41,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateBudgetModal",budget);
+                        Html.RenderPartial("CreateBudgetModal", budget);
                     }
                 </div>
             </div>
@@ -77,32 +76,32 @@
         </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ItemName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EstimatedAmount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NegotiatedAmount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActualAmount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PaidTillDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AmountStillDue)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Open", "Details", new { id = item.BudgetId }, new { @class = "btn btn-lg btn-default icon-folder-open" })
-                    </td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EstimatedAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NegotiatedAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActualAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaidTillDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AmountStillDue)
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "Details", new {id = item.BudgetId}, new {@class = "btn btn-lg btn-default icon-folder-open"})
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

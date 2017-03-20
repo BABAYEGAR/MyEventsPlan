@@ -1,6 +1,4 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
-@model EventResourceMapping
+﻿@model Event.Data.Objects.Entities.EventResourceMapping
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View Allocated Resource";
@@ -15,28 +13,28 @@
             <a href="@Url.Action("Details", "Events", new {id = Model.EventId})">Event Dashboard</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="@Url.Action("Index", "EventResourceMappings", new {eventId = Model.EventId})">Allocated  Resources(s)</a>
+            <a href="@Url.Action("Index", "EventResourceMappings", new {eventId = Model.EventId})">Allocated Resources(s)</a>
         </li>
     </ol>
 }
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Event.Name)
-        </dt>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Event.Name)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Event.Name)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Event.Name)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Resource.Name)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.Resource.Name)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Resource.Name)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Resource.Name)
+    </dd>
 
-    </dl>
+</dl>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
     Deallocate Resources
@@ -53,14 +51,14 @@
                 <h4 class="modal-title" id="myModalLabel1">Deallocate Resources</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Delete", "EventResourceMappings", new { id = Model.EventResourceMappingId }))
+                @using (Html.BeginForm("Delete", "EventResourceMappings", new {id = Model.EventResourceMappingId}))
                 {
                     @Html.AntiForgeryToken()
                     <p>
                         Are you sure you want to deallocate the resources to the inventory?
                     </p>
                     <div class="form-actions no-color">
-                        <input type="submit" value="Deallocate" class="btn btn-danger pull-right" />
+                        <input type="submit" value="Deallocate" class="btn btn-danger pull-right"/>
                     </div>
                 }
             </div>

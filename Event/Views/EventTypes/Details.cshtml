@@ -112,14 +112,14 @@
                 <h4 class="modal-title" id="myModalLabel1">Delete Event-Type</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Delete", "EventTypes", new { id = Model.EventTypeId }))
+                @using (Html.BeginForm("Delete", "EventTypes", new {id = Model.EventTypeId}))
                 {
                     @Html.AntiForgeryToken()
                     <p>
                         Are you sure you want to delete the type?
                     </p>
                     <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
                     </div>
                 }
             </div>

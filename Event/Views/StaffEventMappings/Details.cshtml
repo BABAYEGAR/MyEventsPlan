@@ -76,14 +76,14 @@
                 <h4 class="modal-title" id="myModalLabel1">Unassign Staff From Event</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("UnassignStaff", "StaffEventMappings", new { id = Model.StaffEventMappingId }))
+                @using (Html.BeginForm("UnassignStaff", "StaffEventMappings", new {id = Model.StaffEventMappingId}))
                 {
                     @Html.AntiForgeryToken()
                     <p>
                         Are you sure you want to unassign the staff?
                     </p>
                     <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
                     </div>
                 }
             </div>
