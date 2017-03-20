@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Event.Data.Objects.Entities
 {
@@ -11,5 +12,7 @@ namespace Event.Data.Objects.Entities
         public long? ResourceId { get; set; }
         [ForeignKey("ResourceId")]
         public virtual Resource Resource { get; set; }
+        [Required]
+        public long Quantity { get; set; }
     }
 }

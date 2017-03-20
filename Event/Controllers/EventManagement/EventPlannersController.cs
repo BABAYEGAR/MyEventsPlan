@@ -36,8 +36,9 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventPlanners/Create
-        public ActionResult Create()
+        public ActionResult Create(string type)
         {
+            ViewBag.type = type;
             return View();
         }
 
@@ -47,7 +48,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "EventPlannerId,Firstname,Lastname,Email,Mobile,ConfirmPassword,Password")] EventPlanner
+            [Bind(Include = "EventPlannerId,Firstname,Lastname,LocationId,Email,Mobile,BusinessName,BusinessContact,ConfirmPassword,Password")] EventPlanner
                 eventPlanner, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
@@ -57,6 +58,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 eventPlanner.RoleId = role?.RoleId;
                 eventPlanner.Password = password;
                 eventPlanner.ConfirmPassword = password;
+                eventPlanner.Type = collectedValues["Type"];
                 if (dbc.AppUsers.Any(n => n.Email == eventPlanner.Email))
                 {
                     TempData["display"] = "The email entered already exist! Try another one!";
@@ -122,7 +124,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(
-            [Bind(Include = "EventPlannerId,Firstname,Lastname,Email,Mobile,RoleId")] EventPlanner eventPlanner)
+            [Bind(Include = "EventPlannerId,Firstname,Lastname,Email,Mobile,BusinessName,BusinessContact,Type,RoleId")] EventPlanner eventPlanner)
         {
             if (ModelState.IsValid)
             {

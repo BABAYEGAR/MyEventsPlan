@@ -102,6 +102,22 @@
     <Compile Include="Migrations\201703190003154_migrate5.Designer.cs">
       <DependentUpon>201703190003154_migrate5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703190900252_migrate6.cs" />
+    <Compile Include="Migrations\201703190900252_migrate6.Designer.cs">
+      <DependentUpon>201703190900252_migrate6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703191834598_migrate7.cs" />
+    <Compile Include="Migrations\201703191834598_migrate7.Designer.cs">
+      <DependentUpon>201703191834598_migrate7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703191849201_migrate8.cs" />
+    <Compile Include="Migrations\201703191849201_migrate8.Designer.cs">
+      <DependentUpon>201703191849201_migrate8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703201020250_migrate9.cs" />
+    <Compile Include="Migrations\201703201020250_migrate9.Designer.cs">
+      <DependentUpon>201703201020250_migrate9.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -130,6 +146,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703190003154_migrate5.resx">
       <DependentUpon>201703190003154_migrate5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703190900252_migrate6.resx">
+      <DependentUpon>201703190900252_migrate6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703191834598_migrate7.resx">
+      <DependentUpon>201703191834598_migrate7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703191849201_migrate8.resx">
+      <DependentUpon>201703191849201_migrate8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703201020250_migrate9.resx">
+      <DependentUpon>201703201020250_migrate9.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

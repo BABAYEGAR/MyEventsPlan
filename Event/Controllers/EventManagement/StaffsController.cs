@@ -82,7 +82,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var role = db.Roles.SingleOrDefault(n => n.Name == "Staff");
             if (ModelState.IsValid)
             {
-                if ((loggedinuser != null) && (role != null))
+                if ((loggedinuser != null))
                 {
                     staff.CreatedBy = loggedinuser.AppUserId;
                     staff.DateCreated = DateTime.Now;

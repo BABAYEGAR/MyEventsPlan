@@ -60,4 +60,34 @@
 
 
 </dl>
-@Html.ActionLink("Unassign", "Delete", new {id = Model.StaffEventMappingId}, new {@class = "btn btn-xs btn-danger icon-trash"})
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+    Unassign
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Unassign Staff From Event</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Delete", "CheckListItems", new { id = Model.StaffEventMappingId }))
+                {
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to unassign the staff?
+                    </p>
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

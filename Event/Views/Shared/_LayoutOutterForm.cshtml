@@ -14,7 +14,10 @@
     <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600"
           rel="stylesheet">
     @RenderSection("css", false)
-
+    @{
+        var individual = EventPlannerTypeEnum.Individual.ToString();
+        var organization = EventPlannerTypeEnum.Organization.ToString();
+    }
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -39,11 +42,15 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="@Url.Action("Register", "Vendors")">As a Vendor</a>
+                                <a href="@Url.Action("Register", "Vendors")">Become a Vendor</a>
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="@Url.Action("Create", "EventPlanners")">As an Event Planner</a>
+                                <a href="@Url.Action("Create", "EventPlanners",new {type = individual })">Become an Event Planner (Individual)</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="@Url.Action("Create", "EventPlanners",new {type = organization})">Become an Event Planner (Organization)</a>
                             </li>
                         </ul>
                     </li>

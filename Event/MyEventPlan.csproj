@@ -1411,6 +1411,7 @@
     <Content Include="Views\Shared\EditLocationModal.cshtml" />
     <Content Include="Views\Account\PasswordReset.cshtml" />
     <Content Include="Views\Account\VerifyEmail.cshtml" />
+    <Content Include="Views\Shared\AssignResourcesToEvent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

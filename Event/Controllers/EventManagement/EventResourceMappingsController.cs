@@ -14,12 +14,12 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly EventResourceMappingDataContext db = new EventResourceMappingDataContext();
 
         // GET: EventResourceMappings
-        public ActionResult Index(long? eventId)
+        public ActionResult Index()
         {
+            var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var eventResourceMapping =
-                db.EventResourceMapping.Where(n => n.EventId == eventId).Include(e => e.Event).Include(e => e.Resource);
-            ViewBag.eventId = eventId;
+                db.EventResourceMapping.Where(n => n.EventId == events.EventId).Include(e => e.Event).Include(e => e.Resource);
             ViewBag.ResourceId = new SelectList(
                 db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name");
             return View(eventResourceMapping.ToList());
@@ -49,7 +49,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "EventResourceMappingId,EventId,ResourceId")] EventResourceMapping eventResourceMapping)
+            [Bind(Include = "EventResourceMappingId,EventId,ResourceId,Quantity")] EventResourceMapping eventResourceMapping)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -67,9 +67,24 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Success.ToString();
                     return RedirectToAction("Login", "Account");
                 }
+                var resourceId = eventResourceMapping.ResourceId;
+                var resource = db.Resources.Find(resourceId);
+                if (resource.Quantity > eventResourceMapping.Quantity)
+                {
+                    resource.Quantity = resource.Quantity - eventResourceMapping.Quantity;
+                    resource.DateLastModified = DateTime.Now;
+                    resource.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["display"] = "Your inventory does not have the quantity of resources required!";
+                    TempData["notificationtype"] = NotificationType.Error.ToString();
+                    return RedirectToAction("Index", new { eventId = eventResourceMapping.EventId });
+                }
+                db.Entry(resource).State  = EntityState.Modified;
                 db.EventResourceMapping.Add(eventResourceMapping);
                 db.SaveChanges();
-                TempData["resourcemap"] = "You have successfully added the resource to the event!";
+                TempData["display"] = "You have successfully allocated the resource(s) to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = eventResourceMapping.EventId});
             }
@@ -146,12 +161,18 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             var eventResourceMapping = db.EventResourceMapping.Find(id);
-            var eventId = (long) eventResourceMapping.EventId;
+
+            var resourceId = eventResourceMapping.ResourceId;
+            var resource = db.Resources.Find(resourceId);
+            resource.Quantity = resource.Quantity + eventResourceMapping.Quantity;
+            resource.DateLastModified = DateTime.Now; 
+
+            db.Entry(resource).State = EntityState.Modified;
             db.EventResourceMapping.Remove(eventResourceMapping);
             db.SaveChanges();
-            TempData["resourcemap"] = "You have successfully deleted the resource to the event!";
+            TempData["display"] = "You have successfully deallocated the resources from the event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new {eventId});
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

@@ -1,20 +1,24 @@
-﻿@model Event.Data.Objects.Entities.EventResourceMapping
-
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model EventResourceMapping
 @{
-    Layout = null;
+    ViewBag.Title = "View";
+    ViewBag.Header = "View Allocated Resource";
+    Layout = "../Shared/_LayoutForm.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width"/>
-    <title>Details</title>
-</head>
-<body>
-<div>
-    <h4>EventResourceMapping</h4>
-    <hr/>
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Details", "Events", new {id = Model.EventId})">Event Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "EventResourceMappings", new {eventId = Model.EventId})">Allocated  Resources(s)</a>
+        </li>
+    </ol>
+}
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Event.Name)
@@ -32,43 +36,35 @@
             @Html.DisplayFor(model => model.Resource.Name)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastModifiedBy)
-        </dd>
-
     </dl>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+    Deallocate Resources
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Deallocate Resources</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Delete", "EventResourceMappings", new { id = Model.EventResourceMappingId }))
+                {
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to deallocate the resources to the inventory?
+                    </p>
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Deallocate" class="btn btn-danger pull-right" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new {id = Model.EventResourceMappingId}) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
-</body>
-</html>

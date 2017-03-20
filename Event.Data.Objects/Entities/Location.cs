@@ -10,5 +10,6 @@ namespace Event.Data.Objects.Entities
     {
         public long LocationId { get; set; }
         public string Name { get; set; }
+        public IEnumerable<EventPlanner> EventPlanners { get; set; }
     }
 }

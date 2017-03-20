@@ -1,8 +1,12 @@
-﻿@model Event.Data.Objects.Entities.Event
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.Service.Enum
+@model Event
 @{
     ViewBag.Title = "View";
     ViewBag.Header = Model.Name;
     Layout = "../Shared/_LayoutForm.cshtml";
+    var eventPlaner = Session["eventplanner"] as EventPlanner;
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 }
 @section links{
     <ol class="breadcrumb">
@@ -22,46 +26,79 @@
     <div class="btn-box-row row-fluid">
         <div>
             <div class="btn-box-row row-fluid">
-                <div class="span8">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-calendar"></i><b>Appointments</b>
-                            </a>
-                            <a href="@Url.Action("Index", "EventVendorMappings", new {id = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-user"></i><b>Vendors</b>
-                            </a><a href="@Url.Action("Index", "StaffEventMappings", new {id = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-user"></i><b>Staff</b>
-                            </a>
+                @if (loggedinuser?.EventPlannerId != null && eventPlaner?.Type == EventPlannerTypeEnum.Organization.ToString())
+                {
+                    <div class="span8">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-calendar"></i><b>Appointments</b>
+                                </a>
+                                <a href="@Url.Action("Index", "EventVendorMappings", new {id = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-user"></i><b>Vendors</b>
+                                </a><a href="@Url.Action("Index", "StaffEventMappings", new {id = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-user"></i><b>Staff</b>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <a href="@Url.Action("Index", "CheckLists", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-list-ul"></i><b>Check List</b>
+                                </a><a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-list-ol"></i><b>Guest List</b>
+                                </a><a href="@Url.Action("Index", "Notes", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-paper-clip"></i><b>
+                                        Notes
+                                    </b>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <a href="@Url.Action("Index", "Tasks", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-tasks"></i><b>Tasks</b>
+                                </a>
+                                <a href="@Url.Action("Index", "EventResourceMappings", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-cloud"></i><b>Resources</b>
+                                </a>
+                                <a href="@Url.Action("Index", "Clients", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-user"></i><b>Client</b>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <a href="@Url.Action("Index", "CheckLists", new {eventId = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-list-ul"></i><b>Check List</b>
-                            </a><a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-list-ol"></i><b>Guest List</b>
-                            </a><a href="@Url.Action("Index", "Notes", new {eventId = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-paper-clip"></i><b>
-                                    Notes
-                                </b>
-                            </a>
+                }
+                @if (loggedinuser?.EventPlannerId != null && eventPlaner?.Type == EventPlannerTypeEnum.Individual.ToString())
+                {
+                    <div class="span8">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-calendar"></i><b>Appointments</b>
+                                </a>
+                                <a href="@Url.Action("Index", "EventVendorMappings", new {id = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-user"></i><b>Vendors</b>
+                                </a>
+                                <a href="@Url.Action("Index", "Notes", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-paper-clip"></i><b>
+                                        Notes
+                                    </b>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <a href="@Url.Action("Index", "CheckLists", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-list-ul"></i><b>Check List</b>
+                                </a><a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})" class="btn-box medium span4">
+                                    <i class="icon-list-ol"></i><b>Guest List</b>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <a href="@Url.Action("Index", "Tasks", new {eventId = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-tasks"></i><b>Tasks</b>
-                            </a>
-                            <a href="@Url.Action("Resources", "Events", new {eventId = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-cloud"></i><b>Resources</b>
-                            </a>
-                            <a href="@Url.Action("Index", "Clients", new {eventId = Model.EventId})" class="btn-box medium span4">
-                                <i class="icon-user"></i><b>Client</b>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                }
+             
             </div>
         </div>
     </div>

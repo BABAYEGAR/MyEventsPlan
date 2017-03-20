@@ -26,12 +26,15 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventResourceMappings
-        public ActionResult Resources(long? eventId)
+        public ActionResult Resources()
         {
+            var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var resources = _db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
-            ViewBag.eventId = eventId;
-            return View(resources.ToList());
+            var eventResourceMapping =
+                _db.EventResourceMapping.Where(n => n.EventId == events.EventId).Include(e => e.Event).Include(e => e.Resource);
+            ViewBag.ResourceId = new SelectList(
+                _db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name");
+            return View(eventResourceMapping.ToList());
         }
 
         // GET: CheckItem

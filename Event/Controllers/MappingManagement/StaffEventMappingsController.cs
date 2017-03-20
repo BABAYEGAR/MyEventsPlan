@@ -165,7 +165,6 @@ namespace MyEventPlan.Controllers.MappingManagement
 
         // POST: StaffEventMappings/Delete/5
         [HttpPost]
-        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult UnassignStaff(long id)
         {

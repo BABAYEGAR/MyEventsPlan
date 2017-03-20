@@ -6,6 +6,7 @@
     Layout = "../Shared/_LayoutTable.cshtml";
     var contact = new Contact();
 }
+
 @section add {
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
@@ -32,7 +33,14 @@
 
     </div>
 
-    @Html.ActionLink("Import Contact(.csv)", "Create", null, new {@class = "btn btn-default btn-xs icon-download pull-right"})
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+    </ol>
 }
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">

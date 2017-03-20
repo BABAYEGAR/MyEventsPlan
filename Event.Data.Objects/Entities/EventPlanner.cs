@@ -24,6 +24,11 @@ namespace Event.Data.Objects.Entities
         [MaxLength(100, ErrorMessage = "This field is does not support more than 100 characters")]
        
         public string Mobile { get; set; }
+        public string Type { get; set; }
+        [DisplayName("Business Name")]
+        public string BusinessName { get; set; }
+        [DisplayName("Business Contact")]
+        public string BusinessContact { get; set; }
         [Required]
         [PasswordPropertyText]
         [Compare("ConfirmPassword")]
@@ -35,6 +40,10 @@ namespace Event.Data.Objects.Entities
         public long? RoleId { get; set; }
         [ForeignKey("RoleId")]
         public virtual Role Role { get; set; }
+        [DisplayName("Location")]
+        public long? LocationId { get; set; }
+        [ForeignKey("LocationId")]
+        public virtual Location Location { get; set; }
         public IEnumerable<AppUser> AppUsers { get; set; }
         public IEnumerable<Event> Events { get; set; }
         public IEnumerable<Prospect> Prospects { get; set; }

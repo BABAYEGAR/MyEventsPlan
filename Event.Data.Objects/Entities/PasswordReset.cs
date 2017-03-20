@@ -13,11 +13,12 @@ namespace Event.Data.Objects.Entities
         public long PasswordResetId { get; set; }
         [DisplayName ("Email")]
         public string Email { get; set; }
-        [DisplayName("Password")]
+        [PasswordPropertyText]
+        [Required]
         public string Password { get; set; }
-        [DisplayName("Confirm password")]
-        [Compare("Password",
-             ErrorMessage = "The password and confirmation password do not match.")]
+        [PasswordPropertyText]
+        [Compare("Password")]
+        [DisplayName("Confirm Password")]
         public string ConfirmPassword { get; set; }
         public long Code { get; set; }
         public DateTime Date { get; set; }

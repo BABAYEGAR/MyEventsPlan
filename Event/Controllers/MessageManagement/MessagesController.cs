@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -13,6 +14,7 @@ namespace MyEventPlan.Controllers.MessageManagement
     {
         private readonly MessageDataContext db = new MessageDataContext();
         private readonly NotificationDataContext dbc = new NotificationDataContext();
+        private readonly EventDataContext dbd = new EventDataContext();
 
         // GET: Messages
         public ActionResult Index()
@@ -22,7 +24,36 @@ namespace MyEventPlan.Controllers.MessageManagement
                 db.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId)
                     .Include(m => m.AppUser)
                     .Include(m => m.MessageGroup);
-            ViewBag.AppUserId = new SelectList(db.AppUsers.Where(n => n.AppUserId != loggedinuser.AppUserId && n.AppUserId != 4),
+            var allUsers =
+                db.AppUsers.Where(
+                    n =>
+                        n.AppUserId != loggedinuser.AppUserId && n.AppUserId != 4 && n.ClientId != null &&
+                        n.VendorId != null);
+            var eventPlannerEvents = dbd.Event.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
+            var eventPlannerEventsMapping = dbd.EventVendorMappings.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
+            List<AppUser> users = new List<AppUser>();
+            foreach (var item in allUsers)
+            {
+                if (item.ClientId != null)
+                {
+                    var client = dbd.Clients.Find(item.ClientId);
+                        if (eventPlannerEvents.Any(n => n.EventId == client.EventId))
+                        {
+                            users.Add(item);
+                        } 
+                    
+                }
+                if (item.VendorId != null)
+                {
+                    if (eventPlannerEventsMapping.Any(n => n.VendorId == item.VendorId))
+                    {
+                        users.Add(item);
+                    }
+
+                }
+
+            }
+            ViewBag.AppUserId = new SelectList(users,
                 "AppUserId", "DisplayName");
             ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name");
             return View(messages.ToList());

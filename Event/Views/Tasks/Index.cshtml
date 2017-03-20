@@ -7,6 +7,14 @@
     Layout = "../Shared/_LayoutTask.cshtml";
     var task = new Task();
 }
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+    </ol>
+}
 @section add {
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">

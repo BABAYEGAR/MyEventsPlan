@@ -103,7 +103,7 @@ namespace MyEventPlan.Controllers
             if (loggedinuser != null) reset.Email = loggedinuser.Email;
             _dbc.PasswordResets.Add(reset);
             _db.SaveChanges();
-            _dbc.SaveChanges();
+            //_dbc.SaveChanges();
 
             Session["myeventplanloggedinuser"] = null;
             TempData["login"] = "Welcome Back! You have successfully changed your password.. Login to continue!";
@@ -136,6 +136,12 @@ namespace MyEventPlan.Controllers
                 {
                     Session["myeventplanloggedinuser"] = user;
                     Session["role"] = user.Role;
+                    if (user.EventPlannerId != null)
+                    {
+                        var eventPlanner = _db.EventPlanners.Find(user.EventPlannerId);
+                        Session["eventplanner"] = eventPlanner;
+                    }
+                  
                     return RedirectToAction("Dashboard", "Home");
                 }
                 TempData["login"] = "Verify your account from your email and try again!";

@@ -1,0 +1,33 @@
+﻿@using Event.Data.Objects.Entities
+@model EventResourceMapping
+@{
+    var events = Session["event"] as Event;
+}
+@using (Html.BeginForm("Create", "EventResourceMappings", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+{
+    @Html.AntiForgeryToken()
+    if (events != null)
+    {
+        @Html.Hidden("EventId", events.EventId)
+    }
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="control-group">
+        @Html.LabelFor(model => model.ResourceId, "Resource Item", new {@class = "control-label"})
+        <div class="controls">
+            @Html.DropDownListFor(m => m.ResourceId, null, new {@class = "span8"})
+            @Html.ValidationMessageFor(model => model.ResourceId, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.Quantity, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.Quantity, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Quantity, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Allocate Resources" class="btn btn-default"/>
+        </div>
+    </div>
+}

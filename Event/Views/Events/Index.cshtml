@@ -7,6 +7,14 @@
 @section add {
     @Html.ActionLink("Add Event", "Create", null, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
 }
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+    </ol>
+}
 <div class="table-responsive">
     <table class="datatable-1 table table-bordered table-striped display">
         <thead>
