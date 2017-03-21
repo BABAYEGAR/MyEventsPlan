@@ -10,14 +10,14 @@
     <div class="control-group">
         @Html.LabelFor(model => model.Name, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your first name"}})
+            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", placeholder = "Enter resource name"}})
             @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
         </div>
     </div>
     <div class="control-group">
         @Html.LabelFor(model => model.Quantity, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Quantity, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your email address"}})
+            @Html.EditorFor(model => model.Quantity, new {htmlAttributes = new {@class = "span8", placeholder = "Enter resource quantity"}})
             @Html.ValidationMessageFor(model => model.Quantity, "", new {@class = "text-danger"})
         </div>
     </div>

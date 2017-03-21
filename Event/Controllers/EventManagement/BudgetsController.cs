@@ -52,36 +52,40 @@ namespace MyEventPlan.Controllers.EventManagement
             if (ModelState.IsValid)
             {
                 var events = Session["event"] as Event.Data.Objects.Entities.Event;
-                var eventBudget = db.Budgets.Where(n => n.EventId == events.EventId).ToList();
-                long totalAmount = 0;
-                if (eventBudget.Count > 0)
+                if (events != null)
                 {
-                    totalAmount = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
-                }
+                    long targetBudget = Convert.ToInt64(events.TargetBudget);
+                    var eventBudget = db.Budgets.Where(n => n.EventId == events.EventId).ToList();
+                    long totalAmount = 0;
+                    if (eventBudget.Count > 0)
+                    {
+                        totalAmount = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
+                    }
            
-                if (events != null &&  totalAmount + budget.PaidTillDate < events.TargetBudget )
-                {
-                    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-                    budget.DateCreated = DateTime.Now;
-                    budget.DateLastModified = DateTime.Now;
-                    budget.EventId = events.EventId;
-                    if (loggedinuser != null)
+                    if (totalAmount + budget.PaidTillDate < targetBudget )
                     {
-                        budget.LastModifiedBy = loggedinuser.AppUserId;
-                        budget.CreatedBy = loggedinuser.AppUserId;
-                        budget.AmountStillDue = budget.ActualAmount - budget.PaidTillDate;
-                    }
-                    else
-                    {
-                        TempData["login"] = "Your session has expired, Login again!";
+                        var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                        budget.DateCreated = DateTime.Now;
+                        budget.DateLastModified = DateTime.Now;
+                        budget.EventId = events.EventId;
+                        if (loggedinuser != null)
+                        {
+                            budget.LastModifiedBy = loggedinuser.AppUserId;
+                            budget.CreatedBy = loggedinuser.AppUserId;
+                            budget.AmountStillDue = budget.ActualAmount - budget.PaidTillDate;
+                        }
+                        else
+                        {
+                            TempData["login"] = "Your session has expired, Login again!";
+                            TempData["notificationtype"] = NotificationType.Info.ToString();
+                            return RedirectToAction("Login", "Account");
+                        }
+                        db.Budgets.Add(budget);
+                        db.SaveChanges();
+                        TempData["display"] = "Your have successfully added the budget for an item!";
                         TempData["notificationtype"] = NotificationType.Info.ToString();
-                        return RedirectToAction("Login", "Account");
+                        return RedirectToAction("Index", new {id = events.EventId});
                     }
-                    db.Budgets.Add(budget);
-                    db.SaveChanges();
-                    TempData["display"] = "Your have successfully added the budget for an item!";
-                    TempData["notificationtype"] = NotificationType.Info.ToString();
-                    return RedirectToAction("Index", new {id = events.EventId});
                 }
                 TempData["display"] = "Your budget item overides your target budget !";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
@@ -112,26 +116,38 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate,EventId,CreatedBy,DateCreated")] Budget budget)
         {
-            if (ModelState.IsValid)
+            var events = Session["event"] as Event.Data.Objects.Entities.Event;
+            var eventBudget = db.Budgets.Where(n => n.EventId == events.EventId).ToList();
+            long totalAmount = 0;
+            if (eventBudget.Count > 0)
             {
-                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-                budget.DateLastModified = DateTime.Now;
-                if (loggedinuser != null)
+                totalAmount = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
+            }
+            if (events != null)
+            {
+                long targetBudget = Convert.ToInt64(events.TargetBudget);
+                if (totalAmount + budget.PaidTillDate < targetBudget)
                 {
-                    budget.LastModifiedBy = loggedinuser.AppUserId;
-                    budget.AmountStillDue = budget.ActualAmount - budget.PaidTillDate;
-                }
-                else
-                {
-                    TempData["login"] = "Your session has expired, Login again!";
+                    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                    budget.DateLastModified = DateTime.Now;
+                    budget.EventId = events.EventId;
+                    if (loggedinuser != null)
+                    {
+                        budget.LastModifiedBy = loggedinuser.AppUserId;
+                        budget.AmountStillDue = budget.ActualAmount - budget.PaidTillDate;
+                    }
+                    else
+                    {
+                        TempData["login"] = "Your session has expired, Login again!";
+                        TempData["notificationtype"] = NotificationType.Info.ToString();
+                        return RedirectToAction("Login", "Account");
+                    }
+                    db.Entry(budget).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["display"] = "Your have successfully modified the budget for the item!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Index");
                 }
-                db.Entry(budget).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["display"] = "Your have successfully modified the budget for the item!";
-                TempData["notificationtype"] = NotificationType.Info.ToString();
-                return RedirectToAction("Index");
             }
             return View(budget);
         }

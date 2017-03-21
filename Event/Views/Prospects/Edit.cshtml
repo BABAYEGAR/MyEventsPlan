@@ -1,72 +1,80 @@
 ﻿@model Event.Data.Objects.Entities.Prospect
 @{
-    ViewBag.Title = "Edit";
-    ViewBag.Header = "Edit prospect";
+    ViewBag.Title = "Create";
+    ViewBag.Header = "Edit Prospect";
     Layout = "../Shared/_LayoutForm.cshtml";
 }
 @section css{
-    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet"/>
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
+    <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/Color/spectrum.css" rel="stylesheet" />
 }
-@using (Html.BeginForm("Edit", "Prospects", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Edit", "Prospects", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ProspectId)
     @Html.HiddenFor(m => m.EventPlannerId)
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.HiddenFor(m => m.DateCreated)
-    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="control-group">
-        @Html.LabelFor(model => model.Name, new {@class = "control-label"})
+        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
         <div class="controls">
-            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "span8" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.Color, new {@class = "control-label"})
+        @Html.LabelFor(model => model.Color, new { @class = "control-label" })
         <div class="controls">
-            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor"}})
-            @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
+            @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "span8", id = "color" } })
+            @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new {@class = "control-label"})
+        @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new { @class = "control-label" })
         <div class="controls">
-            @Html.DropDownList("EventTypeId", null, new {@class = "span8"})
-            @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
+            @Html.DropDownList("EventTypeId", null, new { @class = "span8" })
+            @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.TargetBudget, new {@class = "control-label"})
+        @Html.LabelFor(model => model.TargetBudget, new { @class = "control-label" })
         <div class="controls">
-            @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
+            @Html.EditorFor(model => model.TargetBudget, new { htmlAttributes = new { @class = "span8 number" } })
+            @Html.ValidationMessageFor(model => model.TargetBudget, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.EventDate, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "span8", id = "datetimepicker5" } })
+            @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
         </div>
     </div>
 
+    <div class="control-group">
+        @Html.LabelFor(model => model.StartDate, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "span8", id = "datetimepicker6" } })
+            @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "span8", id = "datetimepicker7" } })
+            @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "span8", id = "datetimepicker6"}})
-            @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "datetimepicker7"}})
-            @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <input type="submit" value="Create" class="btn btn-default"/>
+            <input type="submit" value="Create" class="btn btn-default" />
         </div>
     </div>
 }
@@ -74,26 +82,49 @@
 {
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
-    <script src="~/Scripts/jscolor.min.js"></script>
+    <script src="~/Content/Color/spectrum.js"></script>
     <script type="text/javascript">
-        jQuery('#datetimepicker6')
-            .datetimepicker({
-                format: 'm-d-Y h:i',
-                onShow: function(ct) {
-                    this.setOptions({
-                        minDate: @DateTime.Now.ToShortDateString(),
-                    });
-                },
-            });
-        jQuery('#datetimepicker7')
-            .datetimepicker({
-                format: 'm-d-Y h:i',
-                onShow: function(ct) {
-                    this.setOptions({
-                        minDate: jQuery('#datetimepicker6').val() ? jQuery('#datetimepicker6').val() : false
-                    });
-                },
-            });
 
+
+            jQuery('#datetimepicker5')
+                .datetimepicker({
+                    format: 'm-d-Y',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: 0
+                        });
+
+                    },
+                    timepicker: false
+                });
+            jQuery('#datetimepicker6')
+                .datetimepicker({
+                    format: 'm-d-Y H:i',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: 0
+                        });
+                    }
+                });
+            jQuery('#datetimepicker7')
+                .datetimepicker({
+                    format: 'm-d-Y H:i',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: jQuery('#datetimepicker6').val()
+                        });
+                    }
+                });
+            $("#color").spectrum();
+            $('input.number').keyup(function (event) {
+
+                if (event.which >= 37 && event.which <= 40) {
+                    event.preventDefault();
+                }
+                var $this = $(this);
+                var num = $this.val().replace(/,/g, '');
+                // the following line has been simplified. Revision history contains original.
+                $this.val(num.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+            });
     </script>
 }

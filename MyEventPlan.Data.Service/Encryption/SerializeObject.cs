@@ -30,7 +30,7 @@ namespace MyEventPlan.Data.Service.Encryption
                     stream.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Log exception here
             }
@@ -69,7 +69,7 @@ namespace MyEventPlan.Data.Service.Encryption
                     read.Close();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Log exception here
             }

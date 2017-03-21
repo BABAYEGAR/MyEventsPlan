@@ -67,7 +67,7 @@ namespace MyEventPlan.Data.Service.Calender
                     EndDate = DateTime.Now,
                     Status = EventStausEnum.New.ToString(),
                     Color = color,
-                    TargetBudget = budget,
+                    TargetBudget = budget.ToString(),
                     EventPlannerId = plannerId,
                     EventTypeId = type,
                     StartTime = newEventStartTime,
@@ -81,7 +81,7 @@ namespace MyEventPlan.Data.Service.Calender
                 ent.Event.Add(rec);
                 ent.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

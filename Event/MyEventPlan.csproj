@@ -331,6 +331,8 @@
     <Content Include="Content\Calendar\locale\vi.js" />
     <Content Include="Content\Calendar\locale\zh-cn.js" />
     <Content Include="Content\Calendar\locale\zh-tw.js" />
+    <Content Include="Content\Color\spectrum.css" />
+    <Content Include="Content\Color\spectrum.js" />
     <Content Include="Content\Dashboard\bootstrap\css\bootstrap-responsive.min.css" />
     <Content Include="Content\Dashboard\bootstrap\css\bootstrap.min.css" />
     <Content Include="Content\Dashboard\bootstrap\img\glyphicons-halflings-white.png" />

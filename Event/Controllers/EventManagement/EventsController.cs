@@ -172,7 +172,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,StartDate,EndDate")] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
+            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,EventDate,StartDate,EndDate")] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
@@ -184,6 +184,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.DateCreated = DateTime.Now;
                     @event.DateLastModified = DateTime.Now;
                     @event.LastModifiedBy = loggedinuser.AppUserId;
+                    @event.TargetBudget = @event.TargetBudget.Replace(",", "");
                     @event.Status = EventStausEnum.New.ToString();
                     @event.EventPlannerId = loggedinuser.EventPlannerId;
                     @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
@@ -226,7 +227,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "EventId,Name,Color,EventTypeId,TargetBudget,EventPlannerId,StartDate,Status,EndDate,CreatedBy,DateCreated"
+                     "EventId,Name,Color,EventTypeId,TargetBudget,EventDate,EventPlannerId,StartDate,Status,EndDate,CreatedBy,DateCreated"
              )] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -238,6 +239,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.LastModifiedBy = loggedinuser.AppUserId;
                     @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     @event.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                    @event.TargetBudget = @event.TargetBudget.Replace(",", "");
                 }
                 else
                 {

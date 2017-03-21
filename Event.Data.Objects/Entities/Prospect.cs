@@ -20,8 +20,13 @@ namespace Event.Data.Objects.Entities
         [ForeignKey("EventTypeId")]
         public virtual EventType EventType { get; set; }
         [Required]
+        [DisplayName("Event Date")]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        public DateTime EventDate { get; set; }
+        [Required]
         [DisplayName("Target Budget")]
-        public long TargetBudget { get; set; }
+        public string TargetBudget { get; set; }
         [Required]
         [DisplayName("Start Date")]
         [DataType(DataType.DateTime)]

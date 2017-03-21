@@ -124,6 +124,20 @@ namespace MyEventPlan.Controllers.EventManagement
                 if (loggedinuser != null)
                 {
                     eventResourceMapping.LastModifiedBy = loggedinuser.AppUserId;
+                    var resourceId = eventResourceMapping.ResourceId;
+                    var resource = db.Resources.Find(resourceId);
+                    if (resource.Quantity > eventResourceMapping.Quantity)
+                    {
+                        resource.Quantity = resource.Quantity - eventResourceMapping.Quantity;
+                        resource.DateLastModified = DateTime.Now;
+                        resource.LastModifiedBy = loggedinuser.AppUserId;
+                    }
+                    else
+                    {
+                        TempData["display"] = "Your inventory does not have the quantity of resources required!";
+                        TempData["notificationtype"] = NotificationType.Error.ToString();
+                        return RedirectToAction("Index", new { eventId = eventResourceMapping.EventId });
+                    }
                 }
                 else
                 {

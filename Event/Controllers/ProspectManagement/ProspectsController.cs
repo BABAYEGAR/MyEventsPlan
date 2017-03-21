@@ -50,7 +50,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "ProspectId,Name,Color,EventTypeId,TargetBudget,StartDate,EndDate")] Prospect prospect,FormCollection collectedValues)
+            [Bind(Include = "ProspectId,Name,Color,EventTypeId,EventDate,TargetBudget,StartDate,EndDate")] Prospect prospect,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -63,6 +63,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
                     prospect.LastModifiedBy = loggedinuser.AppUserId;
                     prospect.EventPlannerId = loggedinuser.EventPlannerId;
                     prospect.Status = ProspectStausEnum.Active.ToString();
+                    prospect.TargetBudget = prospect.TargetBudget.Replace(",", "");
                     prospect.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     prospect.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
                 }
@@ -101,6 +102,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
             events.StartTime = prospect.StartTime;
             events.EndTime = prospect.EndTime;
             events.TargetBudget = prospect.TargetBudget;
+            events.EventDate = prospect.EventDate;
             if (loggedinuser != null)
             {
                 events.CreatedBy = loggedinuser.AppUserId;
@@ -109,14 +111,17 @@ namespace MyEventPlan.Controllers.ProspectManagement
             events.DateCreated = DateTime.Now;
             events.DateLastModified = DateTime.Now;
             events.Status = EventStausEnum.New.ToString();
+            events.EventTypeId = prospect.EventTypeId;
             dbc.Event.Add(events);
             dbc.SaveChanges();
-            db.Prospects.Remove(prospect);
+
+            var prospectForDelete = db.Prospects.Find(id);
+            db.Prospects.Remove(prospectForDelete);
             db.SaveChanges();
 
             TempData["display"] = "You have successfully converted the prospect to an event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index","Events");
         }
         public ActionResult CancelProspect(long? id)
         {
@@ -154,7 +159,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventPlannerId,StartDate,EndDate,CreatedBy,DateCreated"
+                     "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventDate,EventPlannerId,StartDate,EndDate,CreatedBy,DateCreated"
              )] Prospect prospect,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -166,6 +171,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
                     prospect.LastModifiedBy = loggedinuser.AppUserId;
                     prospect.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     prospect.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                    prospect.TargetBudget = prospect.TargetBudget.Replace(",", "");
                 }
                 else
                 {

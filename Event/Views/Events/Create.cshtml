@@ -5,9 +5,11 @@
     Layout = "../Shared/_LayoutForm.cshtml";
 }
 @section css{
+
     <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet"/>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
+<link href="~/Content/Color/spectrum.css" rel="stylesheet" />
 }
 @using (Html.BeginForm("Create", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
@@ -24,7 +26,7 @@
     <div class="control-group">
         @Html.LabelFor(model => model.Color, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor", id = "color"}})
+            @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8", id = "color"}})
             @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
         </div>
     </div>
@@ -40,11 +42,17 @@
     <div class="control-group">
         @Html.LabelFor(model => model.TargetBudget, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8"}})
+            @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8 number"}})
             @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
         </div>
     </div>
-
+    <div class="control-group">
+        @Html.LabelFor(model => model.EventDate, new { @class = "control-label" })
+        <div class="controls">
+            @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "span8", id = "datetimepicker5" } })
+            @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
+        </div>
+    </div>
     <div class="control-group">
         @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
         <div class="controls">
@@ -70,26 +78,49 @@
 {
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
-    <script src="~/Scripts/jscolor.min.js"></script>
+<script src="~/Content/Color/spectrum.js"></script>
     <script type="text/javascript">
-        jQuery('#datetimepicker6')
-            .datetimepicker({
-                format: 'm-d-Y h:i',
-                onShow: function(ct) {
-                    this.setOptions({
-                        minDate: @DateTime.Now.ToShortDateString(),
-                    });
-                },
-            });
-        jQuery('#datetimepicker7')
-            .datetimepicker({
-                format: 'm-d-Y h:i',
-                onShow: function(ct) {
-                    this.setOptions({
-                        minDate: jQuery('#datetimepicker6').val() ? jQuery('#datetimepicker6').val() : false
-                    });
-                },
-            });
 
+
+            jQuery('#datetimepicker5')
+                .datetimepicker({
+                    format: 'm-d-Y',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: 0
+                        });
+
+                    },
+                    timepicker: false
+                });
+            jQuery('#datetimepicker6')
+                .datetimepicker({
+                    format: 'm-d-Y H:i',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: 0
+                        });
+                    }
+                });
+            jQuery('#datetimepicker7')
+                .datetimepicker({
+                    format: 'm-d-Y H:i',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: jQuery('#datetimepicker6').val()
+                        });
+                    }
+                });
+            $("#color").spectrum();
+       $('input.number').keyup(function(event) {
+
+           if(event.which >= 37 && event.which <= 40){
+               event.preventDefault();
+           }
+           var $this = $(this);
+           var num = $this.val().replace(/,/g, '');
+           // the following line has been simplified. Revision history contains original.
+           $this.val(num.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+       });
     </script>
 }
