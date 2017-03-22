@@ -212,13 +212,15 @@
     <Compile Include="Controllers\EventManagement\NotesController.cs" />
     <Compile Include="Controllers\EventManagement\StaffsController.cs" />
     <Compile Include="Controllers\EventManagement\TasksController.cs" />
+    <Compile Include="Controllers\FinancialManagement\InvoiceItemsController.cs" />
+    <Compile Include="Controllers\FinancialManagement\InvoicePaymentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingManagement\EventVendorMappingsController.cs" />
     <Compile Include="Controllers\MappingManagement\StaffEventMappingsController.cs" />
     <Compile Include="Controllers\MessageManagement\MessagesController.cs" />
     <Compile Include="Controllers\NewsManagement\NewsController.cs" />
-    <Compile Include="Controllers\PaymentManagement\InvoicesController.cs" />
+    <Compile Include="Controllers\FinancialManagement\InvoicesController.cs" />
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
@@ -1438,6 +1440,16 @@
     <Content Include="Views\Packages\Index.cshtml" />
     <Content Include="Views\Shared\CreatePackageModal.cshtml" />
     <Content Include="Views\Shared\EditPackageModal.cshtml" />
+    <Content Include="Views\InvoiceItems\Create.cshtml" />
+    <Content Include="Views\InvoiceItems\Delete.cshtml" />
+    <Content Include="Views\InvoiceItems\Details.cshtml" />
+    <Content Include="Views\InvoiceItems\Edit.cshtml" />
+    <Content Include="Views\InvoiceItems\Index.cshtml" />
+    <Content Include="Views\InvoicePayments\Create.cshtml" />
+    <Content Include="Views\InvoicePayments\Delete.cshtml" />
+    <Content Include="Views\InvoicePayments\Details.cshtml" />
+    <Content Include="Views\InvoicePayments\Edit.cshtml" />
+    <Content Include="Views\InvoicePayments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

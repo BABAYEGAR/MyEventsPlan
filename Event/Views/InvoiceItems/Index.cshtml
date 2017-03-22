@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Event.Data.Objects.Entities.InvoiceItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Invoice.InvoiceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ItemDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Qantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitCost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateLastModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Invoice.InvoiceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ItemDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Qantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnitCost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateLastModified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastModifiedBy)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.InvoiceItemId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.InvoiceItemId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.InvoiceItemId })
+        </td>
+    </tr>
+}
+
+</table>

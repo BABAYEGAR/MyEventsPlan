@@ -1,0 +1,98 @@
+﻿@model Event.Data.Objects.Entities.InvoiceItem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>InvoiceItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Invoice.InvoiceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Invoice.InvoiceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ItemDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Qantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Qantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnitCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnitCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModifiedBy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.InvoiceItemId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
