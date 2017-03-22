@@ -1,23 +1,17 @@
 ﻿@model Event.Data.Objects.Entities.InvoiceItem
-
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "View";
+    ViewBag.Header = "View Invoice Item";
+    Layout = "../Shared/_LayoutForm.cshtml";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>InvoiceItem</h4>
-    <hr />
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+    </ol>
+}
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Invoice.InvoiceName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Invoice.InvoiceName)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.ItemName)
         </dt>
@@ -43,11 +37,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Qantity)
+            @Html.DisplayNameFor(model => model.Quantity)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Qantity)
+            @Html.DisplayFor(model => model.Quantity)
         </dd>
 
         <dt>
@@ -58,41 +52,59 @@
             @Html.DisplayFor(model => model.UnitCost)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastModifiedBy)
-        </dd>
-
     </dl>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal2">
+    Edit Item
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2">Edit Invoice Item</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EditInvoiceItemModal", Model);
+                }
+            </div>
+        </div>
+    </div>
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.InvoiceItemId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+    Delete Item
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete Invoice Item</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Delete", "InvoiceItems", new { id = Model.InvoiceItemId }))
+                {
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to delete the Item?
+                    </p>
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

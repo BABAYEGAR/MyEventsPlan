@@ -1454,6 +1454,7 @@
     <Content Include="Views\Shared\EditInvoiceItemModal.cshtml" />
     <Content Include="Views\Shared\CreateInvoicePaymentModal.cshtml" />
     <Content Include="Views\Shared\EditInvoicePaymentModal.cshtml" />
+    <Content Include="Views\Shared\LinkInvoiceModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

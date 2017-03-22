@@ -2,10 +2,6 @@
 @using MyEventPlan.Data.DataContext.DataContext
 @model InvoiceItem
 @{
-    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    var _db = new InvoiceDataContext();
-    ViewBag.ClientId = new SelectList(_db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
-        "ClientId", "Name");
     long invoiceId = ViewBag.invoiceId;
     Layout = "../Shared/_LayoutModal.cshtml";
 }

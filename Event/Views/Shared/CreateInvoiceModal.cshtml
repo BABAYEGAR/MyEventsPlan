@@ -3,14 +3,22 @@
 @model Invoice
 @{
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    var _db = new InvoiceDataContext();
-    ViewBag.ClientId = new SelectList(_db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+    var db = new InvoiceDataContext();
+    ViewBag.ClientId = new SelectList(db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
         "ClientId", "Name");
     Layout = "../Shared/_LayoutModal.cshtml";
+    long? eventId = ViewBag.id;
+}
+@section css{
+
+    <link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet" />
 }
 @using (Html.BeginForm("Create", "Invoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
+    @Html.Hidden("EventId",eventId)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="control-group">
         @Html.LabelFor(model => model.InvoiceName, new {@class = "control-label"})
@@ -36,7 +44,7 @@
     <div class="control-group">
         @Html.LabelFor(model => model.DueDate, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.DueDate, new {htmlAttributes = new {@class = "span8", placeholder = "Select the due date"}})
+            @Html.EditorFor(model => model.DueDate, new {htmlAttributes = new {@class = "span8", id = "datetimepicker5", placeholder = "Select the due date"}})
             @Html.ValidationMessageFor(model => model.DueDate, "", new {@class = "text-danger"})
         </div>
     </div>
@@ -45,4 +53,25 @@
             <input type="submit" value="Add Invoice" class="btn btn-default"/>
         </div>
     </div>
+}
+@section scripts
+{
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
+    <script src="~/Content/Color/spectrum.js"></script>
+    <script type="text/javascript">
+
+
+            jQuery('#datetimepicker5')
+                .datetimepicker({
+                    format: 'm-d-Y',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: 0
+                        });
+
+                    },
+                    timepicker: false
+                });
+    </script>
 }

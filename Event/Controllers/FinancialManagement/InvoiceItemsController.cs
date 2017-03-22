@@ -20,6 +20,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         public ActionResult Index(long? id)
         {
             var invoiceItems = db.InvoiceItems.Where(n=>n.InvoiceId == id).Include(i => i.Invoice);
+            ViewBag.invoiceId = id;
             return View(invoiceItems.ToList());
         }
 
@@ -49,7 +50,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InvoiceItemId,ItemName,Description,ItemDate,Qantity,UnitCost,InvoiceId")] InvoiceItem invoiceItem)
+        public ActionResult Create([Bind(Include = "InvoiceItemId,ItemName,Description,ItemDate,Quantity,UnitCost,InvoiceId")] InvoiceItem invoiceItem)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -96,7 +97,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InvoiceItemId,ItemName,Description,ItemDate,Qantity,UnitCost,InvoiceId,CreatedBy,DateCreated")] InvoiceItem invoiceItem)
+        public ActionResult Edit([Bind(Include = "InvoiceItemId,ItemName,Description,Quantity,ItemDate,Qantity,UnitCost,InvoiceId,CreatedBy,DateCreated")] InvoiceItem invoiceItem)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)

@@ -2,7 +2,16 @@
 @model IEnumerable<Invoice>
 @{
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "List of all my Invoices";
+    long? eventId = ViewBag.id;
+    if (eventId != null)
+    {
+        ViewBag.TableHeader = "List of all event Invoices";
+    }
+    else
+    {
+        ViewBag.TableHeader = "List of all Invoices";
+    }
+
     Layout = "../Shared/_LayoutTable.cshtml";
     var invoice = new Invoice();
 }
@@ -44,9 +53,6 @@
         <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Client.Name)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.InvoiceName)
             </th>
             <th>
@@ -62,9 +68,6 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Client.Name)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.InvoiceName)
                 </td>

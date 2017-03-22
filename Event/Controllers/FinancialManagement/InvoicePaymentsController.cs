@@ -20,6 +20,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         public ActionResult Index(long? id)
         {
             var invoicePayments = db.InvoicePayments.Where(n=>n.InvoiceId == id).Include(i => i.Invoice);
+            ViewBag.invoiceId = id;
             return View(invoicePayments.ToList());
         }
 

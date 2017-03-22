@@ -1,70 +1,55 @@
 ﻿@model Event.Data.Objects.Entities.Invoice
-
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "View";
+    ViewBag.Header = "View Invoice";
+    Layout = "../Shared/_LayoutForm.cshtml";
 }
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+    </ol>
+}
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.InvoiceName)
+    </dt>
 
-<h2>Details</h2>
+    <dd>
+        @Html.DisplayFor(model => model.InvoiceName)
+    </dd>
 
-<div>
-    <h4>Invoice</h4>
-    <hr/>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Client.Name)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.InvoiceNumber)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Client.Name)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.InvoiceNumber)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.DueDate)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EventPlanner.Firstname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.InvoiceName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.InvoiceName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.InvoiceNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.InvoiceNumber)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DueDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DueDate)
-        </dd>
-    </dl>
-</div>
+    <dd>
+        @Html.DisplayFor(model => model.DueDate)
+    </dd>
+</dl>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
-    Edit Guest
+    Edit Invoice
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Edit Invoice</h4>
+                <h4 class="modal-title" id="myModalLabel2">Edit Invoice</h4>
             </div>
             <div class="modal-body">
                 @{
@@ -95,7 +80,7 @@
                 {
                     @Html.AntiForgeryToken()
                     <p>
-                        Are you sure you want to delete the guest?
+                        Are you sure you want to delete the Invoice?
                     </p>
                     <div class="form-actions no-color">
                         <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
@@ -106,3 +91,37 @@
     </div>
 
 </div>
+@if (Model.EventId != null)
+{
+    @Html.ActionLink("Unlink from event", "UnlinkInvoiceFromEvent", "Invoices", new {id = Model.InvoiceId, eventId = Model.EventId}, new {@class = "btn btn-danger btn-xs icon-check"})
+}
+else
+{
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-xs icon-link" data-toggle="modal" data-target="#myModal">
+        Link Invoice to Event
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Link Invoice to Event</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("LinkInvoiceModal", Model);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+@Html.ActionLink("Invoice Items", "Index", "InvoiceItems", new {id = Model.InvoiceId}, new {@class = "btn btn-success btn-xs icon-check"})
+@Html.ActionLink("Payments", "Index", "InvoicePayments", new {id = Model.InvoiceId}, new {@class = "btn btn-warning btn-xs icon-money"})
