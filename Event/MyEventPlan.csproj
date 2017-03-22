@@ -1450,6 +1450,10 @@
     <Content Include="Views\InvoicePayments\Details.cshtml" />
     <Content Include="Views\InvoicePayments\Edit.cshtml" />
     <Content Include="Views\InvoicePayments\Index.cshtml" />
+    <Content Include="Views\Shared\CreateInvoiceItemModal.cshtml" />
+    <Content Include="Views\Shared\EditInvoiceItemModal.cshtml" />
+    <Content Include="Views\Shared\CreateInvoicePaymentModal.cshtml" />
+    <Content Include="Views\Shared\EditInvoicePaymentModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,7 +21,7 @@ namespace Event.Data.Objects.Entities
         [DisplayName("Item Date")]
         public DateTime ItemDate { get; set; }
         [Required]
-        public long Qantity { get; set; }
+        public long Quantity { get; set; }
         [Required]
         [DisplayName("Unit Cost")]
         public long UnitCost { get; set; }
