@@ -99,7 +99,7 @@
                     <a class="collapsed" data-toggle="collapse" href="#togglePages2">
                         <i class="menu-icon icon-user"></i>
                         <i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>
-                        Planning Users
+                        Planning Tools
                     </a>
                     <ul id="togglePages2" class="collapse unstyled">
                         @if (role.ManageEvents)
@@ -118,6 +118,9 @@
                         }
                         <li>
                             <a href="@Url.Action("Index", "Resources")"><i class="menu-icon icon-cloud"></i>Resources </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Index", "Invoices")"><i class="menu-icon icon-paper-clip-no"></i>Invoices </a>
                         </li>
                     </ul>
                 </li>
@@ -146,10 +149,16 @@
                                 <a href="@Url.Action("Index", "VendorServices")"><i class="menu-icon icon-bold"></i> Vendor Services </a>
                             </li>
                         }
-                        @if (role.ManageVendorServices)
+                        @if (role.ManageLocations)
                         {
                             <li>
-                                <a href="@Url.Action("Index", "Locations")"><i class="menu-icon icon-map-marker"></i> Location </a>
+                                <a href="@Url.Action("Index", "Locations")"><i class="menu-icon icon-map-marker"></i> Locations </a>
+                            </li>
+                        }
+                        @if (role.ManagePackages)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "Packages")"><i class="menu-icon icon-briefcase"></i> Packages </a>
                             </li>
                         }
                     </ul>

@@ -24,9 +24,14 @@ namespace Event.Data.Objects.Entities
         public long ClientId { get; set; }
         [ForeignKey("ClientId")]
         public Client Client { get; set; }
+        public long? EventId { get; set; }
+        [ForeignKey("EventId")]
+        public Event Event { get; set; }
         public long EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public EventPlanner EventPlanner { get; set; }
+        public IEnumerable<InvoiceItem> InvoiceItems { get; set; }
+        public IEnumerable<InvoicePayment> InvoicePayments { get; set; }
 
     }
 }

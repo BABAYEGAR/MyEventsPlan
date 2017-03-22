@@ -34,6 +34,10 @@ namespace Event.Data.Objects.Entities
         public bool ManageProposals { get; set; }
         [DisplayName("Manage Contacts")]
         public bool ManageContacts { get; set; }
+        [DisplayName("Manage Pacakges")]
+        public bool ManagePackages { get; set; }
+        [DisplayName("Manage Locations")]
+        public bool ManageLocations { get; set; }
         public IEnumerable<Staff> Staff { get; set; }
         public IEnumerable<EventPlanner> EventPlanners { get; set; }
         public IEnumerable<AppUser> AppUsers { get; set; }

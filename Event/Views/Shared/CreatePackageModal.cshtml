@@ -1,0 +1,35 @@
+﻿@model Event.Data.Objects.Entities.Package
+@{
+    Layout = "../Shared/_LayoutModal.cshtml";
+}
+@using (Html.BeginForm("Create", "Packages", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="control-group">
+        @Html.LabelFor(model => model.PackageName, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.PackageName, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the package name"}})
+            @Html.ValidationMessageFor(model => model.PackageName, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.Amount, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the amount"}})
+            @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.MaximumEvents, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.MaximumEvents, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the maximum number of allowed events"}})
+            @Html.ValidationMessageFor(model => model.MaximumEvents, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Add Package" class="btn btn-default"/>
+        </div>
+    </div>
+}

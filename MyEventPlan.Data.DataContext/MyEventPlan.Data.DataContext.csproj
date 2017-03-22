@@ -49,6 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\PersonalCheckListItemDataContext.cs" />
+    <Compile Include="DataContext\PersonalCheckListDataContext.cs" />
+    <Compile Include="DataContext\InvoicePaymentDataContext.cs" />
+    <Compile Include="DataContext\InvoiceItemDataContext.cs" />
+    <Compile Include="DataContext\PackageDataContext.cs" />
     <Compile Include="DataContext\InvoiceDataContext.cs" />
     <Compile Include="DataContext\BudgetDataContext.cs" />
     <Compile Include="DataContext\PasswordResetDataContext.cs" />
@@ -148,6 +153,14 @@
     <Compile Include="Migrations\201703211021495_migrate16.Designer.cs">
       <DependentUpon>201703211021495_migrate16.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201703212036006_migrate17.cs" />
+    <Compile Include="Migrations\201703212036006_migrate17.Designer.cs">
+      <DependentUpon>201703212036006_migrate17.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703220443320_migrate18.cs" />
+    <Compile Include="Migrations\201703220443320_migrate18.Designer.cs">
+      <DependentUpon>201703220443320_migrate18.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -209,6 +222,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201703211021495_migrate16.resx">
       <DependentUpon>201703211021495_migrate16.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703212036006_migrate17.resx">
+      <DependentUpon>201703212036006_migrate17.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703220443320_migrate18.resx">
+      <DependentUpon>201703220443320_migrate18.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -222,6 +222,7 @@
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
+    <Compile Include="Controllers\SystemManagement\PackagesController.cs" />
     <Compile Include="Controllers\VendorManagement\LocationsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorServicesController.cs" />
@@ -1430,6 +1431,13 @@
     <Content Include="Views\Invoices\Index.cshtml" />
     <Content Include="Views\Shared\CreateInvoiceModal.cshtml" />
     <Content Include="Views\Shared\EditInvoiceModal.cshtml" />
+    <Content Include="Views\Packages\Create.cshtml" />
+    <Content Include="Views\Packages\Delete.cshtml" />
+    <Content Include="Views\Packages\Details.cshtml" />
+    <Content Include="Views\Packages\Edit.cshtml" />
+    <Content Include="Views\Packages\Index.cshtml" />
+    <Content Include="Views\Shared\CreatePackageModal.cshtml" />
+    <Content Include="Views\Shared\EditPackageModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
