@@ -218,6 +218,8 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MappingManagement\EventVendorMappingsController.cs" />
     <Compile Include="Controllers\MappingManagement\StaffEventMappingsController.cs" />
+    <Compile Include="Controllers\MessageManagement\MessageGroupMembersController.cs" />
+    <Compile Include="Controllers\MessageManagement\MessageGroupsController.cs" />
     <Compile Include="Controllers\MessageManagement\MessagesController.cs" />
     <Compile Include="Controllers\NewsManagement\NewsController.cs" />
     <Compile Include="Controllers\FinancialManagement\InvoicesController.cs" />
@@ -1455,6 +1457,25 @@
     <Content Include="Views\Shared\CreateInvoicePaymentModal.cshtml" />
     <Content Include="Views\Shared\EditInvoicePaymentModal.cshtml" />
     <Content Include="Views\Shared\LinkInvoiceModal.cshtml" />
+    <Content Include="Views\MessageGroups\Create.cshtml" />
+    <Content Include="Views\MessageGroups\Delete.cshtml" />
+    <Content Include="Views\MessageGroups\Details.cshtml" />
+    <Content Include="Views\MessageGroups\Edit.cshtml" />
+    <Content Include="Views\MessageGroups\Index.cshtml" />
+    <Content Include="Views\MessageGroupMembers\Create.cshtml" />
+    <Content Include="Views\MessageGroupMembers\Delete.cshtml" />
+    <Content Include="Views\MessageGroupMembers\Details.cshtml" />
+    <Content Include="Views\MessageGroupMembers\Edit.cshtml" />
+    <Content Include="Views\MessageGroupMembers\Index.cshtml" />
+    <Content Include="Views\Shared\CreateMessageGroupModal.cshtml" />
+    <Content Include="Views\Shared\EditMessageGroupModal.cshtml" />
+    <Content Include="Views\MessageGroupMembers\GroupMember.cshtml" />
+    <Content Include="Views\Shared\CreateMessageGroupMemeberModal.cshtml" />
+    <Content Include="Views\Account\Setting.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Views\Shared\EditUserModal.cshtml" />
+    <Content Include="Views\Shared\ChangePasswordModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

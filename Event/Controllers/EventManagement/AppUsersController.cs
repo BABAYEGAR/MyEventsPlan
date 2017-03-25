@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -118,7 +119,40 @@ namespace MyEventPlan.Controllers.EventManagement
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", appUser.RoleId);
             return View(appUser);
         }
-
+        // POST: AppUsers/UpdateProfile/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateProfile(
+            [Bind(
+                 Include =
+                     "AppUserId,Firstname,Lastname,Email,Mobile,Status,Password,RoleId,VendorId,ClientId,Verified,EventPlannerId,ProfileImage,CreatedBy,DateCreated"
+             )] AppUser appUser)
+        {
+            if (ModelState.IsValid)
+            {
+                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                appUser.DateLastModified = DateTime.Now;
+                if (loggedinuser != null)
+                {
+                    appUser.LastModifiedBy = loggedinuser.AppUserId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
+                db.Entry(appUser).State = EntityState.Modified;
+                db.SaveChanges();
+                Session["myeventplanloggedinuser"] = appUser;
+                TempData["display"] = "You have successfully updated your profile!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("UserProfile","Account");
+            }
+            return View(appUser);
+        }
         // GET: AppUsers/Delete/5
         public ActionResult Delete(long? id)
         {

@@ -1,0 +1,66 @@
+﻿@model Event.Data.Objects.Entities.MessageGroupMember
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MessageGroupMember</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MessageGroup.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MessageGroup.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModifiedBy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MessageGroupMemberId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

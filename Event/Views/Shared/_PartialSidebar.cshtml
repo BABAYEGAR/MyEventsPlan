@@ -28,6 +28,12 @@
                     </b>
                 </a>
             </li>
+            <li>
+                <a href="@Url.Action("Index", "MessageGroups")">
+                    <i class="menu-icon icon-inbox"></i>Group Messaging <b class="label green pull-right">
+                    </b>
+                </a>
+            </li>
             @if (role.ManageApplicationUser)
             {
                 <li>
@@ -175,15 +181,9 @@
                 </a>
                 <ul id="togglePages" class="collapse unstyled">
                     <li>
-                        <a href="other-login.html">
+                        <a href="@Url.Action("Setting","Account")">
                             <i class="icon-inbox"></i>
                             Account Setting
-                        </a>
-                    </li>
-                    <li>
-                        <a href="other-user-profile.html">
-                            <i class="icon-inbox"></i>
-                            Profile
                         </a>
                     </li>
                 </ul>

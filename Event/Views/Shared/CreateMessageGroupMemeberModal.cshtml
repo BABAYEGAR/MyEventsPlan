@@ -1,0 +1,24 @@
+﻿@model Event.Data.Objects.Entities.MessageGroupMember
+@{
+    Layout = "../Shared/_LayoutModal.cshtml";
+    long? groupId = ViewBag.groupId;
+}
+@using (Html.BeginForm("Create", "MessageGroupMembers", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("MessageGroupId",groupId)
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="control-group">
+        @Html.LabelFor(model => model.AppUserId, new {@class = "control-label"})
+        <div class="controls">
+            @Html.DropDownListFor(model => model.AppUserId,null, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.AppUserId, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Add Member" class="btn btn-default"/>
+        </div>
+    </div>
+}

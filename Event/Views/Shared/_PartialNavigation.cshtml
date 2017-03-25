@@ -49,16 +49,20 @@
                     </li>
                     <li class="nav-user dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="~/Content/Dashboard/images/user.png" class="nav-avatar"/>
+                            @if (loggedinuser?.ProfileImage != null)
+                            {
+                                <img src="~/Content/Dashboard/images/user.png" class="nav-avatar" />
+                            }
+                           @if (loggedinuser?.ProfileImage == null)
+                           {
+                                <img src="~/Content/Dashboard/images/user.png" class="nav-avatar" />
+                            }
+                          
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="@Url.Action("ViewProfile", "Home")">Your Profile</a>
-                            </li>
-
-                            <li>
-                                <a href="#">Account Settings</a>
+                                <a href="@Url.Action("Setting", "Account")">Account Settings</a>
                             </li>
                             <li class="divider"></li>
                             <li>

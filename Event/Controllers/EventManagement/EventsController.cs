@@ -114,9 +114,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     id = e.EventId,
                     title =
-                    e.Name + " " +
-                    (Convert.ToDateTime(e.StartDate.ToShortTimeString()) -
-                     Convert.ToDateTime(e.EndDate.ToShortTimeString())) + " mins",
+                    e.Name,
                     start = e.StartDate,
                     end = e.EndDate,
                     color = e.Color,

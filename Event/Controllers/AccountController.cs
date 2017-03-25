@@ -51,6 +51,20 @@ namespace MyEventPlan.Controllers
         {
             return View();
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Setting()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            return View(loggedinuser);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult UserProfile()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            return View(loggedinuser);
+        }
         [HttpPost]
         [AllowAnonymous]
         public ActionResult VerifyEmail(FormCollection collectedValues)
@@ -72,6 +86,31 @@ namespace MyEventPlan.Controllers
             _db.Entry(user).State = EntityState.Modified;
             _db.SaveChanges();
             return RedirectToAction("Dashboard", "Home");
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ChangePassword(FormCollection collectedValues)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var password = collectedValues["ConfirmPassword"];
+            if (loggedinuser != null)
+            {
+                var user = _db.AppUsers.Find(loggedinuser.AppUserId);
+                user.Password = new Hashing().HashPassword(password);
+                _db.Entry(user).State = EntityState.Modified;
+
+            }
+            _db.SaveChanges();
+            Session["myeventplanloggedinuser"] = loggedinuser;
+            TempData["display"] = "You have successfully changed your password!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Setting", "Account");
         }
         [HttpGet]
         [AllowAnonymous]

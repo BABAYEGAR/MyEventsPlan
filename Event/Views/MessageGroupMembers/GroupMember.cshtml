@@ -1,0 +1,73 @@
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model IEnumerable<AppUser>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "List of all group members";
+    Layout = "../Shared/_LayoutTable.cshtml";
+    //var groupMember = new MessageGroupMember();
+    var db = new MessageGroupMemberDataContext();
+    long? groupId = ViewBag.groupId;
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "MessageGroups")">Message Groups</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Details", "MessageGroups", new {id = groupId})">Group Details</a>
+        </li>
+    </ol>
+}
+    using (Html.BeginForm("GroupMember", "MessageGroupMembers", FormMethod.Post))
+    {
+        @Html.Hidden("MessageGroupId", groupId)
+        @Html.AntiForgeryToken()
+        <input type="submit" id="sumbitForm" value="Check Item(s)" class="btn btn-success pull-right "/>
+        <div class="table-responsive">
+            <table class="datatable-1 table table-bordered table-striped display">
+                <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" id="check-all" class="flat">
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DisplayName)
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in Model)
+                {
+                    var allMappings = db.MessageGroupMembers.SingleOrDefault(
+                        n =>
+                            (n.AppUserId == item.AppUserId) &&
+                            (n.MessageGroupId == groupId));
+
+
+                    <tr>
+                        <td>
+                            @if (allMappings != null)
+                            {
+                                <a href="@Url.Action("UncheckItem", "CheckListItems", new {id = item.AppUserId})">
+                                    <i class="icon-remove-circle"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <input type="checkbox" class="flat" name="table_records" value="@item.AppUserId">
+                            }
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DisplayName)
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+}
