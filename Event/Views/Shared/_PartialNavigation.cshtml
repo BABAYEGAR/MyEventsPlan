@@ -9,38 +9,40 @@
 }
 @if (loggedinuser != null)
 {
-    if (loggedinuser.NavigationColor == "Red")
+    if (loggedinuser.BackgroundColor == "Default")
+    {
+    }
+    if (loggedinuser.BackgroundColor == "Red")
     {
         <style>
-            .navbar .navbar-inner {
-                background: red;
-            }
-        </style>
-    }
-    if (loggedinuser.NavigationColor == "Purple")
-    {
-        <style>
-            .navbar .navbar-inner {
-                background: purple;
-            }
-        </style>
-    }
-    if (loggedinuser.NavigationColor == "Blue")
-    {
-        <style>
-            .navbar .navbar-inner {
-                background: blue;
-            }
-        </style>
-    }
+            .navbar .navbar-inner { background: red; }
 
+            .btn-box i { color: red; }
+        </style>
+    }
+    if (loggedinuser.BackgroundColor == "Purple")
+    {
+        <style>
+            .navbar .navbar-inner { background: purple; }
+
+            .btn-box i { color: purple; }
+        </style>
+    }
+    if (loggedinuser.BackgroundColor == "Blue")
+    {
+        <style>
+            .navbar .navbar-inner { background: blue; }
+
+            .btn-box i { color: blue; }
+        </style>
+    }
 }
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-inverse-collapse">
                 <i class="icon-reorder shaded"></i>
-            </a><a class="brand" href="@Url.Action("Index", "Home")">MyEvenPlan</a>
+            </a><a class="brand" href="@Url.Action("Index", "Home")">MyEventPlan</a>
             <div class="nav-collapse collapse navbar-inverse-collapse">
                 <ul class="nav pull-right">
                     <li class="dropdown">
@@ -79,13 +81,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             @if (loggedinuser?.ProfileImage != null)
                             {
-                                <img src="~/UploadedFiles/ProfileImage/@loggedinuser.ProfileImage" class="nav-avatar" />
+                                <img src="~/UploadedFiles/ProfileImage/@loggedinuser.ProfileImage" class="nav-avatar"/>
                             }
-                           @if (loggedinuser?.ProfileImage == null)
-                           {
-                                <img src="~/Content/Dashboard/images/user.png" class="nav-avatar" />
+                            @if (loggedinuser?.ProfileImage == null)
+                            {
+                                <img src="~/Content/Dashboard/images/user.png" class="nav-avatar"/>
                             }
-                          
+
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">

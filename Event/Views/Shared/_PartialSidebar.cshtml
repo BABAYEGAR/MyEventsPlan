@@ -8,31 +8,51 @@
 }
 @if (loggedinuser != null)
 {
-    if (loggedinuser.NavigationColor == "Black")
+    if (loggedinuser.BackgroundColor == "Default")
+    {
+    }
+    if (loggedinuser.BackgroundColor == "Red")
     {
         <style>
             .widget-menu > li > a:hover {
-                background-color: black;
+                background-color: Red;
+                  color: black;
             }
 
             .widget-menu > li > a {
-                background-color: black;
+                background-color: Red;
+                  color: black;
             }
         </style>
     }
-    if (loggedinuser.NavigationColor == "Grey")
+    if (loggedinuser.BackgroundColor == "Purple")
     {
         <style>
             .widget-menu > li > a:hover {
-                background-color: gray;
+                background-color: purple;
+                color: black;
             }
 
             .widget-menu > li > a {
-                background-color:gray;
+                background-color: purple;
+                    color: black;
             }
         </style>
     }
+    if (loggedinuser.BackgroundColor == "Blue")
+    {
+        <style>
+            .widget-menu > li > a:hover {
+                background-color: blue;
+                  color: black;
+            }
 
+            .widget-menu > li > a {
+                background-color: blue;
+                  color: black;
+            }
+        </style>
+    }
 }
 @if (role != null)
 {

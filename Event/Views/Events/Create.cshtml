@@ -32,7 +32,7 @@
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new {@class = "control-label"})
+        @Html.LabelFor(model => model.EventTypeId, "Event Type", new {@class = "control-label"})
         <div class="controls">
             @Html.DropDownList("EventTypeId", null, new {@class = "span8"})
             @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
@@ -107,11 +107,14 @@
                     format: 'm-d-Y H:i',
                     onShow: function(ct) {
                         this.setOptions({
-                            minDate: jQuery('#datetimepicker6').val()
+                            minDate: $('#datetimepicker6').val()
                         });
                     }
                 });
+        //color spectrum
             $("#color").spectrum();
+
+        //amount indicator
        $('input.number').keyup(function(event) {
 
            if(event.which >= 37 && event.which <= 40){

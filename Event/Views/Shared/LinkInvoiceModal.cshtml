@@ -7,8 +7,8 @@
     ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
         "EventId", "Name");
     Layout = "../Shared/_LayoutModal.cshtml";
-}ClientId
-@using (Html.BeginForm("Edit", "Invoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+}
+@using (Html.BeginForm("LinkInvoiceToEvent", "Invoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m=>m.InvoiceId)

@@ -1,4 +1,5 @@
 ﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.Service.Enum
 @{
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 }
@@ -44,6 +45,21 @@
     @RenderSection("header", false)
 
 </header>
+    @if (TempData["display"] != null)
+    {
+        if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+        {
+            <div class="alert alert-success alert-dismissable">@TempData["display"]</div>
+        }
+        else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+        {
+            <div class="alert alert-danger alert-dismissable">@TempData["display"]</div>
+        }
+        else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+        {
+            <div class="alert alert-info alert-dismissable">@TempData["display"]</div>
+        }
+    }
 @RenderBody()
 <footer id="footer">
     <!--Footer-->

@@ -14,22 +14,13 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="control-group">
-        @Html.LabelFor(model => model.NavigationColor, new {@class = "control-label"})
+        @Html.LabelFor(model => model.BackgroundColor, new {@class = "control-label"})
         <div class="controls">
-            @Html.DropDownListFor(m => m.NavigationColor, EnumHelper.GetSelectList(typeof(NavColor)), "select a user role", new {@class = "form-control select-dropdown"})
-            @Html.ValidationMessageFor(model => model.NavigationColor, "", new {@class = "text-danger"})
+            @Html.DropDownListFor(m => m.BackgroundColor, EnumHelper.GetSelectList(typeof(NavColor)), "select a user role", new {@class = "form-control"})
+            @Html.ValidationMessageFor(model => model.BackgroundColor, "", new {@class = "text-danger"})
         </div>
 
     </div>
-
-    <div class="control-group">
-        @Html.LabelFor(model => model.SideBarColor, new {@class = "control-label"})
-        <div class="controls">
-            @Html.DropDownListFor(m => m.SideBarColor, EnumHelper.GetSelectList(typeof(SideColor)), "select a user role", new {@class = "form-control select-dropdown"})
-            @Html.ValidationMessageFor(model => model.SideBarColor, "", new {@class = "text-danger"})
-        </div>
-    </div>
-
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Update Color" class="btn btn-default"/>

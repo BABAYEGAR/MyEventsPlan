@@ -5,6 +5,10 @@
     long invoiceId = ViewBag.invoiceId;
     Layout = "../Shared/_LayoutModal.cshtml";
 }
+@section css{
+    <link href="~/Scripts/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+}
 @using (Html.BeginForm("Create", "InvoiceItems", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
     @Html.AntiForgeryToken()
@@ -41,7 +45,7 @@
     <div class="control-group">
         @Html.LabelFor(model => model.ItemDate, new { @class = "control-label" })
         <div class="controls">
-            @Html.EditorFor(model => model.ItemDate, new { htmlAttributes = new { @class = "span8", placeholder = "Select the item date" } })
+            @Html.EditorFor(model => model.ItemDate, new { htmlAttributes = new { @class = "span8 startDate", placeholder = "Select the item date" } })
             @Html.ValidationMessageFor(model => model.ItemDate, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -50,4 +54,14 @@
             <input type="submit" value="Add Invoice" class="btn btn-default"/>
         </div>
     </div>
+}
+@section scripts{
+<script src="~/Content/Dashboard/scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/Scripts/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript">
+
+    // init datepicker for date
+    $('.startDate').datepicker({ 'startDate': new Date() });
+</script>
 }

@@ -8,6 +8,6 @@ namespace MyEventPlan.Data.Service.Enum
 {
     public enum NavColor
     {
-        Red,Purple,Blue
+        Default,Red,Purple,Blue
     }
 }

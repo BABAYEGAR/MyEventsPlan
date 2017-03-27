@@ -56,10 +56,8 @@ namespace MyEventPlan.Controllers.EventManagement
             if (loggedinuser != null)
             {
                  user = db.AppUsers.Find(loggedinuser.AppUserId);
-                var navBar = typeof(NavColor).GetEnumName(int.Parse(collectedValues["NavigationColor"]));
-                var sideBar = typeof(SideColor).GetEnumName(int.Parse(collectedValues["SideBarColor"]));
-                user.NavigationColor = navBar;
-                user.SideBarColor = sideBar;
+                var bgColor = typeof(NavColor).GetEnumName(int.Parse(collectedValues["BackgroundColor"]));
+                user.BackgroundColor = bgColor;
                 db.Entry(user).State = EntityState.Modified;
             }
             db.SaveChanges();

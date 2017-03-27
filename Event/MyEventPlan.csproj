@@ -408,6 +408,12 @@
     <Content Include="Content\FontAwesome\css\font-awesome.min.css" />
     <Content Include="Content\FontAwesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\ImageUploader\css\Jcrop.gif" />
+    <Content Include="Content\ImageUploader\css\jquery.Jcrop.min.css" />
+    <Content Include="Content\ImageUploader\css\main.css" />
+    <Content Include="Content\ImageUploader\js\jquery.Jcrop.min.js" />
+    <Content Include="Content\ImageUploader\js\jquery.min.js" />
+    <Content Include="Content\ImageUploader\js\script.js" />
     <Content Include="Content\monthly.css" />
     <Content Include="Content\PageLoader\css\jquery-loading.css" />
     <Content Include="Content\PageLoader\css\jquery-loading.min.css" />
@@ -449,7 +455,6 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\base\jquery-ui.css" />
-    <Content Include="Content\themes\base\jquery.Jcrop.min.js" />
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
     <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
@@ -490,7 +495,6 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\themes\base\script.js" />
     <Content Include="Content\Timer\jquery.countdown.min.js" />
     <Content Include="Content\VendorCss\css\animate.css" />
     <Content Include="Content\VendorCss\css\bootstrap.min.css" />
@@ -1537,6 +1541,7 @@
     <Content Include="Views\Shared\CreatePersonalCheckListItemModal.cshtml" />
     <Content Include="Views\Shared\EditPersonalCheckListItemModal.cshtml" />
     <Content Include="Views\Shared\EditPersonalCheckListModal.cshtml" />
+    <Content Include="Views\Shared\_LayoutUpload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

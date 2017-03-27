@@ -36,7 +36,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                @if (item.StartDate > DateTime.Now)
+                @if (item.EventDate > DateTime.Now)
                 {
                     <td style="color: green">
                         @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>

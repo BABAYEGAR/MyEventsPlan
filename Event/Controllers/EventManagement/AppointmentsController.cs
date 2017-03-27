@@ -47,8 +47,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     {
                         id = e.AppointmentId,
                         title =
-                        appoitmentEvent.Name + Environment.NewLine + e.Name + " " +
-                        (Convert.ToDateTime(e.EndTime) - Convert.ToDateTime(e.StartTime)) + " mins",
+                        appoitmentEvent.Name + Environment.NewLine + e.Name,
                         start = e.StartDate,
                         end = e.EndDate,
                         allDay = false
