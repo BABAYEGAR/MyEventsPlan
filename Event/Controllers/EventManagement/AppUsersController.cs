@@ -2,10 +2,12 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Enum;
+using MyEventPlan.Data.Service.FileUploader;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -38,6 +40,59 @@ namespace MyEventPlan.Controllers.EventManagement
             db.Entry(appUser).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        // GET: AppUsers/BackgroundColor
+        public ActionResult BackgroundColor()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            return View(loggedinuser);
+        }
+        // POST: AppUsers/BackgroundColor
+        [HttpPost]
+        public ActionResult BackgroundColor(FormCollection collectedValues)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            AppUser user = null;
+            if (loggedinuser != null)
+            {
+                 user = db.AppUsers.Find(loggedinuser.AppUserId);
+                var navBar = typeof(NavColor).GetEnumName(int.Parse(collectedValues["NavigationColor"]));
+                var sideBar = typeof(SideColor).GetEnumName(int.Parse(collectedValues["SideBarColor"]));
+                user.NavigationColor = navBar;
+                user.SideBarColor = sideBar;
+                db.Entry(user).State = EntityState.Modified;
+            }
+            db.SaveChanges();
+            Session["myeventplanloggedinuser"] = user;
+            TempData["display"] = "You have successfully changed your background color!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Setting","Account");
+        }
+        // GET: AppUsers/ImageUpload
+        public ActionResult ImageUpload()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            return View(loggedinuser);
+        }
+        // POST: AppUsers/BackgroundColor
+        [HttpPost]
+        public ActionResult ImageUpload(FormCollection collectedValues)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            AppUser user = null;
+            HttpPostedFileBase image = Request.Files["image_file"];
+            if (loggedinuser != null)
+            {
+                user = db.AppUsers.Find(loggedinuser.AppUserId);
+                user.ProfileImage = new FileUploader().UploadFile(image, UploadType.ProfileImage);
+                db.Entry(user).State = EntityState.Modified;
+            }
+            db.SaveChanges();
+            Session["myeventplanloggedinuser"] = user;
+            TempData["display"] = "You have successfully changed your logo/image!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Setting", "Account");
+            
         }
 
         // GET: AppUsers/Details/5

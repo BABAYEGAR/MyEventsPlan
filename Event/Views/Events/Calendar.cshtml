@@ -26,8 +26,8 @@
     <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet"/>
     <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet"/>
     <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet"/>
-<link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet" />
-<link href="~/Content/Color/spectrum.css" rel="stylesheet" />
+    <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
+    <link href="~/Content/Color/spectrum.css" rel="stylesheet"/>
 }
 @Html.ActionLink("Add Event", "Create", "Events", new {}, new {@class = "btn btn-primary icon-plus pull-right"})
 
@@ -55,20 +55,21 @@
                 }
             }
 
-            <div id="popupUpdateEventForm" class="modal hide" style="display: none;">
 
-                @using (Html.BeginForm("CreateNewEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "UpdateEventForm"}))
+            <div id="popupUpdateEventForm" class="modal hide" style="display: none;">
+                @using (Html.BeginForm("UpdateCalendarEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "UpdateEventForm"}))
                 {
                     <div class="modal-header">
                         <h3>Add new event</h3>
                     </div>
                     <div class="modal-body">
                         @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.EventId, new {id = "eventId"})
                         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                         <div class="control-group">
                             @Html.LabelFor(model => model.Name, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitle"}})
+                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitles"}})
                                 @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                             </div>
                         </div>
@@ -94,69 +95,77 @@
                                 @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
                             </div>
                         </div>
-
+                    </div>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="button" id="btnPopupUpdateCancel" data-dismiss="modal" class="btn btn-default">Cancel</button>
+                            <input type="submit" value="Update Event" class="btn btn-primary pull-right"/>
+                        </div>
                     </div>
                 }
-                <div class="modal-footer">
-                    <button type="button" id="btnPopupUpdateCancel" data-dismiss="modal" class="btn btn-default">Cancel</button>
-                    <button type="button" id="btnPopupSave" data-dismiss="modal" class="btn btn-primary">Save event</button>
-                </div>
             </div>
- 
+
+
             <div id="popupSaveEventForm" class="modal hide" style="display: none;">
 
-                @using (Html.BeginForm("CreateNewEvent", "Events", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "EventForm" }))
+                @using (Html.BeginForm("UpdateEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
                 {
                     <div class="modal-header">
                         <h3>Add new event</h3>
                     </div>
                     <div class="modal-body">
                         @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                         <div class="control-group">
-                            @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.Name, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "span8", id = "eventTitle" } })
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitle"}})
+                                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
                         <div class="control-group">
-                            @Html.LabelFor(model => model.Color, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.Color, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "span8 jscolor", id = "eventColor" } })
-                                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor", id = "eventColor"}})
+                                @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
                         <div class="control-group">
-                            @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new { @class = "control-label" })
+                            @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new {@class = "control-label"})
                             <div class="controls">
-                                @Html.DropDownList("EventTypeId", null, new { @class = "span8", id = "eventType" })
-                                @Html.ValidationMessageFor(model => model.EventTypeId, "", new { @class = "text-danger" })
+                                @Html.DropDownList("EventTypeId", null, new {@class = "span8", id = "eventType"})
+                                @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
                         <div class="control-group">
-                            @Html.LabelFor(model => model.TargetBudget, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.TargetBudget, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.TargetBudget, new { htmlAttributes = new { @class = "span8", id = "eventBudget" } })
-                                @Html.ValidationMessageFor(model => model.TargetBudget, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.StartDate, new { @class = "control-label" })
-                            <div class="controls">
-                                @Html.TextBoxFor(model => model.StartDate, new { @class = "span8", id = "eventStartDate" })
-                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8", id = "eventBudget"}})
+                                @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
-                            @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.EventDate, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "span8", id = "eventEndDate" } })
-                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(model => model.EventDate, new {@class = "span8", id = "eventDate"})
+                                @Html.ValidationMessageFor(model => model.EventDate, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.StartDate, new {@class = "span8", id = "eventStartDate"})
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "eventEndDate"}})
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
@@ -194,84 +203,80 @@
     </div>
 }
 @section scripts{
-<script src="~/Scripts/moment.min.js"></script>
-<script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
-<script src="~/Content/Color/spectrum.js"></script>
-<script type="text/javascript">
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
+    <script src="~/Content/Color/spectrum.js"></script>
+    <script type="text/javascript">
 
 
-            jQuery('#datetimepicker5')
-                .datetimepicker({
-                    format: 'm-d-Y',
-                    onShow: function(ct) {
-                        this.setOptions({
-                            minDate: 0
-                        });
+        jQuery('#eventDate')
+            .datetimepicker({
+                format: 'm-d-Y',
+                onShow: function(ct) {
+                    this.setOptions({
+                    
+                    });
 
-                    },
-                    timepicker: false
-                });
-    jQuery('#eventStartDate')
-                .datetimepicker({
-                    format: 'm-d-Y H:i',
-                    onShow: function(ct) {
-                        this.setOptions({
-                            minDate: 0
-                        });
-                    }
-                });
-    jQuery('#eventEndDate')
-                .datetimepicker({
-                    format: 'm-d-Y H:i',
-                    onShow: function(ct) {
-                        this.setOptions({
-                            minDate: jQuery('#datetimepicker6').val()
-                        });
-                    }
-                });   
-    jQuery('#eventEndDates')
-                .datetimepicker({
-                    format: 'm-d-Y H:i',
-                    onShow: function(ct) {
-                        this.setOptions({
-                            minDate: 0
-                        });
-                    }
-                });
-    jQuery('#eventEndDates')
-                .datetimepicker({
-                    format: 'm-d-Y H:i',
-                    onShow: function(ct) {
-                        this.setOptions({
-                            minDate: jQuery('#datetimepicker6').val()
-                        });
-                    }
-                });
+                },
+                timepicker: false
+            });
+        jQuery('#eventStartDate')
+            .datetimepicker({
+                format: 'm-d-Y H:i',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: jQuery('#eventEndDate').val()
+                    });
+                }
+            });
+        jQuery('#eventEndDate')
+            .datetimepicker({
+                format: 'm-d-Y H:i',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: jQuery('#eventStartDate').val()
+                    });
+                }
+            });
+        jQuery('#eventStartDates')
+            .datetimepicker({
+                format: 'm-d-Y H:i',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: 0
+                    });
+                }
+            });
+        jQuery('#eventEndDates')
+            .datetimepicker({
+                format: 'm-d-Y H:i',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: jQuery('#eventStartDates').val()
+                    });
+                }
+            });
 
-            $("#eventColor").spectrum();
-            $("#eventColors").spectrum();
+        $("#eventColor").spectrum();
+        $("#eventColors").spectrum();
 
 
-       $('input.number').keyup(function(event) {
+        $('input.number')
+            .keyup(function(event) {
 
-           if(event.which >= 37 && event.which <= 40){
-               event.preventDefault();
-           }
-           var $this = $(this);
-           var num = $this.val().replace(/,/g, '');
-           // the following line has been simplified. Revision history contains original.
-           $this.val(num.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
-       });
-</script>
+                if (event.which >= 37 && event.which <= 40) {
+                    event.preventDefault();
+                }
+                var $this = $(this);
+                var num = $this.val().replace(/,/g, '');
+                // the following line has been simplified. Revision history contains original.
+                $this.val(num.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
+            });
+    </script>
 
     <script>
         $(document)
             .ready(function() {
-
-                var sourceFullView = { url: '@Url.Action("GetMyEvents", "Events")' };
-                var sourceSummaryView = { url: '@Url.Action("GetMyEvents", "Events")' };
-                var calLoading = true;
-
                 $('#calendar')
                     .fullCalendar({
                         header: {
@@ -284,10 +289,9 @@
                         allDaySlot: false,
                         selectable: true,
                         slotMinutes: 15,
-                        eventColor: "#000000",
                         events: '@Url.Action("GetMyEvents", "Events")',
                         eventClick: function(event, jsEvent, view) {
-                            ShowEventPopup(event);
+                            ShowUpdateEventPopup(event);
 
                         },
 
@@ -311,28 +315,9 @@
 
                         dayClick: function(date) {
                             ShowNewEventPopup(date);
-                        },
-
-                        viewRender: function(view) {
-
-                            if (!calLoading) {
-                                if (view.name === 'month') {
-                                    $('#calendar').fullCalendar('removeEventSource', sourceFullView);
-                                    $('#calendar').fullCalendar('removeEvents');
-                                    $('#calendar').fullCalendar('addEventSource', sourceSummaryView);
-                                } else {
-                                    $('#calendar').fullCalendar('removeEventSource', sourceSummaryView);
-                                    $('#calendar').fullCalendar('removeEvents');
-                                    $('#calendar').fullCalendar('addEventSource', sourceFullView);
-                                }
-                            }
                         }
 
                     });
-
-                calLoading = false;
-
-
             });
 
         $('#btnPopupUpdateCancel')
@@ -341,15 +326,15 @@
                 $('#popupUpdateEventForm').hide();
             });
         $('#btnPopupNewCancel')
-        .click(function() {
-            ClearPopupFormValues();
-            $('#popupSaveEventForm').hide();
-        });
+            .click(function() {
+                ClearPopupFormValues();
+                $('#popupSaveEventForm').hide();
+            });
 
-
+        //save a new event
         $('#btnPopupSave')
             .click(function() {
-                $('#popupUpdateEventForm').hide();
+                $('#popupSaveEventForm').hide();
 
                 var dataRow = {
                     'Title': $('#eventTitle').val(),
@@ -358,7 +343,9 @@
                     'Color': $('#eventColor').val(),
                     'Budget': $('#eventBudget').val(),
                     'plannerId': @loggedinuser.EventPlannerId,
-                    'type': $('#eventType').val()
+                    'type': $('#eventType').val(),
+                    'eventDate': $('#eventDate').val(),
+                    'appUserId': @loggedinuser.AppUserId,
                 };
                 ClearPopupFormValues();
 
@@ -377,20 +364,34 @@
                 });
             });
 
-        function ShowEventPopup(event) {
+
+        //update event
+        $('#btnPopupUpdate')
+            .click(function() {
+                $('#popupUpdateEventForm').hide();
+
+                if (confirm("Confirm move?")) {
+                    UpdateEvent(event.id, event.start, event.end);
+                } else {
+                    window.revertFunc();
+                }
+            });
+
+        function ShowUpdateEventPopup(event) {
             ClearPopupFormValues();
             $('#popupUpdateEventForm').fadeIn();
-            $('#eventTitle').val(event.title);
+            $('#eventTitles').val(event.title);
             $('#eventColors').val(event.color);
             $('#eventStartDates').val(event.start);
             $('#eventEndDates').val(event.end);
+            $('#eventId').val(event.id);
         }
+
         function ShowNewEventPopup(date) {
             ClearPopupFormValues();
             $('#popupSaveEventForm').fadeIn();
             $('#eventStartDate').val(date);
         }
-
 
         function ClearPopupFormValues() {
             $('#eventID').val("");

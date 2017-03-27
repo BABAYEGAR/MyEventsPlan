@@ -68,6 +68,8 @@
     <Compile Include="Enum\EventPlannerTypeEnum.cs" />
     <Compile Include="Enum\GuestStatusEnum.cs" />
     <Compile Include="Enum\ChecklistStatusEnum.cs" />
+    <Compile Include="Enum\SideColor.cs" />
+    <Compile Include="Enum\NavColor.cs" />
     <Compile Include="Enum\ProspectStausEnum.cs" />
     <Compile Include="Enum\NewsActionEnum.cs" />
     <Compile Include="Enum\TaskStausEnum.cs" />

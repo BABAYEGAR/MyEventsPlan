@@ -1,10 +1,12 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.StaffEventMapping
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model StaffEventMapping
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "Vendor Details";
     Layout = "../Shared/_LayoutForm.cshtml";
     var userDb = new AppUserDataContext();
+    var events = Session["event"] as Event;
 }
 @section links{
     <ol class="breadcrumb">
@@ -25,8 +27,13 @@
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.Event.Name)
+        @if (events != null)
+        {
+            @events.Name
+        }
+
     </dd>
+
 
     <dt>
         @Html.DisplayName("Event Planner")

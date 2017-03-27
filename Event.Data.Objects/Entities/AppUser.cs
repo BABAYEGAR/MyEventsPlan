@@ -42,6 +42,8 @@ namespace Event.Data.Objects.Entities
         public virtual Client Client { get; set; }
         public string ProfileImage { get; set; }
         public string Status { get; set; }
+        public string NavigationColor { get; set; }
+        public string SideBarColor { get; set; }
         public bool Verified { get; set; }
         public  IEnumerable<Message> Messages { get; set; }
         public  IEnumerable<Setting> Settings { get; set; }

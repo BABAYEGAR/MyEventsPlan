@@ -25,6 +25,14 @@ namespace MyEventPlan.Controllers.EventManagement
             return View(clients.ToList());
         }
 
+        // GET: Clients
+        public ActionResult AllMyClients()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var clients =
+                db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(c => c.Event).Include(c => c.EventPlanner);
+            return View(clients.ToList());
+        }
         // GET: Clients/Details/5
         public ActionResult Details(long? id)
         {

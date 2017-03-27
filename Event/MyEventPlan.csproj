@@ -223,6 +223,8 @@
     <Compile Include="Controllers\MessageManagement\MessagesController.cs" />
     <Compile Include="Controllers\NewsManagement\NewsController.cs" />
     <Compile Include="Controllers\FinancialManagement\InvoicesController.cs" />
+    <Compile Include="Controllers\Personal\PersonalCheckListItemsController.cs" />
+    <Compile Include="Controllers\Personal\PersonalCheckListsController.cs" />
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
@@ -380,6 +382,7 @@
     <Content Include="Content\Dashboard\images\img.jpg" />
     <Content Include="Content\Dashboard\images\jquery-ui\picker.png" />
     <Content Include="Content\Dashboard\images\user.png" />
+    <Content Include="Content\Dashboard\jquery.countdown.js" />
     <Content Include="Content\Dashboard\scripts\common.js" />
     <Content Include="Content\Dashboard\scripts\datatables\jquery.dataTables.js" />
     <Content Include="Content\Dashboard\scripts\flot\jquery.flot.js" />
@@ -401,6 +404,9 @@
     <Content Include="Content\Email\img\mailchimp-logo.jpg" />
     <Content Include="Content\Email\img\media-queries.jpg" />
     <Content Include="Content\Email\img\responsive-email.jpg" />
+    <Content Include="Content\FontAwesome\css\font-awesome.css" />
+    <Content Include="Content\FontAwesome\css\font-awesome.min.css" />
+    <Content Include="Content\FontAwesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\monthly.css" />
     <Content Include="Content\PageLoader\css\jquery-loading.css" />
@@ -443,6 +449,7 @@
     <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.Jcrop.min.js" />
     <Content Include="Content\themes\base\jquery.ui.accordion.css" />
     <Content Include="Content\themes\base\jquery.ui.all.css" />
     <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
@@ -483,6 +490,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\base\script.js" />
+    <Content Include="Content\Timer\jquery.countdown.min.js" />
     <Content Include="Content\VendorCss\css\animate.css" />
     <Content Include="Content\VendorCss\css\bootstrap.min.css" />
     <Content Include="Content\VendorCss\css\font-awesome.min.css" />
@@ -675,6 +684,39 @@
     <Content Include="Content\Dashboard\datatables.net-buttons-bs\bower.json" />
     <Content Include="Content\Dashboard\datatables.net-buttons-bs\Readme.md" />
     <Content Include="Content\Email\img\email-images.zip" />
+    <Content Include="Content\FontAwesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\FontAwesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\FontAwesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\FontAwesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\FontAwesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\FontAwesome\less\animated.less" />
+    <Content Include="Content\FontAwesome\less\bordered-pulled.less" />
+    <Content Include="Content\FontAwesome\less\core.less" />
+    <Content Include="Content\FontAwesome\less\fixed-width.less" />
+    <Content Include="Content\FontAwesome\less\font-awesome.less" />
+    <Content Include="Content\FontAwesome\less\icons.less" />
+    <Content Include="Content\FontAwesome\less\larger.less" />
+    <Content Include="Content\FontAwesome\less\list.less" />
+    <Content Include="Content\FontAwesome\less\mixins.less" />
+    <Content Include="Content\FontAwesome\less\path.less" />
+    <Content Include="Content\FontAwesome\less\rotated-flipped.less" />
+    <Content Include="Content\FontAwesome\less\screen-reader.less" />
+    <Content Include="Content\FontAwesome\less\stacked.less" />
+    <Content Include="Content\FontAwesome\less\variables.less" />
+    <Content Include="Content\FontAwesome\scss\font-awesome.scss" />
+    <Content Include="Content\FontAwesome\scss\_animated.scss" />
+    <Content Include="Content\FontAwesome\scss\_bordered-pulled.scss" />
+    <Content Include="Content\FontAwesome\scss\_core.scss" />
+    <Content Include="Content\FontAwesome\scss\_fixed-width.scss" />
+    <Content Include="Content\FontAwesome\scss\_icons.scss" />
+    <Content Include="Content\FontAwesome\scss\_larger.scss" />
+    <Content Include="Content\FontAwesome\scss\_list.scss" />
+    <Content Include="Content\FontAwesome\scss\_mixins.scss" />
+    <Content Include="Content\FontAwesome\scss\_path.scss" />
+    <Content Include="Content\FontAwesome\scss\_rotated-flipped.scss" />
+    <Content Include="Content\FontAwesome\scss\_screen-reader.scss" />
+    <Content Include="Content\FontAwesome\scss\_stacked.scss" />
+    <Content Include="Content\FontAwesome\scss\_variables.scss" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1193,6 +1235,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="UploadedFiles\NewsImage\131329580750710796.jpg" />
+    <Content Include="UploadedFiles\ProfileImage\131349876343899675.JPG" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1476,6 +1519,24 @@
     <Content Include="Views\Account\UserProfile.cshtml" />
     <Content Include="Views\Shared\EditUserModal.cshtml" />
     <Content Include="Views\Shared\ChangePasswordModal.cshtml" />
+    <Content Include="Views\AppUsers\BackgroundColor.cshtml" />
+    <Content Include="Views\AppUsers\ImageUpload.cshtml" />
+    <Content Include="Views\PersonalCheckLists\Create.cshtml" />
+    <Content Include="Views\PersonalCheckLists\Delete.cshtml" />
+    <Content Include="Views\PersonalCheckLists\Details.cshtml" />
+    <Content Include="Views\PersonalCheckLists\Edit.cshtml" />
+    <Content Include="Views\PersonalCheckLists\Index.cshtml" />
+    <Content Include="Views\PersonalCheckListItems\Create.cshtml" />
+    <Content Include="Views\PersonalCheckListItems\Delete.cshtml" />
+    <Content Include="Views\PersonalCheckListItems\Details.cshtml" />
+    <Content Include="Views\PersonalCheckListItems\Edit.cshtml" />
+    <Content Include="Views\PersonalCheckListItems\Index.cshtml" />
+    <Content Include="Views\Shared\CreateGroupMessageModal.cshtml" />
+    <None Include="Views\Clients\AllMyClients.cshtml" />
+    <Content Include="Views\Shared\CreatePersonalCheckListModal.cshtml" />
+    <Content Include="Views\Shared\CreatePersonalCheckListItemModal.cshtml" />
+    <Content Include="Views\Shared\EditPersonalCheckListItemModal.cshtml" />
+    <Content Include="Views\Shared\EditPersonalCheckListModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -31,7 +31,7 @@
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.EventTypeId, "EventTypeId", new {@class = "control-label"})
+        @Html.LabelFor(model => model.EventTypeId, "Event Type", new {@class = "control-label"})
         <div class="controls">
             @Html.DropDownList("EventTypeId", null, new {@class = "span8"})
             @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})

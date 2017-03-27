@@ -6,6 +6,7 @@
     Layout = "../Shared/_LayoutForm.cshtml";
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
+    var events = Session["event"] as Event;
 }
 <dl class="dl-horizontal">
     <dt>
@@ -13,8 +14,13 @@
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.Event.Name)
+        @if (events != null)
+        {
+            @events.Name
+        }
+
     </dd>
+
 
     <dt>
         @Html.DisplayNameFor(model => model.Name)

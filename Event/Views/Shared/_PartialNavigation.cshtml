@@ -7,6 +7,34 @@
     var dbc = new NotificationDataContext();
     var userNotifications = dbc.Notifications.Where(n => n.AppUserId == loggedinuser.AppUserId);
 }
+@if (loggedinuser != null)
+{
+    if (loggedinuser.NavigationColor == "Red")
+    {
+        <style>
+            .navbar .navbar-inner {
+                background: red;
+            }
+        </style>
+    }
+    if (loggedinuser.NavigationColor == "Purple")
+    {
+        <style>
+            .navbar .navbar-inner {
+                background: purple;
+            }
+        </style>
+    }
+    if (loggedinuser.NavigationColor == "Blue")
+    {
+        <style>
+            .navbar .navbar-inner {
+                background: blue;
+            }
+        </style>
+    }
+
+}
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
@@ -51,7 +79,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             @if (loggedinuser?.ProfileImage != null)
                             {
-                                <img src="~/Content/Dashboard/images/user.png" class="nav-avatar" />
+                                <img src="~/UploadedFiles/ProfileImage/@loggedinuser.ProfileImage" class="nav-avatar" />
                             }
                            @if (loggedinuser?.ProfileImage == null)
                            {

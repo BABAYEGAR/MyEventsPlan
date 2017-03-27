@@ -1,0 +1,43 @@
+﻿@model Event.Data.Objects.Entities.Message
+@{
+    Layout = "../Shared/_LayoutModal.cshtml";
+}
+@using (Html.BeginForm("Create", "Messages", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="control-group">
+        @Html.LabelFor(model => model.Subject, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.Subject, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Subject, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.Body, new {@class = "control-label"})
+        <div class="controls">
+            @Html.TextAreaFor(model => model.Body, new {htmlAttributes = new {@class = "span8"}})
+            @Html.ValidationMessageFor(model => model.Body, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.MessageGroupId, "Receipient Group", new {@class = "control-label"})
+        <div class="controls">
+            @Html.DropDownListFor(m => m.MessageGroupId, null, new {@class = "span8"})
+            @Html.ValidationMessageFor(model => model.MessageGroupId, "", new {@class = "text-danger"})
+        </div>
+    </div>
+
+    <div class="control-group">
+        @Html.LabelFor(model => model.AttachedFile, new {@class = "control-label"})
+        <div class="controls">
+            <input type="file" name="file"/>
+            @Html.ValidationMessageFor(model => model.AttachedFile, "", new {@class = "text-danger"})
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Send Message" class="btn btn-default"/>
+        </div>
+    </div>
+}

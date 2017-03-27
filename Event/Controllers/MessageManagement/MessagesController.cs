@@ -108,35 +108,88 @@ namespace MyEventPlan.Controllers.MessageManagement
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-                message.DateCreated = DateTime.Now;
-                message.DateLastModified = DateTime.Now;
-                if (loggedinuser != null)
+                if (message.AppUserId != null)
                 {
-                    message.LastModifiedBy = loggedinuser.AppUserId;
-                    message.CreatedBy = loggedinuser.AppUserId;
-                    message.Sender = loggedinuser.AppUserId;
-                    message.Read = false;
+                    message.DateCreated = DateTime.Now;
+                    message.DateLastModified = DateTime.Now;
+                    if (loggedinuser != null)
+                    {
+                        message.LastModifiedBy = loggedinuser.AppUserId;
+                        message.CreatedBy = loggedinuser.AppUserId;
+                        message.Sender = loggedinuser.AppUserId;
+                        message.Read = false;
+                        db.Messages.Add(message);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        TempData["login"] = "Your session has expired, Login again!";
+                        TempData["notificationtype"] = NotificationType.Info.ToString();
+                        return RedirectToAction("Login", "Account");
+                    }
                 }
-                else
+                if (message.MessageGroupId != null)
                 {
-                    TempData["login"] = "Your session has expired, Login again!";
-                    TempData["notificationtype"] = NotificationType.Info.ToString();
-                    return RedirectToAction("Login", "Account");
+                    var group = db.MessageGroupMembers.Where(n => n.MessageGroupId == message.MessageGroupId);
+                    foreach (var item in group.ToList())
+                    {
+                        message.AppUserId = item.AppUserId;
+                        if (loggedinuser != null)
+                        {
+                            message.LastModifiedBy = loggedinuser.AppUserId;
+                            message.CreatedBy = loggedinuser.AppUserId;
+                            message.Sender = loggedinuser.AppUserId;
+                        }
+                        message.DateCreated = DateTime.Now;
+                        message.DateLastModified = DateTime.Now;
+                        message.Read = false;
+                        db.Messages.Add(message);
+                        db.SaveChanges();
+                        message.AppUserId = null;
+                    }
                 }
-                db.Messages.Add(message);
-                db.SaveChanges();
-                var notification = new Notification();
-                notification.AppUserId = message.AppUserId;
-                notification.Message = "Platform message from "+loggedinuser.DisplayName +"!";
-                notification.NotificationKey = message.MessageId;
-                notification.DateCreated = DateTime.Now;
-                notification.CreatedBy = loggedinuser.AppUserId;
-                notification.Read = false;
-                notification.DateLastModified = DateTime.Now;
-                notification.LastModifiedBy = loggedinuser.AppUserId;
-                notification.NotificationType = AppNotificationType.Message.ToString();
-                dbc.Notifications.Add(notification);
-                dbc.SaveChanges();
+
+                if (message.MessageGroupId != null)
+                {
+                    var group = db.MessageGroupMembers.Where(n => n.MessageGroupId == message.MessageGroupId);
+                    foreach (var item in group.ToList())
+                    {
+                        var notification = new Notification();
+                        notification.AppUserId = item.AppUserId;
+                        if (loggedinuser != null)
+                        {
+                            notification.Message = "Platform message from " + loggedinuser.DisplayName + "!";
+                            notification.NotificationKey = message.MessageId;
+                            notification.DateCreated = DateTime.Now;
+                            notification.CreatedBy = loggedinuser.AppUserId;
+                            notification.Read = false;
+                            notification.DateLastModified = DateTime.Now;
+                            notification.LastModifiedBy = loggedinuser.AppUserId;
+                        }
+                        notification.NotificationType = AppNotificationType.Message.ToString();
+                        dbc.Notifications.Add(notification);
+                        dbc.SaveChanges();
+                    }
+                }
+
+                if (message.AppUserId != null)
+                {
+                    var notification = new Notification();
+                    notification.AppUserId = (long) message.AppUserId;
+                    if (loggedinuser != null)
+                    {
+                        notification.Message = "Platform message from " + loggedinuser.DisplayName + "!";
+                        notification.NotificationKey = message.MessageId;
+                        notification.DateCreated = DateTime.Now;
+                        notification.CreatedBy = loggedinuser.AppUserId;
+                        notification.Read = false;
+                        notification.DateLastModified = DateTime.Now;
+                        notification.LastModifiedBy = loggedinuser.AppUserId;
+                    }
+                    notification.NotificationType = AppNotificationType.Message.ToString();
+                    dbc.Notifications.Add(notification);
+                    dbc.SaveChanges();
+                }
                 TempData["display"] = "Your platform message has been sent successfully!";
                 TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index");

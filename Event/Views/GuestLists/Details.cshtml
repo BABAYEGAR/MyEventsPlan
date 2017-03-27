@@ -7,6 +7,7 @@
     Layout = "../Shared/_LayoutForm.cshtml";
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
+    var events = Session["event"] as Event;
 }
 @section links{
     <ol class="breadcrumb">
@@ -26,8 +27,13 @@
         @Html.DisplayNameFor(model => model.Event.Name)
     </dt>
 
+
     <dd>
-        @Html.DisplayFor(model => model.Event.Name)
+        @if (events != null)
+        {
+            @events.Name
+        }
+
     </dd>
 
     <dt>

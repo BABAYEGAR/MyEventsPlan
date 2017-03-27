@@ -5,8 +5,7 @@
     ViewBag.Title = "View";
     ViewBag.Header = "View check list";
     Layout = "../Shared/_LayoutForm.cshtml";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
+    var events = Session["event"] as Event;
 }
 @section links{
     <ol class="breadcrumb">
@@ -27,9 +26,12 @@
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.Event.Name)
-    </dd>
+        @if (events != null)
+        {
+            @events.Name
+        }
 
+    </dd>
     <dt>
         @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
     </dt>

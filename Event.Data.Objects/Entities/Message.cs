@@ -18,7 +18,7 @@ namespace Event.Data.Objects.Entities
         public bool Read { get; set; }
         public string AttachedFile { get; set; }
         public long? Sender { get; set; }
-        public long AppUserId { get; set; }
+        public long? AppUserId { get; set; }
         [ForeignKey("AppUserId")]
         public AppUser AppUser { get; set; }
         public long? MessageGroupId { get; set; }

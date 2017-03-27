@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -18,84 +20,38 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var events =
-                _db.Event.OrderByDescending(n => n.StartDate)
-                    .Include(n => n.EventType)
-                    .Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
-            return View(events.ToList());
-        }
-
-        // GET: EventResourceMappings
-        public ActionResult Resources()
-        {
-            var events = Session["event"] as Event.Data.Objects.Entities.Event;
-            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var eventResourceMapping =
-                _db.EventResourceMapping.Where(n => n.EventId == events.EventId).Include(e => e.Event).Include(e => e.Resource);
-            ViewBag.ResourceId = new SelectList(
-                _db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name");
-            return View(eventResourceMapping.ToList());
-        }
-
-        // GET: CheckItem
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddResources(int[] table_records, FormCollection collectedValues)
-        {
-            var allMappings = _db.EventResourceMapping.ToList();
-            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var eventId = Convert.ToInt64(collectedValues["EventId"]);
-            if (table_records != null)
+            IQueryable<Event.Data.Objects.Entities.Event> events = null;
+            if ((loggedinuser != null) && (loggedinuser.EventPlannerId != null))
             {
-                var length = table_records.Length;
-                for (var i = 0; i < length; i++)
-                {
-                    var id = table_records[i];
-                    if (
-                        allMappings.Any(
-                            n =>
-                                (n.ResourceId == id) &&
-                                (n.EventId == eventId)))
-                    {
-                    }
-                    else
-                    {
-                        var eventResource = new EventResourceMapping
-                        {
-                            DateCreated = DateTime.Now,
-                            CreatedBy = loggedinuser.AppUserId,
-                            DateLastModified = DateTime.Now,
-                            LastModifiedBy = loggedinuser.AppUserId,
-                            EventId = eventId,
-                            ResourceId = id
-                        };
-                        _db.EventResourceMapping.Add(eventResource);
-                        _db.SaveChanges();
-                        TempData["display"] = "you have succesfully added the item(s)!";
-                        TempData["notificationtype"] = NotificationType.Success.ToString();
-                    }
-                }
+                events =
+                    _db.Event.OrderByDescending(n => n.StartDate)
+                        .Include(n => n.EventType)
+                        .Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+                return View(events.ToList());
             }
-            else
+            if ((loggedinuser != null) && (loggedinuser.ClientId != null))
             {
-                TempData["display"] = "no item has been selected!";
-                TempData["notificationtype"] = NotificationType.Error.ToString();
-                return RedirectToAction("Resources", new {eventId});
+                var client = _db.Clients.Find(loggedinuser.ClientId);
+                events =
+                    _db.Event.OrderByDescending(n => n.StartDate)
+                        .Include(n => n.EventType)
+                        .Where(n => n.EventId == client.EventId);
+                return View(events.ToList());
             }
-            return RedirectToAction("Resources", new {eventId});
-        }
+            if ((loggedinuser != null) && (loggedinuser.VendorId != null))
+            {
+                events =
+                    from a in _db.Event
+                    join b in _db.EventVendorMappings on a.EventId equals b.EventId
+                    where b.VendorId == loggedinuser.VendorId
+                    select a;
 
-        // GET: CheckListItems/UncheckItem/5
-        public ActionResult RemoveItem(long? resourceId, long? eventId)
-        {
-            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var mapping =
-                _db.EventResourceMapping.SingleOrDefault(n => (n.EventId == eventId) && (n.ResourceId == resourceId));
-            _db.Entry(mapping).State = EntityState.Modified;
-            _db.SaveChanges();
-            TempData["resourcemap"] = "you have succesfully removed the item!";
-            TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Resources", new {eventId});
+                return View(events.ToList());
+            }
+            List<Event.Data.Objects.Entities.Event> list = new List<Event.Data.Objects.Entities.Event>();
+            foreach (var @event in events)
+                list.Add(@event);
+            return View(list);
         }
 
         // GET: Events
@@ -113,8 +69,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 select new
                 {
                     id = e.EventId,
-                    title =
-                    e.Name,
+                    title = e.Name,
                     start = e.StartDate,
                     end = e.EndDate,
                     color = e.Color,
@@ -141,15 +96,38 @@ namespace MyEventPlan.Controllers.EventManagement
             new CalenderEvent().UpdateCalendarEvent(id, newEventStart, newEventEnd);
         }
 
+        // POST: Events/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateCalendarEvent(FormCollection collectedValues)
+        {
+            var eventId = Convert.ToInt64(collectedValues["EventId"]);
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var calendarEvent = _db.Event.Find(eventId);
+            calendarEvent.DateLastModified = DateTime.Now;
+            calendarEvent.LastModifiedBy = loggedinuser.AppUserId;
+            calendarEvent.Color = collectedValues["Color"];
+            calendarEvent.StartDate = DateTime.ParseExact(collectedValues["StartDate"], "dd/MM/yyyy",
+                CultureInfo.InvariantCulture);
+            calendarEvent.EndDate = DateTime.ParseExact(collectedValues["EndDate"], "dd/MM/yyyy",
+                CultureInfo.InvariantCulture);
+            calendarEvent.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+            calendarEvent.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+            _db.Entry(calendarEvent).State = EntityState.Modified;
+            _db.SaveChanges();
+            return RedirectToAction("Calendar");
+        }
+
         public bool CreateNewEvent(string title, string newEventStartDate, string newEventEndDate,
-            string newEventStartTime, string newEventEndTime, string color, long budget,
-            long plannerId, long type)
+            long appUserId, string color, long budget,
+            long plannerId, long type, string eventDate)
         {
             try
             {
-                new CalenderEvent().CreateNewEvent(title, newEventStartDate, newEventEndDate, newEventStartTime,
-                    newEventEndTime, color, budget,
-                    plannerId, type);
+                new CalenderEvent().CreateNewEvent(title, newEventStartDate, newEventEndDate, appUserId, color, budget,
+                    plannerId, type, eventDate);
             }
             catch (Exception)
             {

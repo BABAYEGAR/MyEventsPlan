@@ -9,9 +9,6 @@ namespace Event.Data.Objects.Entities
         [Required]
         public string Name { get; set; }
         public bool Checked { get; set; }
-        public long EventId { get; set; }
-        [ForeignKey("EventId")]
-        public Event Event { get; set; }
         public long PersonalCheckListId { get; set; }
         [ForeignKey("PersonalCheckListId")]
         public PersonalCheckList PersonalCheckList { get; set; }

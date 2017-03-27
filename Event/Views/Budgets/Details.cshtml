@@ -23,9 +23,12 @@
     <dt>
         @Html.DisplayNameFor(model => model.Event.Name)
     </dt>
-
     <dd>
-        @Html.DisplayFor(model => model.Event.Name)
+        @if (events != null)
+        {
+            @events.Name
+        }
+
     </dd>
 
     <dt>

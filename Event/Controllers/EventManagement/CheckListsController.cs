@@ -64,6 +64,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.CheckLists.Add(checkList);
                 db.SaveChanges();
+                TempData["display"] = "Your have successfully created a new list!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index", new {eventId = checkList.EventId});
             }
             return View(checkList);
@@ -104,6 +106,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(checkList).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["display"] = "Your have successfully modified the list!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index", new {eventId = checkList.EventId});
             }
             return View(checkList);
@@ -130,6 +134,8 @@ namespace MyEventPlan.Controllers.EventManagement
             var eventId = checkList.EventId;
             db.CheckLists.Remove(checkList);
             db.SaveChanges();
+            TempData["display"] = "Your have successfully deleted the list!";
+            TempData["notificationtype"] = NotificationType.Info.ToString();
             return RedirectToAction("Index", new {eventId});
         }
 

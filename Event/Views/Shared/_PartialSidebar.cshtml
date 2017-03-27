@@ -6,6 +6,34 @@
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
     long unreadMessages = messageDb.Messages.Where(n => (n.AppUserId == loggedinuser.AppUserId) && (n.Read == false)).ToList().Count;
 }
+@if (loggedinuser != null)
+{
+    if (loggedinuser.NavigationColor == "Black")
+    {
+        <style>
+            .widget-menu > li > a:hover {
+                background-color: black;
+            }
+
+            .widget-menu > li > a {
+                background-color: black;
+            }
+        </style>
+    }
+    if (loggedinuser.NavigationColor == "Grey")
+    {
+        <style>
+            .widget-menu > li > a:hover {
+                background-color: gray;
+            }
+
+            .widget-menu > li > a {
+                background-color:gray;
+            }
+        </style>
+    }
+
+}
 @if (role != null)
 {
     <div class="sidebar">
@@ -31,6 +59,12 @@
             <li>
                 <a href="@Url.Action("Index", "MessageGroups")">
                     <i class="menu-icon icon-inbox"></i>Group Messaging <b class="label green pull-right">
+                    </b>
+                </a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "PersonalCheckLists")">
+                    <i class="menu-icon fa fa-list"></i>My Check-List <b class="label green pull-right">
                     </b>
                 </a>
             </li>
@@ -127,7 +161,7 @@
                         </li>
 
                         <li>
-                            <a href="@Url.Action("Index", "Invoices")"><i class="menu-icon icon-paper-clip-no"></i>Invoices </a>
+                            <a href="@Url.Action("Index", "Invoices")"><i class="menu-icon icon-certificate"></i>Invoices </a>
                         </li>
                     </ul>
                 </li>

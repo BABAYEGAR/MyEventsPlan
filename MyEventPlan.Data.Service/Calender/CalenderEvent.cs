@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Enum;
 
@@ -54,28 +55,29 @@ namespace MyEventPlan.Data.Service.Calender
                 }
             }
         }
-        public bool CreateNewEvent(string title, string newEventStartDate, string newEventEndDate, string newEventStartTime, string newEventEndTime, string color, long budget,
-            long plannerId, long type)
-        { 
+        public bool CreateNewEvent(string title, string newEventStartDate, string newEventEndDate,long appUserId, string color, long budget,
+            long plannerId, long type,string eventDate)
+        {
             try
             {
                 EventDataContext ent = new EventDataContext();
                 Event.Data.Objects.Entities.Event rec = new Event.Data.Objects.Entities.Event
                 {
                     Name = title,
-                    StartDate = DateTime.Now,
-                    EndDate = DateTime.Now,
+                    StartDate = Convert.ToDateTime(newEventStartDate),
+                    EndDate = Convert.ToDateTime(newEventEndDate),
                     Status = EventStausEnum.New.ToString(),
                     Color = color,
                     TargetBudget = budget.ToString(),
                     EventPlannerId = plannerId,
                     EventTypeId = type,
-                    StartTime = newEventStartTime,
-                    EndTime = newEventEndTime,
-                    CreatedBy = plannerId,
-                    LastModifiedBy = plannerId,
+                    StartTime = Convert.ToDateTime(newEventStartDate).ToShortTimeString(),
+                    EndTime = Convert.ToDateTime(newEventEndDate).ToShortTimeString(),
+                    CreatedBy = appUserId,
+                    LastModifiedBy = appUserId,
                     DateCreated = DateTime.Now,
-                    DateLastModified = DateTime.Now
+                    DateLastModified = DateTime.Now,
+                    EventDate = Convert.ToDateTime(eventDate)
                 };
 
                 ent.Event.Add(rec);

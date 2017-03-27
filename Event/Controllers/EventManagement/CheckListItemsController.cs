@@ -75,14 +75,14 @@ namespace MyEventPlan.Controllers.EventManagement
                             dbc.SaveChanges();
                         }
 
-                        TempData["item"] = "you have succesfully check the item(s)!";
+                        TempData["display"] = "you have succesfully checked the item(s)!";
                         TempData["notificationtype"] = NotificationType.Success.ToString();
                     }
                 }
             }
             else
             {
-                TempData["item"] = "no item has been selected!";
+                TempData["display"] = "no item has been selected!";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
                 return RedirectToAction("Index", new {checkListId});
             }
@@ -122,6 +122,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.CheckListItems.Add(checkListItem);
                 db.SaveChanges();
+                TempData["display"] = "Your have successfully created a new item!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
             }
             return View(checkListItem);
@@ -180,10 +182,10 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Entry(checkListItem).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["display"] = "Your have successfully modified the item!";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
             }
-            ViewBag.CheckListId = new SelectList(db.CheckLists, "CheckListId", "Name", checkListItem.CheckListId);
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", checkListItem.EventId);
             return View(checkListItem);
         }
 
@@ -208,6 +210,8 @@ namespace MyEventPlan.Controllers.EventManagement
             var checkListId = checkListItem.CheckListId;
             db.CheckListItems.Remove(checkListItem);
             db.SaveChanges();
+            TempData["display"] = "Your have successfully deleted the item!";
+            TempData["notificationtype"] = NotificationType.Info.ToString();
             return RedirectToAction("Index", new {checkListId});
         }
 

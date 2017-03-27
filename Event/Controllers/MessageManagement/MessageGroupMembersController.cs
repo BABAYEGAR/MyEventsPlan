@@ -41,7 +41,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         public ActionResult GroupMember(int[] table_records, FormCollection collectedValues)
         {
             var allMappings = dbc.MessageGroupMembers.ToList();
-            var loggedinuser = Session["opmasloggedinuser"] as AppUser;
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var groupId = Convert.ToInt64(collectedValues["MessageGroupId"]);
             if (table_records != null)
             {
@@ -71,7 +71,6 @@ namespace MyEventPlan.Controllers.MessageManagement
                             };
 
                             dbc.MessageGroupMembers.Add(groupMembers);
-
                             dbc.SaveChanges();
 
                             TempData["display"] = "you have succesfully added the users(s) to the group!";
