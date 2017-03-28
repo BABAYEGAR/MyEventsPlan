@@ -102,6 +102,8 @@
                             <input type="submit" value="Update Event" class="btn btn-primary pull-right"/>
                         </div>
                     </div>
+                    <br/>
+                    <br/>
                 }
             </div>
 
@@ -214,7 +216,7 @@
                 format: 'm-d-Y',
                 onShow: function(ct) {
                     this.setOptions({
-                    
+                        minDate: 0
                     });
 
                 },
@@ -225,7 +227,7 @@
                 format: 'm-d-Y H:i',
                 onShow: function(ct) {
                     this.setOptions({
-                        minDate: jQuery('#eventEndDate').val()
+                        minDate: 0
                     });
                 }
             });
@@ -243,7 +245,7 @@
                 format: 'm-d-Y H:i',
                 onShow: function(ct) {
                     this.setOptions({
-                        minDate: 0
+                    
                     });
                 }
             });
@@ -252,13 +254,23 @@
                 format: 'm-d-Y H:i',
                 onShow: function(ct) {
                     this.setOptions({
-                        minDate: jQuery('#eventStartDates').val()
+                        
                     });
                 }
             });
 
-        $("#eventColor").spectrum();
-        $("#eventColors").spectrum();
+        $("#eventColor").spectrum({
+            show: function(color) {
+                color.toHexString(); // #ff0000
+            }
+       
+        });
+        $("#eventColors").spectrum({
+            show: function(color) {
+                color.toHexString(); // #ff0000
+            }
+       
+        });
 
 
         $('input.number')
@@ -291,6 +303,7 @@
                         slotMinutes: 15,
                         events: '@Url.Action("GetMyEvents", "Events")',
                         eventClick: function(event, jsEvent, view) {
+                            $(this).css('border-color', event.color);
                             ShowUpdateEventPopup(event);
 
                         },
@@ -313,7 +326,7 @@
                         },
 
 
-                        dayClick: function(date) {
+                        dayClick: function(date, jsEvent, view) {
                             ShowNewEventPopup(date);
                         }
 
@@ -382,15 +395,15 @@
             $('#popupUpdateEventForm').fadeIn();
             $('#eventTitles').val(event.title);
             $('#eventColors').val(event.color);
-            $('#eventStartDates').val(event.start);
-            $('#eventEndDates').val(event.end);
+            $('#eventStartDates').val(event.start.format('M/D/Y HH:mm'));
+            $('#eventEndDates').val(event.end.format('M/D/Y HH:mm'));
             $('#eventId').val(event.id);
         }
 
         function ShowNewEventPopup(date) {
             ClearPopupFormValues();
             $('#popupSaveEventForm').fadeIn();
-            $('#eventStartDate').val(date);
+            $('#eventStartDate').val(date.format('M/D/Y HH:mm'));
         }
 
         function ClearPopupFormValues() {
