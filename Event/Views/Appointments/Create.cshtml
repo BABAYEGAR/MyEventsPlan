@@ -62,26 +62,25 @@
 {
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
-    <script src="~/Scripts/jscolor.min.js"></script>
+    <script src="~/Content/Color/spectrum.js"></script>
     <script type="text/javascript">
-        jQuery('#datetimepicker6')
-            .datetimepicker({
-                format: 'm-d-Y h:i',
-                onShow: function(ct) {
-                    this.setOptions({
-                        minDate: @DateTime.Now.ToShortDateString(),
-                    });
-                },
-            });
-        jQuery('#datetimepicker7')
-            .datetimepicker({
-                format: 'm-d-Y h:i',
-                onShow: function(ct) {
-                    this.setOptions({
-                        minDate: jQuery('#datetimepicker6').val() ? jQuery('#datetimepicker6').val() : false
-                    });
-                },
-            });
-
+            jQuery('#datetimepicker6')
+                .datetimepicker({
+                    format: 'm-d-Y H:i',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: 0
+                        });
+                    }
+                });
+            jQuery('#datetimepicker7')
+                .datetimepicker({
+                    format: 'm-d-Y H:i',
+                    onShow: function(ct) {
+                        this.setOptions({
+                            minDate: $('#datetimepicker6').val()
+                        });
+                    }
+                });
     </script>
 }

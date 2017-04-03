@@ -42,13 +42,10 @@ namespace MyEventPlan.Data.Service.Calender
                 var rec = ent.Event.FirstOrDefault(s => s.EventId == id);
                 if (rec != null)
                 {
-                    DateTime dateTimeStart = DateTime.Parse(newEventStart, null,
-                       DateTimeStyles.RoundtripKind).ToLocalTime();
-
-                    TimeSpan timeDifference = rec.EndDate - rec.StartDate;
-                        rec.EndDate = dateTimeStart.Add(timeDifference);
-                    rec.StartDate = dateTimeStart;
-                  
+                    rec.StartDate = Convert.ToDateTime(newEventStart);
+                    rec.EndDate = Convert.ToDateTime(newEventEnd);
+                    rec.StartTime = Convert.ToDateTime(newEventStart).ToShortTimeString();
+                    rec.EndTime = Convert.ToDateTime(newEventEnd).ToShortTimeString();
 
                     ent.Entry(rec).State = EntityState.Modified;
                     ent.SaveChanges();

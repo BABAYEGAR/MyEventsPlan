@@ -12,47 +12,163 @@
     loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 
     var role = Session["role"] as Role;
-    ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name");
+    ViewBag.EventId = new SelectList(db.Event.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
 }
 @section css{
-    <link href="~/Content/themes/base/jquery.ui.core.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.button.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.slider.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet"/>
-    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.core.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.button.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.slider.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
+    <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/Color/spectrum.css" rel="stylesheet" />
 }
 @if ((loggedinuser != null) && (role != null))
 {
-    <br/>
-    <br/>
     <!--/.span3-->
     <div class="span9">
         <div class="content">
-            @if (TempData["appointment"] != null)
+            @if (TempData["event"] != null)
             {
                 if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
                 {
-                    <div class="alert-success alert-dismissable">@TempData["appointment"]</div>
+                    <div class="alert alert-success alert-dismissable">@TempData["event"]</div>
                 }
                 else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
                 {
-                    <div class="alert-danger alert-dismissable">@TempData["appointment"]</div>
+                    <div class="alert alert-danger alert-dismissable">@TempData["event"]</div>
                 }
                 else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
                 {
-                    <div class="alert-info alert-dismissable">@TempData["appointment"]</div>
+                    <div class="alert alert-info alert-dismissable">@TempData["event"]</div>
                 }
             }
 
-            <div class="btn-controls">
 
+            <div id="popupUpdateEventForm" class="modal hide" style="display: none;">
+                @using (Html.BeginForm("UpdateCalendarAppointment", "Appointments", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "UpdateEventForm" }))
+                {
+                    <div class="modal-header">
+                        <h3>Update Appointment</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(m => m.AppointmentId, new { id = "appointmentId" })
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "span8", id = "eventTitles" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.Location, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.Location, new { @class = "span8", id = "eventLocations" })
+                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.Notes, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "span8", id = "eventNotes" } })
+                                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.StartDate, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.StartDate, new { @class = "span8", id = "eventStartDates" })
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "span8", id = "eventEndDates" } })
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnPopupUpdateCancel" data-dismiss="modal" class="btn btn-default pull-left fa fa-stop">Cancel</button>
+                        <input type="submit" value="Update Appointment" class="btn btn-primary pull-left fa fa-arro" />
+                    </div>
+                }
+            </div>
+
+
+            <div id="popupSaveEventForm" class="modal hide" style="display: none;">
+
+                @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+                {
+                    <div class="modal-header">
+                        <h3>Add new Appointment</h3>
+                    </div>
+                    <div class="modal-body">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "span8", id = "eventTitle" } })
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.EventId, "Event", new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.DropDownListFor(m=>m.EventId, null, new { @class = "span8", id = "eventId" })
+                                @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.Location, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.Location, new { @class = "span8", id = "eventLocation" })
+                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.Notes, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.Notes, new { htmlAttributes = new { @class = "span8", id = "eventNote" } })
+                                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.StartDate, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.StartDate, new { @class = "span8", id = "eventStartDate" })
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
+                            <div class="controls">
+                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "span8", id = "eventEndDate" } })
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                    </div>
+                }
+                <div class="modal-footer">
+                    <button type="button" id="btnPopupNewCancel" data-dismiss="modal" class="btn btn-default">Cancel</button>
+                    <button type="button" id="btnPopupSave" data-dismiss="modal" class="btn btn-primary">Save event</button>
+                </div>
+            </div>
+            <div class="btn-controls">
                 <div class="btn-box-row row-fluid">
 
                     <div class="module">
@@ -79,14 +195,64 @@
     </div>
 }
 @section scripts{
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
+    <script src="~/Content/Color/spectrum.js"></script>
+    <script type="text/javascript">
+
+        $.datetimepicker.setLocale('en');
+        jQuery('#eventDate')
+            .datetimepicker({
+                format: 'm-d-Y',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: 0
+                    });
+
+                },
+                timepicker: false
+            });
+        jQuery('#eventStartDate')
+            .datetimepicker({
+                format: 'm-d-Y H:i',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: 0
+                    });
+                }
+            });
+        jQuery('#eventEndDate')
+            .datetimepicker({
+                format: 'm-d-Y H:i',
+                onShow: function(ct) {
+                    this.setOptions({
+                        minDate: jQuery('#eventStartDate').val()
+                    });
+                }
+            });
+        jQuery('#eventStartDates')
+            .datetimepicker({
+                format: 'm-d-Y H:i',
+                onShow: function(ct) {
+                    this.setOptions({
+
+                    });
+                }
+            });
+        jQuery('#eventEndDates')
+            .datetimepicker({
+                format: 'm-d-Y H:i',
+                onShow: function(ct) {
+                    this.setOptions({
+
+                    });
+                }
+            });
+    </script>
+
     <script>
         $(document)
             .ready(function() {
-
-                var sourceFullView = { url: '@Url.Action("GetMyAppointments", "Appointments")' };
-                var sourceSummaryView = { url: '@Url.Action("GetMyAppointments", "Appointments")' };
-                var calLoading = true;
-
                 $('#calendar')
                     .fullCalendar({
                         header: {
@@ -100,6 +266,11 @@
                         selectable: true,
                         slotMinutes: 15,
                         events: '@Url.Action("GetMyAppointments", "Appointments")',
+                        eventClick: function(event, jsEvent, view) {
+                            $(this).css('border-color', event.backgroundColor);
+                            ShowUpdateEventPopup(event);
+
+                        },
 
                         eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc) {
                             if (confirm("Confirm move?")) {
@@ -119,38 +290,96 @@
                         },
 
 
-                        dayClick: function(date) {
-                            $('#eventTitle').val("");
-                            $('#eventStartDate').val(date.toString());
-                            ShowEventPopup(date);
-                        },
-
-                        viewRender: function(view) {
-
-                            if (!calLoading) {
-                                if (view.name === 'month') {
-                                    $('#calendar').fullCalendar('removeEventSource', sourceFullView);
-                                    $('#calendar').fullCalendar('removeEvents');
-                                    $('#calendar').fullCalendar('addEventSource', sourceSummaryView);
-                                } else {
-                                    $('#calendar').fullCalendar('removeEventSource', sourceSummaryView);
-                                    $('#calendar').fullCalendar('removeEvents');
-                                    $('#calendar').fullCalendar('addEventSource', sourceFullView);
-                                }
-                            }
+                        dayClick: function(date, jsEvent, view) {
+                            ShowNewEventPopup(date);
                         }
 
                     });
-
-                calLoading = false;
-
-
             });
 
-        function UpdateEvent(eventId, eventStart, eventEnd) {
+        $('#btnPopupUpdateCancel')
+            .click(function() {
+                ClearPopupFormValues();
+                $('#popupUpdateEventForm').hide();
+            });
+        $('#btnPopupNewCancel')
+            .click(function() {
+                ClearPopupFormValues();
+                $('#popupSaveEventForm').hide();
+            });
+
+        //save a new event
+        $('#btnPopupSave')
+            .click(function() {
+                $('#popupSaveEventForm').hide();
+
+                var dataRow = {
+                    'Title': $('#eventTitle').val(),
+                    'NewEventStartDate': $('#eventStartDate').val(),
+                    'NewEventEndDate': $('#eventEndDate').val(),
+                    'appUserId': @loggedinuser.AppUserId,
+                    'Location': $('#eventLocation').val(),
+                    'Note': $('#eventNote').val(),
+                    'plannerId': @loggedinuser.EventPlannerId,
+                    'eventId':$('#eventId').val(),
+                };
+                ClearPopupFormValues();
+
+                $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("CreateNewAppointment", "Appointments")",
+                    data: dataRow,
+                    success: function(response) {
+                        if (response === 'True') {
+                            $('#calendar').fullCalendar('refetchEvents');
+                            alert('New appointment saved!');
+                        } else {
+                            alert('Error, could not save appointment!');
+                        }
+                    }
+                });
+            });
+
+
+        //update event
+        $('#btnPopupUpdate')
+            .click(function() {
+                $('#popupUpdateEventForm').hide();
+
+                if (confirm("Confirm move?")) {
+                    UpdateEvent(event.id, event.start, event.end);
+                } else {
+                    window.revertFunc();
+                }
+            });
+
+        function ShowUpdateEventPopup(event) {
+            ClearPopupFormValues();
+            $('#popupUpdateEventForm').fadeIn();
+            $('#eventTitles').val(event.title);
+            $('#eventStartDates').val((event.start).format('M/D/Y HH:mm'));
+            $('#eventEndDates').val(event.end.format('M/D/Y HH:mm'));
+            $('#eventLocations').val(event.location);
+            $('#eventNotes').val(event.note);
+            $('#appointmentId').val(event.id);
+        }
+
+        function ShowNewEventPopup(date) {
+            ClearPopupFormValues();
+            $('#popupSaveEventForm').fadeIn();
+            $('#eventStartDate').val(date.format('M/D/Y HH:mm'));
+        }
+
+        function ClearPopupFormValues() {
+            $('#eventID').val("");
+            $('#eventTitle').val("");
+            $('#eventDateTime').val("");
+            $('#eventDuration').val("");
+        }
+        function UpdateEvent(appointmentId, eventStart, eventEnd) {
 
             var dataRow = {
-                'ID': eventId,
+                'ID': appointmentId,
                 'NewEventStart': eventStart,
                 'NewEventEnd': eventEnd
             };
@@ -158,9 +387,9 @@
                 type: 'POST',
                 url: "@Url.Action("UpdateEventAppoitments", "Appointments")",
                 dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify(dataRow)
-            });
+            contentType: "application/json",
+            data: JSON.stringify(dataRow)
+        });
 
         }
     </script>

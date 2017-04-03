@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
-using System.Globalization;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -9,6 +10,7 @@ using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Calender;
 using MyEventPlan.Data.Service.Enum;
+using ColorConverter = System.Drawing.ColorConverter;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -72,9 +74,9 @@ namespace MyEventPlan.Controllers.EventManagement
                     title = e.Name,
                     start = e.StartDate,
                     end = e.EndDate,
-                    color = "#"+e.Color,
+                    color = e.Color,
                     allDay = false,
-                    backgroundColor = "#" + e.Color
+                    backgroundColor = e.Color
                 };
             var rows = eventList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);
@@ -107,14 +109,17 @@ namespace MyEventPlan.Controllers.EventManagement
             var eventId = Convert.ToInt64(collectedValues["EventId"]);
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var calendarEvent = _db.Event.Find(eventId);
-            calendarEvent.DateLastModified = DateTime.Now;
-            if (loggedinuser != null) calendarEvent.LastModifiedBy = loggedinuser.AppUserId;
-            calendarEvent.Color = collectedValues["Color"];
-            calendarEvent.StartDate = Convert.ToDateTime(collectedValues["StartDate"]);
-            calendarEvent.EndDate = Convert.ToDateTime(collectedValues["EndDate"]);
-            calendarEvent.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
-            calendarEvent.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
-            _db.Entry(calendarEvent).State = EntityState.Modified;
+            if (calendarEvent != null)
+            {
+                calendarEvent.DateLastModified = DateTime.Now;
+                if (loggedinuser != null) calendarEvent.LastModifiedBy = loggedinuser.AppUserId;
+                calendarEvent.Color = collectedValues["Color"];
+                calendarEvent.StartDate = Convert.ToDateTime(collectedValues["StartDate"]);
+                calendarEvent.EndDate = Convert.ToDateTime(collectedValues["EndDate"]);
+                calendarEvent.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                calendarEvent.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                _db.Entry(calendarEvent).State = EntityState.Modified;
+            }
             _db.SaveChanges();
             return RedirectToAction("Calendar");
         }
@@ -151,6 +156,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
+            
             if (ModelState.IsValid)
             {
                 if ((role != null) && (loggedinuser != null) && (role.Name == "Event Planner"))
@@ -164,6 +170,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.EventPlannerId = loggedinuser.EventPlannerId;
                     @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     @event.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                   
+
                 }
                 else
                 {

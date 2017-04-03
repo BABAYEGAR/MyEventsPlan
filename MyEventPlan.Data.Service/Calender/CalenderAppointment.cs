@@ -24,7 +24,10 @@ namespace MyEventPlan.Data.Service.Calender
                         StartDate = item.StartDate,
                         EndDate = item.EndDate,
                         Name = item.Name,
-                        EventPlannerId = id, AppointmentId = item.AppointmentId
+                        Notes = item.Notes,
+                        Location = item.Location,
+                        EventPlannerId = id,
+                        AppointmentId = item.AppointmentId
                     };
 
 
@@ -46,7 +49,11 @@ namespace MyEventPlan.Data.Service.Calender
                         EventId = item.EventId,
                         StartDate = item.StartDate,
                         EndDate = item.EndDate,
-                        Name = item.Name
+                        Name = item.Name,
+                        Notes = item.Notes,
+                        Location = item.Location,
+                        EventPlannerId = id,
+                        AppointmentId = item.AppointmentId
                     };
                     result.Add(rec);
                 }
@@ -61,18 +68,47 @@ namespace MyEventPlan.Data.Service.Calender
                 var rec = ent.Appointments.FirstOrDefault(s => s.AppointmentId == id);
                 if (rec != null)
                 {
-                    DateTime dateTimeStart = DateTime.Parse(newEventStart, null,
-                       DateTimeStyles.RoundtripKind).ToLocalTime(); // and convert offset to localtime
-                    TimeSpan timeDifference = rec.EndDate - rec.StartDate;
-                    rec.EndDate = dateTimeStart.Add(timeDifference);
-
-                    rec.StartDate = dateTimeStart;
-                   
+                    rec.StartDate = Convert.ToDateTime(newEventStart);
+                    rec.EndDate = Convert.ToDateTime(newEventEnd);
+                    rec.StartTime = Convert.ToDateTime(newEventStart).ToShortTimeString();
+                    rec.EndTime = Convert.ToDateTime(newEventEnd).ToShortTimeString();
                     ent.Entry(rec).State = EntityState.Modified;
                     ent.SaveChanges();
                 }
             }
         }
-      
+        public bool CreateNewAppointment(string title, string newEventStartDate, string newEventEndDate, long appUserId, string location, string note,
+       long plannerId,long eventId)
+        {
+            try
+            {
+                AppointmentDataContext ent = new AppointmentDataContext();
+                Event.Data.Objects.Entities.Appointment rec = new Event.Data.Objects.Entities.Appointment
+                {
+                    Name = title,
+                    StartDate = Convert.ToDateTime(newEventStartDate),
+                    EndDate = Convert.ToDateTime(newEventEndDate),
+                    Location = location,
+                    EventPlannerId = plannerId,
+                    Notes = note,
+                    StartTime = Convert.ToDateTime(newEventStartDate).ToShortTimeString(),
+                    EndTime = Convert.ToDateTime(newEventEndDate).ToShortTimeString(),
+                    CreatedBy = appUserId,
+                    LastModifiedBy = appUserId,
+                    DateCreated = DateTime.Now,
+                    DateLastModified = DateTime.Now,
+                    EventId = eventId
+                };
+
+                ent.Appointments.Add(rec);
+                ent.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
+        }
+
     }
 }

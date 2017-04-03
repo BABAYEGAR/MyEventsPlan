@@ -37,18 +37,18 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var appointments = new CalenderAppointment().LoadAllUserAppointments(loggedinuser?.EventPlannerId);
-            Event.Data.Objects.Entities.Event appoitmentEvent = null;
             foreach (var item in appointments)
             {
-                appoitmentEvent = _db.Event.Find(item.EventId);
+                var appoitmentEvent = _db.Event.Find(item.EventId);
 
                 var appointmentList = from e in appointments
                     select new
                     {
                         id = e.AppointmentId,
-                        title =
-                        appoitmentEvent.Name + Environment.NewLine + e.Name,
+                        title = e.Name,
                         start = e.StartDate,
+                        location = e.Location,
+                        note = e.Notes,
                         end = e.EndDate,
                         allDay = false
                     };
@@ -56,6 +56,31 @@ namespace MyEventPlan.Controllers.EventManagement
                 return Json(rows, JsonRequestBehavior.AllowGet);
             }
             return Json(appointments.ToArray(), JsonRequestBehavior.AllowGet);
+        }
+        // POST: Appointment/UpdateCalendarAppointment/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateCalendarAppointment(FormCollection collectedValues)
+        {
+            var appointmentId = Convert.ToInt64(collectedValues["appointmentId"]);
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var calendarAppointment = _db.Appointments.Find(appointmentId);
+            if (calendarAppointment != null)
+            {
+                calendarAppointment.DateLastModified = DateTime.Now;
+                if (loggedinuser != null) calendarAppointment.LastModifiedBy = loggedinuser.AppUserId;
+                calendarAppointment.StartDate = Convert.ToDateTime(collectedValues["StartDate"]);
+                calendarAppointment.Notes = collectedValues["Notes"];
+                calendarAppointment.Location = collectedValues["Location"];
+                calendarAppointment.EndDate = Convert.ToDateTime(collectedValues["EndDate"]);
+                calendarAppointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                calendarAppointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                _db.Entry(calendarAppointment).State = EntityState.Modified;
+            }
+            _db.SaveChanges();
+            return RedirectToAction("Calendar");
         }
 
         public void UpdateEventAppoitments(int id, string newEventStart, string newEventEnd)
@@ -72,6 +97,21 @@ namespace MyEventPlan.Controllers.EventManagement
             if (appointment == null)
                 return HttpNotFound();
             return View(appointment);
+        }
+        public bool CreateNewAppointment(string title, string newEventStartDate, string newEventEndDate,
+    long appUserId, string location, string note,
+    long plannerId,long eventId)
+        {
+            try
+            {
+                new CalenderAppointment().CreateNewAppointment(title, newEventStartDate, newEventEndDate, appUserId, location, note,
+                    plannerId,eventId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            return true;
         }
 
         // GET: Appointments/Create
@@ -182,9 +222,10 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             var appointment = _db.Appointments.Find(id);
+            var eventId = appointment.EventId;
             _db.Appointments.Remove(appointment);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index",new { eventId  = eventId});
         }
 
         protected override void Dispose(bool disposing)

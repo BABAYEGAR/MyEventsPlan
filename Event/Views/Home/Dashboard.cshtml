@@ -22,7 +22,7 @@
 
 
     var role = Session["role"] as Role;
-    var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+
     var upComingvents = dbEvent.Event.Where(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StartDate > DateTime.Now)).ToList();
     //recent event details
     Event recentEvent = null;
@@ -31,6 +31,7 @@
     var recentDate = new DateTime();
     if ((loggedinuser != null) && (loggedinuser.EventPlannerId != null))
     {
+        var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
         recentEvent = events.OrderByDescending(n => n.EventDate).FirstOrDefault();
 
         if (recentEvent != null)

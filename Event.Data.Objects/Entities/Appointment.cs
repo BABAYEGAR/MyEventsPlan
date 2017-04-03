@@ -9,6 +9,7 @@ namespace Event.Data.Objects.Entities
     public class Appointment :Transport
     {
         public long AppointmentId { get; set; }
+        [Required]
         public string Name { get; set; }
         public long EventId { get; set; }
         [ForeignKey("EventId")]
@@ -27,6 +28,7 @@ namespace Event.Data.Objects.Entities
         public DateTime EndDate { get; set; }
         [DisplayName("End Time")]
         public string EndTime { get; set; }
+        [Required]
         public string Location { get; set; }
         public string Notes { get; set; }
         public long? EventPlannerId { get; set; }

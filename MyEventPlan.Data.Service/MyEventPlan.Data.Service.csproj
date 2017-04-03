@@ -58,6 +58,7 @@
     <Compile Include="AuthenticationManagement\Hashing.cs" />
     <Compile Include="Calender\CalenderAppointment.cs" />
     <Compile Include="Calender\CalenderEvent.cs" />
+    <Compile Include="Calender\ColorCodeConverter.cs" />
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="DateTimeHelper\DateTimeCalculator.cs" />
     <Compile Include="EmailService\MailerDaemon.cs" />
