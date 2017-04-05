@@ -234,17 +234,17 @@
      <script src="~/Content/Timer/jquery.countdown.min.js"></script>
      <script type="text/javascript">
          $('#getting-started')
-             .countdown('@recentDate',
+             .countdown('@recentDate.ToString()',
                  function(event) {
                      $(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
                  });
          $('#getting-started1')
-             .countdown('@recentDate',
+             .countdown('@recentDate.ToString()',
                  function(event) {
                      $(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
                  });
          $('#getting-started2')
-             .countdown('@recentDate',
+             .countdown('@recentDate.ToString()',
                  function(event) {
                      $(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
                  });

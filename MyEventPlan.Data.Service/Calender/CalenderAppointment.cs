@@ -53,7 +53,8 @@ namespace MyEventPlan.Data.Service.Calender
                         Notes = item.Notes,
                         Location = item.Location,
                         EventPlannerId = id,
-                        AppointmentId = item.AppointmentId
+                        AppointmentId = item.AppointmentId,
+                        Event = item.Event
                     };
                     result.Add(rec);
                 }
@@ -70,8 +71,6 @@ namespace MyEventPlan.Data.Service.Calender
                 {
                     rec.StartDate = Convert.ToDateTime(newEventStart);
                     rec.EndDate = Convert.ToDateTime(newEventEnd);
-                    rec.StartTime = Convert.ToDateTime(newEventStart).ToShortTimeString();
-                    rec.EndTime = Convert.ToDateTime(newEventEnd).ToShortTimeString();
                     ent.Entry(rec).State = EntityState.Modified;
                     ent.SaveChanges();
                 }

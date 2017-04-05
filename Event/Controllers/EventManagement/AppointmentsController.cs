@@ -50,7 +50,8 @@ namespace MyEventPlan.Controllers.EventManagement
                         location = e.Location,
                         note = e.Notes,
                         end = e.EndDate,
-                        allDay = false
+                        allDay = false,
+                        backgroundColor = e.Event.Color
                     };
                 var rows = appointmentList.ToArray();
                 return Json(rows, JsonRequestBehavior.AllowGet);
