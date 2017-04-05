@@ -25,7 +25,9 @@ namespace MyEventPlan.Data.Service.Calender
                         StartDate = item.StartDate,
                         EndDate = item.EndDate,
                         Name = item.Name,
-                        Color = item.Color
+                        Color = item.Color,
+                        StartTime = item.StartTime,
+                        EndTime = item.EndTime,
                     };
 
 

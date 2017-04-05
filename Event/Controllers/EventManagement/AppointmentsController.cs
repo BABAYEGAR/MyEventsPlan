@@ -39,19 +39,19 @@ namespace MyEventPlan.Controllers.EventManagement
             var appointments = new CalenderAppointment().LoadAllUserAppointments(loggedinuser?.EventPlannerId);
             foreach (var item in appointments)
             {
-                var appoitmentEvent = _db.Event.Find(item.EventId);
-
                 var appointmentList = from e in appointments
                     select new
                     {
                         id = e.AppointmentId,
-                        title = e.Name,
+                        title = e.Name +" on "+ e.Event.Name +" Event"+ " ... Starts from "+ e.StartTime + "To "+e.EndTime,
                         start = e.StartDate,
                         location = e.Location,
                         note = e.Notes,
                         end = e.EndDate,
                         allDay = false,
-                        backgroundColor = e.Event.Color
+                        backgroundColor = e.Event.Color,
+                        startTime = e.StartTime,
+                        endTime = e.EndTime
                     };
                 var rows = appointmentList.ToArray();
                 return Json(rows, JsonRequestBehavior.AllowGet);

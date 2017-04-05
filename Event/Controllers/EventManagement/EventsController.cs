@@ -71,12 +71,14 @@ namespace MyEventPlan.Controllers.EventManagement
                 select new
                 {
                     id = e.EventId,
-                    title = e.Name,
+                    title = e.Name +" ... Starts from " + e.StartTime + "To " + e.EndTime,
                     start = e.StartDate,
                     end = e.EndDate,
                     color = e.Color,
                     allDay = false,
-                    backgroundColor = e.Color
+                    backgroundColor = e.Color,
+                    startTime = e.StartTime,
+                    endTime = e.EndTime
                 };
             var rows = eventList.ToArray();
             return Json(rows, JsonRequestBehavior.AllowGet);

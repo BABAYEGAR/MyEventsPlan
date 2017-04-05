@@ -7,7 +7,6 @@
 }
 @section css{
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link href="~/Content/Color/spectrum.css" rel="stylesheet"/>
 }
 @using (Html.BeginForm("BackgroundColor", "AppUsers", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
 {
@@ -16,24 +15,14 @@
     <div class="control-group">
         @Html.LabelFor(model => model.BackgroundColor, new {@class = "control-label"})
         <div class="controls">
-            @Html.DropDownListFor(m => m.BackgroundColor, EnumHelper.GetSelectList(typeof(NavColor)), "select a user role", new {@class = "form-control"})
+            @Html.DropDownListFor(m => m.BackgroundColor, EnumHelper.GetSelectList(typeof(NavColor)), "select a background color", new {@class = "form-control"})
             @Html.ValidationMessageFor(model => model.BackgroundColor, "", new {@class = "text-danger"})
         </div>
 
     </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Update Color" class="btn btn-default"/>
+            <input type="submit" value="Apply Color" class="btn btn-default"/>
         </div>
     </div>
-}
-@section scripts
-{
-    <script src="~/Content/Color/spectrum.js"></script>
-    <script type="text/javascript">
-
-        $("#sideColor").spectrum();
-        $("#navColor").spectrum();
-
-    </script>
 }

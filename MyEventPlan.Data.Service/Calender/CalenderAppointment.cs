@@ -49,6 +49,8 @@ namespace MyEventPlan.Data.Service.Calender
                         EventId = item.EventId,
                         StartDate = item.StartDate,
                         EndDate = item.EndDate,
+                        StartTime = item.StartTime,
+                        EndTime = item.EndTime,
                         Name = item.Name,
                         Notes = item.Notes,
                         Location = item.Location,

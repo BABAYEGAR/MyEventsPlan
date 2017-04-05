@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -42,6 +43,7 @@ namespace Event.Data.Objects.Entities
         public virtual Client Client { get; set; }
         public string ProfileImage { get; set; }
         public string Status { get; set; }
+        [DisplayName("Background Color")]
         public string BackgroundColor { get; set; }
         public bool Verified { get; set; }
         public  IEnumerable<Message> Messages { get; set; }
