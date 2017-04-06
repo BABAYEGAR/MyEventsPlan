@@ -44,6 +44,7 @@
     <Compile Include="Entities\Appointment.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Budget.cs" />
+    <Compile Include="Entities\EventPlannerPackage.cs" />
     <Compile Include="Entities\PersonalCheckListItem.cs" />
     <Compile Include="Entities\PersonalCheckList.cs" />
     <Compile Include="Entities\CheckListItem.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Staff.cs" />
     <Compile Include="Entities\CheckList.cs" />
+    <Compile Include="Entities\SubscriptionInvoice.cs" />
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\Transport.cs" />
     <Compile Include="Entities\Vendor.cs" />

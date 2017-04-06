@@ -228,6 +228,7 @@
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
+    <Compile Include="Controllers\SystemManagement\EventPlannerPackagesController.cs" />
     <Compile Include="Controllers\SystemManagement\PackagesController.cs" />
     <Compile Include="Controllers\VendorManagement\LocationsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorsController.cs" />
@@ -1514,6 +1515,13 @@
     <Content Include="Views\Shared\EditPersonalCheckListItemModal.cshtml" />
     <Content Include="Views\Shared\EditPersonalCheckListModal.cshtml" />
     <Content Include="Views\Shared\_LayoutUpload.cshtml" />
+    <Content Include="Views\EventPlannerPackages\Create.cshtml" />
+    <Content Include="Views\EventPlannerPackages\Delete.cshtml" />
+    <Content Include="Views\EventPlannerPackages\Details.cshtml" />
+    <Content Include="Views\EventPlannerPackages\Edit.cshtml" />
+    <Content Include="Views\EventPlannerPackages\Index.cshtml" />
+    <Content Include="Views\Account\Pricing.cshtml" />
+    <Content Include="Views\Account\Invoice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

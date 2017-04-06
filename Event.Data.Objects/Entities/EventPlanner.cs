@@ -60,5 +60,7 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<Resource> Resources { get; set; }
         public IEnumerable<Client> Clients { get; set; }
         public IEnumerable<Invoice> Invoices { get; set; }
+        public IEnumerable<EventPlannerPackage> EventPlannerPackage { get; set; }
+        public IEnumerable<SubscriptionInvoice> SubscriptionInvoices { get; set; }
     }
 }

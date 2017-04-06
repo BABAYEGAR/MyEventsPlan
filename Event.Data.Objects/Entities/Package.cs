@@ -14,9 +14,10 @@ namespace Event.Data.Objects.Entities
         [Required]
         [DisplayName("Package Name")]
         public string PackageName { get; set; }
-        public string Amount { get; set; }
+        public long Amount { get; set; }
         [Required]
         [DisplayName("Maximum Number Of Events")]
         public long MaximumEvents { get; set; }
+        public IEnumerable<EventPlannerPackage> EventPlannerPackage { get; set; }
     }
 }

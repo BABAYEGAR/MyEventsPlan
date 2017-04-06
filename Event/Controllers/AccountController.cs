@@ -21,6 +21,9 @@ namespace MyEventPlan.Controllers
     {
         private readonly AppUserDataContext _db = new AppUserDataContext();
         private readonly PasswordResetDataContext _dbc = new PasswordResetDataContext();
+        private readonly EventDataContext _dbd = new EventDataContext();
+        private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
+        private readonly EventPlannerPackageDataContext _dbf = new EventPlannerPackageDataContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -45,12 +48,161 @@ namespace MyEventPlan.Controllers
             get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
             private set { _userManager = value; }
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: EventPlanners/Invoice
+        public ActionResult Invoice(long id)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var selectedPackage = _dbd.Packages.Find(id);
+            var subscriptionInvoice = new SubscriptionInvoice();
+
+            //random number
+            var generator = new Random();
+            var randomNumber = generator.Next(0, 1000000).ToString("D6");
+
+            if (loggedinuser != null)
+            {
+                subscriptionInvoice.AppUserId = loggedinuser.AppUserId;
+                if (loggedinuser.EventPlannerId != null)
+                    subscriptionInvoice.EventPlannerId = (long) loggedinuser.EventPlannerId;
+                subscriptionInvoice.DateCreated = DateTime.Now;
+                subscriptionInvoice.DateLastModified = DateTime.Now;
+                subscriptionInvoice.CreatedBy = loggedinuser.AppUserId;
+                subscriptionInvoice.LastModifiedBy = loggedinuser.AppUserId;
+            }
+            subscriptionInvoice.InvoiceNumber = "#" + randomNumber;
+            if (selectedPackage != null)
+            {
+                subscriptionInvoice.PackageId = selectedPackage.PackageId;
+
+                Session["package"] = selectedPackage;
+            }
+            Session["invoice"] = subscriptionInvoice;
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: EventPlanners/Pricing
+        public ActionResult Pricing()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var packages = _dbd.EventPlannerPackages.Include(n => n.Package);
+
+            var packageSubscribed =
+                packages.SingleOrDefault(
+                    n =>
+                        (n.EventPlannerId == loggedinuser.EventPlannerId) &&
+                        (n.Status == PackageStatusEnum.Active.ToString()));
+            return View(packageSubscribed);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: EventPlanners/Pricing
+        public ActionResult ConfirmPayment()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var package = Session["package"] as Package;
+            var invoice = Session["invoice"] as SubscriptionInvoice;
+            var packageToSubscribed = new EventPlannerPackage();
+            var packages = _dbd.EventPlannerPackages.Include(n => n.Package);
+            //current subscription
+            var packageSubscribed =
+                packages.SingleOrDefault(
+                    n =>
+                        (n.EventPlannerId == loggedinuser.EventPlannerId) &&
+                        (n.Status == PackageStatusEnum.Active.ToString()));
+
+
+            if (packageSubscribed != null)
+            {
+                //make the current package inactive
+                packageSubscribed.Status = PackageStatusEnum.Inactive.ToString();
+                packageSubscribed.DateLastModified = DateTime.Now;
+                _dbf.Entry(packageSubscribed).State = EntityState.Modified;
+                _dbf.SaveChanges();
+
+                //populate new package
+                if ((loggedinuser != null) && (loggedinuser.EventPlannerId != null))
+                    packageToSubscribed.EventPlannerId = (long) loggedinuser.EventPlannerId;
+                if (loggedinuser != null)
+                {
+                    packageToSubscribed.CreatedBy = loggedinuser.AppUserId;
+                    packageToSubscribed.LastModifiedBy = loggedinuser.AppUserId;
+                    packageToSubscribed.AppUserId = loggedinuser.AppUserId;
+                }
+
+                packageToSubscribed.DateCreated = DateTime.Now;
+                packageToSubscribed.DateLastModified = DateTime.Now;
+                packageToSubscribed.Status = PackageStatusEnum.Active.ToString();
+                packageToSubscribed.SubscribedEvent = 0;
+
+                //package data
+                if (package != null)
+                {
+                    packageToSubscribed.PackageId = package.PackageId;
+                    packageToSubscribed.AllowedEvent = package.MaximumEvents;
+                }
+                //commit package to database
+                _dbf.EventPlannerPackages.Add(packageToSubscribed);
+                _dbf.SaveChanges();
+
+                //commit invoice to database
+                if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
+                _dbe.SaveChanges();
+                Session["package"] = null;
+                Session["invoice"] = null;
+                //display notification
+                TempData["display"] = "You have successfully subscribed to the package!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Setting", "Account");
+            }
+            if (loggedinuser != null)
+            {
+                if (loggedinuser.EventPlannerId != null)
+                    packageToSubscribed.EventPlannerId = (long) loggedinuser.EventPlannerId;
+                packageToSubscribed.CreatedBy = loggedinuser.AppUserId;
+                packageToSubscribed.LastModifiedBy = loggedinuser.AppUserId;
+                packageToSubscribed.AppUserId = loggedinuser.AppUserId;
+            }
+            packageToSubscribed.DateCreated = DateTime.Now;
+            packageToSubscribed.DateLastModified = DateTime.Now;
+            packageToSubscribed.Status = PackageStatusEnum.Active.ToString();
+            packageToSubscribed.SubscribedEvent = 0;
+
+
+            //package data
+            if (package != null)
+            {
+                packageToSubscribed.PackageId = package.PackageId;
+                packageToSubscribed.AllowedEvent = package.MaximumEvents;
+            }
+            _dbf.EventPlannerPackages.Add(packageToSubscribed);
+            _dbf.SaveChanges();
+            if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
+            _dbe.SaveChanges();
+
+            Session["package"] = null;
+            Session["invoice"] = null;
+
+            //display notification
+            TempData["display"] = "You have successfully subscribed to the package!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Setting", "Account");
+
+            return View(packageSubscribed);
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult VerifyEmail()
         {
             return View();
         }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Setting()
@@ -58,6 +210,7 @@ namespace MyEventPlan.Controllers
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             return View(loggedinuser);
         }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult UserProfile()
@@ -65,6 +218,7 @@ namespace MyEventPlan.Controllers
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             return View(loggedinuser);
         }
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult VerifyEmail(FormCollection collectedValues)
@@ -77,6 +231,7 @@ namespace MyEventPlan.Controllers
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("PasswordReset", "Account");
         }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult VerifyAccount(long id)
@@ -87,12 +242,14 @@ namespace MyEventPlan.Controllers
             _db.SaveChanges();
             return RedirectToAction("Dashboard", "Home");
         }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult ChangePassword()
         {
             return View();
         }
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult ChangePassword(FormCollection collectedValues)
@@ -104,7 +261,6 @@ namespace MyEventPlan.Controllers
                 var user = _db.AppUsers.Find(loggedinuser.AppUserId);
                 user.Password = new Hashing().HashPassword(password);
                 _db.Entry(user).State = EntityState.Modified;
-
             }
             _db.SaveChanges();
             Session["myeventplanloggedinuser"] = loggedinuser;
@@ -112,12 +268,14 @@ namespace MyEventPlan.Controllers
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Setting", "Account");
         }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult PasswordReset()
         {
             return View();
         }
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult PasswordReset(FormCollection collectedValues)
@@ -131,13 +289,12 @@ namespace MyEventPlan.Controllers
                 var user = _db.AppUsers.Find(loggedinuser.AppUserId);
                 user.Password = new Hashing().HashPassword(password);
                 _db.Entry(user).State = EntityState.Modified;
-              
             }
-            Random generator = new Random();
-            long number = Convert.ToInt64(generator.Next(0, 1000000).ToString("D6"));
+            var generator = new Random();
+            var number = Convert.ToInt64(generator.Next(0, 1000000).ToString("D6"));
             reset.Password = password;
-                reset.ConfirmPassword = new Hashing().HashPassword(password);
-                reset.Date = DateTime.Now;
+            reset.ConfirmPassword = new Hashing().HashPassword(password);
+            reset.Date = DateTime.Now;
             reset.Code = number;
             if (loggedinuser != null) reset.Email = loggedinuser.Email;
             _dbc.PasswordResets.Add(reset);
@@ -158,7 +315,7 @@ namespace MyEventPlan.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
-  
+
         //
         // POST: /Account/Login
         [HttpPost]
@@ -180,7 +337,7 @@ namespace MyEventPlan.Controllers
                         var eventPlanner = _db.EventPlanners.Find(user.EventPlannerId);
                         Session["eventplanner"] = eventPlanner;
                     }
-                  
+
                     return RedirectToAction("Dashboard", "Home");
                 }
                 TempData["login"] = "Verify your account from your email and try again!";

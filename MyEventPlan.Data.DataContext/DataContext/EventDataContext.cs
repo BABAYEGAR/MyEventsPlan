@@ -59,6 +59,8 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<InvoicePayment> InvoicePayments { get; set; }
         public virtual DbSet<PersonalCheckList> PersonalCheckLists { get; set; }
         public virtual DbSet<PersonalCheckListItem> PersonalCheckListItems { get; set; }
+        public virtual DbSet<EventPlannerPackage> EventPlannerPackages { get; set; }
+        public virtual DbSet<SubscriptionInvoice> SubscriptionInvoices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

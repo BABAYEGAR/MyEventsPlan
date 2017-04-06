@@ -5,8 +5,6 @@
     ViewBag.Title = "View";
     ViewBag.Header = Model.DisplayName;
     Layout = "../Shared/_LayoutForm.cshtml";
-    var eventPlaner = Session["eventplanner"] as EventPlanner;
-    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 }
 @section links{
     <ol class="breadcrumb">
@@ -15,7 +13,6 @@
         </li>
     </ol>
 }
-
 <div class="btn-controls">
     <div class="btn-box-row row-fluid">
         <div>
@@ -35,6 +32,9 @@
                             <div class="span12">
                                 <a href="@Url.Action("ImageUpload", "AppUsers")" class="btn-box medium span4">
                                     <i class="icon-camera"></i><b>Logo</b>
+                                </a>
+                                <a href="@Url.Action("Pricing", "Account")" class="btn-box medium span4">
+                                    <i class="fa fa-dollar"></i><b>Subscription</b>
                                 </a>
                             </div>
                         </div>

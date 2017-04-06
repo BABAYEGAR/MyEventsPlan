@@ -183,6 +183,29 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _db.Event.Add(@event);
                 _db.SaveChanges();
+                if (@event.EventId > 0)
+                {
+                    //package data
+                    var packageData =
+                        _db.EventPlannerPackages.FirstOrDefault(n => n.Status == PackageStatusEnum.Active.ToString());
+                    if (packageData != null && packageData.SubscribedEvent < packageData.AllowedEvent)
+                    {
+                        packageData.SubscribedEvent = packageData.SubscribedEvent + 1;
+                    }
+                    if (packageData != null && packageData.SubscribedEvent >= packageData.AllowedEvent)
+                    {
+                        packageData.Status = PackageStatusEnum.Inactive.ToString();
+                    }
+                    if (packageData != null)
+                    {
+                        packageData.LastModifiedBy = loggedinuser.AppUserId;
+                        packageData.DateLastModified = DateTime.Now;
+                    }
+                    _db.Entry(packageData).State = EntityState.Modified;
+                    _db.SaveChanges();
+
+                }
+                //display notification
                 TempData["display"] = "You have successfully added an event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
