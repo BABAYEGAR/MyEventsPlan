@@ -1,11 +1,20 @@
-﻿@model IEnumerable<Event.Data.Objects.Entities.Event>
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<Event>
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all my events";
     Layout = "../Shared/_LayoutTable.cshtml";
+    var packageSubscribed = Session["subscribe"] as EventPlannerPackage;
 }
 @section add {
-    @Html.ActionLink("Add Event", "Create", null, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
+ @if (packageSubscribed != null && packageSubscribed.AllowedEvent > packageSubscribed.SubscribedEvent)
+ {
+     @Html.ActionLink("Add Event", "Create", null, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
+ }
+ else
+ {
+     <div class="alert alert-info" style="margin-left: 12px;">Your Subscription has been exhausted.. Buy a new subscription by clicking <a href="@Url.Action("Pricing","Account")"> here</a></div>
+ }
 }
 @section links{
 

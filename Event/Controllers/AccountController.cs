@@ -96,6 +96,8 @@ namespace MyEventPlan.Controllers
                     n =>
                         (n.EventPlannerId == loggedinuser.EventPlannerId) &&
                         (n.Status == PackageStatusEnum.Active.ToString()));
+            if (packageSubscribed != null)
+                Session["subscribe"] = packageSubscribed;
             return View(packageSubscribed);
         }
 
@@ -337,6 +339,13 @@ namespace MyEventPlan.Controllers
                         var eventPlanner = _db.EventPlanners.Find(user.EventPlannerId);
                         Session["eventplanner"] = eventPlanner;
                     }
+                    var packageSubscribed =
+                        _dbe.EventPlannerPackages.SingleOrDefault(
+                            n =>
+                                (n.EventPlannerId == user.EventPlannerId) &&
+                                (n.Status == PackageStatusEnum.Active.ToString()));
+                    if (packageSubscribed != null)
+                        Session["subscribe"] = packageSubscribed;
 
                     return RedirectToAction("Dashboard", "Home");
                 }

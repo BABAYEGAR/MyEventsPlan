@@ -1,9 +1,11 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.EventPlannerPackage
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model EventPlannerPackage
 @{
     Layout = null;
     var dbd = new EventDataContext();
     var packages = dbd.Packages;
+    var packageSubscribed = Session["subscribe"] as EventPlannerPackage;
 }
 <style>
     body {
@@ -29,109 +31,81 @@
         text-align: center;
     }
 
-        .pricing img {
-            display: block;
-            margin: auto;
-            width: 32px;
-        }
+    .pricing img {
+        display: block;
+        margin: auto;
+        width: 32px;
+    }
 
-        .pricing li:first-child,
-        .pricing li:last-child {
-            padding: 20px 13px;
-        }
+    .pricing li:first-child,
+    .pricing li:last-child { padding: 20px 13px; }
 
-        .pricing li {
-            list-style: none;
-            padding: 13px;
-        }
+    .pricing li {
+        list-style: none;
+        padding: 13px;
+    }
 
-            .pricing li + li {
-                border-top: 1px solid #f0f0f0;
-            }
+    .pricing li + li { border-top: 1px solid #f0f0f0; }
 
-        .pricing big {
-            font-size: 32px;
-        }
+    .pricing big { font-size: 32px; }
 
-        .pricing h3 {
-            font-size: 36px;
-            margin-bottom: 0;
-        }
+    .pricing h3 {
+        font-size: 36px;
+        margin-bottom: 0;
+    }
 
-        .pricing span {
-            color: #999;
-            font-size: 12px;
-            font-weight: normal;
-        }
+    .pricing span {
+        color: #999;
+        font-size: 12px;
+        font-weight: normal;
+    }
 
-        .pricing li:nth-last-child(2) {
-            padding: 30px 13px;
-        }
+    .pricing li:nth-last-child(2) { padding: 30px 13px; }
 
-        .pricing button {
-            background: #aaa;
-            border: none;
-            border-radius: 50px;
-            color: #fff;
-            font-size: 15px;
-            font-weight: bold;
-            margin: auto;
-            opacity: 1;
-            outline: none;
-            padding: 9px 24px;
-            transition: opacity .2s ease;
-            width: auto;
-        }
+    .pricing button {
+        background: #aaa;
+        border: none;
+        border-radius: 50px;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        margin: auto;
+        opacity: 1;
+        outline: none;
+        padding: 9px 24px;
+        transition: opacity .2s ease;
+        width: auto;
+    }
 
-            .pricing button:hover {
-                opacity: .9;
-            }
+    .pricing button:hover { opacity: .9; }
 
-            .pricing button:active {
-                box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
-            }
+    .pricing button:active { box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1); }
 
     /* pricing color */
 
     .p-green big,
-    .p-green h3 {
-        color: #4c7737;
-    }
+    .p-green h3 { color: #4c7737; }
 
-    .p-green button {
-        background: #4c7737;
-    }
+    .p-green button { background: #4c7737; }
 
     .p-yel big,
-    .p-yel h3 {
-        color: #ffbb42;
-    }
+    .p-yel h3 { color: #ffbb42; }
 
-    .p-yel button {
-        background: #ffbb42;
-    }
+    .p-yel button { background: #ffbb42; }
 
     .p-red big,
-    .p-red h3 {
-        color: #e13c4c;
-    }
+    .p-red h3 { color: #e13c4c; }
 
-    .p-red button {
-        background: #e13c4c;
-    }
+    .p-red button { background: #e13c4c; }
 
     .p-blue big,
-    .p-blue h3 {
-        color: #3f4bb8;
-    }
+    .p-blue h3 { color: #3f4bb8; }
 
-    .p-blue button {
-        background: #3f4bb8;
-    }
+    .p-blue button { background: #3f4bb8; }
 </style>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Subscription</title>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
@@ -144,20 +118,40 @@
         </li>
         <li class="breadcrumb-item">
             <a href="@Url.Action("Setting", "Account")">
-                Account  Setting
+                Account Setting
             </a>
         </li>
     </ol>
     <br/>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            Current Package:
-        </li>
-            <br />
-        <li class="breadcrumb-item">
-            Events Left:
-        </li>
-</ol>
+        @if ((packages != null) && (packageSubscribed != null))
+        {
+            <li class="breadcrumb-item">
+                Current Package:
+                @{
+                    var package = packages.Find(packageSubscribed.PackageId);
+                }
+                @if (package != null)
+                {
+                    @package.PackageName
+                }
+            </li>
+            <br/>
+            <li class="breadcrumb-item">
+                Events Left: @(packageSubscribed.AllowedEvent - packageSubscribed.SubscribedEvent)
+            </li>
+        }
+        else
+        {
+            <li class="breadcrumb-item">
+                Current Package: None
+            </li>
+            <br/>
+            <li class="breadcrumb-item">
+                Events Left: 0
+            </li>
+        }
+    </ol>
     <br/>
     <br/>
     <br/>
@@ -179,7 +173,7 @@
                             <span>for up to @item.MaximumEvents Event(s)</span>
                         </li>
                         <li>
-                            <a href="@Url.Action("Invoice",new {id = item.PackageId})" class="btn p-blue"><i class="fa fa-credit-card"></i> Buy</a>
+                            <a href="@Url.Action("Invoice", new {id = item.PackageId})" class="btn p-blue"><i class="fa fa-credit-card"></i> Buy</a>
                         </li>
                     </ul>
                 </div>

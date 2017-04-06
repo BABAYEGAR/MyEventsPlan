@@ -10,9 +10,8 @@
 <style>
     .invoice {
         background: #fff;
-        border: 1px solid #f4f4f4;
-        margin: 10px 25px;
-        padding: 20px;
+        margin-right: 10px;
+        padding: 15px;
         position: relative;
     }
 
@@ -21,13 +20,14 @@
         margin: 10px 0 20px 0;
     }
 </style>
+
 <section class="content content_content" style="margin: auto; width: 70%;">
     <section class="invoice">
         <!-- title row -->
         <div class="row">
             <div class="col-xs-12">
                 <h2 class="page-header">
-                    <i class="fa fa-globe"></i> Trust point Co.
+                    <i class="fa fa-globe"></i> MyEventsPlan.
                     <small class="pull-right">Date: @DateTime.Now</small>
                 </h2>
             </div><!-- /.col -->
@@ -75,15 +75,15 @@
                     </thead>
                     <tbody>
 
-@if (package != null)
-{
-    <tr>
-        <td>1</td>
-        <td>@package.PackageName</td>
-        <td>@package.Amount</td>
-        <td>@package.Amount</td>
-    </tr>
-}
+                    @if (package != null)
+                    {
+                        <tr>
+                            <td>1</td>
+                            <td>@package.PackageName</td>
+                            <td>@package.Amount</td>
+                            <td>@package.Amount</td>
+                        </tr>
+                    }
                     </tbody>
                 </table>
             </div><!-- /.col -->
@@ -95,14 +95,13 @@
                 <div class="table-responsive">
                     <table class="table">
                         <tbody>
-@if (package != null)
-{
-
-    <tr>
-        <th>Total:</th>
-        <td> @package.Amount</td>
-    </tr>
-}
+                        @if (package != null)
+                        {
+                            <tr>
+                                <th>Total:</th>
+                                <td> @package.Amount</td>
+                            </tr>
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -111,10 +110,50 @@
         <!-- this row will not appear when printing -->
         <div class="row no-print">
             <div class="col-xs-12">
-                <a href="" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                <a href="@Url.Action("ConfirmPayment")" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Make Payment</a>
-                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+                    <script src="https://js.paystack.co/v1/inline.js"></script>
+                    <a href="" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                    <button type="button" onclick="payWithPaystack()" class="btn btn-success pull-right"> <i class="fa fa-credit-card"></i> Make Payment</button>
+                    <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
             </div>
         </div>
     </section>
 </section>
+<script>
+    function payWithPaystack() {
+        var handler = window.PaystackPop.setup({
+            key: 'pk_test_86d32aa1nV4l1da7120ce530f0b221c3cb97cbcc',
+            email: '@loggedinuser.Email',
+            amount: @package.Amount,
+            ref: "UNIQUE TRANSACTION REFERENCE HERE",
+            metadata: {
+                custom_fields: [
+                    {
+                        display_name: "Mobile Number",
+                        variable_name: "mobile_number",
+                        value: "@loggedinuser.Mobile"
+                    }
+                ]
+            },
+            callback: function(response) {
+                ConfirmPayment();
+                alert('success. transaction ref is ' + response.reference);
+            },
+            onClose: function() {
+                alert('window closed');
+            }
+        });
+        handler.openIframe();
+    }
+
+    function ConfirmPayment() {
+        $.ajax({
+            url: '@Url.Action("ConfirmPayment", "Account")',
+            type: 'GET',
+            dataType: 'json',
+            // we set cache: false because GET requests are often cached by browsers
+            // IE is particularly aggressive in that respect
+            cache: false
+        });
+    }
+
+</script>
