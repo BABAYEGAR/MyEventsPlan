@@ -6,6 +6,7 @@
 
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
     var package = Session["package"] as Package;
+    var invoice = Session["invoice"] as SubscriptionInvoice;
 }
 <style>
     .invoice {
@@ -110,10 +111,10 @@
         <!-- this row will not appear when printing -->
         <div class="row no-print">
             <div class="col-xs-12">
-                    <script src="https://js.paystack.co/v1/inline.js"></script>
-                    <a href="" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-                    <button type="button" onclick="payWithPaystack()" class="btn btn-success pull-right"> <i class="fa fa-credit-card"></i> Make Payment</button>
-                    <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
+                <script src="https://js.paystack.co/v1/inline.js"></script>
+                <a href="" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+                <button type="button" onclick="payWithPaystack()" class="btn btn-success pull-right"> <i class="fa fa-credit-card"></i> Make Payment</button>
+                <button class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF</button>
             </div>
         </div>
     </section>
@@ -121,16 +122,16 @@
 <script>
     function payWithPaystack() {
         var handler = window.PaystackPop.setup({
-            key: 'pk_test_86d32aa1nV4l1da7120ce530f0b221c3cb97cbcc',
+            key: 'pk_test_d19305d69eba56904f42be1c7a8a1fa0259f0760',
             email: '@loggedinuser.Email',
             amount: @package.Amount,
-            ref: "UNIQUE TRANSACTION REFERENCE HERE",
+            ref: "",
             metadata: {
                 custom_fields: [
                     {
                         display_name: "Mobile Number",
                         variable_name: "mobile_number",
-                        value: "@loggedinuser.Mobile"
+                        value: "+2348114675635"
                     }
                 ]
             },

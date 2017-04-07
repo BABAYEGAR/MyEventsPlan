@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Event.Data.Objects.Entities
+@{
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -33,7 +37,7 @@
                         <div class="module-body">
                             <div class="stream-composer media">
                                 <a href="#" class="media-avatar medium pull-left">
-                                    <img src="~/Content/Dashboard/images/user.png">
+                                    <img src="~/UploadedFiles/ProfileImage/@loggedinuser.ProfileImage">
                                 </a>
                                 @RenderSection("addNews", false)
 

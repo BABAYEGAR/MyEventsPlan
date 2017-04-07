@@ -1,8 +1,10 @@
-﻿@model IEnumerable<Event.Data.Objects.Entities.News>
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<News>
 @{
     ViewBag.Title = "Index";
     ViewBag.Header = "News Activity";
     Layout = "../Shared/_LayoutNews.cshtml";
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 }
 @section addNews{
     @using (Html.BeginForm("Create", "News", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
@@ -11,7 +13,7 @@
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
         <div class="media-body">
             <div class="row-fluid">
-                <textarea class="span12" name="Content" style="height: 70px; resize: none;"></textarea>
+                <textarea class="span12" name="Content" style="height: 70px; resize: none;" required="*"></textarea>
             </div>
             <div class="clearfix">
                 <br/>
@@ -39,7 +41,7 @@
         </div>
         <div class="media stream">
             <a href="#" class="media-avatar medium pull-left">
-                <img src="~/Content/Dashboard/images/user.png">
+                <img src="~/UploadedFiles/NewsImage/@loggedinuser.ProfileImage">
             </a>
             <div class="media-body">
                 <div class="stream-headline">

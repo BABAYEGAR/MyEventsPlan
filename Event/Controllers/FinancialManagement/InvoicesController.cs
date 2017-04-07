@@ -76,10 +76,14 @@ namespace MyEventPlan.Controllers.FinancialManagement
             long invoiceId = Convert.ToInt64(collectedValues["InvoiceId"]);
             var invoice = _db.Invoices.Find(invoiceId);
             var events = _db.Event.Find(eventId);
-            invoice.EventId = eventId;
-            _db.Entry(invoice).State = EntityState.Modified;
+            if (invoice != null)
+            {
+                invoice.EventId = eventId;
+                _db.Entry(invoice).State = EntityState.Modified;
+            }
             _db.SaveChanges();
-            TempData["display"] = "You have successfully linked the Invoice to "+ events.Name +"!";
+            if (events != null)
+                TempData["display"] = "You have successfully linked the Invoice to "+ events.Name +"!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
@@ -88,10 +92,14 @@ namespace MyEventPlan.Controllers.FinancialManagement
         {
             var invoice = _db.Invoices.Find(id);
             var events = _db.Event.Find(eventId);
-            invoice.EventId = null;
-            _db.Entry(invoice).State = EntityState.Modified;
+            if (invoice != null)
+            {
+                invoice.EventId = null;
+                _db.Entry(invoice).State = EntityState.Modified;
+            }
             _db.SaveChanges();
-            TempData["display"] = "You have successfully linked the Invoice to " + events.Name + "!";
+            if (events != null)
+                TempData["display"] = "You have successfully Unlinked the Invoice to " + events.Name + "!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new { id = eventId });
         }
