@@ -85,11 +85,12 @@
         @Html.DisplayFor(model => model.EndTime)
     </dd>
 
-    <dt>
-        @Html.DisplayNameFor(model => model.CreatedBy)
-    </dt>
     @if ((role != null) && (role.Name == "Platform Administrator"))
     {
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
         <dt>
             @Html.DisplayNameFor(model => model.CreatedBy)
         </dt>
@@ -127,8 +128,8 @@
 @if (Model.Status == ProspectStausEnum.Active.ToString())
 {
     @Html.ActionLink("Cancel", "CancelProspect", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-warning icon-remove"})
-
-    @Html.ActionLink("Convert Prospect to event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-success"})
+    <span>|</span>
+    @Html.ActionLink("Convert To Event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-success"})
 }
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
