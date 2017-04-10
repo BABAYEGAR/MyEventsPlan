@@ -3,7 +3,8 @@
 @model IEnumerable<PersonalCheckListItem>
 @{
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "List of all my check list item";
+    ViewBag.TableHeader = "My Personal Check-List Items";
+    ViewBag.TableSubHeader = "List of all my Check-List Items";
     Layout = "../Shared/_LayoutTable.cshtml";
     var checkListItem = new PersonalCheckListItem();
     var db = new PersonalCheckListDataContext();
@@ -55,8 +56,8 @@
 
     </div>
 }
-    <div class="table-responsive">
-        <table class="datatable-1 table table-bordered table-striped display">
+    <div class="card-content table-responsive">
+        <table class="text-primary">
             <thead>
             <tr>
                 <th>

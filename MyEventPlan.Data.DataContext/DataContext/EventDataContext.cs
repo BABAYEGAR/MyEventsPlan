@@ -55,6 +55,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<PasswordReset> PasswordResets { get; set; }
         public virtual DbSet<Budget> Budgets { get; set; }
         public virtual DbSet<Invoice> Invoices { get; set; }
+        public virtual DbSet<Staff> Staff { get; set; }
         public virtual DbSet<InvoiceItem> InvoiceItems { get; set; }
         public virtual DbSet<InvoicePayment> InvoicePayments { get; set; }
         public virtual DbSet<PersonalCheckList> PersonalCheckLists { get; set; }

@@ -2,67 +2,68 @@
 @model IEnumerable<Location>
 @{
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "List of all locations";
+    ViewBag.TableHeader = "Locations";
+    ViewBag.TableSubHeader = "List of all Locations";
     Layout = "../Shared/_LayoutTable.cshtml";
     var locations = new Location();
 }
 @section links{
 
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
-        </li>
-    </ol>
-}
-@section add {
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
-        Add Location
-    </button>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+            </li>
+        </ol>
+    }
+    @section add {
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+            Add Location
+        </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">Add a new location</h4>
-                </div>
-                <div class="modal-body">
-                    @{
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Add a new location</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{
 
-                        Html.RenderPartial("CreateLocationModal", locations);
-                    }
+                            Html.RenderPartial("CreateLocationModal", locations);
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
 
-    </div>
-}
-<div class="table-responsive">
-    <table class="datatable-1 table table-bordered table-striped display">
+        </div>
+    }
+<div class="card-content table-responsive">
+    <table class="table table-hover">
         <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>Action</th>
-        </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>Action</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.ActionLink("Open", "Details", new {id = item.LocationId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
-                </td>
-            </tr>
-        }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Open", "Details", new { id = item.LocationId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </div>

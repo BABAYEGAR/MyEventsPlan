@@ -24,5 +24,7 @@ namespace Event.Data.Objects.Entities
         [ForeignKey("EventPlannerId")]
         public virtual EventPlanner EventPlanner { get; set; }
         public IEnumerable<EventContactMapping> EventContactMapping { get; set; }
+        public string DisplayName
+=> Firstname + " " + Lastname;
     }
 }

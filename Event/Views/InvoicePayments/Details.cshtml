@@ -1,8 +1,9 @@
 ﻿@model Event.Data.Objects.Entities.InvoicePayment
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View Invoice Payments";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.Reference + " Payment Card";
+    ViewBag.TableSubHeader = "Details of Invoive Payment";
 }
     <dl class="dl-horizontal">
         <dt>

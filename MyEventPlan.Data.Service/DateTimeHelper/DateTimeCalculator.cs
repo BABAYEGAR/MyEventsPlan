@@ -17,25 +17,25 @@ namespace MyEventPlan.Data.Service.DateTimeHelper
                 var years = span.Days/365;
                 if (span.Days%365 != 0)
                     years += 1;
-                return $"about {years} {(years == 1 ? "year" : "years")} ago";
+                return $"{years} {(years == 1 ? "year" : "years")} until the event";
             }
             if (span.Days > 30)
             {
                 var months = span.Days/30;
                 if (span.Days%31 != 0)
                     months += 1;
-                return $"about {months} {(months == 1 ? "month" : "months")} ago";
+                return $"about {months} {(months == 1 ? "month" : "months")} until the event";
             }
             if (span.Days > 0)
-                return $"about {span.Days} {(span.Days == 1 ? "day" : "days")} ago";
+                return $"{span.Days} {(span.Days == 1 ? "day" : "days")} until the event";
             if (span.Hours > 0)
-                return $"about {span.Hours} {(span.Hours == 1 ? "hour" : "hours")} ago";
+                return $"{span.Hours} {(span.Hours == 1 ? "hour" : "hours")} until the event";
             if (span.Minutes > 0)
-                return $"about {span.Minutes} {(span.Minutes == 1 ? "minute" : "minutes")} ago";
+                return $"{span.Minutes} {(span.Minutes == 1 ? "minute" : "minutes")} until the event";
             if (span.Seconds > 5)
-                return $"about {span.Seconds} seconds ago";
+                return $"{span.Seconds} seconds ago";
             if (span.Seconds <= 5)
-                return "just now";
+                return "until the event";
             return string.Empty;
         }
     }

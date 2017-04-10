@@ -415,6 +415,27 @@
     <Content Include="Content\ImageUploader\js\jquery.Jcrop.min.js" />
     <Content Include="Content\ImageUploader\js\jquery.min.js" />
     <Content Include="Content\ImageUploader\js\script.js" />
+    <Content Include="Content\MaterialDesign\assets\css\bootstrap.min.css" />
+    <Content Include="Content\MaterialDesign\assets\css\demo.css" />
+    <Content Include="Content\MaterialDesign\assets\css\material-dashboard.css" />
+    <Content Include="Content\MaterialDesign\assets\img\apple-icon.png" />
+    <Content Include="Content\MaterialDesign\assets\img\cover.jpeg" />
+    <Content Include="Content\MaterialDesign\assets\img\faces\marc.jpg" />
+    <Content Include="Content\MaterialDesign\assets\img\favicon.png" />
+    <Content Include="Content\MaterialDesign\assets\img\mask.png" />
+    <Content Include="Content\MaterialDesign\assets\img\new_logo.png" />
+    <Content Include="Content\MaterialDesign\assets\img\sidebar-1.jpg" />
+    <Content Include="Content\MaterialDesign\assets\img\sidebar-2.jpg" />
+    <Content Include="Content\MaterialDesign\assets\img\sidebar-3.jpg" />
+    <Content Include="Content\MaterialDesign\assets\img\sidebar-4.jpg" />
+    <Content Include="Content\MaterialDesign\assets\img\tim_80x80.png" />
+    <Content Include="Content\MaterialDesign\assets\js\bootstrap-notify.js" />
+    <Content Include="Content\MaterialDesign\assets\js\bootstrap.min.js" />
+    <Content Include="Content\MaterialDesign\assets\js\chartist.min.js" />
+    <Content Include="Content\MaterialDesign\assets\js\demo.js" />
+    <Content Include="Content\MaterialDesign\assets\js\jquery-3.1.0.min.js" />
+    <Content Include="Content\MaterialDesign\assets\js\material-dashboard.js" />
+    <Content Include="Content\MaterialDesign\assets\js\material.min.js" />
     <Content Include="Content\monthly.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -694,6 +715,9 @@
     <Content Include="Content\FontAwesome\scss\_screen-reader.scss" />
     <Content Include="Content\FontAwesome\scss\_stacked.scss" />
     <Content Include="Content\FontAwesome\scss\_variables.scss" />
+    <Content Include="Content\MaterialDesign\assets\img\.DS_Store" />
+    <Content Include="Content\MaterialDesign\assets\img\faces\.DS_Store" />
+    <Content Include="Content\MaterialDesign\assets\js\.DS_Store" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1522,6 +1546,11 @@
     <Content Include="Views\EventPlannerPackages\Index.cshtml" />
     <Content Include="Views\Account\Pricing.cshtml" />
     <Content Include="Views\Account\Invoice.cshtml" />
+    <Content Include="Views\Shared\_PartialMaterialSideBar.cshtml" />
+    <Content Include="Views\Shared\_PartialMaterialNavBar.cshtml" />
+    <Content Include="Views\Shared\_PartialMaterialFooter.cshtml" />
+    <Content Include="Views\Shared\_LayoutView.cshtml" />
+    <Content Include="Views\Shared\_LayoutEventDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

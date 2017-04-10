@@ -5,8 +5,9 @@
 @{
     var db = new EventDataContext();
 
-    ViewBag.Title = "Dashboard";
-    Layout = "~/Views/Shared/_LayoutCalendar.cshtml";
+    ViewBag.Title = "Calendar";
+    ViewBag.Header = "My Events Calendar";
+    Layout = "../Shared/_LayoutCalendar.cshtml";
 
     AppUser loggedinuser = null;
     loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -31,177 +32,147 @@
 }
 @Html.ActionLink("Add Event", "Create", "Events", new {}, new {@class = "btn btn-primary icon-plus pull-right"})
 
-
-<br/>
-<br/>
 @if ((loggedinuser != null) && (role != null))
 {
-    <!--/.span3-->
-    <div class="span9">
-        <div class="content">
-            @if (TempData["event"] != null)
-            {
-                if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
-                {
-                    <div class="alert alert-success alert-dismissable">@TempData["event"]</div>
-                }
-                else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
-                {
-                    <div class="alert alert-danger alert-dismissable">@TempData["event"]</div>
-                }
-                else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
-                {
-                    <div class="alert alert-info alert-dismissable">@TempData["event"]</div>
-                }
-            }
-
-
-            <div id="popupUpdateEventForm" class="modal hide" style="display: none;">
-                @using (Html.BeginForm("UpdateCalendarEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "UpdateEventForm"}))
-                {
-                    <div class="modal-header">
-                        <h3>Update Event</h3>
-                    </div>
-                    <div class="modal-body">
-                        @Html.AntiForgeryToken()
-                        @Html.HiddenFor(m => m.EventId, new {id = "eventId"})
-                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.Name, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitles"}})
-                                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.Color, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8", id = "eventColors"}})
-                                @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.TextBoxFor(model => model.StartDate, new {@class = "span8", id = "eventStartDates"})
-                                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "eventEndDates"}})
-                                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" id="btnPopupUpdateCancel" data-dismiss="modal" class="btn btn-default pull-left fa fa-stop">Cancel</button>
-                        <input type="submit" value="Update Event" class="btn btn-primary pull-left fa fa-arro"/>
-                    </div>
-                }
+    if (TempData["event"] != null)
+    {
+        if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+        {
+            <div class="alert alert-success alert-dismissable">@TempData["event"]</div>
+        }
+        else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+        {
+            <div class="alert alert-danger alert-dismissable">@TempData["event"]</div>
+        }
+        else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+        {
+            <div class="alert alert-info alert-dismissable">@TempData["event"]</div>
+        }
+    }
+    <div id="popupUpdateEventForm" class="modal" style="display: none;">
+        @using (Html.BeginForm("UpdateCalendarEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "UpdateEventForm"}))
+        {
+            <div class="modal-header">
+                <h3>Update Event</h3>
             </div>
-
-
-            <div id="popupSaveEventForm" class="modal hide" style="display: none;">
-
-                @using (Html.BeginForm("UpdateEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
-                {
-                    <div class="modal-header">
-                        <h3>Add new event</h3>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.EventId, new {id = "eventId"})
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Name, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitles"}})
+                        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                     </div>
-                    <div class="modal-body">
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.Name, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitle"}})
-                                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
+                </div>
 
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.Color, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor", id = "eventColor"}})
-                                @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.EventTypeId, "Event Type", new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.DropDownList("EventTypeId", null, new {@class = "span8", id = "eventType"})
-                                @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.TargetBudget, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8", id = "eventBudget"}})
-                                @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.EventDate, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.TextBoxFor(model => model.EventDate, new {@class = "span8", id = "eventDate"})
-                                @Html.ValidationMessageFor(model => model.EventDate, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.TextBoxFor(model => model.StartDate, new {@class = "span8", id = "eventStartDate"})
-                                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
-                            <div class="controls">
-                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "eventEndDate"}})
-                                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
-                            </div>
-                        </div>
-
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Color, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8", id = "eventColors"}})
+                        @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
                     </div>
-                }
-                <div class="modal-footer">
-                    <button type="button" id="btnPopupNewCancel" data-dismiss="modal" class="btn btn-default">Cancel</button>
-                    <button type="button" id="btnPopupSave" data-dismiss="modal" class="btn btn-primary">Save event</button>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.StartDate, new {@class = "span8", id = "eventStartDates"})
+                        @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "eventEndDates"}})
+                        @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
+                    </div>
                 </div>
             </div>
-            <div class="btn-controls">
-                <div class="btn-box-row row-fluid">
-
-                    <div class="module">
-
-                        <div class="module-head">
-                            <h3>
-                                Calendar
-                            </h3>
-                        </div>
-                        <div class="module-body">
-                            <div id="calendar" class="monthly">
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <!--/.module-->
-                </div>
-                <!--/.content-->
+            <div class="modal-footer">
+                <button type="button" id="btnPopupUpdateCancel" data-dismiss="modal" class="btn btn-default pull-left fa fa-stop">Cancel</button>
+                <input type="submit" value="Update Event" class="btn btn-primary pull-left fa fa-arro"/>
             </div>
-            <!--/.span9-->
+        }
+    </div>
 
+
+    <div id="popupSaveEventForm" class="modal" style="display: none;">
+
+        @using (Html.BeginForm("UpdateEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+        {
+            <div class="modal-header">
+                <h3>Add new event</h3>
+            </div>
+            <div class="modal-body">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Name, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitle"}})
+                        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Color, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.EditorFor(model => model.Color, new {htmlAttributes = new {@class = "span8 jscolor", id = "eventColor"}})
+                        @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.EventTypeId, "Event Type", new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.DropDownList("EventTypeId", null, new {@class = "span8", id = "eventType"})
+                        @Html.ValidationMessageFor(model => model.EventTypeId, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TargetBudget, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "span8", id = "eventBudget"}})
+                        @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(model => model.EventDate, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.EventDate, new {@class = "span8", id = "eventDate"})
+                        @Html.ValidationMessageFor(model => model.EventDate, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.StartDate, new {@class = "span8", id = "eventStartDate"})
+                        @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="control-group">
+                    @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
+                    <div class="controls">
+                        @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "eventEndDate"}})
+                        @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+            </div>
+        }
+        <div class="modal-footer">
+            <button type="button" id="btnPopupNewCancel" data-dismiss="modal" class="btn btn-default">Cancel</button>
+            <button type="button" id="btnPopupSave" data-dismiss="modal" class="btn btn-primary">Save event</button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div id="calendar" class="monthly">
         </div>
     </div>
 }
 @section scripts{
-    <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
     <script src="~/Content/Color/spectrum.js"></script>
     <script type="text/javascript">
@@ -291,7 +262,7 @@
                         defaultView: 'month',
                         editable: true,
                         allDaySlot: false,
-                        timezone : 'local',
+                        timezone: 'local',
                         selectable: true,
                         slotMinutes: 15,
                         events: '@Url.Action("GetMyEvents", "Events")',

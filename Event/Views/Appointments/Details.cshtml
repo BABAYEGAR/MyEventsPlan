@@ -3,8 +3,9 @@
 @model Appointment
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "Appointment Details";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.Name + " Appointment";
+    ViewBag.TableSubHeader = "Details of Appointment";
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
     var events = Session["event"] as Event;

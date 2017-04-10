@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "View";
     var events = Session["event"] as Event;
-    ViewBag.Header = "View Budget";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    ViewBag.TableHeader = Model.ItemName + " Budget Item";
+    ViewBag.TableSubHeader = "Details of Budget";
 }
 @section links{
     <ol class="breadcrumb">

@@ -3,8 +3,8 @@
 @model Contact
 @{
     ViewBag.Title = "Details";
-    ViewBag.Header = "Contact Details";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    ViewBag.TableHeader = Model.DisplayName + "Contact Card";
+    ViewBag.TableSubHeader = "Details of Contact";
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
 }

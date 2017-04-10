@@ -1,253 +1,334 @@
-﻿@using System.Data.Entity
-@using Event.Data.Objects.Entities
+﻿@using Event.Data.Objects.Entities
 @using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
 @{
     ViewBag.Title = "Dashboard";
+    ViewBag.Header = "My Dashboard";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
     var dbEvent = new EventDataContext();
-    var clientEvents = new List<Event>();
-    if (loggedinuser?.ClientId != null)
-    {
-        var client = dbEvent.Clients.Find(loggedinuser.ClientId);
-        var allEvents = dbEvent.Event.ToList();
-        foreach (var item in allEvents)
-        {
-            if (item.EventId == client.EventId)
-            {
-                clientEvents.Add(item);
-            }
-        }
-    }
-
 
     var role = Session["role"] as Role;
 
-    var upComingvents = dbEvent.Event.Where(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StartDate > DateTime.Now)).ToList();
+    var upComingvents = dbEvent.Event.Where(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StartDate > DateTime.Now)).OrderByDescending(n=>n.EventDate).ToList();
+    var checkList = dbEvent.PersonalCheckLists.Where(n => n.AppUserId == loggedinuser.AppUserId);
     //recent event details
-    Event recentEvent = null;
-    EventVendorMapping recentEventMapping = null;
-    IQueryable<Event> recentClientEvents = null;
-    var recentDate = new DateTime();
-    if ((loggedinuser != null) && (loggedinuser.EventPlannerId != null))
-    {
-        var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-        recentEvent = events.OrderByDescending(n => n.EventDate).FirstOrDefault();
-
-        if (recentEvent != null)
-        {
-            recentDate = recentEvent.EventDate;
-        }
-    }
-    if ((loggedinuser != null) && (loggedinuser.VendorId != null))
-    {
-        var eventsz = dbEvent.EventVendorMappings.Where(n => n.VendorId == loggedinuser.VendorId).Include(n => n.Event);
-        recentEventMapping = eventsz.OrderByDescending(n => n.Event.EventDate).FirstOrDefault();
-        if (recentEventMapping != null)
-        {
-            recentDate = recentEventMapping.Event.EventDate;
-        }
-    }
-    if ((loggedinuser != null) && (loggedinuser.ClientId != null))
-    {
-        var client = dbEvent.Clients.Find(loggedinuser.ClientId);
-        recentClientEvents = dbEvent.Event.OrderByDescending(n => n.EventDate)
-            .Include(n => n.EventType)
-            .Where(n => n.EventId == client.EventId);
-        recentEvent = recentClientEvents.FirstOrDefault();
-        if (recentEventMapping != null)
-        {
-            recentDate = recentEventMapping.Event.EventDate;
-        }
-    }
+    var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+    var prospects = dbEvent.Prospects.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+    var contacts = dbEvent.Contacts.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+    var resources = dbEvent.Contacts.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+    var appointments = dbEvent.Appointments.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+    var invoice = dbEvent.Invoices.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+    var staff = dbEvent.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
 }
-@section css{
-
-    <style>
-        .style {
-            border-style: solid;
-            font-family: sans-serif;
-            font-weight: bold;
-            width: 100%;
-        }
-
-        .colorDefinition {
-            background: #000000;
-            border-color: blue;
-            color: #FFFFFF;
-        }
-
-        .size_xl {
-            border-radius: 6px;
-            border-width: 8px;
-            font-size: 50px;
-        }
-
-        .size_lg {
-            border-radius: 5px;
-            border-width: 7px;
-            font-size: 40px;
-        }
-
-        .size_md {
-            border-radius: 4px;
-            border-width: 5px;
-            font-size: 30px;
-        }
-
-        .size_sm {
-            border-radius: 3px;
-            border-width: 3px;
-            font-size: 20px;
-        }
-
-        .size_xs {
-            border-radius: 2px;
-            border-width: 2px;
-            font-size: 15px;
-        }
-    </style>
-}
-@if ((loggedinuser != null) && (role != null))
-{
-    <!--/.span3-->
-    <div class="span9">
-        <div class="content">
-            <div class="btn-controls">
-                <div class="btn-box-row row-fluid">
-                    @if (role.ManageEvents || (role.Name == "EventPlanner"))
-                    {
-                        <a href="@Url.Action("Calendar", "Events")" class="btn-box big span4">
-                            <i class=" icon-calendar"></i><b>@upComingvents.Count events</b>
-                            <p class="text-muted">
-                                Calender Events
-                            </p>
-                        </a>
-                        if (recentEvent != null)
-                        {
-                            <a href="@Url.Action("Details", "Events", new {id = recentEvent.EventId})" class="btn-box big span4">
-                                <i class="icon-download"></i><b>
-                                    <div id="getting-started" style="font-weight: bolder"></div>
-                                    <p class="text-muted" style="color: black">
-                                        To @recentEvent.Name
-                                    </p>
-                                </b>
-                            </a>
-                        }
-                    }
-                    @if (role.Name == "Platform Administrator")
-                    {
-                        <a href="@Url.Action("Index", "AppUsers")" class="btn-box big span4">
-                            <i class="icon-user"></i>
-                            <p class="text-muted">
-                                All Users
-                            </p>
-                        </a>
-                        <a href="@Url.Action("Index", "EventPlanners")" class="btn-box big span4">
-                            <i class="icon-user"></i>
-                            <p class="text-muted">
-                                Event Planners
-                            </p>
-                        </a>
-                    }
-                    @if (role.Name == "Client")
-                    {
-                        <a href="@Url.Action("")" class="btn-box big span4">
-                            <i class="icon-user"></i><b>15</b>
-                            <p class="text-muted">
-                                My Event
-                            </p>
-                        </a>
-                        <a href="#" class="btn-box big span4">
-                            <i class="icon-download"></i><b>
-                                <div id="getting-started2" style="font-weight: bolder"></div>
-                                <p class="text-muted" style="color: black">
-                                    To @recentEvent.Name
-                                </p>
-                            </b>
-                        </a>
-                    }
-                    @if (role.Name == "Vendor")
-                    {
-                        <a href="@Url.Action("Index", "Events")" class="btn-box big span4">
-                            <i class="fa fa-tags"></i><b>   </b>
-                            <p class="text-muted">
-                                My Events
-                            </p>
-                        </a>
-                        <a href="#" class="btn-box big span4">
-                            <i class="icon-download"></i><b>
-                                <div id="getting-started1" style="font-weight: bolder"></div>
-                                <p class="text-muted" style="color: black">
-                                    To @recentEventMapping.Event.Name
-                                </p>
-                            </b>
-                        </a>
-                    }
-                    <div>
-                        <div class="btn-box-row row-fluid col-md-9">
-                            @if (role.ManageEvents || (role.Name == "EventPlanner"))
-                            {
-                                <div class="span8">
-                                    <div class="row-fluid">
-
-                                        <div class="span12">
-                                            <a href="@Url.Action("Index", "Prospects")" class="btn-box small span4">
-                                                <i class="fa fa-edge"></i><b>Prospects</b>
-                                            </a>
-                                            <a href="@Url.Action("Index", "Messages")" class="btn-box small span4">
-                                                <i class="icon-envelope"></i><b>Messages</b>
-                                            </a><a href="@Url.Action("AllMyClients", "Clients")" class="btn-box small span4">
-                                                <i class="icon-group"></i><b>Clients</b>
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                    <div class="row-fluid">
-                                        <div class="span12">
-                                            <a href="@Url.Action("Index", "Invoices")" class="btn-box small span4">
-                                                <i class="fa fa-certificate"></i><b>Invoices</b>
-                                            </a><a href="@Url.Action("Index", "News")" class="btn-box small span4">
-                                                <i class="icon-bullhorn"></i><b>Social Feed</b>
-                                            </a><a href="@Url.Action("Index", "Contacts")" class="btn-box small span4">
-                                                <i class="fa fa-user-times"></i><b>
-                                                    Contacts
-                                                </b>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <!--/.module-->
-                </div>
-                <!--/.content-->
+<div class="content">
+<div class="container-fluid">
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="purple">
+                <i class="material-icons">event_seat</i>
             </div>
-            <!--/.span9-->
-
+            <div class="card-content">
+                <p class="category">My Events</p>
+                <h3 class="title">
+                    @events.Count<small> Events</small>
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "Events")">View Events</a>
+                </div>
+            </div>
         </div>
     </div>
-}@section scripts{
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="green">
+                <i class="material-icons">today</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Events Calendar</p>
+                <h3 class="title">
+                    @events.Count<small> Events</small>
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">today</i> <a href="@Url.Action("Calendar", "Events")">View Event Calendar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="purple">
+                <i class="material-icons">today</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Appointment Calendar</p>
+                <h3 class="title">
+                    @appointments.Count<small> Appointments</small>
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">today</i> <a href="@Url.Action("Calendar", "Appointments")">View Appointment Calendar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="deep_orange">
+                <i class="material-icons">assignment</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Prospects</p>
+                <h3 class="title">
+                    @prospects.Count<small> Prospects</small>
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">assignment</i> <a href="@Url.Action("Index", "Prospects")">View Prospects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="amber">
+                <i class="material-icons">supervisor_account</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Staff</p>
+                <h3 class="title">
+                    @staff.Count<small> Staff</small>
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">supervisor_account</i> <a href="@Url.Action("Calendar", "Appointments")">View all my Staff</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="green">
+                <i class="material-icons">description</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Invoice</p>
+                <h3 class="title">
+                    @invoice.Count<small> Invoices</small>
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">description</i> <a href="@Url.Action("Index", "Invoices")">View Invoices</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="blue">
+                <i class="material-icons">contacts</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Contacts</p>
+                <h3 class="title">
+                    @contacts.Count <small>Contacts</small>
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">contacts</i> <a href="@Url.Action("Index", "Contacts")">View Contacts</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card card-stats">
+            <div class="card-header" data-background-color="teal">
+                <i class="material-icons">cloud</i>
+            </div>
+            <div class="card-content">
+                <p class="category">Resources</p>
+                <h3 class="title">
+                    @resources.Count <small>Resource Items</small>
+                </h3>
+            </div>
+            <div class="card-footer">
+                <div class="stats">
+                    <i class="material-icons">cloud</i> <a href="@Url.Action("Index", "Resources")">View Resources</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 col-md-12">
+        <div class="card">
+            <div class="card-header" data-background-color="green">
+                <h4 class="title">Newest Events</h4>
+                <p class="category">Latest Events Closest to @DateTime.Now.ToShortDateString()</p>
+            </div>
+            <div class="card-content table-responsive">
+                <table class="table table-hover">
+                    <thead class="text-success">
+                    <tr>
+                        <th>
+                            @Html.DisplayName("Event Name")
+                        </th>
+                        <th>
+                            @Html.DisplayName("Start Date")
+                        </th>
 
-     <script src="~/Content/Timer/jquery.countdown.min.js"></script>
-     <script type="text/javascript">
-         $('#getting-started')
-             .countdown('@recentDate.ToString()',
-                 function(event) {
-                     $(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
-                 });
-         $('#getting-started1')
-             .countdown('@recentDate.ToString()',
-                 function(event) {
-                     $(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
-                 });
-         $('#getting-started2')
-             .countdown('@recentDate.ToString()',
-                 function(event) {
-                     $(this).html(event.strftime('%w weeks %d days %H:%M:%S'));
-                 });
-     </script>
+                        <th>
+                            @Html.DisplayName("End Date")
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in upComingvents.Take(4))
+                    {
+                        <tr>
+                            @if (item.EventDate > DateTime.Now)
+                            {
+                                <td style="color: green">
+                                    @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>
+                                </td>
+                            }
+                            else
+                            {
+                                <td style="color: red">
+                                    @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-down"></i>
+                                </td>
+                            }
 
- }
+                            <td>
+                                @item.StartDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.EndDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @Html.ActionLink("Open", "Details", "Events", new {id = item.EventId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+        <div class="card card-nav-tabs">
+            <div class="card-header" data-background-color="purple">
+                <div class="nav-tabs-navigation">
+                    <div class="nav-tabs-wrapper">
+                        <span class="nav-tabs-title">Tools:</span>
+                        <ul class="nav nav-tabs" data-tabs="tabs">
+                            <li class="active">
+                                <a href="#prospects" data-toggle="tab">
+                                    <i class="material-icons">cloud</i>
+                                    Prospects
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a href="#checklist" data-toggle="tab">
+                                    <i class="material-icons">list</i>
+                                    Check-List
+                                    <div class="ripple-container"></div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-content">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="prospects">
+                        <table class="table">
+                            <tbody>
+                            @foreach (var item in prospects)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="tab-pane" id="checklist">
+                        <table class="table">
+
+                            @foreach (var item in checkList)
+                            {
+                                <tbody>
+                                <tr>
+
+                                    @if (item.Status == ChecklistStatusEnum.Completed.ToString())
+                                    {
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="optionsCheckboxes" checked>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="optionsCheckboxes">
+                                                </label>
+                                            </div>
+                                        </td>
+                                    }
+                                    <td>
+                                        @item.Name
+                                    </td>
+                                    <td class="td-actions text-right">
+                                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-simple btn-xs">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                    </td>
+
+                                </tr>
+                                </tbody>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+</div>

@@ -3,9 +3,9 @@
 @model StaffEventMapping
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "Vendor Details";
-    Layout = "../Shared/_LayoutForm.cshtml";
-    var userDb = new AppUserDataContext();
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.Staff.DisplayName + " Staff Card";
+    ViewBag.TableSubHeader = "Details of Staff";
     var events = Session["event"] as Event;
 }
 @section links{

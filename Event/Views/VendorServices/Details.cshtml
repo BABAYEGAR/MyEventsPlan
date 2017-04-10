@@ -4,9 +4,10 @@
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View vendor service";
-    Layout = "../Shared/_LayoutForm.cshtml";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.ServiceName + " Service Card";
+    ViewBag.TableSubHeader = "Details of Vendor Service";
+
 }
 @section links{
 
@@ -35,40 +36,6 @@
     <dd>
         @Html.DisplayFor(model => model.Scale)
     </dd>
-    @if ((role != null) && (role.Name == "Platform Administrator"))
-    {
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-        </dd>
-    }
 </dl>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">

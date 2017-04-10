@@ -1,8 +1,9 @@
 ﻿@model Event.Data.Objects.Entities.Invoice
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View Invoice";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.InvoiceName + " Invoice";
+    ViewBag.TableSubHeader = "Details of Invoice";
 }
 @section links{
     <ol class="breadcrumb">

@@ -4,8 +4,9 @@
 @model Prospect
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View prospect";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.Name +" Prospect (Lead)";
+    ViewBag.TableSubHeader = "Details of Prospect";
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
 }
@@ -124,7 +125,7 @@
         </dd>
     }
 </dl>
-@Html.ActionLink("Edit", "Edit", new {id = Model.ProspectId}, new {@class = "btn btn-primary icon-pencil"})
+@Html.ActionLink("Edit", "Edit", new {id = Model.ProspectId}, new {@class = "btn btn-primary fa fa-pencil"})
 @if (Model.Status == ProspectStausEnum.Active.ToString())
 {
     @Html.ActionLink("Cancel", "CancelProspect", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-warning icon-remove"})
@@ -132,7 +133,7 @@
     @Html.ActionLink("Convert To Event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-success"})
 }
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+    <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
         Delete
     </button>
 

@@ -3,8 +3,9 @@
 @model Client
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View check list";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.Name + " Client Card";
+    ViewBag.TableSubHeader = "Details of Client";
     var events = Session["event"] as Event;
 }
 @section links{

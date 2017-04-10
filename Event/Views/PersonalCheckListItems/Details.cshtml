@@ -3,8 +3,9 @@
 @model PersonalCheckListItem
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View check list item";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.Name + " Personal Check-List Item";
+    ViewBag.TableSubHeader = "Details of Personal Check-List Item";
 }
 @section links{
     <ol class="breadcrumb">

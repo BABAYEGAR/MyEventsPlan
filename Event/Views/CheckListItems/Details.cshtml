@@ -3,8 +3,8 @@
 @model CheckListItem
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View check list item";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    ViewBag.TableHeader = Model.Name + " Item";
+    ViewBag.TableSubHeader = "Details of Check-List Item";
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
     var events = Session["event"] as Event;

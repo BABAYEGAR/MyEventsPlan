@@ -3,8 +3,9 @@
 @model Guest
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View guest";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/_LayoutView.cshtml";
+    ViewBag.TableHeader = Model.Name + " Guest Card";
+    ViewBag.TableSubHeader = "Details of Guest";
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
     var events = Session["event"] as Event;

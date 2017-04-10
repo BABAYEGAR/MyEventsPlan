@@ -3,11 +3,13 @@
 @model IEnumerable<EventResourceMapping>
 @{
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "Allocate Resources";
+    var events = Session["event"] as Event;
+    ViewBag.TableHeader = "Resource Management";
+    ViewBag.TableSubHeader = "Allocate Resources to "+events.Name+"";
     Layout = "../Shared/_LayoutTable.cshtml";
     var db = new EventResourceMappingDataContext();
     var resourceEvent = new EventResourceMapping();
-    var events = Session["event"] as Event;
+
 }
 @section links{
 
