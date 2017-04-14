@@ -59,7 +59,9 @@ namespace MyEventPlan.Controllers.EventManagement
                     long totalAmount = 0;
                     if (eventBudget.Count > 0)
                     {
-                        totalAmount = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
+                        var sum = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
+                        if (sum != null)
+                            totalAmount = (long) sum;
                     }
            
                     if (totalAmount + budget.PaidTillDate < targetBudget )
@@ -121,7 +123,9 @@ namespace MyEventPlan.Controllers.EventManagement
             long totalAmount = 0;
             if (eventBudget.Count > 0)
             {
-                totalAmount = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
+                var sum = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
+                if (sum != null)
+                    totalAmount = (long) sum;
             }
             if (events != null)
             {

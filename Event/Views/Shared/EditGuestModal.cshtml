@@ -2,7 +2,7 @@
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Edit", "Guests", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Edit", "Guests", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.GuestId)
@@ -12,33 +12,27 @@
     @Html.HiddenFor(m => m.EventId)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.Name, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your first name"}})
-            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your first name"}})
+        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.Email, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your email address"}})
-            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your email address"}})
+        @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.PhoneNumber, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.PhoneNumber, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your mobile number"}})
-            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.PhoneNumber, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your mobile number"}})
+        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Update" class="btn btn-default"/>
         </div>
     </div>
-}
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

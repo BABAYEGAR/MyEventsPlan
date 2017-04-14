@@ -17,18 +17,18 @@ namespace Event.Data.Objects.Entities
         public string ItemName { get; set; }
         [Required]
         [DisplayName("Estimated Amount")]
-        public long EstimatedAmount { get; set; }
+        public long? EstimatedAmount { get; set; }
         [Required]
         [DisplayName("Negotiated Amount")]
-        public long NegotiatedAmount { get; set; }
+        public long? NegotiatedAmount { get; set; }
         [Required]
         [DisplayName("Actual Amount")]
-        public long ActualAmount { get; set; }
+        public long? ActualAmount { get; set; }
         [Required]
         [DisplayName("Paid Till Date")]
-        public long PaidTillDate { get; set; }
+        public long? PaidTillDate { get; set; }
         [DisplayName("Amount Still Due")]
-        public long AmountStillDue { get; set; }
+        public long? AmountStillDue { get; set; }
         public long? EventId { get; set; }
         [ForeignKey("EventId")]
         public virtual Event Event { get; set; }

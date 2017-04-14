@@ -10,7 +10,7 @@
 
     var role = Session["role"] as Role;
 
-    var upComingvents = dbEvent.Event.Where(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StartDate > DateTime.Now)).OrderByDescending(n=>n.EventDate).ToList();
+    var upComingvents = dbEvent.Event.Where(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StartDate > DateTime.Now)).OrderByDescending(n => n.EventDate).ToList();
     var checkList = dbEvent.PersonalCheckLists.Where(n => n.AppUserId == loggedinuser.AppUserId);
     //recent event details
     var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();

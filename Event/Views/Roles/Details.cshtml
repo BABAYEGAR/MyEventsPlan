@@ -1,6 +1,4 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
-@model Role
+﻿@model Event.Data.Objects.Entities.Role
 @{
     ViewBag.Title = "View";
     Layout = "../Shared/_LayoutView.cshtml";
@@ -114,7 +112,7 @@
     <dd>
         @Html.DisplayFor(model => model.ManageProposals)
     </dd>
-    
+
 </dl>
 @Html.ActionLink("Edit", "Edit", new {id = Model.RoleId}, new {@class = "btn btn-primary icon-pencil"})
 @Html.ActionLink("Delete", "Delete", new {id = Model.RoleId}, new {@class = "btn btn-danger icon-trash"})

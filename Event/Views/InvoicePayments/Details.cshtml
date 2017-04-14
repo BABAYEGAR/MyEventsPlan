@@ -5,39 +5,39 @@
     ViewBag.TableHeader = Model.Reference + " Payment Card";
     ViewBag.TableSubHeader = "Details of Invoive Payment";
 }
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Invoice.InvoiceName)
-        </dt>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Invoice.InvoiceName)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Invoice.InvoiceName)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Invoice.InvoiceName)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.Amount)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Amount)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Reference)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.Reference)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Reference)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Reference)
+    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PaymentDate)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.PaymentDate)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PaymentDate)
-        </dd>
-    </dl>
+    <dd>
+        @Html.DisplayFor(model => model.PaymentDate)
+    </dd>
+</dl>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal2">
     Edit Payment
@@ -78,14 +78,14 @@
                 <h4 class="modal-title" id="myModalLabel1">Delete Invoice Payment</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Delete", "InvoiceItems", new { id = Model.InvoicePaymentId }))
+                @using (Html.BeginForm("Delete", "InvoiceItems", new {id = Model.InvoicePaymentId}))
                 {
                     @Html.AntiForgeryToken()
                     <p>
                         Are you sure you want to delete the Payment?
                     </p>
                     <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
                     </div>
                 }
             </div>

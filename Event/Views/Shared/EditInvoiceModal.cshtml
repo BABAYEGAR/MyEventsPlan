@@ -8,7 +8,7 @@
         "ClientId", "Name", Model.ClientId);
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Edit", "Invoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Edit", "Invoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.InvoiceId)
@@ -16,37 +16,33 @@
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.HiddenFor(m => m.EventPlannerId)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.InvoiceName, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.InvoiceName, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the invoice name"}})
-            @Html.ValidationMessageFor(model => model.InvoiceName, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.InvoiceName, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the invoice name"}})
+        @Html.ValidationMessageFor(model => model.InvoiceName, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.InvoiceNumber, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.InvoiceNumber, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the invoice number"}})
-            @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.InvoiceNumber, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the invoice number"}})
+        @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.ClientId, new {@class = "control-label"})
-        <div class="controls">
-            @Html.DropDownListFor(model => model.ClientId, null, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.ClientId, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.DropDownListFor(model => model.ClientId, null, new {htmlAttributes = new {@class = "span8"}})
+        @Html.ValidationMessageFor(model => model.ClientId, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.DueDate, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.DueDate, new {htmlAttributes = new {@class = "span8", placeholder = "Select the due date"}})
-            @Html.ValidationMessageFor(model => model.DueDate, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.DueDate, new {htmlAttributes = new {@class = "span8", placeholder = "Select the due date"}})
+        @Html.ValidationMessageFor(model => model.DueDate, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Update Invoice" class="btn btn-default"/>
+            <input type="submit" value="Update" class="btn btn-default"/>
         </div>
     </div>
 }

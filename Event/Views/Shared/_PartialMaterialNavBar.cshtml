@@ -6,7 +6,7 @@
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
     var dbc = new NotificationDataContext();
     var userNotifications = dbc.Notifications.Where(n => n.AppUserId == loggedinuser.AppUserId);
-    var userUnreadNotifications = dbc.Notifications.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false);
+    var userUnreadNotifications = dbc.Notifications.Where(n => (n.AppUserId == loggedinuser.AppUserId) && (n.Read == false));
 }
 <nav class="navbar navbar-transparent navbar-absolute">
     <div class="container-fluid">
@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="@Url.Action("Dashboard","Home")" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="@Url.Action("Dashboard", "Home")" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="material-icons">dashboard</i>
                         <p class="hidden-lg hidden-md">Dashboard</p>
                     </a>
@@ -38,7 +38,9 @@
                         {
                             if (item.NotificationType == AppNotificationType.Message.ToString())
                             {
-                                <li><a href="@Url.Action("Details", "Messages", new {id = item.NotificationKey, notificationId = item.NotificationId})"></a></li>
+                                <li>
+                                    <a href="@Url.Action("Details", "Messages", new {id = item.NotificationKey, notificationId = item.NotificationId})"></a>
+                                </li>
                             }
                         }
                     </ul>
@@ -63,4 +65,3 @@
         </div>
     </div>
 </nav>
-

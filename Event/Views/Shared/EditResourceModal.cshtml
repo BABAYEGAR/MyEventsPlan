@@ -2,7 +2,7 @@
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Edit", "Resources", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Edit", "Resources", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.ResourceId)
@@ -11,19 +11,17 @@
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.Name, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your first name"}})
-            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your first name"}})
+        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.Quantity, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Quantity, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your email address"}})
-            @Html.ValidationMessageFor(model => model.Quantity, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.Quantity, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your email address"}})
+        @Html.ValidationMessageFor(model => model.Quantity, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">

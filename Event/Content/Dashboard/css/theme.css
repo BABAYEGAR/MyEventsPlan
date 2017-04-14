@@ -163,7 +163,6 @@ body [class^="icon-"], body [class*=" icon-"] {
 .form-horizontal .control-group, .form-vertical .control-group { margin-bottom: 0 }
 
 .form-horizontal .control-group + .control-group, .form-vertical .control-group + .control-group {
-    border-top: 1px solid #f5f5f5;
     margin-top: 13px;
     padding-top: 13px;
 }

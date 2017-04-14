@@ -2,21 +2,19 @@
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Create", "PersonalCheckLists", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Create", "PersonalCheckLists", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-    <div class="control-group">
-        @Html.LabelFor(model => model.Name, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-        </div>
-    </div>
+    <div class="mui-textfield mui-textfield--float-label">
 
+        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {placeholder = "Enter Check List Item Name"}})
+        @Html.LabelFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+    </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Create List" class="btn btn-default"/>
+            <input type="submit" value="Add List" class="btn btn-default"/>
         </div>
     </div>
 }

@@ -2,7 +2,7 @@
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Edit", "CheckListItems", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Edit", "CheckListItems", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.HiddenFor(m => m.CheckListItemId)
     @Html.HiddenFor(m => m.CheckListId)
@@ -12,14 +12,12 @@
     @Html.HiddenFor(m => m.Checked)
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.Name, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-        </div>
-    </div>
 
+        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8"}})
+        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+    </div>
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Update" class="btn btn-default"/>

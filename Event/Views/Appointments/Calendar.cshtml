@@ -12,22 +12,22 @@
     loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 
     var role = Session["role"] as Role;
-    ViewBag.EventId = new SelectList(db.Event.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
+    ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
 }
 @section css{
-    <link href="~/Content/themes/base/jquery.ui.core.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.button.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.slider.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet" />
-    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
-    <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet" />
-    <link href="~/Content/Color/spectrum.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/jquery.ui.core.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.button.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.slider.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet"/>
+    <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet"/>
+    <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
+    <link href="~/Content/Color/spectrum.css" rel="stylesheet"/>
 }
 @if ((loggedinuser != null) && (role != null))
 {
@@ -52,55 +52,55 @@
 
 
             <div id="popupUpdateEventForm" class="modal hide" style="display: none;">
-                @using (Html.BeginForm("UpdateCalendarAppointment", "Appointments", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "UpdateEventForm" }))
+                @using (Html.BeginForm("UpdateCalendarAppointment", "Appointments", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "UpdateEventForm"}))
                 {
                     <div class="modal-header">
                         <h3>Update Appointment</h3>
                     </div>
                     <div class="modal-body">
                         @Html.AntiForgeryToken()
-                        @Html.HiddenFor(m => m.AppointmentId, new { id = "appointmentId" })
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.HiddenFor(m => m.AppointmentId, new {id = "appointmentId"})
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                         <div class="control-group">
-                            @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.Name, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "span8", id = "eventTitles" } })
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitles"}})
+                                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
-                            @Html.LabelFor(model => model.Location, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.Location, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.Location, new { @class = "span8", id = "eventLocations" })
-                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(model => model.Location, new {@class = "span8", id = "eventLocations"})
+                                @Html.ValidationMessageFor(model => model.Location, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
                         <div class="control-group">
-                            @Html.LabelFor(model => model.Notes, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.Notes, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.Notes, new { htmlAttributes = new { @class = "span8", id = "eventNotes" } })
-                                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Notes, new {htmlAttributes = new {@class = "span8", id = "eventNotes"}})
+                                @Html.ValidationMessageFor(model => model.Notes, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
-                            @Html.LabelFor(model => model.StartDate, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.StartDate, new { @class = "span8", id = "eventStartDates" })
-                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(model => model.StartDate, new {@class = "span8", id = "eventStartDates"})
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
-                            @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "span8", id = "eventEndDates" } })
-                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "eventEndDates"}})
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" id="btnPopupUpdateCancel" data-dismiss="modal" class="btn btn-default pull-left fa fa-stop">Cancel</button>
-                        <input type="submit" value="Update Appointment" class="btn btn-primary pull-left fa fa-arro" />
+                        <input type="submit" value="Update Appointment" class="btn btn-primary pull-left fa fa-arro"/>
                     </div>
                 }
             </div>
@@ -108,56 +108,56 @@
 
             <div id="popupSaveEventForm" class="modal hide" style="display: none;">
 
-                @using (Html.BeginForm("", "", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal row-fluid" }))
+                @using (Html.BeginForm("", "", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
                 {
                     <div class="modal-header">
                         <h3>Add new Appointment</h3>
                     </div>
                     <div class="modal-body">
                         @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
                         <div class="control-group">
-                            @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.Name, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "span8", id = "eventTitle" } })
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", id = "eventTitle"}})
+                                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
-                            @Html.LabelFor(model => model.EventId, "Event", new { @class = "control-label" })
+                            @Html.LabelFor(model => model.EventId, "Event", new {@class = "control-label"})
                             <div class="controls">
-                                @Html.DropDownListFor(m=>m.EventId, null, new { @class = "span8", id = "eventId" })
-                                @Html.ValidationMessageFor(model => model.EventId, "", new { @class = "text-danger" })
+                                @Html.DropDownListFor(m => m.EventId, null, new {@class = "span8", id = "eventId"})
+                                @Html.ValidationMessageFor(model => model.EventId, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
-                            @Html.LabelFor(model => model.Location, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.Location, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.Location, new { @class = "span8", id = "eventLocation" })
-                                @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-
-                        <div class="control-group">
-                            @Html.LabelFor(model => model.Notes, new { @class = "control-label" })
-                            <div class="controls">
-                                @Html.TextBoxFor(model => model.Notes, new { htmlAttributes = new { @class = "span8", id = "eventNote" } })
-                                @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(model => model.Location, new {@class = "span8", id = "eventLocation"})
+                                @Html.ValidationMessageFor(model => model.Location, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
                         <div class="control-group">
-                            @Html.LabelFor(model => model.StartDate, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.Notes, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.StartDate, new { @class = "span8", id = "eventStartDate" })
-                                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                                @Html.TextBoxFor(model => model.Notes, new {htmlAttributes = new {@class = "span8", id = "eventNote"}})
+                                @Html.ValidationMessageFor(model => model.Notes, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            @Html.LabelFor(model => model.StartDate, new {@class = "control-label"})
+                            <div class="controls">
+                                @Html.TextBoxFor(model => model.StartDate, new {@class = "span8", id = "eventStartDate"})
+                                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
                             </div>
                         </div>
                         <div class="control-group">
-                            @Html.LabelFor(model => model.EndDate, new { @class = "control-label" })
+                            @Html.LabelFor(model => model.EndDate, new {@class = "control-label"})
                             <div class="controls">
-                                @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "span8", id = "eventEndDate" } })
-                                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {@class = "span8", id = "eventEndDate"}})
+                                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
                             </div>
                         </div>
 
@@ -235,7 +235,7 @@
                 format: 'm-d-Y H:i',
                 onShow: function(ct) {
                     this.setOptions({
-
+                    
                     });
                 }
             });
@@ -244,7 +244,7 @@
                 format: 'm-d-Y H:i',
                 onShow: function(ct) {
                     this.setOptions({
-
+                    
                     });
                 }
             });
@@ -264,7 +264,7 @@
                         editable: true,
                         allDaySlot: false,
                         selectable: true,
-                        timezone : 'local',
+                        timezone: 'local',
                         slotMinutes: 15,
                         events: '@Url.Action("GetMyAppointments", "Appointments")',
                         eventClick: function(event, jsEvent, view) {
@@ -322,7 +322,7 @@
                     'Location': $('#eventLocation').val(),
                     'Note': $('#eventNote').val(),
                     'plannerId': @loggedinuser.EventPlannerId,
-                    'eventId':$('#eventId').val(),
+                    'eventId': $('#eventId').val(),
                 };
                 ClearPopupFormValues();
 
@@ -377,6 +377,7 @@
             $('#eventDateTime').val("");
             $('#eventDuration').val("");
         }
+
         function UpdateEvent(appointmentId, eventStart, eventEnd) {
 
             var dataRow = {
@@ -388,9 +389,9 @@
                 type: 'POST',
                 url: "@Url.Action("UpdateEventAppoitments", "Appointments")",
                 dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify(dataRow)
-        });
+                contentType: "application/json",
+                data: JSON.stringify(dataRow)
+            });
 
         }
     </script>

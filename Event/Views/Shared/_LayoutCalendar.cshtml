@@ -36,11 +36,19 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    @RenderBody()
-                    @{ Html.RenderPartial("_PartialMaterialFooter"); }
+                    <div class="col-md-9">
+                        @RenderSection("add", false)
+                        @RenderSection("links", false)
+                        <div class="card">
+                            <div class="card-header" data-background-color="purple">
+                                <h4 class="title">@ViewBag.TableHeader</h4>
+                                <p class="category">@ViewBag.TableSubHeader</p>
+                            </div>
+                            @RenderBody()
+                            @{ Html.RenderPartial("_PartialMaterialFooter"); }
 
-
-
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

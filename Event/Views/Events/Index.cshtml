@@ -8,68 +8,70 @@
     var packageSubscribed = Session["subscribe"] as EventPlannerPackage;
 }
 @section add {
-        @if (packageSubscribed != null && packageSubscribed.AllowedEvent > packageSubscribed.SubscribedEvent)
-        {
-            @Html.ActionLink("Add Event", "Create", null, new { @class = "btn btn-primary icon-plus pull-right" })
-        }
-        else
-        {
-            <div class="alert alert-info" style="margin-left: 12px;">Your Subscription has been exhausted.. Buy a new subscription by clicking <a href="@Url.Action("Pricing","Account")"> here</a></div>
-        }
+    @if ((packageSubscribed != null) && (packageSubscribed.AllowedEvent > packageSubscribed.SubscribedEvent))
+    {
+        @Html.ActionLink("Add Event", "Create", null, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
     }
+    else
+    {
+        <div class="alert alert-info" style="margin-left: 12px;">
+            Your Subscription has been exhausted.. Buy a new subscription by clicking <a href="@Url.Action("Pricing", "Account")"> here</a>
+        </div>
+    }
+}
 @section links{
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
-            </li>
-        </ol>
-    }
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+    </ol>
+}
 <div class="card-content table-responsive">
     <table class="table table-hover">
         <thead class="text-primary">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StartDate)
-                </th>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
 
-                <th>
-                    @Html.DisplayNameFor(model => model.EndDate)
-                </th>
-                <th>Action</th>
-            </tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    @if (item.EventDate > DateTime.Now)
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (item.EventDate > DateTime.Now)
                 {
-                        <td style="color: green">
-                            @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>
-                        </td>
-                    }
-                    else
-                    {
-                        <td style="color: red">
-                            @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-down"></i>
-                        </td>
-                    }
+                    <td style="color: green">
+                        @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>
+                    </td>
+                }
+                else
+                {
+                    <td style="color: red">
+                        @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-down"></i>
+                    </td>
+                }
 
-                    <td>
-                        @item.StartDate.ToShortDateString()
-                    </td>
-                    <td>
-                        @item.EndDate.ToShortDateString()
-                    </td>
-                    <td>
-                        @Html.ActionLink("Open", "Details", new { id = item.EventId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
-                    </td>
-                </tr>
-            }
+                <td>
+                    @item.StartDate.ToShortDateString()
+                </td>
+                <td>
+                    @item.EndDate.ToShortDateString()
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "Details", new {id = item.EventId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

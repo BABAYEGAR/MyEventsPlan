@@ -1,5 +1,4 @@
-﻿@using Event.Data.Objects.Entities
-@model IEnumerable<Client>
+﻿@model IEnumerable<Event.Data.Objects.Entities.Client>
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all my clients";
@@ -31,23 +30,23 @@
             </th>
         </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Event.Name)
-                    </td>
-                    <td>
-                        @(item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Mobile)
-                    </td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.Name)
+                </td>
+                <td>
+                    @(item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Mobile)
+                </td>
+            </tr>
+        }
 
     </table>
 </div>

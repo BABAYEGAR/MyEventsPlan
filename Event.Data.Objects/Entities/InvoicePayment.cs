@@ -13,10 +13,10 @@ namespace Event.Data.Objects.Entities
     {
         public long InvoicePaymentId { get; set; }
         [Required]
-        public long Amount { get; set; }
+        public long? Amount { get; set; }
         [Required]
         [DisplayName("Reference Number")]
-        public long Reference { get; set; }
+        public long? Reference { get; set; }
         [Required]
         [DisplayName("Payment Date")]
         public DateTime PaymentDate { get; set; }

@@ -1,6 +1,8 @@
 ﻿@model Event.Data.Objects.Entities.Note
-
-@using (Html.BeginForm("Edit", "Notes", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@{
+    Layout = "../Shared/_LayoutModal.cshtml";
+}
+@using (Html.BeginForm("Edit", "Notes", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.NoteId)
@@ -8,26 +10,23 @@
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.HiddenFor(m => m.DateCreated)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.Title, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.Title, new {htmlAttributes = new {@class = "span8"}})
+        @Html.ValidationMessageFor(model => model.Title, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.Content, new {@class = "control-label"})
-        <div class="controls">
-            @Html.TextAreaFor(model => model.Content, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.Content, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.TextAreaFor(model => model.Content, new {htmlAttributes = new {@class = "span8"}})
+        @Html.ValidationMessageFor(model => model.Content, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.ShowToClient, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.ShowToClient, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.ShowToClient, "", new {@class = "text-danger"})
-        </div>
+
+        @Html.EditorFor(model => model.ShowToClient, new {htmlAttributes = new {@class = "span8"}})
+        @Html.ValidationMessageFor(model => model.ShowToClient, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">

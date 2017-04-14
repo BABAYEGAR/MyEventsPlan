@@ -2,30 +2,27 @@
 @{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Create", "Packages", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Create", "Packages", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-    <div class="control-group">
-        @Html.LabelFor(model => model.PackageName, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.PackageName, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the package name"}})
-            @Html.ValidationMessageFor(model => model.PackageName, "", new {@class = "text-danger"})
-        </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.PackageName, new {htmlAttributes = new {placeholder = "Enter Package Name"}})
+        @Html.LabelFor(model => model.PackageName)
+        @Html.ValidationMessageFor(model => model.PackageName, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.Amount, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the amount"}})
-            @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
-        </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {placeholder = "Enter Package Amount"}})
+        @Html.LabelFor(model => model.Amount)
+        @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.MaximumEvents, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.MaximumEvents, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the maximum number of allowed events"}})
-            @Html.ValidationMessageFor(model => model.MaximumEvents, "", new {@class = "text-danger"})
-        </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.MaximumEvents, new {htmlAttributes = new {placeholder = "Enter the Maximum Number of allowed events"}})
+        @Html.LabelFor(model => model.MaximumEvents)
+        @Html.ValidationMessageFor(model => model.MaximumEvents, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">

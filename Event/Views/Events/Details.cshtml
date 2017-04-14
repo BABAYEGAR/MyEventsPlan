@@ -1,6 +1,5 @@
 ﻿@using Event.Data.Objects.Entities
 @using MyEventPlan.Data.DataContext.DataContext
-@using MyEventPlan.Data.Service.DateTimeHelper
 @using MyEventPlan.Data.Service.Enum
 @model Event
 @{
@@ -29,14 +28,14 @@
     <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-header" data-background-color="@Model.Color">
-                <img class="img-circle" src="~/UploadedFiles/ProfileImage/@loggedinuser.ProfileImage"/>
+                <i class="material-icons">hourglass_empty</i>
             </div>
             <div class="card-content boldtext">
-                <p class="category" style="font-weight: bolder; color: gray;font-size: 24px">@Model.Name</p>
+                <p class="category" style="color: gray; font-size: 24px; font-weight: bolder;">@Model.Name</p>
                 <br/>
-                <p class="category"><i class="material-icons" style="color: purple">today</i>@Model.StartDate.ToString("D")</p>
-                <p class="category"><i class="material-icons"  style="color: purple">query_builder</i>@Model.StartTime - @Model.EndTime</p>
-                <p class="category"><i class="material-icons"  style="color: purple">hourglass_empty</i>@(remainingDays) days until event</p>
+                <p class="category">Event Date: @Model.EventDate.ToString("D")</p>
+                <p class="category">Event Time: @Model.StartTime - @Model.EndTime</p>
+                <p class="category">Days to Event: @(remainingDays) days until event</p>
                 <h3 class="title">
                 </h3>
                 <br/>
@@ -44,23 +43,23 @@
             </div>
         </div>
     </div>
-<div class="col-lg-6 col-md-9 col-sm-9">
-    <div class="card card-stats">
-        <div class="card-content boldtext">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="@Url.Action("Index")">My Events</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a class="btn btn-primary fa fa-pencil" href="@Url.Action("Edit", new {id = Model.EventId})">Edit Event</a>
-                </li>
-                <li class="breadcrumb-item">
-                    <a class="btn btn-success fa fa-plus" href="@Url.Action("Create", "Appointments", new {eventId = Model.EventId})">Add Appointment</a>
-                </li>
-            </ol>
+    <div class="col-lg-6 col-md-9 col-sm-9">
+        <div class="card card-stats">
+            <div class="card-content boldtext">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="@Url.Action("Index")">My Events</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="btn btn-primary fa fa-pencil" href="@Url.Action("Edit", new {id = Model.EventId})">Edit Event</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="btn btn-success fa fa-plus" href="@Url.Action("Create", "Appointments", new {eventId = Model.EventId})">Add Appointment</a>
+                    </li>
+                </ol>
+            </div>
         </div>
     </div>
-</div>
 
 }
 @if ((loggedinuser?.EventPlannerId != null) && (eventPlaner?.Type == EventPlannerTypeEnum.Organization.ToString()))

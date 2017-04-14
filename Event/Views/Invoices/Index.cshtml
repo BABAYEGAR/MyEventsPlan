@@ -18,72 +18,72 @@
     var invoice = new Invoice();
 }
 @section links{
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
-            </li>
-        </ol>
-    }
-    @section add {
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
-            Add Invoice
-        </button>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+    </ol>
+}
+@section add {
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Invoice
+    </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">Add an Invoice</h4>
-                    </div>
-                    <div class="modal-body">
-                        @{
-                            Html.RenderPartial("CreateInvoiceModal", invoice);
-                        }
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add an Invoice</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("CreateInvoiceModal", invoice);
+                    }
                 </div>
             </div>
-
         </div>
-    }
+
+    </div>
+}
 <div class="card-content table-responsive">
     <table class="table table-hover">
         <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.InvoiceName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.InvoiceNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.DueDate)
-                </th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DueDate)
+            </th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InvoiceName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.InvoiceNumber)
-                    </td>
-                    <td>
-                        @item.DueDate.ToShortDateString()
-                    </td>
-                    <td>
-                        @Html.ActionLink("Open", "Details", new { id = item.InvoiceId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
-                    </td>
-                </tr>
-            }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InvoiceNumber)
+                </td>
+                <td>
+                    @item.DueDate.ToShortDateString()
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "Details", new {id = item.InvoiceId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+                </td>
+            </tr>
+        }
         </tbody>
     </table>
 </div>

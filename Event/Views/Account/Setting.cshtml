@@ -1,6 +1,4 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.Service.Enum
-@model AppUser
+﻿@model Event.Data.Objects.Entities.AppUser
 @{
     ViewBag.Title = "View";
     ViewBag.Header = Model.DisplayName;
@@ -9,7 +7,7 @@
 @section links{
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="@Url.Action("Dashboard","Home")">My Dashboard</a>
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
         </li>
     </ol>
 }
@@ -17,29 +15,29 @@
     <div class="btn-box-row row-fluid">
         <div>
             <div class="btn-box-row row-fluid">
-                    <div class="span8">
-                        <div class="row-fluid">
-                            <div class="span12">
-                                <a href="@Url.Action("UserProfile", "Account")" class="btn-box medium span4">
-                                    <i class="icon-user"></i><b>Profile Data</b>
-                                </a>
-                                <a href="@Url.Action("ChangePassword", "Account")" class="btn-box medium span4">
-                                    <i class="fa fa-key"></i><b>Change Password</b>
-                                </a><a href="@Url.Action("BackgroundColor", "AppUsers")" class="btn-box medium span4">
-                                    <i class="fa fa-paint-brush"></i><b>Background Color</b>
-                                </a>
-                            </div>
-                            <div class="span12">
-                                <a href="@Url.Action("ImageUpload", "AppUsers")" class="btn-box medium span4">
-                                    <i class="icon-camera"></i><b>Logo</b>
-                                </a>
-                                <a href="@Url.Action("Pricing", "Account")" class="btn-box medium span4">
-                                    <i class="fa fa-dollar"></i><b>Subscription</b>
-                                </a>
-                            </div>
+                <div class="span8">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <a href="@Url.Action("UserProfile", "Account")" class="btn-box medium span4">
+                                <i class="icon-user"></i><b>Profile Data</b>
+                            </a>
+                            <a href="@Url.Action("ChangePassword", "Account")" class="btn-box medium span4">
+                                <i class="fa fa-key"></i><b>Change Password</b>
+                            </a><a href="@Url.Action("BackgroundColor", "AppUsers")" class="btn-box medium span4">
+                                <i class="fa fa-paint-brush"></i><b>Background Color</b>
+                            </a>
                         </div>
-
+                        <div class="span12">
+                            <a href="@Url.Action("ImageUpload", "AppUsers")" class="btn-box medium span4">
+                                <i class="icon-camera"></i><b>Logo</b>
+                            </a>
+                            <a href="@Url.Action("Pricing", "Account")" class="btn-box medium span4">
+                                <i class="fa fa-dollar"></i><b>Subscription</b>
+                            </a>
+                        </div>
                     </div>
+
+                </div>
             </div>
         </div>
     </div>

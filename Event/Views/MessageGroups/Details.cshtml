@@ -1,6 +1,4 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
-@model MessageGroup
+﻿@model Event.Data.Objects.Entities.MessageGroup
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View Group";
@@ -14,15 +12,15 @@
         <a href="@Url.Action("Index", "MessageGroups")">Message Groups</a>
     </li>
 </ol>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+    <dd>
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+</dl>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
     Edit Group
@@ -47,7 +45,7 @@
     </div>
 
 </div>
-@Html.ActionLink("Group Members", "GroupMember", "MessageGroupMembers", new { id = Model.MessageGroupId }, new { @class = "btn btn-success btn-xs icon-list" })
+@Html.ActionLink("Group Members", "GroupMember", "MessageGroupMembers", new {id = Model.MessageGroupId}, new {@class = "btn btn-success btn-xs icon-list"})
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
     Delete Group
@@ -64,14 +62,14 @@
                 <h4 class="modal-title" id="myModalLabel1">Delete Group</h4>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Delete", "MessageGroups", new { id = Model.MessageGroupId }))
+                @using (Html.BeginForm("Delete", "MessageGroups", new {id = Model.MessageGroupId}))
                 {
                     @Html.AntiForgeryToken()
                     <p>
                         Are you sure you want to delete the group and all ite members?
                     </p>
                     <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right" />
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
                     </div>
                 }
             </div>

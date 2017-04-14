@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "View";
     Layout = "../Shared/_LayoutView.cshtml";
-    ViewBag.TableHeader = Model.Name +" Prospect (Lead)";
+    ViewBag.TableHeader = Model.Name + " Prospect (Lead)";
     ViewBag.TableSubHeader = "Details of Prospect";
     var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
@@ -88,7 +88,6 @@
 
     @if ((role != null) && (role.Name == "Platform Administrator"))
     {
-
         <dt>
             @Html.DisplayNameFor(model => model.CreatedBy)
         </dt>
@@ -132,34 +131,34 @@
     <span>|</span>
     @Html.ActionLink("Convert To Event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-success"})
 }
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
-        Delete
-    </button>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
+    Delete
+</button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel1">Delete Prospect</h4>
-                </div>
-                <div class="modal-body">
-                    @using (Html.BeginForm("Delete", "Prospects", new {id = Model.ProspectId}))
-                    {
-                        @Html.AntiForgeryToken()
-                        <p>
-                            Are you sure you want to delete the prospect?
-                        </p>
-                        <div class="form-actions no-color">
-                            <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
-                        </div>
-                    }
-                </div>
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete Prospect</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Delete", "Prospects", new {id = Model.ProspectId}))
+                {
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to delete the prospect?
+                    </p>
+                    <div class="form-actions no-color">
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
+                    </div>
+                }
             </div>
         </div>
-
     </div>
+
+</div>

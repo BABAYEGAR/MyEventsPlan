@@ -10,46 +10,46 @@
 }
 @section links{
 
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item">
-                <a href="@Url.Action("Index", "Events")">My Events</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a href="@if (events != null)
-                         {
-                             @Url.Action("Details", "Events", new {id = events.EventId})
-                         }">
-                    Event Dashboard
-                </a>
-            </li>
-        </ol>
-    }
-    @section add {
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary icon-plus pull-right waves-effect waves-light" data-toggle="modal" data-target="#myModal">
-            Add Guest List
-        </button>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Events</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@if (events != null)
+                     {
+                         @Url.Action("Details", "Events", new {id = events.EventId})
+                     }">
+                Event Dashboard
+            </a>
+        </li>
+    </ol>
+}
+@section add {
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary icon-plus btn-xs pull-right waves-effect waves-light" data-toggle="modal" data-target="#myModal">
+        Add Guest List
+    </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title" id="myModalLabel">Add a guest list</h4>
-                    </div>
-                    <div class="modal-body">
-                        @{
-                            Html.RenderPartial("CreateGuestListModal", guestList);
-                        }
-                    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a guest list</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("CreateGuestListModal", guestList);
+                    }
                 </div>
             </div>
-
         </div>
-    }
+
+    </div>
+}
 <div class="card-content table-responsive">
     <table class="table table-hover">
         <thead>
@@ -68,7 +68,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Open", "Details", new { id = item.GuestListId }, new { @class = "btn btn-default btn-lg icon-folder-open" })
+                    @Html.ActionLink("Open", "Details", new {id = item.GuestListId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
 
                 </td>
             </tr>
@@ -78,11 +78,11 @@
 </div>
 @section scripts{
     <script type="text/javascript">
-    $('#myModal')
-        .on('shown.bs.modal',
-            function() {
-                $('#myInput').focus();
-            });
-</script>
+        $('#myModal')
+            .on('shown.bs.modal',
+                function() {
+                    $('#myInput').focus();
+                });
+    </script>
 
 }

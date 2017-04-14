@@ -4,44 +4,33 @@
     var db = new EventDataContext();
     long guestListId = ViewBag.guestListId;
     var eventId = db.GuestLists.Find(guestListId).EventId;
-}
-@{
     Layout = "../Shared/_LayoutModal.cshtml";
 }
-@using (Html.BeginForm("Create", "Guests", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Create", "Guests", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("GuestListId", guestListId)
     @Html.Hidden("EventId", eventId)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
-    <div class="control-group">
-        @Html.LabelFor(model => model.Name, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your first name"}})
-            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
-        </div>
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {placeholder = "Enter Guest Full-Name"}})
+        @Html.LabelFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.Email, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your email address"}})
-            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
-        </div>
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {placeholder = "Enter Guest Email Address"}})
+        @Html.LabelFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.PhoneNumber, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.PhoneNumber, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your mobile number"}})
-            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new {@class = "text-danger"})
-        </div>
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.PhoneNumber, new {htmlAttributes = new {placeholder = "Enter Guest Phone Number"}})
+        @Html.LabelFor(model => model.PhoneNumber)
+        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Add Guest" class="btn btn-default"/>
         </div>
     </div>
-}
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

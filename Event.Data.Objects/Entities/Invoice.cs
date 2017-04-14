@@ -17,7 +17,7 @@ namespace Event.Data.Objects.Entities
         public string InvoiceName { get; set; }
         [DisplayName("Invoice Number")]
         [Required]
-        public long InvoiceNumber { get; set; }
+        public long? InvoiceNumber { get; set; }
         [DisplayName("Due Date")]
         [Required]
         public DateTime DueDate { get; set; }

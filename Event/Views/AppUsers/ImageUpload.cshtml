@@ -4,44 +4,46 @@
     Layout = "../Shared/_LayoutUpload.cshtml";
 }
 @section css{
-<link href="~/Content/ImageUploader/css/main.css" rel="stylesheet" />
-    <link href="~/Content/ImageUploader/css/jquery.Jcrop.min.css" rel="stylesheet" />
+    <link href="~/Content/ImageUploader/css/main.css" rel="stylesheet"/>
+    <link href="~/Content/ImageUploader/css/jquery.Jcrop.min.css" rel="stylesheet"/>
     <style>
         .widget-menu a {
-    color: #555;
-    display: block;
-    line-height: 20px;
-    padding: 15px;
-    text-decoration: none !important;
-}
+            color: #555;
+            display: block;
+            line-height: 20px;
+            padding: 15px;
+            text-decoration: none !important;
+        }
     </style>
 }
 <div class="bbody">
     <!-- upload form -->
     <form id="upload_form" enctype="multipart/form-data" method="post" onsubmit="return checkForm()">
         <!-- hidden crop params -->
-        <input type="hidden" id="x1" name="x1" />
-        <input type="hidden" id="y1" name="y1" />
-        <input type="hidden" id="x2" name="x2" />
-        <input type="hidden" id="y2" name="y2" />
+        <input type="hidden" id="x1" name="x1"/>
+        <input type="hidden" id="y1" name="y1"/>
+        <input type="hidden" id="x2" name="x2"/>
+        <input type="hidden" id="y2" name="y2"/>
         <h2>Step1: Please select image file</h2>
-        <div><input type="file" name="image_file" id="image_file" onchange="fileSelectHandler()" /></div>
+        <div>
+            <input type="file" name="image_file" id="image_file" onchange="fileSelectHandler()"/>
+        </div>
         <div class="error"></div>
         <div class="step2">
             <h2>Step2: Please select a crop region</h2>
-            <img id="preview" />
+            <img id="preview"/>
             <div class="info">
-                <label>File size</label> <input type="text" id="filesize" name="filesize" />
-                <label>Type</label> <input type="text" id="filetype" name="filetype" />
-                <label>Image dimension</label> <input type="text" id="filedim" name="filedim" />
-                <label>W</label> <input type="text" id="w" name="w" />
-                <label>H</label> <input type="text" id="h" name="h" />
+                <label>File size</label> <input type="text" id="filesize" name="filesize"/>
+                <label>Type</label> <input type="text" id="filetype" name="filetype"/>
+                <label>Image dimension</label> <input type="text" id="filedim" name="filedim"/>
+                <label>W</label> <input type="text" id="w" name="w"/>
+                <label>H</label> <input type="text" id="h" name="h"/>
             </div>
-            <input type="submit" value="Upload" class="btn btn-primary" />
+            <input type="submit" value="Upload" class="btn btn-primary"/>
         </div>
     </form>
 </div>
 @section scripts{
-<script src="~/Content/ImageUploader/js/jquery.Jcrop.min.js"></script>
-<script src="~/Content/ImageUploader/js/script.js"></script>
+    <script src="~/Content/ImageUploader/js/jquery.Jcrop.min.js"></script>
+    <script src="~/Content/ImageUploader/js/script.js"></script>
 }

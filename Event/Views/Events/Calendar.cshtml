@@ -29,6 +29,12 @@
     <link href="~/Content/themes/base/jquery.ui.theme.css" rel="stylesheet"/>
     <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
     <link href="~/Content/Color/spectrum.css" rel="stylesheet"/>
+    <style>
+        .modal {
+            color: black;
+            z-index: 200;
+        }
+    </style>
 }
 @Html.ActionLink("Add Event", "Create", "Events", new {}, new {@class = "btn btn-primary icon-plus pull-right"})
 
@@ -49,7 +55,7 @@
             <div class="alert alert-info alert-dismissable">@TempData["event"]</div>
         }
     }
-    <div id="popupUpdateEventForm" class="modal" style="display: none;">
+    <div id="popupUpdateEventForm" class="modal-backdrop" style="display: none;">
         @using (Html.BeginForm("UpdateCalendarEvent", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid", id = "UpdateEventForm"}))
         {
             <div class="modal-header">
