@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Entity;
-using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -10,7 +8,6 @@ using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Calender;
 using MyEventPlan.Data.Service.Enum;
-using ColorConverter = System.Drawing.ColorConverter;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -22,6 +19,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
             IQueryable<Event.Data.Objects.Entities.Event> events = null;
             if ((loggedinuser != null) && (loggedinuser.EventPlannerId != null))
             {
@@ -50,7 +48,7 @@ namespace MyEventPlan.Controllers.EventManagement
 
                 return View(events.ToList());
             }
-            List<Event.Data.Objects.Entities.Event> list = new List<Event.Data.Objects.Entities.Event>();
+            var list = new List<Event.Data.Objects.Entities.Event>();
             foreach (var @event in events)
                 list.Add(@event);
             return View(list);
@@ -59,6 +57,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: Events
         public ActionResult Calendar()
         {
+            ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
             return View();
         }
 
@@ -71,7 +70,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 select new
                 {
                     id = e.EventId,
-                    title = e.Name +" ... Starts from " + e.StartTime + "To " + e.EndTime,
+                    title = e.Name,
                     start = e.StartDate,
                     end = e.EndDate,
                     color = e.Color,
@@ -90,10 +89,28 @@ namespace MyEventPlan.Controllers.EventManagement
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var @event = _db.Event.Find(id);
-            if (@event == null)
-                return HttpNotFound();
-            Session["event"] = @event;
-            return View(@event);
+            //recent event details
+            if (@event != null)
+            {
+                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                ViewBag.events = _db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+                ViewBag.guestList = _db.GuestLists.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.checkList = _db.CheckLists.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.clients = _db.Clients.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.resources = _db.EventResourceMapping.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.appointments = _db.Appointments.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.invoice = _db.Invoices.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.staff = _db.StaffEventMapping.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.notes = _db.Notes.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.vendors = _db.EventVendorMappings.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.budget = _db.Budgets.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.task = _db.Tasks.Where(n => n.EventId == @event.EventId).ToList();
+
+                ViewBag.remainingDays = @event.EventDate.Subtract(DateTime.Now).Days;
+                Session["event"] = @event;
+                return View(@event);
+            }
+            return View();
         }
 
         public void UpdateEvent(int id, string newEventStart, string newEventEnd)
@@ -116,6 +133,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 calendarEvent.DateLastModified = DateTime.Now;
                 if (loggedinuser != null) calendarEvent.LastModifiedBy = loggedinuser.AppUserId;
                 calendarEvent.Color = collectedValues["Color"];
+                calendarEvent.Name = collectedValues["Name"];
                 calendarEvent.StartDate = Convert.ToDateTime(collectedValues["StartDate"]);
                 calendarEvent.EndDate = Convert.ToDateTime(collectedValues["EndDate"]);
                 calendarEvent.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
@@ -158,7 +176,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
-            
+
             if (ModelState.IsValid)
             {
                 if ((role != null) && (loggedinuser != null) && (role.Name == "Event Planner"))
@@ -172,8 +190,6 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.EventPlannerId = loggedinuser.EventPlannerId;
                     @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     @event.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
-                   
-
                 }
                 else
                 {
@@ -188,14 +204,10 @@ namespace MyEventPlan.Controllers.EventManagement
                     //package data
                     var packageData =
                         _db.EventPlannerPackages.FirstOrDefault(n => n.Status == PackageStatusEnum.Active.ToString());
-                    if (packageData != null && packageData.SubscribedEvent < packageData.AllowedEvent)
-                    {
+                    if ((packageData != null) && (packageData.SubscribedEvent < packageData.AllowedEvent))
                         packageData.SubscribedEvent = packageData.SubscribedEvent + 1;
-                    }
-                    if (packageData != null && packageData.SubscribedEvent >= packageData.AllowedEvent)
-                    {
+                    if ((packageData != null) && (packageData.SubscribedEvent >= packageData.AllowedEvent))
                         packageData.Status = PackageStatusEnum.Inactive.ToString();
-                    }
                     if (packageData != null)
                     {
                         packageData.LastModifiedBy = loggedinuser.AppUserId;
@@ -203,7 +215,6 @@ namespace MyEventPlan.Controllers.EventManagement
                     }
                     _db.Entry(packageData).State = EntityState.Modified;
                     _db.SaveChanges();
-
                 }
                 //display notification
                 TempData["display"] = "You have successfully added an event!";

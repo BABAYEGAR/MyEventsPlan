@@ -19,6 +19,9 @@ namespace MyEventPlan.Controllers.FinancialManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.id = id;
+            //view bag property for clients
+            ViewBag.ClientId = new SelectList(_db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+    "ClientId", "Name");
             IQueryable<Invoice> invoices = null;
             if (loggedinuser?.ClientId != null)
             {
@@ -61,9 +64,12 @@ namespace MyEventPlan.Controllers.FinancialManagement
         // GET: Invoices/Details/5
         public ActionResult Details(long? id)
         {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var invoice = _db.Invoices.Find(id);
+            ViewBag.EventId = new SelectList(_db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+    "EventId", "Name");
             if (invoice == null)
                 return HttpNotFound();
             return View(invoice);

@@ -26,7 +26,7 @@ namespace MyEventPlan.Controllers.MappingManagement
                 where a.EventPlannerId == loggedinuser.EventPlannerId
                 select a;
 
-            ViewBag.StaffId = new SelectList(db.Staff.Except(vedors), "StaffId", "Firstname");
+            ViewBag.StaffId = new SelectList(db.Staff.Except(vedors), "StaffId", "DisplayName");
             var staffEventMapping =
                 db.StaffEventMapping.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId)
                     .Include(e => e.Event)

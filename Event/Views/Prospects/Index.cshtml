@@ -1,13 +1,39 @@
-﻿@model IEnumerable<Event.Data.Objects.Entities.Prospect>
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<Prospect>
 
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My Prospects (Leads)";
     ViewBag.TableSubHeader = "List of all my Prospects";
     Layout = "../Shared/_LayoutTable.cshtml";
+    var prospect = new Prospect();
 }
 @section add {
-    @Html.ActionLink("Add Prospect", "Create", null, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Prospect
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new Prospect</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("CreateProspectModal", prospect);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 }
 @section links{
 

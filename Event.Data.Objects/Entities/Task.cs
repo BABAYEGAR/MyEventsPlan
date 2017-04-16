@@ -18,6 +18,10 @@ namespace Event.Data.Objects.Entities
         public string Status { get; set; }
         [Required]
         public DateTime DueDate { get; set; }
+        [Required]
+        public long? StaffId { get; set; }
+        [ForeignKey("StaffId")]
+        public Staff Staff { get; set; }
         public long EventId { get; set; }
         [ForeignKey("EventId")]
         public Event Event { get; set; }

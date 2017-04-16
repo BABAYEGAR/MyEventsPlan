@@ -1,25 +1,22 @@
 ﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
 @using MyEventPlan.Data.Service.Enum
 @{
     ViewBag.Title = "Dashboard";
     ViewBag.Header = "My Dashboard";
     Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
-    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    var dbEvent = new EventDataContext();
 
-    var role = Session["role"] as Role;
+    //event details
+    List<Event> upComingvents = ViewBag.upComingvents;
+    IQueryable<PersonalCheckList> checkList = ViewBag.checkList;
 
-    var upComingvents = dbEvent.Event.Where(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StartDate > DateTime.Now)).OrderByDescending(n => n.EventDate).ToList();
-    var checkList = dbEvent.PersonalCheckLists.Where(n => n.AppUserId == loggedinuser.AppUserId);
-    //recent event details
-    var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-    var prospects = dbEvent.Prospects.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-    var contacts = dbEvent.Contacts.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-    var resources = dbEvent.Contacts.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-    var appointments = dbEvent.Appointments.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-    var invoice = dbEvent.Invoices.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-    var staff = dbEvent.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+    //recent event planner details
+    List<Event> events = ViewBag.events;
+    List<Prospect> prospects = ViewBag.prospects;
+    List<Contact> contacts = ViewBag.contacts;
+    List<Resource> resources = ViewBag.resources;
+    List<Appointment> appointments = ViewBag.appointments;
+    List<Invoice> invoice = ViewBag.invoice;
+    List<Staff> staff = ViewBag.staff;
 }
 <div class="content">
 <div class="container-fluid">
@@ -50,7 +47,7 @@
             <div class="card-content">
                 <p class="category">Events Calendar</p>
                 <h3 class="title">
-                    @events.Count<small> Events</small>
+                    @upComingvents.Count<small> Events</small>
                 </h3>
             </div>
             <div class="card-footer">
@@ -111,7 +108,7 @@
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    <i class="material-icons">supervisor_account</i> <a href="@Url.Action("Calendar", "Appointments")">View all my Staff</a>
+                    <i class="material-icons">supervisor_account</i> <a href="@Url.Action("Index", "Staffs")">View all my Staff</a>
                 </div>
             </div>
         </div>

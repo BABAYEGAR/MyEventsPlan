@@ -2,6 +2,7 @@
 @using MyEventPlan.Data.DataContext.DataContext
 @model Contact
 @{
+    Layout = "../Shared/_LayoutView.cshtml";
     ViewBag.Title = "Details";
     ViewBag.TableHeader = Model.DisplayName + "Contact Card";
     ViewBag.TableSubHeader = "Details of Contact";
@@ -135,19 +136,23 @@
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Delete contact</h4>
             </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Delete", "Contacts", new {id = Model.ContactId}))
-                {
+
+            @using (Html.BeginForm("Delete", "Contacts", new {id = Model.ContactId}))
+            {
+                <div class="modal-body">
                     @Html.AntiForgeryToken()
                     <p>
-                        Are you sure you want to delete the contact?
-                    </p>
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
+                        Are you sure you want to remove the contact?
 
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Remove" class="btn btn-danger pull-right fa fa-trash"/>
+                    <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                </div>
+            }
+        </div>
+
+    </div>
 </div>

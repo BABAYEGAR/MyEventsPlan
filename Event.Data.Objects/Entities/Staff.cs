@@ -41,6 +41,7 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<AppUser> AppUsers { get; set; }
         public IEnumerable<Event> Events { get; set; }
         public IEnumerable<StaffEventMapping> StaffEventMapping { get; set; }
+        public IEnumerable<Task> Tasks { get; set; }
         public string DisplayName
 => Firstname + " " + Lastname;
     }

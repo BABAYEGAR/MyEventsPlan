@@ -4,8 +4,9 @@
 @model IEnumerable<Message>
 @{
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "Inbox Messages";
-    Layout = "../Shared/_LayoutMessage.cshtml";
+    ViewBag.TableHeader = "Messages";
+    ViewBag.TableSubHeader = "My Inbox Messages";
+    Layout = "../Shared/_LayoutTable.cshtml";
     var appUserDb = new AppUserDataContext();
     var messageDb = new MessageDataContext();
     var message = new Message();
@@ -15,11 +16,6 @@
 <div class="span9">
     <div class="content">
         <div class="module message">
-            <div class="module-head">
-                <h3>
-                    Message
-                </h3>
-            </div>
             <div class="module-option clearfix">
                 <div class="pull-left">
                     <div class="btn-group">

@@ -1,5 +1,4 @@
 ﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
 @using MyEventPlan.Data.Service.Enum
 @model Event
 @{
@@ -8,21 +7,21 @@
     Layout = "../Shared/_LayoutEventDashboard.cshtml";
     var eventPlaner = Session["eventplanner"] as EventPlanner;
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    var dbEvent = new EventDataContext();
 
     //recent event details
-    var events = dbEvent.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
-    var guestList = dbEvent.GuestLists.Where(n => n.EventId == Model.EventId).ToList();
-    var checkList = dbEvent.GuestLists.Where(n => n.EventId == Model.EventId).ToList();
-    var clients = dbEvent.Clients.Where(n => n.EventId == Model.EventId).ToList();
-    var resources = dbEvent.EventResourceMapping.Where(n => n.EventId == Model.EventId).ToList();
-    var appointments = dbEvent.Appointments.Where(n => n.EventId == Model.EventId).ToList();
-    var invoice = dbEvent.Invoices.Where(n => n.EventId == Model.EventId).ToList();
-    var staff = dbEvent.StaffEventMapping.Where(n => n.EventId == Model.EventId).ToList();
-    var note = dbEvent.Notes.Where(n => n.EventId == Model.EventId).ToList();
-    var vendors = dbEvent.EventVendorMappings.Where(n => n.EventId == Model.EventId).ToList();
-    var budget = dbEvent.Budgets.Where(n => n.EventId == Model.EventId).ToList();
-    var remainingDays = Model.EventDate.Subtract(DateTime.Now).Days;
+    List<Event> events = ViewBag.events;
+    List<GuestList> guestList = ViewBag.guestList;
+    List<CheckList> checkList = ViewBag.checkList;
+    List<Client> clients = ViewBag.clients;
+    List<EventResourceMapping> resources = ViewBag.resources;
+    List<Appointment> appointments = ViewBag.appointments;
+    List<Invoice> invoice = ViewBag.invoice;
+    List<StaffEventMapping> staff = ViewBag.staff;
+    List<Note> notes = ViewBag.notes;
+    List<EventVendorMapping> vendors = ViewBag.vendors;
+    List<Budget> budget = ViewBag.budget;
+    List<Task> task = ViewBag.task;
+    int remainingDays = ViewBag.remainingDays;
 }
 @section majorinfo{
     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -78,7 +77,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">today</i> <a href="@Url.Action("Index", "Appointments")">View Appointments</a>
+                        <i class="material-icons">today</i> <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})">View Appointments</a>
                     </div>
                 </div>
             </div>
@@ -183,7 +182,7 @@
                 <div class="card-content">
                     <p class="category">Note</p>
                     <h3 class="title">
-                        @note.Count<small> Notes</small>
+                        @notes.Count<small> Notes</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -257,7 +256,7 @@
                 <div class="card-content">
                     <p class="category">Task</p>
                     <h3 class="title">
-                        @events.Count<small> Tasks</small>
+                        @task.Count<small> Tasks</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -316,7 +315,7 @@
                 <div class="card-content">
                     <p class="category">Note</p>
                     <h3 class="title">
-                        @note.Count<small> Notes</small>
+                        @notes.Count<small> Notes</small>
                     </h3>
                 </div>
                 <div class="card-footer">

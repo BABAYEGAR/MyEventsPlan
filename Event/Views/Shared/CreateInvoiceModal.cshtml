@@ -1,11 +1,5 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
-@model Invoice
+﻿@model Event.Data.Objects.Entities.Invoice
 @{
-    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    var db = new InvoiceDataContext();
-    ViewBag.ClientId = new SelectList(db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
-        "ClientId", "Name");
     Layout = "../Shared/_LayoutModal.cshtml";
     long? eventId = ViewBag.id;
 }
@@ -29,12 +23,9 @@
         @Html.LabelFor(model => model.InvoiceNumber)
         @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.ClientId, "Client", new {@class = "control-label"})
-        <div class="controls">
-            @Html.DropDownListFor(model => model.ClientId, null, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.ClientId, "", new {@class = "text-danger"})
-        </div>
+    <div class="mui-select">
+        @Html.DropDownListFor(m => m.ClientId, (SelectList) ViewBag.ClientId, "Select the Client", new {@class = ""})
+        @Html.ValidationMessageFor(model => model.ClientId, "", new {@class = "text-danger"})
     </div>
     <div class="mui-textfield mui-textfield--float-label">
         @Html.EditorFor(model => model.DueDate, new {htmlAttributes = new {@class = "span8 startDate", id = "datetimepicker5", placeholder = "Select Invoice Due Date"}})

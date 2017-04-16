@@ -19,6 +19,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name");
             var prospects =
                 db.Prospects.OrderByDescending(n => n.StartDate)
                     .Include(p => p.EventType)

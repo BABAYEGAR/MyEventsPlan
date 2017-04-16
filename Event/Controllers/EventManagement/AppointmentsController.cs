@@ -29,6 +29,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: Appointments
         public ActionResult Calendar()
         {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            ViewBag.EventId = new SelectList(_db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
             return View();
         }
 
@@ -43,7 +45,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     select new
                     {
                         id = e.AppointmentId,
-                        title = e.Name +" on "+ e.Event.Name +" Event"+ " ... Starts from "+ e.StartTime + "To "+e.EndTime,
+                        title = e.Name,
                         start = e.StartDate,
                         location = e.Location,
                         note = e.Notes,
@@ -74,6 +76,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 if (loggedinuser != null) calendarAppointment.LastModifiedBy = loggedinuser.AppUserId;
                 calendarAppointment.StartDate = Convert.ToDateTime(collectedValues["StartDate"]);
                 calendarAppointment.Notes = collectedValues["Notes"];
+                calendarAppointment.Name = collectedValues["Name"];
                 calendarAppointment.Location = collectedValues["Location"];
                 calendarAppointment.EndDate = Convert.ToDateTime(collectedValues["EndDate"]);
                 calendarAppointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();

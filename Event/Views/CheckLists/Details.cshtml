@@ -1,12 +1,10 @@
 ﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
 @model CheckList
 @{
     ViewBag.Title = "View";
     Layout = "../Shared/_LayoutView.cshtml";
     ViewBag.TableHeader = Model.Name + " Check-List";
     ViewBag.TableSubHeader = "Details of Check-List";
-    var userDb = new AppUserDataContext();
     var role = Session["role"] as Role;
     var events = Session["event"] as Event;
 }
@@ -43,44 +41,9 @@
     <dd>
         @Html.DisplayFor(model => model.Name)
     </dd>
-
-    @if ((role != null) && (role.Name == "Platform Administrator"))
-    {
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-        </dd>
-    }
 </dl>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary btn-xs fa fa-pencil" data-toggle="modal" data-target="#myModal">
     Edit Check-List
 </button>
 
@@ -103,9 +66,9 @@
     </div>
 
 </div>
-@Html.ActionLink("List Items", "Index", "CheckListItems", new {checkListId = Model.CheckListId}, new {@class = "btn btn-xs btn-default icon-list"})
+@Html.ActionLink("List Items", "Index", "CheckListItems", new {checkListId = Model.CheckListId}, new {@class = "btn btn-xs btn-default fa fa-list"})
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+<button type="button" class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete
 </button>
 
@@ -118,19 +81,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Delete check-list</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Delete", "CheckLists", new {id = Model.CheckListId}))
-                {
-                    @Html.AntiForgeryToken()
-                    <p>
-                        Are you sure you want to delete the list?
-                    </p>
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
-                    </div>
-                }
-            </div>
+            </div>@using (Html.BeginForm("Delete", "CheckLists", new {id = Model.CheckListId}))
+                  {
+                      <div class="modal-body">
+
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to delete the list?
+                          </p>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                      </div>
+                  }
         </div>
     </div>
 

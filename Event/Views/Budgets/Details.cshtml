@@ -1,6 +1,7 @@
 ﻿@using Event.Data.Objects.Entities
 @model Budget
 @{
+    Layout = "../Shared/_LayoutView.cshtml";
     ViewBag.Title = "View";
     var events = Session["event"] as Event;
     ViewBag.TableHeader = Model.ItemName + " Budget Item";
@@ -80,7 +81,7 @@
     </dd>
 </dl>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary btn-xs fa fa-pencil" data-toggle="modal" data-target="#myModal">
     Edit Budget
 </button>
 
@@ -104,7 +105,7 @@
 
 </div>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+<button type="button" class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete Budget
 </button>
 
@@ -117,19 +118,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Delete Budget</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Delete", "Budgets", new {id = Model.BudgetId, eventId = Model.EventId}))
-                {
-                    @Html.AntiForgeryToken()
-                    <p>
-                        Are you sure you want to delete the budget?
-                    </p>
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
-                    </div>
-                }
-            </div>
+            </div>@using (Html.BeginForm("Delete", "Budgets", new {id = Model.BudgetId, eventId = Model.EventId}))
+                  {
+                      <div class="modal-body">
+
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to delete the budget?
+                          </p>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                      </div>
+                  }
         </div>
     </div>
 

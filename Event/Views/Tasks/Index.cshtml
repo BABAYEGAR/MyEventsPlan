@@ -1,10 +1,9 @@
 ﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.Service.Enum
 @model IEnumerable<Task>
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all my task";
-    Layout = "../Shared/_LayoutTask.cshtml";
+    Layout = "../Shared/_LayoutTable.cshtml";
     var task = new Task();
 }
 @section links{
@@ -44,57 +43,30 @@
     </div>
 }
 <div class="table-responsive">
-    <table class="table table-message">
+    <table class="table table-hover">
         <tr class="heading">
             <td class="cell-icon"></td>
             <td class="cell-title">Task</td>
             <td class="cell-status hidden-phone hidden-tablet">Status</td>
+            <td class="cell-status hidden-phone hidden-tablet">Assigned To</td>
             <td class="cell-time align-right">Due Date</td>
         </tr>
 
         @foreach (var item in Model)
         {
-            if (item.Status == TaskStausEnum.Missed.ToString())
-            {
-                <tr class="task">
-                    <td class="cell-icon">
-                        <i class="icon-checker high"></i>
-                    </td>
-                    <td class="cell-title">
-                        <div>@item.Description</div>
-                    </td>
-                    <td class="cell-status hidden-phone hidden-tablet">
-                        <b class="due">Missed</b>
-                    </td>
-                    <td class="cell-time align-right">@item.DueDate.ToShortDateString()</td>
-                </tr>
-            }
-            if (item.Status == TaskStausEnum.InProgress.ToString())
-            {
-                <tr class="task">
-                    <td class="cell-icon">
-                        <i class="icon-checker high"></i>
-                    </td>
-                    <td class="cell-title">
-                        <div>@item.Description</div>
-                    </td>
-                    <td class="cell-status hidden-phone hidden-tablet">@item.Status</td>
-                    <td class="cell-time align-right">@item.DueDate.ToShortDateString()</td>
-                </tr>
-            }
-            if (item.Status == TaskStausEnum.Completed.ToString())
-            {
-                <tr class="task resolved">
-                    <td class="cell-icon">
-                        <i class="icon-checker high"></i>
-                    </td>
-                    <td class="cell-title">
-                        <div>@item.Description</div>
-                    </td>
-                    <td class="cell-status hidden-phone hidden-tablet">@item.Status</td>
-                    <td class="cell-time align-right">@item.DueDate.ToShortDateString()</td>
-                </tr>
-            }
+            <tr class="task">
+                <td class="cell-icon">
+                    <i class="icon-checker high"></i>
+                </td>
+                <td class="cell-title">
+                    <div>@item.Description</div>
+                </td>
+                <td class="cell-status hidden-phone hidden-tablet">
+                    <b class="due">@item.Status</b>
+                </td>
+                <td class="cell-time align-right">@item.Staff.DisplayName</td>
+                <td class="cell-time align-right">@item.DueDate.ToShortDateString()</td>
+            </tr>
         }
 
     </table>

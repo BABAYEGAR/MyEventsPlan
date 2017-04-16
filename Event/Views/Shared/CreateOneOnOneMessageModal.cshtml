@@ -6,28 +6,22 @@
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-    <div class="control-group">
-        @Html.LabelFor(model => model.Subject, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Subject, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.Subject, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.Body, new {@class = "control-label"})
-        <div class="controls">
-            @Html.TextAreaFor(model => model.Body, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.Body, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.AppUserId, "Receipient", new {@class = "control-label"})
-        <div class="controls">
-            @Html.DropDownListFor(m => m.AppUserId, null, new {@class = "span8"})
-            @Html.ValidationMessageFor(model => model.AppUserId, "", new {@class = "text-danger"})
-        </div>
-    </div>
+    <div class="mui-textfield mui-textfield--float-label">
 
+        @Html.EditorFor(model => model.Subject, new {htmlAttributes = new {placeholder = "Enter Message Subject"}})
+        @Html.LabelFor(model => model.Subject)
+        @Html.ValidationMessageFor(model => model.Subject, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.Body, new {htmlAttributes = new {placeholder = "Enter Message Body"}})
+        @Html.LabelFor(model => model.Body)
+        @Html.ValidationMessageFor(model => model.Body, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-select">
+        @Html.DropDownListFor(m => m.AppUserId, (SelectList) ViewBag.AppUserId, "Select a Recipient", new {@class = ""})
+        @Html.ValidationMessageFor(model => model.AppUserId, "", new {@class = "text-danger"})
+    </div>
     <div class="control-group">
         @Html.LabelFor(model => model.AttachedFile, new {@class = "control-label"})
         <div class="controls">
@@ -35,6 +29,7 @@
             @Html.ValidationMessageFor(model => model.AttachedFile, "", new {@class = "text-danger"})
         </div>
     </div>
+    <br/>
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Send Message" class="btn btn-default"/>

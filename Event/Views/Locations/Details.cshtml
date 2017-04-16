@@ -25,7 +25,7 @@
 </dl>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary btn-xs fa fa-pencil" data-toggle="modal" data-target="#myModal">
     Edit Location
 </button>
 
@@ -49,7 +49,7 @@
 
 </div>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+<button type="button" class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete Location
 </button>
 
@@ -62,19 +62,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Delete Location</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Delete", "Locations", new {id = Model.LocationId}))
-                {
-                    @Html.AntiForgeryToken()
-                    <p>
-                        Are you sure you want to delete the location?
-                    </p>
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
-                    </div>
-                }
-            </div>
+            </div>@using (Html.BeginForm("Delete", "Locations", new {id = Model.LocationId}))
+                  {
+                      <div class="modal-body">
+
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to delete the location?
+                          </p>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                      </div>
+                  }
         </div>
     </div>
 

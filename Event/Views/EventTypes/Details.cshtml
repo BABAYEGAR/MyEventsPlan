@@ -1,12 +1,8 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
-@model EventType
+﻿@model Event.Data.Objects.Entities.EventType
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View event type";
     Layout = "../Shared/_LayoutForm.cshtml";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
 }
 @section links{
 
@@ -26,54 +22,11 @@
     <dd>
         @Html.DisplayFor(model => model.Name)
     </dd>
-    @if ((role != null) && (role.Name == "Platform Administrator"))
-    {
-        if (Model.CreatedBy != null)
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </dt>
-
-            <dd>
-
-                @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
-
-            </dd>
-        }
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-        if (Model.LastModifiedBy != null)
-        {
-            <dt>
-                @Html.DisplayNameFor(model => model.LastModifiedBy)
-            </dt>
-
-            <dd>
-
-                @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-
-            </dd>
-        }
-    }
 
 </dl>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary btn-xs fa fa-pencil" data-toggle="modal" data-target="#myModal">
     Edit
 </button>
 
@@ -97,7 +50,7 @@
 
 </div>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger btn-xs icon-trash" data-toggle="modal" data-target="#myModal1">
+<button type="button" class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete
 </button>
 
@@ -110,19 +63,21 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Delete Event-Type</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Delete", "EventTypes", new {id = Model.EventTypeId}))
-                {
-                    @Html.AntiForgeryToken()
-                    <p>
-                        Are you sure you want to delete the type?
-                    </p>
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right"/>
-                    </div>
-                }
-            </div>
+            </div>@using (Html.BeginForm("Delete", "EventTypes", new {id = Model.EventTypeId}))
+                  {
+                      <div class="modal-body">
+
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to delete the type?
+                          </p>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                      </div>
+                  }
         </div>
     </div>
 

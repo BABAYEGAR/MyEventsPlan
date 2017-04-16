@@ -55,19 +55,22 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Deallocate Resources</h4>
-            </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Delete", "EventResourceMappings", new {id = Model.EventResourceMappingId}))
-                {
-                    @Html.AntiForgeryToken()
-                    <p>
-                        Are you sure you want to deallocate the resources to the inventory?
-                    </p>
-                    <div class="form-actions no-color">
-                        <input type="submit" value="Deallocate" class="btn btn-danger pull-right"/>
-                    </div>
-                }
-            </div>
+            </div>@using (Html.BeginForm("Delete", "EventResourceMappings", new {id = Model.EventResourceMappingId}))
+                  {
+                      <div class="modal-body">
+
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to deallocate the resources from the event?
+
+                          </p>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Deallocate" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                      </div>
+                  }
         </div>
     </div>
 

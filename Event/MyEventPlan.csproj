@@ -1874,6 +1874,10 @@
     <Content Include="Views\Shared\_PartialMaterialFooter.cshtml" />
     <Content Include="Views\Shared\_LayoutView.cshtml" />
     <Content Include="Views\Shared\_LayoutEventDashboard.cshtml" />
+    <Content Include="Views\Shared\CreateCalendarEvent.cshtml" />
+    <Content Include="Views\Shared\UpdateCalendarEvent.cshtml" />
+    <Content Include="Views\Shared\UpdateCalendarAppointment.cshtml" />
+    <Content Include="Views\Shared\CreateCalendarAppointment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

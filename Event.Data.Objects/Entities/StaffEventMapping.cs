@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Event.Data.Objects.Entities
 {
@@ -8,6 +9,7 @@ namespace Event.Data.Objects.Entities
         public long? EventId { get; set; }
         [ForeignKey("EventId")]
         public virtual Event Event { get; set; }
+        [Required]
         public long? StaffId { get; set; }
         [ForeignKey("StaffId")]
         public virtual Staff Staff { get; set; }

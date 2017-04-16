@@ -12,12 +12,15 @@ namespace MyEventPlan.Controllers.EventManagement
     public class TasksController : Controller
     {
         private readonly TaskDataContext db = new TaskDataContext();
+        private readonly StaffDataContext dbc = new StaffDataContext();
 
         // GET: Tasks
         public ActionResult Index(long? eventId)
         {
-            var tasks = db.Tasks.Where(n => n.EventId == eventId).Include(t => t.Event);
+            var tasks = db.Tasks.Where(n => n.EventId == eventId).Include(t => t.Event).Include(t=>t.Staff);
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.eventId = eventId;
+            ViewBag.StaffId = new SelectList(dbc.Staff.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId), "StaffId", "DisplayName");
             return View(tasks.ToList());
         }
 
@@ -44,7 +47,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TaskId,Name,Description,EventId,DueDate")] Task task)
+        public ActionResult Create([Bind(Include = "TaskId,Name,Description,EventId,DueDate,StaffId")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -89,7 +92,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(
-            [Bind(Include = "TaskId,Name,Description,EventId,CreatedBy,DateCreated,DueDate,Status")] Task task)
+            [Bind(Include = "TaskId,Name,Description,EventId,CreatedBy,DateCreated,DueDate,Status,StaffId")] Task task)
         {
             if (ModelState.IsValid)
             {
