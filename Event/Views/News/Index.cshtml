@@ -3,10 +3,11 @@
 @{
     ViewBag.Title = "Index";
     ViewBag.Header = "News Activity";
-    Layout = "../Shared/_LayoutNews.cshtml";
+    ViewBag.SubHeader = "Images and Comments On your Events";
+    Layout = "../Shared/_LayoutForm.cshtml";
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 }
-@section addNews{
+@section add{
     @using (Html.BeginForm("Create", "News", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
     {
         @Html.AntiForgeryToken()

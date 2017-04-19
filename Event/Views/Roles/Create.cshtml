@@ -5,7 +5,7 @@
     ViewBag.Header = "Create a new role";
     Layout = "../Shared/_LayoutForm.cshtml";
 }
-@using (Html.BeginForm("Create", "Roles", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+@using (Html.BeginForm("Create", "Roles", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
@@ -16,12 +16,11 @@
             @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
         </div>
     </div>
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageApplicationUser, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageApplicationUser)
-            @Html.ValidationMessageFor(model => model.ManageApplicationUser, "", new {@class = "text-danger span8"})
+            @Html.ValidationMessageFor(model => model.ManageApplicationUser, "", new {@class = "text-danger"})
         </div>
     </div>
 
@@ -29,7 +28,7 @@
         @Html.LabelFor(model => model.ManageRoles, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageRoles)
-            @Html.ValidationMessageFor(model => model.ManageRoles, "", new {@class = "text-danger span8"})
+            @Html.ValidationMessageFor(model => model.ManageRoles, "", new {@class = "text-danger"})
         </div>
     </div>
 
@@ -41,6 +40,20 @@
         </div>
     </div>
     <div class="control-group">
+        @Html.LabelFor(model => model.ManageProspects, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.ManageProspects)
+            @Html.ValidationMessageFor(model => model.ManageProspects, "", new {@class = "text-danger span8"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.ManageCalendar, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.ManageCalendar)
+            @Html.ValidationMessageFor(model => model.ManageCalendar, "", new {@class = "text-danger span8"})
+        </div>
+    </div>
+    <div class="control-group">
         @Html.LabelFor(model => model.ManageEventType, new {@class = "control-label"})
         <div class="controls">
             @Html.EditorFor(model => model.ManageEventType)
@@ -49,10 +62,10 @@
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageEventPlanners, new {@class = "control-label"})
+        @Html.LabelFor(model => model.ManageEventVendors, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.ManageEventPlanners)
-            @Html.ValidationMessageFor(model => model.ManageEventPlanners, "", new {@class = "text-danger span8"})
+            @Html.EditorFor(model => model.ManageEventVendors)
+            @Html.ValidationMessageFor(model => model.ManageEventVendors, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
@@ -72,13 +85,7 @@
         </div>
     </div>
 
-    <div class="control-group">
-        @Html.LabelFor(model => model.ManageProspects, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.ManageProspects)
-            @Html.ValidationMessageFor(model => model.ManageProspects, "", new {@class = "text-danger span8"})
-        </div>
-    </div>
+
     <div class="control-group">
         @Html.LabelFor(model => model.ManageInvoices, new {@class = "control-label"})
         <div class="controls">
@@ -88,18 +95,25 @@
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageContracts, new {@class = "control-label"})
+        @Html.LabelFor(model => model.ManageBudgets, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.ManageContracts)
-            @Html.ValidationMessageFor(model => model.ManageContracts, "", new {@class = "text-danger span8"})
+            @Html.EditorFor(model => model.ManageBudgets)
+            @Html.ValidationMessageFor(model => model.ManageBudgets, "", new {@class = "text-danger span8"})
         </div>
     </div>
 
     <div class="control-group">
-        @Html.LabelFor(model => model.ManageProposals, new {@class = "control-label"})
+        @Html.LabelFor(model => model.ManageCheckList, new {@class = "control-label"})
         <div class="controls">
-            @Html.EditorFor(model => model.ManageProposals)
-            @Html.ValidationMessageFor(model => model.ManageProposals, "", new {@class = "text-danger span8"})
+            @Html.EditorFor(model => model.ManageCheckList)
+            @Html.ValidationMessageFor(model => model.ManageCheckList, "", new {@class = "text-danger span8"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.ManageGuestList, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.ManageGuestList)
+            @Html.ValidationMessageFor(model => model.ManageGuestList, "", new {@class = "text-danger span8"})
         </div>
     </div>
     <div class="control-group">
@@ -107,6 +121,20 @@
         <div class="controls">
             @Html.EditorFor(model => model.ManageContacts)
             @Html.ValidationMessageFor(model => model.ManageContacts, "", new {@class = "text-danger span8"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.ManageLocations, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.ManageLocations)
+            @Html.ValidationMessageFor(model => model.ManageLocations, "", new {@class = "text-danger span8"})
+        </div>
+    </div>
+    <div class="control-group">
+        @Html.LabelFor(model => model.ManageResources, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.ManageResources)
+            @Html.ValidationMessageFor(model => model.ManageResources, "", new {@class = "text-danger span8"})
         </div>
     </div>
 

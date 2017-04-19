@@ -49,7 +49,6 @@ namespace Event.Data.Objects.Entities
         [ForeignKey("StaffId")]
         public virtual Staff Staff { get; set; }
         public IEnumerable<Appointment> Appointments { get; set; }
-        public IEnumerable<EventContactMapping> EventContactMapping { get; set; }
         public IEnumerable<EventVendorMapping> EventVendorMappings { get; set; }
         public IEnumerable<StaffEventMapping> StaffEventMapping { get; set; }
         public IEnumerable<Guest> Guests { get; set; }

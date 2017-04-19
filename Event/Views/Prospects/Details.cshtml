@@ -85,51 +85,36 @@
     <dd>
         @Html.DisplayFor(model => model.EndTime)
     </dd>
-
-    @if ((role != null) && (role.Name == "Platform Administrator"))
-    {
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-        </dd>
-    }
 </dl>
-@Html.ActionLink("Edit", "Edit", new {id = Model.ProspectId}, new {@class = "btn btn-primary fa fa-pencil"})
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary  fa fa-pencil" data-toggle="modal" data-target="#myModal">
+    Edit Prospect
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit Prospect</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EditProspectModal", Model);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
 @if (Model.Status == ProspectStausEnum.Active.ToString())
 {
-    @Html.ActionLink("Cancel", "CancelProspect", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-warning icon-remove"})
+    @Html.ActionLink("Cancel", "CancelProspect", new {id = Model.ProspectId}, new {@class = "btn  btn-warning fa fa-remove"})
     <span>|</span>
-    @Html.ActionLink("Convert To Event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn btn-xs btn-success"})
+    @Html.ActionLink("Convert To Event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn  btn-success"})
 }
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">

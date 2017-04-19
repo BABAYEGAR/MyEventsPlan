@@ -194,8 +194,6 @@ namespace MyEventPlan.Controllers
             TempData["display"] = "You have successfully subscribed to the package!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Setting", "Account");
-
-            return View(packageSubscribed);
         }
 
         [HttpGet]
@@ -632,8 +630,6 @@ namespace MyEventPlan.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
-
-        //
         // POST: /Account/LogOff
         [HttpGet]
         [ValidateAntiForgeryToken]

@@ -285,7 +285,7 @@ th {
 .glyphicon-asterisk:before {
   content: "\2a";
 }
-.glyphicon-plus:before {
+.glyphfa fa-plus:before {
   content: "\2b";
 }
 .glyphicon-euro:before,
@@ -538,7 +538,7 @@ th {
 .glyphicon-chevron-right:before {
   content: "\e080";
 }
-.glyphicon-plus-sign:before {
+.glyphfa fa-plus-sign:before {
   content: "\e081";
 }
 .glyphicon-minus-sign:before {
@@ -640,7 +640,7 @@ th {
 .glyphicon-folder-close:before {
   content: "\e117";
 }
-.glyphicon-folder-open:before {
+.glyphfa fa-folder-open:before {
   content: "\e118";
 }
 .glyphicon-resize-vertical:before {

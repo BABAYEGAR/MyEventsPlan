@@ -28,11 +28,9 @@
         @Html.EditorFor(model => model.InvoiceNumber, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the invoice number"}})
         @Html.ValidationMessageFor(model => model.InvoiceNumber, "", new {@class = "text-danger"})
     </div>
-    <div class="mui-textfield mui-textfield--float-label">
-        @Html.LabelFor(model => model.ClientId, new {@class = "control-label"})
-
-        @Html.DropDownListFor(model => model.ClientId, null, new {htmlAttributes = new {@class = "span8"}})
-        @Html.ValidationMessageFor(model => model.ClientId, "", new {@class = "text-danger"})
+    <div class="mui-select">
+        @Html.DropDownListFor(m => m.ClientId, (SelectList)ViewBag.ClientId, "Select a Client", new { @class = "", id = "" })
+        @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
     </div>
     <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.DueDate, new {@class = "control-label"})

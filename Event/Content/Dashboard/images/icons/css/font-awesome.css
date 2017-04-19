@@ -430,7 +430,7 @@ ul.icons li [class*=" icon-"] { width: .75em; }
 
 .icon-chevron-right:before { content: "\f054"; }
 
-.icon-plus-sign:before { content: "\f055"; }
+.fa fa-plus-sign:before { content: "\f055"; }
 
 .icon-minus-sign:before { content: "\f056"; }
 
@@ -464,7 +464,7 @@ ul.icons li [class*=" icon-"] { width: .75em; }
 
 .icon-resize-small:before { content: "\f066"; }
 
-.icon-plus:before { content: "\f067"; }
+.fa fa-plus:before { content: "\f067"; }
 
 .icon-minus:before { content: "\f068"; }
 
@@ -504,7 +504,7 @@ ul.icons li [class*=" icon-"] { width: .75em; }
 
 .icon-folder-close:before { content: "\f07b"; }
 
-.icon-folder-open:before { content: "\f07c"; }
+.fa fa-folder-open:before { content: "\f07c"; }
 
 .icon-resize-vertical:before { content: "\f07d"; }
 
@@ -724,7 +724,7 @@ ul.icons li [class*=" icon-"] { width: .75em; }
 
 .icon-h-sign:before { content: "\f0fd"; }
 
-.icon-plus-sign-alt:before { content: "\f0fe"; }
+.fa fa-plus-sign-alt:before { content: "\f0fe"; }
 
 .icon-double-angle-left:before { content: "\f100"; }
 
@@ -766,4 +766,4 @@ ul.icons li [class*=" icon-"] { width: .75em; }
 
 .icon-folder-close-alt:before { content: "\f114"; }
 
-.icon-folder-open-alt:before { content: "\f115"; }
+.fa fa-folder-open-alt:before { content: "\f115"; }

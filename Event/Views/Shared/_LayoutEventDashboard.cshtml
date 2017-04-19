@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@using MyEventPlan.Data.Service.Enum
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -21,10 +22,39 @@
     <!-- Fonts and icons -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel="stylesheet" type="text/css">
+    <link href="~/Content/MaterialDesign/assets/css/CustomCss.css" rel="stylesheet" />
     @RenderSection("css", false)
 </head>
 
 <body>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel1">System Log-Out</h4>
+                </div>@using (Html.BeginForm("LogOff", "Account", FormMethod.Get))
+                {
+                    <div class="modal-body">
+
+                        @Html.AntiForgeryToken()
+                        <p>
+                            Are you sure you want to log out of the system?
+                        </p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Log-Out" class="btn btn-danger pull-right fa fa-trash" />
+                        <input type="button" data-dismiss="modal" value="Back To Work" class="btn btn-default pull-left" />
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
 
 <div class="wrapper">
 
@@ -42,7 +72,27 @@
                 <div class="row">
 
                     <div class="col-md-12">
-
+                        @if (TempData["display"] != null)
+                        {
+                            if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
+                            {
+                                <div class="alert alert-success alert-dismissable">
+                                    @TempData["display"] <button type="button" class="close" data-dismiss="alert">×</button>
+                                </div>
+                            }
+                            else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
+                            {
+                                <div class="alert alert-danger alert-dismissable">
+                                    @TempData["display"] <button type="button" class="close" data-dismiss="alert">×</button>
+                                </div>
+                            }
+                            else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
+                            {
+                                <div class="alert alert-info alert-dismissable">
+                                    @TempData["display"] <button type="button" class="close" data-dismiss="alert">×</button>
+                                </div>
+                            }
+                        }
 
                         @RenderSection("add", false)
                         @RenderSection("links", false)

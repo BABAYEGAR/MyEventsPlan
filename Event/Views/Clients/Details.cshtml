@@ -65,7 +65,7 @@
 
 </dl>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-xs icon-pencil" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary fa fa-pencil" data-toggle="modal" data-target="#myModal">
     Edit Client
 </button>
 
@@ -88,9 +88,9 @@
     </div>
 
 </div>
-@Html.ActionLink("Generate Login Access", "CreateLoginAccessForClient", new {id = Model.ClientId}, new {@class = "btn btn-warning btn-xs icon-user"})
+@Html.ActionLink("Generate Login Access", "CreateLoginAccessForClient", new {id = Model.ClientId}, new {@class = "btn btn-warning  icon-user"})
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#myModal1">
+<button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete Client
 </button>
 

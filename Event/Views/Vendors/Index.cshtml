@@ -9,7 +9,7 @@
         Session["event"] as Event;
 }
 @section add {
-    @Html.ActionLink("View List Of vendors", "ListOfVendors", new {}, new {@class = "btn btn-xs btn-primary pull-right"})
+    @Html.ActionLink("View List Of vendors", "ListOfVendors", new {}, new {@class = "btn  btn-primary pull-right"})
 
 }
 
@@ -70,9 +70,9 @@
                     @Html.DisplayFor(modelItem => item.Mobile)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new {id = item.VendorId}, new {@class = "btn btn-xs btn-primary"})
-                    @Html.ActionLink("Details", "Details", new {id = item.VendorId}, new {@class = "btn btn-xs btn-default"})
-                    @Html.ActionLink("Delete", "Delete", new {id = item.VendorId}, new {@class = "btn btn-xs btn-danger"})
+                    @Html.ActionLink("Edit", "Edit", new {id = item.VendorId}, new {@class = "btn  btn-primary"})
+                    @Html.ActionLink("Details", "Details", new {id = item.VendorId}, new {@class = "btn  btn-default"})
+                    @Html.ActionLink("Delete", "Delete", new {id = item.VendorId}, new {@class = "btn  btn-danger"})
                 </td>
             </tr>
         }

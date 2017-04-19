@@ -1,13 +1,10 @@
 ﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
 @model Appointment
 @{
     ViewBag.Title = "View";
     Layout = "../Shared/_LayoutView.cshtml";
-    ViewBag.TableHeader = Model.Name + " Appointment";
-    ViewBag.TableSubHeader = "Details of Appointment";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
+    ViewBag.Header = Model.Name + " Appointment";
+    ViewBag.SubHeader = "Details of Appointment";
     var events = Session["event"] as Event;
 }
 @section links{
@@ -35,60 +32,68 @@
         }
 
     </dd>
-
     <dt>
-        @Html.DisplayName("Event Planner")
-    </dt>
-
-    <dd>
-        @(Model.EventPlanner.Firstname + " " + Model.EventPlanner.Lastname)
-    </dd>
-
-    <dt>
-        @Html.DisplayName("Appointment")
+        @Html.DisplayName("Appointment Name")
     </dt>
 
     <dd>
         @(Model.Name)
     </dd>
-    @if ((role != null) && (role.Name == "Platform Administrator"))
-    {
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(m=>m.StartDate)
+    </dt>
 
-        <dd>
-            @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
-        </dd>
+    <dd>
+        @(Model.StartDate.ToShortDateString())
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(m => m.EndDate)
+    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
+    <dd>
+        @(Model.EndDate.ToShortDateString())
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(m => m.StartTime)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
+    <dd>
+        @(Model.StartTime)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(m => m.EndTime)
+    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-        </dd>
-    }
+    <dd>
+        @(Model.EndTime)
+    </dd>
 </dl>
-@Html.ActionLink("Edit", "Edit", new {id = Model.AppointmentId}, new {@class = "btn btn-primary fa fa-pencil"})
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#myModal1">
+<button type="button" class="btn btn-primary fa fa-pencil" data-toggle="modal" data-target="#myModal">
+    Edit Appointment
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit Appointment</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EditAppointmentModal", Model);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger  fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete Appointment
 </button>
 

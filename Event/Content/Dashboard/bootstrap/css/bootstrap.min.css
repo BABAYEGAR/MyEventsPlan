@@ -458,7 +458,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{*padding-top:1px;*padding-
 .icon-eject{background-position:-408px -72px;}
 .icon-chevron-left{background-position:-432px -72px;}
 .icon-chevron-right{background-position:-456px -72px;}
-.icon-plus-sign{background-position:0 -96px;}
+.fa fa-plus-sign{background-position:0 -96px;}
 .icon-minus-sign{background-position:-24px -96px;}
 .icon-remove-sign{background-position:-48px -96px;}
 .icon-ok-sign{background-position:-72px -96px;}
@@ -475,7 +475,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{*padding-top:1px;*padding-
 .icon-share-alt{background-position:-336px -96px;}
 .icon-resize-full{background-position:-360px -96px;}
 .icon-resize-small{background-position:-384px -96px;}
-.icon-plus{background-position:-408px -96px;}
+.fa fa-plus{background-position:-408px -96px;}
 .icon-minus{background-position:-433px -96px;}
 .icon-asterisk{background-position:-456px -96px;}
 .icon-exclamation-sign{background-position:0 -120px;}
@@ -495,7 +495,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{*padding-top:1px;*padding-
 .icon-retweet{background-position:-336px -120px;}
 .icon-shopping-cart{background-position:-360px -120px;}
 .icon-folder-close{background-position:-384px -120px;}
-.icon-folder-open{background-position:-408px -120px;width:16px;}
+.fa fa-folder-open{background-position:-408px -120px;width:16px;}
 .icon-resize-vertical{background-position:-432px -119px;}
 .icon-resize-horizontal{background-position:-456px -118px;}
 .icon-hdd{background-position:0 -144px;}

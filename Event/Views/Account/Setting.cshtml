@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "View";
     ViewBag.Header = Model.DisplayName;
+    ViewBag.SubHeader = "Account Setting";
     Layout = "../Shared/_LayoutForm.cshtml";
 }
 @section links{
@@ -11,35 +12,115 @@
         </li>
     </ol>
 }
-<div class="btn-controls">
-    <div class="btn-box-row row-fluid">
-        <div>
-            <div class="btn-box-row row-fluid">
-                <div class="span8">
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <a href="@Url.Action("UserProfile", "Account")" class="btn-box medium span4">
-                                <i class="icon-user"></i><b>Profile Data</b>
-                            </a>
-                            <a href="@Url.Action("ChangePassword", "Account")" class="btn-box medium span4">
-                                <i class="fa fa-key"></i><b>Change Password</b>
-                            </a><a href="@Url.Action("BackgroundColor", "AppUsers")" class="btn-box medium span4">
-                                <i class="fa fa-paint-brush"></i><b>Background Color</b>
-                            </a>
-                        </div>
-                        <div class="span12">
-                            <a href="@Url.Action("ImageUpload", "AppUsers")" class="btn-box medium span4">
-                                <i class="icon-camera"></i><b>Logo</b>
-                            </a>
-                            <a href="@Url.Action("Pricing", "Account")" class="btn-box medium span4">
-                                <i class="fa fa-dollar"></i><b>Subscription</b>
-                            </a>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit contact</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("ChangeBackgroundColor", Model);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="purple">
+                        <i class="material-icons">account_box</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Manage Profile</p>
+                        <h3 class="title">
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">account_box</i> <a href="@Url.Action("UserProfile", "Account")">View Profile</a>
                         </div>
                     </div>
-
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="teal">
+                        <i class="material-icons">lock</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Manage Password</p>
+                        <h3 class="title">
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">lock</i> <a href="@Url.Action("ChangePassword", "Account")">View Password</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="amber">
+                        <i class="material-icons">format_paint</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Background Color</p>
+                        <h3 class="title">
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">format_paint</i><a data-toggle="modal" data-target="#myModal">change Background Color</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="deep_orange">
+                            <i class="material-icons">camera</i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Logo/Profile Picture</p>
+                            <h3 class="title">
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">camera</i> <a href="@Url.Action("ImageUpload", "AppUsers")">View Logo</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="green">
+                            <i class="material-icons">credit_card</i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Account Subscription</p>
+                            <h3 class="title">
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">credit_card</i> <a href="@Url.Action("Pricing", "Account")">View Account Subscription</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--/.content-->
-</div>

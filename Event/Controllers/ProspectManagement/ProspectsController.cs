@@ -33,8 +33,10 @@ namespace MyEventPlan.Controllers.ProspectManagement
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var prospect = db.Prospects.Find(id);
+          
             if (prospect == null)
                 return HttpNotFound();
+            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
         }
 

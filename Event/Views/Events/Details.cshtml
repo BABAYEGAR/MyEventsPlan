@@ -1,15 +1,13 @@
 ﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.Service.Enum
 @model Event
 @{
     ViewBag.Title = "View";
     ViewBag.Header = Model.Name;
     Layout = "../Shared/_LayoutEventDashboard.cshtml";
-    var eventPlaner = Session["eventplanner"] as EventPlanner;
-    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+    var role = Session["role"] as Role;
 
     //recent event details
-    List<Event> events = ViewBag.events;
+
     List<GuestList> guestList = ViewBag.guestList;
     List<CheckList> checkList = ViewBag.checkList;
     List<Client> clients = ViewBag.clients;
@@ -22,6 +20,8 @@
     List<Budget> budget = ViewBag.budget;
     List<Task> task = ViewBag.task;
     int remainingDays = ViewBag.remainingDays;
+
+    var appointment = new Appointment();
 }
 @section majorinfo{
     <div class="col-lg-3 col-md-6 col-sm-6">
@@ -50,10 +50,93 @@
                         <a href="@Url.Action("Index")">My Events</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a class="btn btn-primary fa fa-pencil" href="@Url.Action("Edit", new {id = Model.EventId})">Edit Event</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary fa fa-pencil" data-toggle="modal" data-target="#myModal">
+                            Edit Event
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title pull-left" id="myModalLabel">Edit Event</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @{
+                                            Html.RenderPartial("EditEventModal", Model);
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </li>
                     <li class="breadcrumb-item">
-                        <a class="btn btn-success fa fa-plus" href="@Url.Action("Create", "Appointments", new {eventId = Model.EventId})">Add Appointment</a>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal1">
+                            Add Appointment
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title pull-left" id="myModalLabel1">Create a New Appointment</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        @{
+                                            Html.RenderPartial("CreateAppointmentModal", appointment);
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal2">
+                            Delete Event
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title pull-left" id="myModalLabel2">Delete Event</h4>
+                                    </div>@using (Html.BeginForm("Delete", "Events", new {id = Model.EventId}))
+                                          {
+                                              <div class="modal-body">
+
+                                                  @Html.AntiForgeryToken()
+                                                  <div class="alert alert-danger alert-dismissable">
+                                                      Deleting this Event will also delete the Clients, Appointments, Vendors Attached, Guests, CheckList, invoices, budget and all othee information associated with this Event
+                                                  </div>
+                                                  <p>
+                                                      Are you sure you want to delete the Event?
+                                                  </p>
+
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                                                  <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                                              </div>
+                                          }
+                                </div>
+                            </div>
+
+                        </div>
                     </li>
                 </ol>
             </div>
@@ -61,307 +144,243 @@
     </div>
 
 }
-@if ((loggedinuser?.EventPlannerId != null) && (eventPlaner?.Type == EventPlannerTypeEnum.Organization.ToString()))
+@if (role != null)
 {
     <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="purple">
-                    <i class="material-icons">today</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Appointments</p>
-                    <h3 class="title">
-                        @appointments.Count<small> Appointments</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">today</i> <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})">View Appointments</a>
+        @if (role.ManageEvents)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="purple">
+                        <i class="material-icons">today</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Appointments</p>
+                        <h3 class="title">
+                            @appointments.Count<small> Appointments</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">today</i> <a href="@Url.Action("Index", "Appointments", new {eventId = Model.EventId})">View Appointments</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="blue">
-                    <i class="material-icons">group</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Vendors</p>
-                    <h3 class="title">
-                        @vendors.Count<small> Vendors</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">group</i> <a href="@Url.Action("Index", "EventVendorMappings", new {id = Model.EventId})">View Vendors</a>
+        }
+        @if (role.ManageEventVendors)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="blue">
+                        <i class="material-icons">group</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Vendors</p>
+                        <h3 class="title">
+                            @vendors.Count<small> Vendors</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">group</i> <a href="@Url.Action("Index", "EventVendorMappings", new {id = Model.EventId})">View Vendors</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="amber">
-                    <i class="material-icons">people</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Staff</p>
-                    <h3 class="title">
-                        @staff.Count<small> Staff</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">people</i> <a href="@Url.Action("Index", "StaffEventMappings", new {id = Model.EventId})">View Staff</a>
+        }
+        @if (role.ManageStaff)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="amber">
+                        <i class="material-icons">people</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Staff</p>
+                        <h3 class="title">
+                            @staff.Count<small> Staff</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">people</i> <a href="@Url.Action("Index", "StaffEventMappings", new {id = Model.EventId})">View Staff</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="amber">
-                    <i class="material-icons">people</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Client(s)</p>
-                    <h3 class="title">
-                        @clients.Count<small> Clients</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">people</i> <a href="@Url.Action("Index", "Clients", new {eventId = Model.EventId})">View Clients</a>
+        }
+        @if (role.ManageEvents)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="amber">
+                        <i class="material-icons">people</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Client(s)</p>
+                        <h3 class="title">
+                            @clients.Count<small> Clients</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">people</i> <a href="@Url.Action("Index", "Clients", new {eventId = Model.EventId})">View Clients</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="deep_orange">
-                    <i class="material-icons">list</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Check-List</p>
-                    <h3 class="title">
-                        @checkList.Count<small> Check-List</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">list</i> <a href="@Url.Action("Index", "CheckLists", new {eventId = Model.EventId})">View Check-List</a>
+        @if (role.ManageCheckList)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="deep_orange">
+                        <i class="material-icons">list</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Check-List</p>
+                        <h3 class="title">
+                            @checkList.Count<small> Check-List</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">list</i> <a href="@Url.Action("Index", "CheckLists", new {eventId = Model.EventId})">View Check-List</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="teal">
-                    <i class="material-icons">view_list</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Guest-List</p>
-                    <h3 class="title">
-                        @guestList.Count<small> Guest-List</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">view_list</i> <a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})">View Guest-List</a>
+        }
+        @if (role.ManageGuestList)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="teal">
+                        <i class="material-icons">view_list</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Guest-List</p>
+                        <h3 class="title">
+                            @guestList.Count<small> Guest-List</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">view_list</i> <a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})">View Guest-List</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="green">
-                    <i class="material-icons">note</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Note</p>
-                    <h3 class="title">
-                        @notes.Count<small> Notes</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">note</i> <a href="@Url.Action("Index", "Notes", new {eventId = Model.EventId})">View Notes</a>
+        }
+        @if (role.ManageNotes)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="green">
+                        <i class="material-icons">note</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Note</p>
+                        <h3 class="title">
+                            @notes.Count<small> Notes</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">note</i> <a href="@Url.Action("Index", "Notes", new {eventId = Model.EventId})">View Notes</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="teal">
-                    <i class="material-icons">cloud</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Resources</p>
-                    <h3 class="title">
-                        @resources.Count<small> Resource Item</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">cloud</i> <a href="@Url.Action("Index", "EventResourceMappings", new {eventId = Model.EventId})">View Resources</a>
+        }
+        @if (role.ManageResources)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="teal">
+                        <i class="material-icons">cloud</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Resources</p>
+                        <h3 class="title">
+                            @resources.Count<small> Resource Item</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">cloud</i> <a href="@Url.Action("Index", "EventResourceMappings", new {eventId = Model.EventId})">View Resources</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="amber">
-                    <i class="material-icons">attach_money</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Budget</p>
-                    <h3 class="title">
-                        @budget.Count<small> Budget</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">attach_money</i> <a href="@Url.Action("Index", "Budgets", new {id = Model.EventId})">View Budgets</a>
+        @if (role.ManageBudgets)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="amber">
+                        <i class="material-icons">attach_money</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Budget</p>
+                        <h3 class="title">
+                            @budget.Count<small> Budget</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">attach_money</i> <a href="@Url.Action("Index", "Budgets", new {id = Model.EventId})">View Budgets</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="green">
-                    <i class="material-icons">description</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Invoice</p>
-                    <h3 class="title">
-                        @invoice.Count<small> Invoices</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">description</i> <a href="@Url.Action("Index", "Invoices", new {id = Model.EventId})">View Invoices</a>
+        }
+        @if (role.ManageInvoices)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="green">
+                        <i class="material-icons">description</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Invoice</p>
+                        <h3 class="title">
+                            @invoice.Count<small> Invoices</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">description</i> <a href="@Url.Action("Index", "Invoices", new {id = Model.EventId})">View Invoices</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="green">
-                    <i class="material-icons">assignment</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Task</p>
-                    <h3 class="title">
-                        @task.Count<small> Tasks</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">assignment</i> <a href="@Url.Action("Index", "Tasks", new {eventId = Model.EventId})">View Task</a>
+        }
+        @if (role.ManageTasks)
+        {
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="green">
+                        <i class="material-icons">assignment</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Task</p>
+                        <h3 class="title">
+                            @task.Count<small> Tasks</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">assignment</i> <a href="@Url.Action("Index", "Tasks", new {eventId = Model.EventId})">View Task</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-}
-@if ((loggedinuser?.EventPlannerId != null) && (eventPlaner?.Type == EventPlannerTypeEnum.Individual.ToString()))
-{
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="purple">
-                    <i class="material-icons">today</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Appointments</p>
-                    <h3 class="title">
-                        @appointments.Count<small> Appointments</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">today</i> <a href="@Url.Action("Index", "Appointments")">View Appointments</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="blue">
-                    <i class="material-icons">group</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Vendors</p>
-                    <h3 class="title">
-                        @vendors.Count<small> Vendors</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">group</i> <a href="@Url.Action("Index", "EventVendorMappings", new {id = Model.EventId})">View Vendors</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="green">
-                    <i class="material-icons">note</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Note</p>
-                    <h3 class="title">
-                        @notes.Count<small> Notes</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">note</i> <a href="@Url.Action("Index", "Notes", new {eventId = Model.EventId})">View Notes</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="deep_orange">
-                    <i class="material-icons">list</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Check-List</p>
-                    <h3 class="title">
-                        @checkList.Count<small> Check-List</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">list</i> <a href="@Url.Action("Index", "CheckLists", new {eventId = Model.EventId})">View Check-List</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="teal">
-                    <i class="material-icons">view_list</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Guest-List</p>
-                    <h3 class="title">
-                        @guestList.Count<small> Guest-List</small>
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">view_list</i> <a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})">View Guest-List</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
 }

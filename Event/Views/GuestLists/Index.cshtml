@@ -26,7 +26,7 @@
 }
 @section add {
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary icon-plus btn-xs pull-right waves-effect waves-light" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-primary fa fa-plus  pull-right waves-effect waves-light" data-toggle="modal" data-target="#myModal">
         Add Guest List
     </button>
 
@@ -68,7 +68,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Open", "Details", new {id = item.GuestListId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+                    @Html.ActionLink("Open", "Details", new {id = item.GuestListId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
 
                 </td>
             </tr>

@@ -38,7 +38,7 @@
     </dd>
 </dl>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-xs fa fa-pencil" data-toggle="modal" data-target="#myModal2">
+<button type="button" class="btn btn-primary  fa fa-pencil" data-toggle="modal" data-target="#myModal2">
     Edit Invoice
 </button>
 
@@ -62,7 +62,7 @@
 
 </div>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#myModal1">
+<button type="button" class="btn btn-danger  fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete Invoice
 </button>
 
@@ -95,12 +95,12 @@
 </div>
 @if (Model.EventId != null)
 {
-    @Html.ActionLink("Unlink from event", "UnlinkInvoiceFromEvent", "Invoices", new {id = Model.InvoiceId, eventId = Model.EventId}, new {@class = "btn btn-danger btn-xs icon-check"})
+    @Html.ActionLink("Unlink from event", "UnlinkInvoiceFromEvent", "Invoices", new {id = Model.InvoiceId, eventId = Model.EventId}, new {@class = "btn btn-danger  icon-check"})
 }
 else
 {
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-xs icon-link" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-primary  icon-link" data-toggle="modal" data-target="#myModal">
         Link Invoice to Event
     </button>
 
@@ -125,5 +125,5 @@ else
     </div>
 }
 
-@Html.ActionLink("Invoice Items", "Index", "InvoiceItems", new {id = Model.InvoiceId}, new {@class = "btn btn-success btn-xs icon-check"})
-@Html.ActionLink("Payments", "Index", "InvoicePayments", new {id = Model.InvoiceId}, new {@class = "btn btn-warning btn-xs icon-money"})
+@Html.ActionLink("Invoice Items", "Index", "InvoiceItems", new {id = Model.InvoiceId}, new {@class = "btn btn-success  icon-check"})
+@Html.ActionLink("Payments", "Index", "InvoicePayments", new {id = Model.InvoiceId}, new {@class = "btn btn-warning  icon-money"})

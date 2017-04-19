@@ -119,9 +119,8 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Appointments/Create
-        public ActionResult Create(long? eventId)
+        public ActionResult Create()
         {
-            ViewBag.eventId = eventId;
             return View();
         }
 
@@ -135,6 +134,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
+            var events = Session["event"] as Event.Data.Objects.Entities.Event;
             if (ModelState.IsValid)
             {
                 if ((role != null) && (loggedinuser != null) && (role.Name == "Event Planner"))
@@ -143,6 +143,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     appointment.DateCreated = DateTime.Now;
                     appointment.DateLastModified = DateTime.Now;
                     appointment.LastModifiedBy = loggedinuser.AppUserId;
+                    if (events != null) appointment.EventId = events.EventId;
                     appointment.EventPlannerId = loggedinuser.EventPlannerId;
                     appointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     appointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
@@ -162,6 +163,44 @@ namespace MyEventPlan.Controllers.EventManagement
             return View(appointment);
         }
 
+        // POST: Appointments/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAppointmentFromEvent(
+            [Bind(Include = "AppointmentId,Name,StartDate,EndDate,Location,Notes")] Appointment appointment, FormCollection collectedValues)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var role = Session["role"] as Role;
+            var events = Session["event"] as Event.Data.Objects.Entities.Event;
+            if (ModelState.IsValid)
+            {
+                if ((role != null) && (loggedinuser != null) && (role.Name == "Event Planner"))
+                {
+                    appointment.CreatedBy = loggedinuser.AppUserId;
+                    appointment.DateCreated = DateTime.Now;
+                    appointment.DateLastModified = DateTime.Now;
+                    appointment.LastModifiedBy = loggedinuser.AppUserId;
+                    appointment.EventPlannerId = loggedinuser.EventPlannerId;
+                    appointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
+                    appointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                    if (events != null) appointment.EventId = events.EventId;
+                }
+                else
+                {
+                    TempData["login"] = "Your session has expired, Login again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Login", "Account");
+                }
+                _db.Appointments.Add(appointment);
+                _db.SaveChanges();
+                TempData["display"] = "You have successfully added an appointment!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Details","Events", new { id = appointment.EventId });
+            }
+            return View(appointment);
+        }
         // GET: Appointments/Edit/5
         public ActionResult Edit(long? id)
         {
@@ -181,7 +220,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "AppointmentId,Name,EventId,StartDate,EndDate,Location,Notes,EventPlannerId")] Appointment appointment, FormCollection collectedValues)
+                     "AppointmentId,Name,EventId,StartDate,EndDate,Location,Notes,EventPlannerId,DateCreated,CreatedBy,EventId")] Appointment appointment, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)

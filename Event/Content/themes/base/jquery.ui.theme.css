@@ -291,7 +291,7 @@
 
 .ui-icon-folder-collapsed { background-position: 0 -96px; }
 
-.ui-icon-folder-open { background-position: -16px -96px; }
+.ui-fa fa-folder-open { background-position: -16px -96px; }
 
 .ui-icon-document { background-position: -32px -96px; }
 
@@ -355,9 +355,9 @@
 
 .ui-icon-cancel { background-position: 0 -128px; }
 
-.ui-icon-plus { background-position: -16px -128px; }
+.ui-fa fa-plus { background-position: -16px -128px; }
 
-.ui-icon-plusthick { background-position: -32px -128px; }
+.ui-fa fa-plusthick { background-position: -32px -128px; }
 
 .ui-icon-minus { background-position: -48px -128px; }
 

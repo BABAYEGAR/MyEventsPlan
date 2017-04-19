@@ -22,9 +22,6 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<EventType> EventTypes { get; set; }
         public virtual DbSet<EventPlanner> EventPlanner { get; set; }
         public virtual DbSet<Contact> Contact { get; set; }
-        public virtual DbSet<ContactRole> ContactRoles { get; set; }
-        public virtual DbSet<EventContactMapping> EventContactMapping { get; set; }
-        public virtual DbSet<ProspectContactMapping> ProspectContactMapping { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

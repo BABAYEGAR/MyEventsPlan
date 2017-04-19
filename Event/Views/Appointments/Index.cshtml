@@ -1,10 +1,12 @@
-﻿@model IEnumerable<Event.Data.Objects.Entities.Appointment>
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<Appointment>
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of my appointments";
     ViewBag.TableSubHeader = "List of all " + Model.FirstOrDefault()?.Event.Name + " appointments";
     Layout = "../Shared/_LayoutTable.cshtml";
-    long eventId = ViewBag.eventId;
+    var appointment = new Appointment();
+    var events = Session["event"] as Event;
 }
 @section links{
     <ol class="breadcrumb">
@@ -12,12 +14,39 @@
             <a href="@Url.Action("Index", "Events")">My Events</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="@Url.Action("Details", "Events", new {id = eventId})">Event Dashboard</a>
+            <a href="@if (events != null)
+                     {
+                         @Url.Action("Details", "Events", new {id = events.EventId})
+                     }">Event Dashboard</a>
         </li>
     </ol>
 }
 @section add {
-    @Html.ActionLink("Add Appointment", "Create", new {eventId}, new {@class = "btn btn-primary btn-xs icon-plus pull-right"})
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Appointment
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new Appointment</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("CreateAppointmentModal", appointment);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 }
 <div class="card-content table-responsive">
     <table class="table table-hover">
@@ -50,7 +79,7 @@
                     @item.EndDate.ToShortDateString()
                 </td>
                 <td>
-                    @Html.ActionLink("Open", "Details", new {id = item.AppointmentId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+                    @Html.ActionLink("Open", "Details", new {id = item.AppointmentId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
 
                 </td>
             </tr>

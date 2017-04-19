@@ -73,7 +73,7 @@
     </dd>
 </dl>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary btn-xs fa fa-pencil" data-toggle="modal" data-target="#myModal">
+<button type="button" class="btn btn-primary  fa fa-pencil" data-toggle="modal" data-target="#myModal">
     Edit Guest
 </button>
 
@@ -96,10 +96,10 @@
     </div>
 
 </div>
-@Html.ActionLink("Attending Event", "GuestAttending", new {id = Model.GuestId}, new {@class = "btn btn-success btn-xs fa fa-check"})
-@Html.ActionLink("Not Attending", "GuestNotAttending", new {id = Model.GuestId}, new {@class = "btn btn-danger btn-xs fa fa-off"})
+@Html.ActionLink("Attending Event", "GuestAttending", new {id = Model.GuestId}, new {@class = "btn btn-success  fa fa-check"})
+@Html.ActionLink("Not Attending", "GuestNotAttending", new {id = Model.GuestId}, new {@class = "btn btn-danger  fa fa-off"})
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-danger btn-xs fa fa-trash" data-toggle="modal" data-target="#myModal1">
+<button type="button" class="btn btn-danger  fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete Guest
 </button>
 

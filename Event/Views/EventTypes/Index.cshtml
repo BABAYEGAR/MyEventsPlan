@@ -17,7 +17,7 @@
 }
 @section add {
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-primary  fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
         Add Event Type
     </button>
 
@@ -59,7 +59,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.ActionLink("Open", "Details", "EventTypes", new {id = item.EventTypeId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+                    @Html.ActionLink("Open", "Details", "EventTypes", new {id = item.EventTypeId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
 
                 </td>
             </tr>

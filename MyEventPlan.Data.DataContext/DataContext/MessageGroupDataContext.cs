@@ -24,9 +24,6 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<MessageGroup> MessageGroups { get; set; }
         public virtual DbSet<MessageGroupMember> MessageGroupMembers { get; set; }
-        public virtual DbSet<ContactRole> ContactRoles { get; set; }
-        public virtual DbSet<EventContactMapping> EventContactMapping { get; set; }
-        public virtual DbSet<ProspectContactMapping> ProspectContactMapping { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

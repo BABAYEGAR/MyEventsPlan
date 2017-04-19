@@ -79,9 +79,7 @@
     <Compile Include="DataContext\StaffEventMappingDataContext.cs" />
     <Compile Include="DataContext\EventVendorMappingDataContext.cs" />
     <Compile Include="DataContext\StaffDataContext.cs" />
-    <Compile Include="DataContext\ProspectContactMappingDataContext.cs" />
     <Compile Include="DataContext\ContactDataContext.cs" />
-    <Compile Include="DataContext\EventContactMappingDataContext.cs" />
     <Compile Include="DataContext\AppUserDataContext.cs" />
     <Compile Include="DataContext\EventPlannerDataContext.cs" />
     <Compile Include="DataContext\VendorServiceDataContext.cs" />
@@ -211,6 +209,14 @@
     <Compile Include="Migrations\201704152154491_migrate31.Designer.cs">
       <DependentUpon>201704152154491_migrate31.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704162231374_migrate32.cs" />
+    <Compile Include="Migrations\201704162231374_migrate32.Designer.cs">
+      <DependentUpon>201704162231374_migrate32.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704170016237_migrate33.cs" />
+    <Compile Include="Migrations\201704170016237_migrate33.Designer.cs">
+      <DependentUpon>201704170016237_migrate33.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -314,6 +320,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704152154491_migrate31.resx">
       <DependentUpon>201704152154491_migrate31.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704162231374_migrate32.resx">
+      <DependentUpon>201704162231374_migrate32.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704170016237_migrate33.resx">
+      <DependentUpon>201704170016237_migrate33.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -17,7 +17,7 @@
 }
 @section add {
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary btn-xs icon-plus pull-right" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-primary  fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
         Add vendor service
     </button>
 
@@ -66,7 +66,7 @@
                     @Html.DisplayFor(modelItem => item.Scale)
                 </td>
                 <td>
-                    @Html.ActionLink("Open", "Details", new {id = item.VendorServiceId}, new {@class = "btn btn-default btn-lg icon-folder-open"})
+                    @Html.ActionLink("Open", "Details", new {id = item.VendorServiceId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
                 </td>
             </tr>
         }

@@ -26,15 +26,39 @@
     <!-- Fonts and icons -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel="stylesheet" type="text/css">
-    <style>
-        .text-danger { color: red; }
-
-        .modal-backdrop { z-index: 0; }
-    </style>
+    <link href="~/Content/MaterialDesign/assets/css/CustomCss.css" rel="stylesheet" />
     @RenderSection("css", false)
 </head>
 
 <body>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel1">System Log-Out</h4>
+                </div>@using (Html.BeginForm("LogOff", "Account", FormMethod.Get))
+                {
+                    <div class="modal-body">
+
+                        @Html.AntiForgeryToken()
+                        <p>
+                            Are you sure you want to log out of the system?
+                        </p>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Log-Out" class="btn btn-danger pull-right fa fa-trash" />
+                        <input type="button" data-dismiss="modal" value="Back To Work" class="btn btn-default pull-left" />
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
 
 <div class="wrapper">
 

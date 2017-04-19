@@ -50,7 +50,6 @@
     <Compile Include="Entities\CheckListItem.cs" />
     <Compile Include="Entities\Client.cs" />
     <Compile Include="Entities\Contact.cs" />
-    <Compile Include="Entities\ContactRole.cs" />
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\EventResourceMapping.cs" />
     <Compile Include="Entities\Guest.cs" />
@@ -72,8 +71,6 @@
     <Compile Include="Entities\Setting.cs" />
     <Compile Include="Entities\StaffEventMapping.cs" />
     <Compile Include="Entities\EventVendorMapping.cs" />
-    <Compile Include="Entities\ProspectContactMapping.cs" />
-    <Compile Include="Entities\EventContactMapping.cs" />
     <Compile Include="Entities\EventPlanner.cs" />
     <Compile Include="Entities\EventType.cs" />
     <Compile Include="Entities\Prospect.cs" />
