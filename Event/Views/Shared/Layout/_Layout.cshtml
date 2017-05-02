@@ -1,0 +1,122 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Wedding Vendor | Find The Best Wedding Vendors</title>
+    <!-- Bootstrap -->
+    <link href="~/Content/AppTheme/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Template style.css -->
+    <link rel="stylesheet" type="text/css" href="~/Content/AppTheme/css/style.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/AppTheme/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/AppTheme/css/owl.theme.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/AppTheme/css/owl.transitions.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/AppTheme/css/fontello.css">
+    <!-- Font used in template -->
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,300italic,300' rel='stylesheet' type='text/css'>
+    <!--font awesome icon -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- favicon icon -->
+    <link rel="shortcut icon" href="~/Content/AppTheme/images/favicon.ico" type="image/x-icon">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="header-v2 navbar-fixed-top">
+        @{ Html.RenderPartial("Partial/_PartialTopMenu"); }
+        @{ Html.RenderPartial("Partial/_PartialUnderMenu"); }
+
+    </div>
+@RenderBody()
+    <div class="footer">
+        <!-- Footer -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 ft-aboutus">
+                    <h2>Wedding.Vendor</h2>
+                    <p>At Wedding Vendor our purpose is to help people find great online network connecting wedding suppliers and wedding couples who use those suppliers. <a href="#">Start Find Vendor!</a></p>
+                    <a href="#" class="btn btn-default">Find a Vendor</a>
+                </div>
+                <div class="col-md-3 ft-link">
+                    <h2>Useful links</h2>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">News</a></li>
+                        <li><a href="#">Career</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 newsletter">
+                    <h2>Subscribe for Newsletter</h2>
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Enter E-Mail Address" required>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">Submit</button>
+                            </span>
+                        </div>
+                        <!-- /input-group -->
+                        <!-- /.col-lg-6 -->
+                    </form>
+                    <div class="social-icon">
+                        <h2>Be Social &amp; Stay Connected</h2>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fa fa-flickr"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.Footer -->
+    <div class="tiny-footer">
+        <!-- Tiny footer -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">Copyright © 2014. All Rights Reserved</div>
+            </div>
+        </div>
+    </div>
+    <!-- /. Tiny Footer -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="~/Content/AppTheme/js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/Content/AppTheme/js/bootstrap.min.js"></script>
+    <!-- Flex Nav Script -->
+    <script src="~/Content/AppTheme/js/jquery.flexnav.js" type="text/javascript"></script>
+    <script src="~/Content/AppTheme/js/navigation.js"></script>
+    <!-- slider -->
+    <script src="~/Content/AppTheme/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/Content/AppTheme/js/slider.js"></script>
+    <!-- sticky header -->
+    <script type="text/javascript">
+    //jQuery to collapse the navbar on scroll
+    $(window).scroll(function() {
+        if ($(".header-v2").offset().top > 50) {
+            $(".navbar-fixed-top").addClass("top-nav-collapse");
+        } else {
+            $(".navbar-fixed-top").removeClass("top-nav-collapse");
+        }
+    });
+    </script>
+</body>
+
+</html>

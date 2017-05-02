@@ -1,0 +1,78 @@
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@{
+    var categories = new VendorServiceDataContext();
+    var location = new LocationDataContext();
+    var vendorCategories = categories.VendorService.ToList();
+    var vendorLocations = location.Locations.ToList();
+}
+<div class="col-sm-3">
+    <div class="left-sidebar">
+        <h2>Category</h2>
+        <div class="panel-group category-products" id="accordian">
+            <!--category-productsr-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#womens">
+                            <span class="badge pull-right">
+                                <i class="fa fa-plus"></i>
+                            </span>
+                            Vendor Categories
+                        </a>
+                    </h4>
+                </div>
+                <div id="womens" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul>
+                            @foreach (var item in vendorCategories)
+                            {
+                                <li>
+
+                                    <a href="@Url.Action("ListOfVendorsByCategory", "Vendors", new {categoryId = item.VendorServiceId})">@item.ServiceName</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordian" href="#location">
+                            <span class="badge pull-right">
+                                <i class="fa fa-plus"></i>
+                            </span>
+                            Locations
+                        </a>
+                    </h4>
+                </div>
+                <div id="location" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul>
+                            @foreach (var item in vendorLocations)
+                            {
+                                <li>
+
+                                    <a href="@Url.Action("ListOfVendorsByLocation", "Vendors", new {locationId = item.LocationId})">@item.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div><!--/category-productsr-->
+
+        <div class="price-range">
+            <!--price-range-->
+            <h2>Price Range</h2>
+            <div class="well">
+                <label>Minimum Price</label>
+                <input type="text"><br/>
+                <label>Maximum Price</label>
+                <input type="text"><br/>
+            </div>
+        </div>
+        <!--/price-range-->
+
+    </div>
+</div>
