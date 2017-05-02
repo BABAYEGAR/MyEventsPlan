@@ -819,7 +819,7 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
             }
 
             for (var i = 0; i < 64; i++)
-                for (var j = 0; j < clen >> 1; j++)
+                for (var j = 0; clen >> 1 > j; j++)
                     Encipher(cdata, j << 1);
 
             var ret = new byte[clen*4];
