@@ -5,7 +5,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My GuestList";
     ViewBag.TableSubHeader = "List of all my Guest List";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var guestList = new GuestList();
 }
 @section links{
@@ -42,7 +42,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateGuestListModal", guestList);
+                        Html.RenderPartial("EventPlanning/CreateGuestListModal", guestList);
                     }
                 </div>
             </div>

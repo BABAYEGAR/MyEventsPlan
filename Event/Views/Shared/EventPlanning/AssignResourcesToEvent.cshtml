@@ -2,7 +2,7 @@
 @model EventResourceMapping
 @{
     var events = Session["event"] as Event;
-    Layout = "../Shared/_LayoutModal.cshtml";
+     Layout = "//Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Create", "EventResourceMappings", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {

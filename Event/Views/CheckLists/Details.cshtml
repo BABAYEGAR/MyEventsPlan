@@ -2,7 +2,7 @@
 @model CheckList
 @{
     ViewBag.Title = "View";
-    Layout = "../Shared/_LayoutView.cshtml";
+  Layout = "../Shared/Layout/_LayoutView.cshtml";
     ViewBag.TableHeader = Model.Name + " Check-List";
     ViewBag.TableSubHeader = "Details of Check-List";
     var role = Session["role"] as Role;

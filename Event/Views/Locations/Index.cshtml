@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Locations";
     ViewBag.TableSubHeader = "List of all Locations";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var locations = new Location();
 }
 @section links{
@@ -34,7 +34,7 @@
                 <div class="modal-body">
                     @{
 
-                        Html.RenderPartial("CreateLocationModal", locations);
+                        Html.RenderPartial("EventPlanning/CreateLocationModal", locations);
                     }
                 </div>
             </div>

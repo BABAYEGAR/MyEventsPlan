@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Vendor Services";
     ViewBag.TableSubHeader = "List of all Vendor Services";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var vendorService = new VendorService();
 }
 @section links{
@@ -34,7 +34,7 @@
                 <div class="modal-body">
                     @{
 
-                        Html.RenderPartial("CreateVendorServiceModal", vendorService);
+                        Html.RenderPartial("EventPlanning/CreateVendorServiceModal", vendorService);
                     }
                 </div>
             </div>

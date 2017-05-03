@@ -5,7 +5,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My Prospects (Leads)";
     ViewBag.TableSubHeader = "List of all my Prospects";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var prospect = new Prospect();
 }
 @section add {
@@ -26,7 +26,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateProspectModal", prospect);
+                        Html.RenderPartial("EventPlanning/CreateProspectModal", prospect);
                     }
                 </div>
             </div>

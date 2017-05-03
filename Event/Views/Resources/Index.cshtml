@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My Resources";
     ViewBag.TableSubHeader = "List of all my Resources";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var resource = new Resource();
 }
 
@@ -26,7 +26,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateResourceModal", resource);
+                        Html.RenderPartial("EventPlanning/CreateResourceModal", resource);
                     }
                 </div>
             </div>

@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My Invoice Items";
     ViewBag.TableSubHeader = "List of all my Invoice Items";
-    Layout = "../Shared/_LayoutTable.cshtml";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var invoiceItem = new InvoiceItem();
 }
 @section links{
@@ -32,7 +32,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateInvoiceItemModal", invoiceItem);
+                        Html.RenderPartial("EventPlanning/CreateInvoiceItemModal", invoiceItem);
                     }
                 </div>
             </div>

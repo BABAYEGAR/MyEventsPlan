@@ -5,7 +5,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My Personal Check-List Items";
     ViewBag.TableSubHeader = "List of all my Check-List Items";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var checkListItem = new PersonalCheckListItem();
     var db = new PersonalCheckListDataContext();
     long? listId = ViewBag.checkListId;
@@ -48,7 +48,7 @@
                 <div class="modal-body">
                     @{
 
-                        Html.RenderPartial("CreatePersonalCheckListItemModal", checkListItem);
+                        Html.RenderPartial("EventPlanning/CreatePersonalCheckListItemModal", checkListItem);
                     }
                 </div>
             </div>

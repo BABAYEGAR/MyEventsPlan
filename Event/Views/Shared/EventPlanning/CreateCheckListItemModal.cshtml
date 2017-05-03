@@ -4,7 +4,8 @@
     var db = new CheckListDataContext();
     long checkListId = ViewBag.checkListId;
     var eventId = db.CheckLists.Find(checkListId).EventId;
-    Layout = "../Shared/_LayoutModal.cshtml";
+     Layout = "//Shared/Layout/_LayoutModal.cshtml";
+  
 }
 @using (Html.BeginForm("Create", "CheckListItems", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {

@@ -5,7 +5,7 @@
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Sent Messages";
-    Layout = "../Shared/_LayoutMessage.cshtml";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var appUserDb = new AppUserDataContext();
     var messageDb = new MessageDataContext();
     var message = new Message();
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="modal-body">
                                     @{
-                                        Html.RenderPartial("CreateOneOnOneMessageModal", message);
+                                        Html.RenderPartial("EventPlanning/CreateOneOnOneMessageModal", message);
                                     }
                                 </div>
                             </div>

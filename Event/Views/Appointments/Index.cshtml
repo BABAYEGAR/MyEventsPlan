@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of my appointments";
     ViewBag.TableSubHeader = "List of all " + Model.FirstOrDefault()?.Event.Name + " appointments";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var appointment = new Appointment();
     var events = Session["event"] as Event;
 }
@@ -39,7 +39,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateAppointmentModal", appointment);
+                        Html.RenderPartial("EventPlanning/CreateAppointmentModal", appointment);
                     }
                 </div>
             </div>

@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all my task";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var task = new Task();
 }
 @section links{
@@ -32,7 +32,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateTaskModal", task);
+                        Html.RenderPartial("EventPlanning/CreateTaskModal", task);
                     }
                 </div>
             </div>

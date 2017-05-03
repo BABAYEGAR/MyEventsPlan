@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My Clients";
     ViewBag.TableSubHeader = "List of all my Clients";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var client = new Client();
     var events = Session["event"] as Event;
 }
@@ -42,7 +42,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateClientModal", client);
+                        Html.RenderPartial("EventPlanning/CreateClientModal", client);
                     }
                 </div>
             </div>

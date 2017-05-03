@@ -5,7 +5,7 @@
     var events = Session["event"] as Event;
     ViewBag.TableSubHeader = "List of budgets for " + events?.Name + "!";
     ViewBag.TableHeader = "Event Budget";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var budget = new Budget();
 }
 @section links{
@@ -42,7 +42,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateBudgetModal", budget);
+                        Html.RenderPartial("EventPlanning/CreateBudgetModal", budget);
                     }
                 </div>
             </div>

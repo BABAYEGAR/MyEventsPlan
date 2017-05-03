@@ -5,7 +5,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Check-List";
     ViewBag.TableSubHeader = "List of all my Check-List";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var checkList = new CheckList();
 }
 @section links{
@@ -43,7 +43,7 @@
                 <div class="modal-body">
                     @{
 
-                        Html.RenderPartial("CreateCheckListModal", checkList);
+                        Html.RenderPartial("EventPlanning/CreateCheckListModal", checkList);
                     }
                 </div>
             </div>

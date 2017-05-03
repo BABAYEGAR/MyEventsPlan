@@ -1622,6 +1622,8 @@
     <Content Include="Views\Shared\Account\ChangeBackgroundColor.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialTopMenu.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialUnderMenu.cshtml" />
+    <Content Include="Views\Shared\Layout\_LayoutAppTheme.cshtml" />
+    <Content Include="Views\Shared\Partial\_PartialAppThemeFooter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

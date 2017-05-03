@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Event Types";
     ViewBag.TableSubHeader = "List of all Event Types";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var eventType = new EventType();
 }
 @section links{
@@ -33,7 +33,7 @@
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("CreateEventTypeModal", eventType);
+                        Html.RenderPartial("EventPlanning/CreateEventTypeModal", eventType);
                     }
                 </div>
             </div>

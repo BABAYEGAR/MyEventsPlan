@@ -6,7 +6,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Messages";
     ViewBag.TableSubHeader = "My Inbox Messages";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var appUserDb = new AppUserDataContext();
     var messageDb = new MessageDataContext();
     var message = new Message();
@@ -62,7 +62,7 @@
                                 </div>
                                 <div class="modal-body">
                                     @{
-                                        Html.RenderPartial("CreateOneOnOneMessageModal", message);
+                                        Html.RenderPartial("EventPlanning/CreateOneOnOneMessageModal", message);
                                     }
                                 </div>
                             </div>
@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="modal-body">
                                     @{
-                                        Html.RenderPartial("CreateGroupMessageModal", message);
+                                        Html.RenderPartial("EventPlanning/CreateGroupMessageModal", message);
                                     }
                                 </div>
                             </div>

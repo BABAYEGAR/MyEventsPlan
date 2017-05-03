@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My Events";
     ViewBag.TableSubHeader = "List of all my events";
-    Layout = "../Shared/_LayoutTable.cshtml";
+      Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var packageSubscribed = Session["subscribe"] as EventPlannerPackage;
     var events = new Event();
 }
@@ -28,7 +28,7 @@
                     </div>
                     <div class="modal-body">
                         @{
-                            Html.RenderPartial("CreateEventModal", events);
+                            Html.RenderPartial("EventPlanning/CreateEventModal", events);
                         }
                     </div>
                 </div>
