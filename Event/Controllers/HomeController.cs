@@ -11,6 +11,8 @@ namespace MyEventPlan.Controllers
         readonly EventDataContext _dbEvent = new EventDataContext();
         public ActionResult Index()
         {
+            ViewBag.VendorServiceId = new SelectList(_dbEvent.VendorServices, "VendorServiceId", "ServiceName");
+            ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name");
             return View();
         }
 

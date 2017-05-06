@@ -1,6 +1,6 @@
 ﻿@model Event.Data.Objects.Entities.StaffEventMapping
 @{
-     Layout = "//Shared/Layout/_LayoutModal.cshtml";
+       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
     long? eventId = ViewBag.Event;
 }
 @using (Html.BeginForm("Create", "StaffEventMappings", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))

@@ -500,6 +500,8 @@
     <Content Include="Content\Dashboard\images\1272.jpg" />
     <Content Include="Content\Dashboard\images\bg.png" />
     <Content Include="Content\Dashboard\images\download.jpg" />
+    <Content Include="Content\Dashboard\images\event1.jpg" />
+    <Content Include="Content\Dashboard\images\event2.jpg" />
     <Content Include="Content\Dashboard\images\icons\css\font-awesome.css" />
     <Content Include="Content\Dashboard\images\image1.jpg" />
     <Content Include="Content\Dashboard\images\image2.jpg" />
@@ -508,6 +510,9 @@
     <Content Include="Content\Dashboard\images\images.jpg" />
     <Content Include="Content\Dashboard\images\img.jpg" />
     <Content Include="Content\Dashboard\images\jquery-ui\picker.png" />
+    <Content Include="Content\Dashboard\images\slider-1.jpg" />
+    <Content Include="Content\Dashboard\images\slider-2.jpg" />
+    <Content Include="Content\Dashboard\images\slider-3.jpg" />
     <Content Include="Content\Dashboard\images\user.png" />
     <Content Include="Content\Dashboard\jquery.countdown.js" />
     <Content Include="Content\Dashboard\scripts\common.js" />
@@ -1503,7 +1508,6 @@
     <Content Include="Views\Vendors\Register.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialVendorSideBar.cshtml" />
     <Content Include="Views\Vendors\VendorDetails.cshtml" />
-    <Content Include="Views\Vendors\AllVendors.cshtml" />
     <Content Include="Views\Clients\Create.cshtml" />
     <Content Include="Views\Clients\Delete.cshtml" />
     <Content Include="Views\Clients\Details.cshtml" />

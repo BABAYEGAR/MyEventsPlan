@@ -2,7 +2,7 @@
 @model Event.Data.Objects.Entities.Vendor
 @{
     var dbc = new EventDataContext();
-     Layout = "//Shared/Layout/_LayoutModal.cshtml";
+       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
     ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
 }
 @using (Html.BeginForm("Create", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))

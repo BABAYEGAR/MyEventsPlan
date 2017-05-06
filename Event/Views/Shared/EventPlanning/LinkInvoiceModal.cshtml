@@ -1,6 +1,6 @@
 ﻿@model Event.Data.Objects.Entities.Invoice
 @{
-     Layout = "//Shared/Layout/_LayoutModal.cshtml";
+       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("LinkInvoiceToEvent", "Invoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {

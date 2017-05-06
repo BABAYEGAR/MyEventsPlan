@@ -1,160 +1,434 @@
 ﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
 @model IEnumerable<Vendor>
 @{
     ViewBag.Title = "List";
     ViewBag.Header = "List of all vendors";
-    Layout = "../Shared/_LayoutVendors.cshtml";
+    Layout = "../Shared/Layout/_LayoutVendors.cshtml";
+    long? service = ViewBag.locationId;
+    long? category = ViewBag.categoryId;
 
-    var mapping = new EventVendorMappingDataContext();
-
-    var events = Session["event"] as Event;
-    var vendor = new Vendor();
+    List<VendorService> categories = ViewBag.services;
+    List<Location> locations = ViewBag.locations;
 }
-@section header{
-    <div class="header-bottom">
-        <!--header-bottom-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-9">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="mainmenu pull-left">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                                <a href="@Url.Action("Index", "Events")">My Events</a>
-                            </li>
-                            <li class="breadcrumb-item">
-                                <a href="@if (events != null)
-                                         {
-                                             @Url.Action("Details", "Events", new {id = events.EventId})
-                                         }">
-                                    Event Dashboard
-                                </a>
-                            </li><li class="breadcrumb-item">
-                                <a href="@if (events != null)
-                                         {
-                                             @Url.Action("Index", "EventVendorMappings", new {id = events.EventId})
-                                         }">
-                                    Event Vendors
-                                </a>
-                            </li>
-                        </ol>
-
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="search_box pull-right">
-
-
-                        <input type="text" placeholder="Search"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-<section>
+<div class="tp-breadcrumb">
     <div class="container">
         <div class="row">
-            @{
-                Html.RenderPartial("_PartialVendorSideBar");
-            }
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary btn-md fa fa-plus-circle pull-right" data-toggle="modal" data-target="#myModal">
-                Add vendor
-            </button>
-
-            <!-- Modal -->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">Add a new vendor</h4>
-                        </div>
-                        <div class="modal-body">
-                            @{
-
-                                Html.RenderPartial("CreateVendorModal", vendor);
-                            }
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="col-sm-9 padding-right">
-                <div class="features_items">
-                    <!--features_items-->
-                    <h2 class="title text-center">List Of Vendors</h2>
-                    @foreach (var item in Model)
-                    {
-                        <div class="col-sm-4">
-                            <div class="product-image-wrapper">
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <a href="@Url.Action("VendorDetails", new {id = item.VendorId})">
-                                            <img src="~/Content/VendorCss/images/shop/product12.jpg" alt=""/>
-                                        </a>
-                                        <h2>@item.BusinessName</h2>
-                                        <p>@item.Location.Name</p>
-                                        @if ((events != null) && mapping.EventVendorMapping.Any(n => (n.VendorId == item.VendorId) && (n.EventId == events.EventId)))
-                                        {
-                                            <a href="@Url.Action("RemoveVendorFromEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventId = events.EventId})" class="btn btn-danger add-to-cart">
-                                                <i class="fa fa-trash-o"></i>Remove Vendor
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <a href="@if (events != null)
-                                                     {
-                                                         @Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventId = events.EventId})
-                                                     }" class="btn btn-primary add-to-cart">
-                                                <i class="fa fa-plus-square-o"></i>Add to event
-                                            </a>
-                                        }
-                                    </div>
-                                </div>
-                                <div class="choose">
-                                    <ul class="nav nav-pills nav-justified">
-                                        <li>
-                                            <a href=""><i class="fa fa-user"></i>Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href=""><i class="fa fa-star-half-full"></i>Review</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <br/>
-                    <br/>
-                    <ul class="pagination">
-                        <li class="active">
-                            <a href="">1</a>
-                        </li>
-                        <li>
-                            <a href="">2</a>
-                        </li>
-                        <li>
-                            <a href="">3</a>
-                        </li>
-                        <li>
-                            <a href="">&raquo;</a>
-                        </li>
-                    </ul>
-                </div><!--features_items-->
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="active">Vendors</li>
+                </ol>
             </div>
         </div>
     </div>
-</section>
+</div>
+<div class="main-container">
+<div class="container">
+<div class="row">
+<div class="col-md-3">
+    <div class="filter-sidebar">
+        <div class="col-md-12 form-title">
+            <h2>Refine Your Search</h2>
+        </div>
+        @using (Html.BeginForm("ListOfVendors", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        {
+            <div class="col-md-12 form-group">
+                <label class="control-label" for="venuetype">Vendor Category</label>
+                <select id="venuetype" name="venuetype" class="form-control">
+                    <option value="@null">Select Category</option>
+                    @foreach (var item in categories)
+                    {
+                        if (item.VendorServiceId == category)
+                        {
+                            <option selected="selected" name="@item.VendorServiceId" value="@item.VendorServiceId">@item.ServiceName</option>
+                        }
+                        <option name="@item.VendorServiceId"  value="@item.VendorServiceId">@item.ServiceName</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="control-label" for="price">Location</label>
+                <select id="price" name="price" class="form-control">
+                    <option value="@null"> Select Location</option>
+                    @foreach (var item in locations.ToList())
+                    {
+                        if (item.LocationId == service)
+                        {
+                            <option selected="selected" name="@item.LocationId"  value="@item.LocationId">@item.Name</option>
+                        }
+                        <option name="@item.LocationId" value="@item.LocationId">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-12 form-group rating">
+                <label class="control-label">Select Rating </label>
+                <div class="checkbox checkbox-success">
+                    <input type="checkbox" name="checkbox" id="checkbox-0" value="1" class="styled">
+                    <label for="checkbox-0" class="control-label">
+                        <i class="fa fa-star"></i>
+                    </label>
+                </div>
+                <div class="checkbox checkbox-success">
+                    <input type="checkbox" name="checkbox" id="checkbox-1" value="2" class="styled">
+                    <label for="checkbox-1" class="control-label">
+                        <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                    </label>
+                </div>
+                <div class="checkbox checkbox-success">
+                    <input type="checkbox" name="checkbox" id="checkbox-2" value="3" class="styled">
+                    <label for="checkbox-2" class="control-label">
+                        <i class="fa fa-star"></i> <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                    </label>
+                </div>
+                <div class="checkbox checkbox-success">
+                    <input type="checkbox" name="checkbox" id="checkbox-3" value="4" class="styled">
+                    <label for="checkbox-3" class="control-label">
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                    </label>
+                </div>
+                <div class="checkbox checkbox-success">
+                    <input type="checkbox" name="checkbox" id="checkbox-4" value="5" class="styled">
+                    <label for="checkbox-4" class="control-label">
+                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-12 form-group">
+                <div class="price-range default-range">
+                    <label for="amount" class="control-label">Price range:</label>
+                    <input type="text" id="amount" readonly style="border: 0; color: #f6931f; font-weight: bold;">
+                    <div id="slider-range"></div>
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <input type="submit" value="Find Vendors" class="btn btn-primary btn-lg btn-block"/>
+            </div>
+        }
+    </div>
+</div>
+<div class="col-md-9">
+<div class="row">
+<div class="col-md-6 vendor-box">
+    <!-- venue box start-->
+    <div class="vendor-image">
+        <!-- venue pic -->
+        <a href="#">
+            <img src="images/vendor-6.jpg" alt="wedding venue" class="img-responsive">
+        </a>
+        <div class="favourite-bg">
+            <a href="#" class="">
+                <i class="fa fa-heart"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.venue pic -->
+    <div class="vendor-detail">
+        <!-- venue details -->
+        <div class="caption">
+            <!-- caption -->
+            <h2>
+                <a href="#" class="title">Venue Vendor Title</a>
+            </h2>
+            <p class="location">
+                <i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.
+            </p>
+            <div class="rating ">
+                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+            </div>
+        </div>
+        <!-- /.caption -->
+        <div class="vendor-price">
+            <div class="price">$390 - $600</div>
+        </div>
+    </div>
+    <!-- venue details -->
+</div>
+<!-- /.venue box start-->
+<div class="col-md-6 vendor-box">
+    <!-- venue box start-->
+    <div class="vendor-image">
+        <!-- venue pic -->
+        <a href="#">
+            <img src="images/vendor-1.jpg" alt="wedding venue" class="img-responsive">
+        </a>
+        <div class="favourite-bg">
+            <a href="#" class="">
+                <i class="fa fa-heart"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.venue pic -->
+    <div class="vendor-detail">
+        <!-- venue details -->
+        <div class="caption">
+            <!-- caption -->
+            <h2>
+                <a href="#" class="title">Venue Vendor Title</a>
+            </h2>
+            <p class="location">
+                <i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.
+            </p>
+            <div class="rating ">
+                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+            </div>
+        </div>
+        <!-- /.caption -->
+        <div class="vendor-price">
+            <div class="price">$390 - $600</div>
+        </div>
+    </div>
+    <!-- venue details -->
+</div>
+<!-- /.venue box start-->
+<div class="col-md-6 vendor-box">
+    <!-- venue box start-->
+    <div class="vendor-image">
+        <!-- venue pic -->
+        <a href="#">
+            <img src="images/vendor-2.jpg" alt="wedding venue" class="img-responsive">
+        </a>
+        <div class="favourite-bg">
+            <a href="#" class="">
+                <i class="fa fa-heart"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.venue pic -->
+    <div class="vendor-detail">
+        <!-- venue details -->
+        <div class="caption">
+            <!-- caption -->
+            <h2>
+                <a href="#" class="title">Venue Vendor Title</a>
+            </h2>
+            <p class="location">
+                <i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.
+            </p>
+            <div class="rating ">
+                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+            </div>
+        </div>
+        <!-- /.caption -->
+        <div class="vendor-price">
+            <div class="price">$390 - $600</div>
+        </div>
+    </div>
+    <!-- venue details -->
+</div>
+<!-- /.venue box start-->
+<div class="col-md-6 vendor-box">
+    <!-- venue box start-->
+    <div class="vendor-image">
+        <!-- venue pic -->
+        <a href="#">
+            <img src="images/vendor-3.jpg" alt="wedding venue" class="img-responsive">
+        </a>
+        <div class="favourite-bg">
+            <a href="#" class="">
+                <i class="fa fa-heart"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.venue pic -->
+    <div class="vendor-detail">
+        <!-- venue details -->
+        <div class="caption">
+            <!-- caption -->
+            <h2>
+                <a href="#" class="title">Venue Vendor Title</a>
+            </h2>
+            <p class="location">
+                <i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.
+            </p>
+            <div class="rating ">
+                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+            </div>
+        </div>
+        <!-- /.caption -->
+        <div class="vendor-price">
+            <div class="price">$390 - $600</div>
+        </div>
+    </div>
+    <!-- venue details -->
+</div>
+<!-- /.venue box start-->
+<div class="col-md-6 vendor-box">
+    <!-- venue box start-->
+    <div class="vendor-image">
+        <!-- venue pic -->
+        <a href="#">
+            <img src="images/vendor-4.jpg" alt="wedding venue" class="img-responsive">
+        </a>
+        <div class="favourite-bg">
+            <a href="#" class="">
+                <i class="fa fa-heart"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.venue pic -->
+    <div class="vendor-detail">
+        <!-- venue details -->
+        <div class="caption">
+            <!-- caption -->
+            <h2>
+                <a href="#" class="title">Venue Vendor Title</a>
+            </h2>
+            <p class="location">
+                <i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.
+            </p>
+            <div class="rating ">
+                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+            </div>
+        </div>
+        <!-- /.caption -->
+        <div class="vendor-price">
+            <div class="price">$390 - $600</div>
+        </div>
+    </div>
+    <!-- venue details -->
+</div>
+<!-- /.venue box start-->
+<div class="col-md-6 vendor-box">
+    <!-- venue box start-->
+    <div class="vendor-image">
+        <!-- venue pic -->
+        <a href="#">
+            <img src="images/vendor-5.jpg" alt="wedding venue" class="img-responsive">
+        </a>
+        <div class="favourite-bg">
+            <a href="#" class="">
+                <i class="fa fa-heart"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.venue pic -->
+    <div class="vendor-detail">
+        <!-- venue details -->
+        <div class="caption">
+            <!-- caption -->
+            <h2>
+                <a href="#" class="title">Venue Vendor Title</a>
+            </h2>
+            <p class="location">
+                <i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.
+            </p>
+            <div class="rating ">
+                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+            </div>
+        </div>
+        <!-- /.caption -->
+        <div class="vendor-price">
+            <div class="price">$390 - $600</div>
+        </div>
+    </div>
+    <!-- venue details -->
+</div>
+<!-- /.venue box start-->
+<div class="col-md-6 vendor-box">
+    <!-- venue box start-->
+    <div class="vendor-image">
+        <!-- venue pic -->
+        <a href="#">
+            <img src="images/vendor-7.jpg" alt="wedding venue" class="img-responsive">
+        </a>
+        <div class="favourite-bg">
+            <a href="#" class="">
+                <i class="fa fa-heart"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.venue pic -->
+    <div class="vendor-detail">
+        <!-- venue details -->
+        <div class="caption">
+            <!-- caption -->
+            <h2>
+                <a href="#" class="title">Venue Vendor Title</a>
+            </h2>
+            <p class="location">
+                <i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.
+            </p>
+            <div class="rating ">
+                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+            </div>
+        </div>
+        <!-- /.caption -->
+        <div class="vendor-price">
+            <div class="price">$390 - $600</div>
+        </div>
+    </div>
+    <!-- venue details -->
+</div>
+<!-- /.venue box start-->
+<div class="col-md-6 vendor-box">
+    <!-- venue box start-->
+    <div class="vendor-image">
+        <!-- venue pic -->
+        <a href="#">
+            <img src="images/vendor-8.jpg" alt="wedding venue" class="img-responsive">
+        </a>
+        <div class="favourite-bg">
+            <a href="#" class="">
+                <i class="fa fa-heart"></i>
+            </a>
+        </div>
+    </div>
+    <!-- /.venue pic -->
+    <div class="vendor-detail">
+        <!-- venue details -->
+        <div class="caption">
+            <!-- caption -->
+            <h2>
+                <a href="#" class="title">Venue Vendor Title</a>
+            </h2>
+            <p class="location">
+                <i class="fa fa-map-marker"></i> Street Address, Name of Town, 12345, Country.
+            </p>
+            <div class="rating ">
+                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+            </div>
+        </div>
+        <!-- /.caption -->
+        <div class="vendor-price">
+            <div class="price">$390 - $600</div>
+        </div>
+    </div>
+    <!-- venue details -->
+</div>
+<!-- /.venue box start-->
+<div class="col-md-12 tp-pagination">
+    <ul class="pagination">
+        <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">Previous</span>
+            </a>
+        </li>
+        <li class="active">
+            <a href="#">1</a>
+        </li>
+        <li>
+            <a href="#">2</a>
+        </li>
+        <li>
+            <a href="#">3</a>
+        </li>
+        <li>
+            <a href="#">4</a>
+        </li>
+        <li>
+            <a href="#">5</a>
+        </li>
+        <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">NEXT</span>
+            </a>
+        </li>
+    </ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>

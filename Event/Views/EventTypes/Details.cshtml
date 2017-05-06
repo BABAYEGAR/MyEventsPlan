@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View event type";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/Layout/_LayoutForm.cshtml";
 }
 @section links{
 
@@ -42,7 +42,7 @@
             </div>
             <div class="modal-body">
                 @{
-                    Html.RenderPartial("EditEventTypeModal", Model);
+                    Html.RenderPartial("EventPlanning/EditEventTypeModal", Model);
                 }
             </div>
         </div>

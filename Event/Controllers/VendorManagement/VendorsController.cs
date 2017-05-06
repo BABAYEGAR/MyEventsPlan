@@ -48,31 +48,21 @@ namespace MyEventPlan.Controllers.VendorManagement
             return View(vendor);
         }
 
-        // GET: Vendors/ListOfVendors
-        public ActionResult ListOfVendors()
+        // GET: Vendors/ListOfVendors/SearchParameters
+        public ActionResult ListOfVendors(FormCollection collectedValues)
         {
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-            return View(db.Vendors.Include(n => n.Location));
-        }
+            long serviceId = Convert.ToInt64(collectedValues["VendorServiceId"]);
+            long locationId = Convert.ToInt64(collectedValues["LocationId"]);
 
-        // GET: Vendors/ListOfVendorsByLocation
-        public ActionResult ListOfVendorsByLocation(long? locationId)
-        {
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-            return View("ListOfVendors",
-                db.Vendors.Where(n => n.LocationId == locationId).Include(n => n.Location).Include(n => n.VendorService));
-        }
+            ViewBag.service = serviceId;
+            ViewBag.location = locationId;
 
-        // GET: Vendors/ListOfVendorsByCategory
-        public ActionResult ListOfVendorsByCategory(long? categoryId)
-        {
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-            return View("ListOfVendors",
-                db.Vendors.Where(n => n.VendorServiceId == categoryId)
-                    .Include(n => n.Location)
-                    .Include(n => n.VendorService));
-        }
+            ViewBag.categories = new SelectList(dbc.VendorServices.ToList(), "VendorServiceId", "ServiceName");
+            ViewBag.locations = new SelectList(dbc.Locations.ToList(), "LocationId", "Name");
 
+            var vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId);
+            return View(vendors.ToList());
+        }
         // GET: Vendors/Create
         public ActionResult Create()
         {
