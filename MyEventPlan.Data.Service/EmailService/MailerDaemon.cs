@@ -130,7 +130,7 @@ namespace MyEventPlan.Data.Service.EmailService
         {
             return
            new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewVendor.html")).ReadToEnd()
-                    .Replace("DISPLAYNAME", vendor.BusinessName)
+                    .Replace("DISPLAYNAME", vendor.Name)
                     .Replace("AppUserId", userId.ToString());
         }
 

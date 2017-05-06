@@ -23,7 +23,7 @@ namespace MyEventPlan.Controllers
         private readonly PasswordResetDataContext _dbc = new PasswordResetDataContext();
         private readonly EventDataContext _dbd = new EventDataContext();
         private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
-        private readonly EventPlannerPackageDataContext _dbf = new EventPlannerPackageDataContext();
+        private readonly EventPlannerPackageSettingDataContext _dbf = new EventPlannerPackageSettingDataContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -55,7 +55,7 @@ namespace MyEventPlan.Controllers
         public ActionResult Invoice(long id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var selectedPackage = _dbd.Packages.Find(id);
+            var selectedPackage = _dbd.EventPlannerPackages.Find(id);
             var subscriptionInvoice = new SubscriptionInvoice();
 
             //random number
@@ -75,7 +75,7 @@ namespace MyEventPlan.Controllers
             subscriptionInvoice.InvoiceNumber = "#" + randomNumber;
             if (selectedPackage != null)
             {
-                subscriptionInvoice.PackageId = selectedPackage.PackageId;
+                subscriptionInvoice.PackageId = selectedPackage.EventPlannerPackageId;
 
                 Session["package"] = selectedPackage;
             }
@@ -89,7 +89,7 @@ namespace MyEventPlan.Controllers
         public ActionResult Pricing()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var packages = _dbd.EventPlannerPackages.Include(n => n.Package);
+            var packages = _dbd.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
 
             var packageSubscribed =
                 packages.SingleOrDefault(
@@ -107,10 +107,10 @@ namespace MyEventPlan.Controllers
         public ActionResult ConfirmPayment()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var package = Session["package"] as Package;
+            var package = Session["package"] as EventPlannerPackage;
             var invoice = Session["invoice"] as SubscriptionInvoice;
-            var packageToSubscribed = new EventPlannerPackage();
-            var packages = _dbd.EventPlannerPackages.Include(n => n.Package);
+            var packageToSubscribed = new EventPlannerPackageSetting();
+            var packages = _dbd.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
             //current subscription
             var packageSubscribed =
                 packages.SingleOrDefault(
@@ -145,7 +145,7 @@ namespace MyEventPlan.Controllers
                 //package data
                 if (package != null)
                 {
-                    packageToSubscribed.PackageId = package.PackageId;
+                    packageToSubscribed.EventPlannerPackageId = package.EventPlannerPackageId;
                     packageToSubscribed.AllowedEvent = package.MaximumEvents;
                 }
                 //commit package to database
@@ -179,7 +179,7 @@ namespace MyEventPlan.Controllers
             //package data
             if (package != null)
             {
-                packageToSubscribed.PackageId = package.PackageId;
+                packageToSubscribed.EventPlannerPackageId = package.EventPlannerPackageId;
                 packageToSubscribed.AllowedEvent = package.MaximumEvents;
             }
             _dbf.EventPlannerPackages.Add(packageToSubscribed);

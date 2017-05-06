@@ -65,7 +65,7 @@
             <thead>
             <tr>
                 <th>
-                    <input type="checkbox" id="check-all" class="flat">
+                    <input type="checkbox" id="check-all" class="flat" onclick="toggle(this)">
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Name)
@@ -88,7 +88,7 @@
                         @if (allMappings != null)
                         {
                             <a href="@Url.Action("UncheckItem", "CheckListItems", new {id = item.CheckListItemId})">
-                                <i class="icon-remove-circle"></i>
+                                <i class="fa fa-remove"></i>
                             </a>
                         }
                         else
@@ -110,3 +110,11 @@
         </table>
     </div>
 }
+<script>     
+    function toggle(source) {
+        checkboxes = document.getElementsByName('table_records');
+        for(var i=0, n=checkboxes.length;i<n;i++){
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>

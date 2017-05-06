@@ -25,7 +25,34 @@
 </head>
 
 <body>
+<!-- Modal -->
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel4">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel4">System Log-Out</h4>
+            </div>@using (Html.BeginForm("LogOff", "Account", FormMethod.Get))
+                  {
+                      <div class="modal-body">
 
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to log out of the system?
+                          </p>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Log-Out" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Back To Work" class="btn btn-default pull-left"/>
+                      </div>
+                  }
+        </div>
+    </div>
+
+</div>
 <div class="wrapper">
 
     @{ Html.RenderPartial("Partial/_PartialMaterialSideBar"); }

@@ -1,0 +1,158 @@
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@{
+    var individual = EventPlannerTypeEnum.Individual.ToString();
+    var organization = EventPlannerTypeEnum.Organization.ToString();
+    var dbEvent = new EventDataContext();
+    var services = dbEvent.VendorServices.ToList();
+}
+<div class="header">
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 logo">
+            <div class="navbar-brand">
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="~/Content/AppTheme/images/logo.png" alt="Wedding Vendors" class="img-responsive">
+                </a>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="navigation" id="navigation">
+                <ul>
+                    <li class="active">
+                        <a href="@Url.Action("Index", "Home")">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Event Planning</a>
+                        <ul>
+                            <li>
+                                <a href="@Url.Action("Create", "EventPlanners", new {type = individual})">I'm an Event Planner (Individual)</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Create", "EventPlanners", new {type = organization})">We are Event Planners (Organization)</a>
+                            </li>
+                         
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Vendor</a>
+                        <ul>
+                            <li>
+                                <a href="@Url.Action("Pricing", "VendorPackages")">Are you Vendor?</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" title="Home" class="animsition-link">Vendor Services</a>
+                        <ul>
+                            @foreach (var item in services)
+                            {
+                                <li>
+                                    <a href="venue-listing.html">@item.ServiceName</a>
+                                </li>  
+                            }
+                        </ul>
+                    </li>
+                    @*<li>
+                        <a href="#">Planning Tools</a>
+                        <ul>
+                            <li>
+                                <a href="planning-to-do.html">To Do List</a>
+                            </li>
+                            <li>
+                                <a href="planning-budget.html">Budget Planner</a>
+                            </li>
+                            <li>
+                                <a href="planning-table-arrangement.html">Seating Planner</a>
+                            </li>
+                            <li>
+                                <a href="planning-guest-list.html">Guest List</a>
+                            </li>
+                            <li>
+                                <a href="couple-landing-page.html">Couple Signup (LP)</a>
+                            </li>
+                            <li>
+                                <a href="couple-dashboard.html">Couple Admin</a>
+                            </li>
+                            <li>
+                                <a href="dashboard-vendor.html">Vendor Admin</a>
+                            </li>
+                        </ul>
+                    </li>*@
+                    <li>
+                        <a href="#">Features</a>
+                        <ul>
+                            @*<li>
+                                <a href="#">Blog</a>
+                                <ul>
+                                    <li>
+                                        <a href="blog.html">Blog Listing</a>
+                                    </li>
+                                    <li>
+                                        <a href="blog-single.html">Blog Single</a>
+                                    </li>
+                                </ul>
+                            </li>*@
+                            <li>
+                                <a href="about-us.html">About us</a>
+                            </li>
+                            <li>
+                                <a href="contact-us.html">Contact us</a>
+                            </li>
+                            <li>
+                                <a href="pricing-plan.html">Pricing Table</a>
+                            </li>
+                            <li>
+                                <a href="faq.html">FAQ's</a>
+                            </li>
+                            @*<li>
+                                <a href="404-error.html">404 Error</a>
+                            </li>
+                            <li>
+                                <a href="#">Shortcodes</a>
+                                <ul>
+                                    <li>
+                                        <a href="shortcode-columns.html">Column</a>
+                                    </li>
+                                    <li>
+                                        <a href="shortcode-accordion.html">Accordion</a>
+                                    </li>
+                                    <li>
+                                        <a href="shortcode-tabs.html">Tabs</a>
+                                    </li>
+                                    <li>
+                                        <a href="shortcode-pagination.html">Paginations</a>
+                                    </li>
+                                    <li>
+                                        <a href="shortcode-typography.html">Typography</a>
+                                    </li>
+                                    <li>
+                                        <a href="shortcode-accordion.html">Accordion</a>
+                                    </li>
+                                    <li>
+                                        <a href="shordcods-alerts.html">Alert</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="wedding-guideline.html">Template Guideline</a>
+                            </li>*@
+                        </ul>
+                    </li>
+                    @*<li>
+                        <a href="#">Real Weddings</a>
+                        <ul>
+                            <li>
+                                <a href="real-wedding-listing.html">Listing</a>
+                            </li>
+                            <li>
+                                <a href="real-wedding-single.html">Real Wedding Single</a>
+                            </li>
+                        </ul>
+                    </li>*@
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

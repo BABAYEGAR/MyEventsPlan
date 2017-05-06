@@ -1,0 +1,28 @@
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@model Event.Data.Objects.Entities.VendorPackageItem
+@{
+    long packageId = ViewBag.packageId;
+       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+}
+@using (Html.BeginForm("Create", "VendorPackageItems", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("VendorPackageId", packageId)
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.ItemName, new {htmlAttributes = new {placeholder = "Enter Item Name"}})
+        @Html.LabelFor(model => model.ItemName)
+        @Html.ValidationMessageFor(model => model.ItemName, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {placeholder = "Enter the amount"}})
+        @Html.LabelFor(model => model.Amount)
+        @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Add Item" class="btn btn-default"/>
+        </div>
+    </div>
+}

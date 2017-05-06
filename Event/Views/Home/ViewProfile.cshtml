@@ -10,21 +10,6 @@
 }
 
 <div class="container">
-    @if (TempData["profile"] != null)
-    {
-        if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
-        {
-            <div class="alert-success alert-dismissable">@TempData["profile"]</div>
-        }
-        else if (TempData["notificationtype"].Equals(NotificationType.Error.ToString()))
-        {
-            <div class="alert-danger alert-dismissable">@TempData["profile"]</div>
-        }
-        else if (TempData["notificationtype"].Equals(NotificationType.Info.ToString()))
-        {
-            <div class="alert-info alert-dismissable">@TempData["profile"]</div>
-        }
-    }
     <div class="row">
         <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
             <p class="text-info">@DateTime.Now</p>

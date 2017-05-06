@@ -233,6 +233,8 @@
     <Compile Include="Controllers\VendorManagement\LocationsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorServicesController.cs" />
+    <Compile Include="Controllers\VendorPackage\VendorPackageItemsController.cs" />
+    <Compile Include="Controllers\VendorPackage\VendorPackagesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1627,7 +1629,26 @@
     <Content Include="Views\Shared\Partial\_PartialTopMenu.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialUnderMenu.cshtml" />
     <Content Include="Views\Shared\Layout\_LayoutAppTheme.cshtml" />
-    <Content Include="Views\Shared\Partial\_PartialAppThemeFooter.cshtml" />
+    <Content Include="Views\Shared\Partial\_PartialVendorTopMenu.cshtml" />
+    <Content Include="Views\Shared\Partial\_PartialVendorUnderMenu.cshtml" />
+    <Content Include="Views\Shared\Partial\_AppThemeFooter.cshtml" />
+    <Content Include="Views\Vendors\Subscription.cshtml" />
+    <Content Include="Views\Shared\Layout\_LayoutSubscription.cshtml" />
+    <Content Include="Views\VendorPackages\Create.cshtml" />
+    <Content Include="Views\VendorPackages\Delete.cshtml" />
+    <Content Include="Views\VendorPackages\Details.cshtml" />
+    <Content Include="Views\VendorPackages\Edit.cshtml" />
+    <Content Include="Views\VendorPackages\Index.cshtml" />
+    <Content Include="Views\VendorPackageItems\Create.cshtml" />
+    <Content Include="Views\VendorPackageItems\Delete.cshtml" />
+    <Content Include="Views\VendorPackageItems\Details.cshtml" />
+    <Content Include="Views\VendorPackageItems\Edit.cshtml" />
+    <Content Include="Views\VendorPackageItems\Index.cshtml" />
+    <Content Include="Views\Shared\AppManagement\CreateVendorPackageItemModal.cshtml" />
+    <Content Include="Views\Shared\AppManagement\CreateVendorPackageModal.cshtml" />
+    <Content Include="Views\Shared\AppManagement\EditVendorPackageItemModal.cshtml" />
+    <Content Include="Views\Shared\AppManagement\EditVendorPackageModal.cshtml" />
+    <Content Include="Views\VendorPackages\Pricing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

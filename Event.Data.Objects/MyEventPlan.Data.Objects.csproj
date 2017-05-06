@@ -44,7 +44,11 @@
     <Compile Include="Entities\Appointment.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Budget.cs" />
-    <Compile Include="Entities\EventPlannerPackage.cs" />
+    <Compile Include="Entities\VendorPackageItem.cs" />
+    <Compile Include="Entities\VendorPackage.cs" />
+    <Compile Include="Entities\EventPlannerPackageItem.cs" />
+    <Compile Include="Entities\VendorPackageSetting.cs" />
+    <Compile Include="Entities\EventPlannerPackageSetting.cs" />
     <Compile Include="Entities\PersonalCheckListItem.cs" />
     <Compile Include="Entities\PersonalCheckList.cs" />
     <Compile Include="Entities\CheckListItem.cs" />
@@ -65,7 +69,7 @@
     <Compile Include="Entities\News.cs" />
     <Compile Include="Entities\Note.cs" />
     <Compile Include="Entities\Notification.cs" />
-    <Compile Include="Entities\Package.cs" />
+    <Compile Include="Entities\EventPlannerPackage.cs" />
     <Compile Include="Entities\PasswordReset.cs" />
     <Compile Include="Entities\Resource.cs" />
     <Compile Include="Entities\Setting.cs" />

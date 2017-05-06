@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "View";
     ViewBag.Header = Model.Name;
-    Layout = "../Shared/_LayoutEventDashboard.cshtml";
+    Layout = "../Shared/Layout/_LayoutEventDashboard.cshtml";
     var role = Session["role"] as Role;
 
     //recent event details
@@ -67,7 +67,7 @@
                                     </div>
                                     <div class="modal-body">
                                         @{
-                                            Html.RenderPartial("EditEventModal", Model);
+                                            Html.RenderPartial("EventPlanning/EditEventModal", Model);
                                         }
                                     </div>
                                 </div>
@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="modal-body">
                                         @{
-                                            Html.RenderPartial("CreateAppointmentModal", appointment);
+                                            Html.RenderPartial("EventPlanning/CreateAppointmentModal", appointment);
                                         }
                                     </div>
                                 </div>

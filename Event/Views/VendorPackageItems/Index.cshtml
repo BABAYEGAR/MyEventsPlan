@@ -1,0 +1,73 @@
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<VendorPackageItem>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "Vendor Package Item";
+    ViewBag.TableSubHeader = "List of all Package Item";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    var packageItem = new VendorPackageItem();
+}
+@section add {
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary  fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Item
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new Package Item</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("AppManagement/CreateVendorPackageItemModal", packageItem);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+<div class="card-content table-responsive">
+    <table class="table table-hover">
+        <thead class="text-primary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VendorPackage.PackageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorPackage.PackageName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "Details", new {id = item.VendorPackageItemId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
+
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

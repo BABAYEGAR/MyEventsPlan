@@ -18,7 +18,6 @@ namespace Event.Data.Objects.Entities
         [Required]
         public string Address { get; set; }
         public string About { get; set; }
-        [Required]
         public long MinimumPrice { get; set; }
         public string ImageOne { get; set; }
          public string ImageTwo { get; set; }
@@ -28,12 +27,6 @@ namespace Event.Data.Objects.Entities
         public string Email { get; set; }
         [Required]
         public string Mobile { get; set; }
-        [Required]
-        [DisplayName("Business Name")]
-        public string BusinessName { get; set; }
-        [Required]
-        [DisplayName("Business Contact")]
-        public string BusinessContact { get; set; }
         [Required]
         [DisplayName("Vendor Service")]
         public  long? VendorServiceId { get; set; }
@@ -50,6 +43,7 @@ namespace Event.Data.Objects.Entities
         public virtual Event Event { get; set; }
 
         public  IEnumerable<EventVendorMapping> EventVendorMappings { get; set; }
+        public  IEnumerable<VendorPackageSetting> VendorPackageSettings { get; set; }
         public  IEnumerable<AppUser> AppUsers { get; set; }
     }
 }

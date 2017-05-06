@@ -49,6 +49,7 @@ namespace Event.Data.Objects.Entities
         public  IEnumerable<Message> Messages { get; set; }
         public  IEnumerable<Setting> Settings { get; set; }
         public IEnumerable<SubscriptionInvoice> SubscriptionInvoices { get; set; }
+        public IEnumerable<VendorPackageSetting> VendorPackageSettings { get; set; }
         public string DisplayName
      => Firstname + " " + Lastname;
 

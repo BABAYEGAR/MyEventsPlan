@@ -1,10 +1,10 @@
 ﻿@using Event.Data.Objects.Entities
 @using MyEventPlan.Data.DataContext.DataContext
-@model EventPlannerPackage
+@model EventPlannerPackageSetting
 @{
     Layout = null;
     var dbd = new EventDataContext();
-    var packages = dbd.Packages;
+    var packages = dbd.EventPlannerPackages;
     var packageSubscribed = Session["subscribe"] as EventPlannerPackage;
 }
 <style>

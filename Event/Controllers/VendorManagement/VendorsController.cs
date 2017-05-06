@@ -15,6 +15,7 @@ namespace MyEventPlan.Controllers.VendorManagement
     {
         private readonly VendorDataContext db = new VendorDataContext();
         private readonly EventDataContext dbc = new EventDataContext();
+        private readonly VendorPackageSettingDataContext dbd = new VendorPackageSettingDataContext();
 
         // GET: Vendors
         public ActionResult Index()
@@ -51,17 +52,18 @@ namespace MyEventPlan.Controllers.VendorManagement
         // GET: Vendors/ListOfVendors/SearchParameters
         public ActionResult ListOfVendors(FormCollection collectedValues)
         {
-            long serviceId = Convert.ToInt64(collectedValues["VendorServiceId"]);
-            long locationId = Convert.ToInt64(collectedValues["LocationId"]);
+            long? serviceId = null;
+            long? locationId = null;
+            if (collectedValues["VendorServiceId"] != "")
+                serviceId = Convert.ToInt64(collectedValues["VendorServiceId"]);
+            if (collectedValues["VendorServiceId"] != "")
+                locationId = Convert.ToInt64(collectedValues["LocationId"]);
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
+            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", locationId);
 
-            ViewBag.service = serviceId;
-            ViewBag.location = locationId;
-
-            ViewBag.categories = new SelectList(dbc.VendorServices.ToList(), "VendorServiceId", "ServiceName");
-            ViewBag.locations = new SelectList(dbc.Locations.ToList(), "LocationId", "Name");
-
-            var vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId);
-            return View(vendors.ToList());
+            ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId)
+                .ToList();
+            return View();
         }
         // GET: Vendors/Create
         public ActionResult Create()
@@ -78,9 +80,9 @@ namespace MyEventPlan.Controllers.VendorManagement
         [ValidateAntiForgeryToken]
         public ActionResult Create(
             [Bind(
-                 Include =
-                     "VendorId,Name,Address,Email,Mobile,MinimumPrice,LocationId,About,VendorServiceId,BusinessName,BusinessContact"
-             )] Vendor vendor)
+                Include =
+                    "VendorId,Name,Address,Email,Mobile,MinimumPrice,LocationId,About,VendorServiceId,BusinessName,BusinessContact"
+            )] Vendor vendor)
         {
             var allUsers = dbc.AppUsers;
 
@@ -138,10 +140,11 @@ namespace MyEventPlan.Controllers.VendorManagement
 
 
         // GET: Vendors/Create
-        public ActionResult Register()
+        public ActionResult Register(long? id)
         {
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
             ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
+            ViewBag.packageId = id;
             return View();
         }
 
@@ -152,17 +155,16 @@ namespace MyEventPlan.Controllers.VendorManagement
         [ValidateAntiForgeryToken]
         public ActionResult Register(
             [Bind(
-                 Include =
-                     "VendorId,Name,About,Address,Email,MinimumPrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
-             )] Vendor vendor)
+                Include =
+                    "VendorId,Name,About,Address,Email,MinimumPrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
+            )] Vendor vendor)
         {
             var role = dbc.Roles.FirstOrDefault(m => m.Name == "Vendor");
+            long? packageId = ViewBag.packageId;
             if (ModelState.IsValid)
             {
                 vendor.DateCreated = DateTime.Now;
                 vendor.DateLastModified = DateTime.Now;
-
-
                 if (dbc.AppUsers.Any(n => n.Email == vendor.Email))
                 {
                     TempData["outterform"] = "The email entered already exist! Try another one!";
@@ -176,6 +178,8 @@ namespace MyEventPlan.Controllers.VendorManagement
 
                 db.Vendors.Add(vendor);
                 db.SaveChanges();
+
+                //vendor user account details
                 var appUser = new AppUser();
                 appUser.EventPlannerId = null;
                 appUser.Email = vendor.Email;
@@ -192,6 +196,23 @@ namespace MyEventPlan.Controllers.VendorManagement
                 appUser.Password = new Hashing().HashPassword(vendor.Password);
                 dbc.AppUsers.Add(appUser);
                 dbc.SaveChanges();
+
+
+                var packageSetting = new VendorPackageSetting();
+                packageSetting.AppUserId = appUser.AppUserId;
+                packageSetting.StartDate = DateTime.Now;
+                packageSetting.EndDate = DateTime.Now.AddMonths(1);
+                packageSetting.Status = PackageStatusEnum.Active.ToString();
+                packageSetting.VendorId = vendor.VendorId;
+                if (packageId != null) packageSetting.VendorPackageId = (long) packageId;
+                packageSetting.DateCreated = DateTime.Now;
+                packageSetting.DateLastModified = DateTime.Now;
+                packageSetting.CreatedBy = 1;
+                packageSetting.LastModifiedBy = 1;
+
+                dbd.VendorPackageSetting.Add(packageSetting);
+                dbd.SaveChanges();
+
                 new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
                 TempData["login"] =
                     "You have successfully registered as a vendor! Verify access in your email to login";
@@ -223,9 +244,9 @@ namespace MyEventPlan.Controllers.VendorManagement
         [ValidateAntiForgeryToken]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "VendorId,Name,Address,Email,Mobile,LocationId,ConfirmPassword,Password,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
-             )] Vendor vendor)
+                Include =
+                    "VendorId,Name,Address,Email,Mobile,LocationId,ConfirmPassword,Password,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
+            )] Vendor vendor)
         {
             if (ModelState.IsValid)
             {

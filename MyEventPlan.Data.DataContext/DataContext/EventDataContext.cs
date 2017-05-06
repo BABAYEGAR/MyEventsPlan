@@ -36,7 +36,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<CheckList> CheckLists { get; set; }
         public virtual DbSet<CheckListItem> CheckListItems { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
-        public virtual DbSet<Package> Packages { get; set; }
+        public virtual DbSet<EventPlannerPackage> EventPlannerPackages { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<News> Newses { get; set; }
         public virtual DbSet<NewsAction> NewsActions { get; set; }
@@ -57,8 +57,11 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<InvoicePayment> InvoicePayments { get; set; }
         public virtual DbSet<PersonalCheckList> PersonalCheckLists { get; set; }
         public virtual DbSet<PersonalCheckListItem> PersonalCheckListItems { get; set; }
-        public virtual DbSet<EventPlannerPackage> EventPlannerPackages { get; set; }
+        public virtual DbSet<EventPlannerPackageSetting> EventPlannerPackageSettings { get; set; }
         public virtual DbSet<SubscriptionInvoice> SubscriptionInvoices { get; set; }
+        public virtual DbSet<VendorPackage> VendorPackages { get; set; }
+        public virtual DbSet<VendorPackageItem> VendorPackageItems { get; set; }
+        public virtual DbSet<VendorPackageSetting> VendorPackageSettings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

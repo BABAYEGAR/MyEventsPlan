@@ -11,13 +11,13 @@ namespace MyEventPlan.Controllers.SystemManagement
 {
     public class EventPlannerPackagesController : Controller
     {
-        private readonly EventPlannerPackageDataContext db = new EventPlannerPackageDataContext();
+        private readonly EventPlannerPackageSettingDataContext db = new EventPlannerPackageSettingDataContext();
 
         // GET: EventPlannerPackages
         public ActionResult Index()
         {
-            var eventPlannerPackages = db.EventPlannerPackages.Include(e => e.EventPlanner).Include(e => e.Package);
-            return View(eventPlannerPackages.ToList());
+            var eventPlannerPackageSetting = db.EventPlannerPackages.Include(e => e.EventPlanner).Include(e => e.EventPlannerPackage);
+            return View(eventPlannerPackageSetting.ToList());
         }
 
         // GET: EventPlannerPackages/Details/5
@@ -25,16 +25,16 @@ namespace MyEventPlan.Controllers.SystemManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackage = db.EventPlannerPackages.Find(id);
-            if (eventPlannerPackage == null)
+            var eventPlannerPackageSetting = db.EventPlannerPackages.Find(id);
+            if (eventPlannerPackageSetting == null)
                 return HttpNotFound();
-            return View(eventPlannerPackage);
+            return View(eventPlannerPackageSetting);
         }
 
         // GET: EventPlannerPackages/Create
         public ActionResult Create()
         {
-            ViewBag.PackageId = new SelectList(db.Packages, "PackageId", "PackageName");
+            ViewBag.PackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId", "PackageName");
             return View();
         }
 
@@ -44,40 +44,40 @@ namespace MyEventPlan.Controllers.SystemManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "EventPlannerPackageId")] EventPlannerPackage
-                eventPlannerPackage)
+            [Bind(Include = "EventPlannerPackageSettingId")] EventPlannerPackageSetting
+                eventPlannerPackageSetting)
         {
             if (ModelState.IsValid)
             {
-                var package = Session["package"] as Package;
+                var package = Session["package"] as EventPlannerPackage;
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 if (loggedinuser != null)
                 {
                     if (loggedinuser.EventPlannerId != null)
-                    eventPlannerPackage.EventPlannerId = (long) loggedinuser.EventPlannerId;
-                    eventPlannerPackage.CreatedBy = loggedinuser.AppUserId;
-                    eventPlannerPackage.LastModifiedBy = loggedinuser.AppUserId;
+                    eventPlannerPackageSetting.EventPlannerId = (long) loggedinuser.EventPlannerId;
+                    eventPlannerPackageSetting.CreatedBy = loggedinuser.AppUserId;
+                    eventPlannerPackageSetting.LastModifiedBy = loggedinuser.AppUserId;
                 }
-                eventPlannerPackage.DateCreated = DateTime.Now;
-                eventPlannerPackage.DateLastModified = DateTime.Now;
-                eventPlannerPackage.Status = PackageStatusEnum.Active.ToString();
-                eventPlannerPackage.SubscribedEvent = 0;
+                eventPlannerPackageSetting.DateCreated = DateTime.Now;
+                eventPlannerPackageSetting.DateLastModified = DateTime.Now;
+                eventPlannerPackageSetting.Status = PackageStatusEnum.Active.ToString();
+                eventPlannerPackageSetting.SubscribedEvent = 0;
 
                 //package data
                 if (package != null)
                 {
-                    eventPlannerPackage.PackageId = package.PackageId;
-                    eventPlannerPackage.AllowedEvent = package.MaximumEvents;
+                    eventPlannerPackageSetting.EventPlannerPackageId = package.EventPlannerPackageId;
+                    eventPlannerPackageSetting.AllowedEvent = package.MaximumEvents;
                 }
-                db.EventPlannerPackages.Add(eventPlannerPackage);
+                db.EventPlannerPackages.Add(eventPlannerPackageSetting);
                 db.SaveChanges();
                 //display notification
                 TempData["display"] = "You have successfully subscribed to the package!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
-            ViewBag.PackageId = new SelectList(db.Packages, "PackageId", "PackageName", eventPlannerPackage.PackageId);
-            return View(eventPlannerPackage);
+            ViewBag.PackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId", "PackageName", eventPlannerPackageSetting.EventPlannerPackageId);
+            return View(eventPlannerPackageSetting);
         }
 
         // GET: EventPlannerPackages/Edit/5
@@ -85,13 +85,13 @@ namespace MyEventPlan.Controllers.SystemManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackage = db.EventPlannerPackages.Find(id);
-            if (eventPlannerPackage == null)
+            var eventPlannerPackageSetting = db.EventPlannerPackages.Find(id);
+            if (eventPlannerPackageSetting == null)
                 return HttpNotFound();
             ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname",
-                eventPlannerPackage.EventPlannerId);
-            ViewBag.PackageId = new SelectList(db.Packages, "PackageId", "PackageName", eventPlannerPackage.PackageId);
-            return View(eventPlannerPackage);
+                eventPlannerPackageSetting.EventPlannerId);
+            ViewBag.PackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId", "PackageName", eventPlannerPackageSetting.EventPlannerPackageId);
+            return View(eventPlannerPackageSetting);
         }
 
         // POST: EventPlannerPackages/Edit/5
@@ -102,8 +102,8 @@ namespace MyEventPlan.Controllers.SystemManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "EventPlannerPackageId,SubscribedEvent,AllowedEvent,PackageId,EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
-             )] EventPlannerPackage eventPlannerPackage)
+                     "EventPlannerPackageSettingId,SubscribedEvent,AllowedEvent,PackageId,EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+             )] EventPlannerPackageSetting eventPlannerPackage)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +113,7 @@ namespace MyEventPlan.Controllers.SystemManagement
             }
             ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname",
                 eventPlannerPackage.EventPlannerId);
-            ViewBag.PackageId = new SelectList(db.Packages, "PackageId", "PackageName", eventPlannerPackage.PackageId);
+            ViewBag.PackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId", "PackageName", eventPlannerPackage.EventPlannerPackageId);
             return View(eventPlannerPackage);
         }
 
@@ -122,10 +122,10 @@ namespace MyEventPlan.Controllers.SystemManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackage = db.EventPlannerPackages.Find(id);
-            if (eventPlannerPackage == null)
+            var eventPlannerPackageSetting = db.EventPlannerPackages.Find(id);
+            if (eventPlannerPackageSetting == null)
                 return HttpNotFound();
-            return View(eventPlannerPackage);
+            return View(eventPlannerPackageSetting);
         }
 
         // POST: EventPlannerPackages/Delete/5

@@ -80,6 +80,7 @@
     <Compile Include="Enum\NotificationType.cs" />
     <Compile Include="Enum\StaffStatus.cs" />
     <Compile Include="Enum\UploadType.cs" />
+    <Compile Include="Enum\VendorPackageEnum.cs" />
     <Compile Include="Enum\VendorScale.cs" />
     <Compile Include="FileUploader\FileUploader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

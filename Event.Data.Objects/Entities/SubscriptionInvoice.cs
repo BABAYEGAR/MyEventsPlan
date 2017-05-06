@@ -12,7 +12,7 @@ namespace Event.Data.Objects.Entities
         public long SubscriptionInvoiceId { get; set; }
         public string InvoiceNumber { get; set; }
         public long PackageId { get; set; }
-        public Package Package { get; set; }
+        public EventPlannerPackage Package { get; set; }
         public long AppUserId { get; set; }
         public AppUser AppUser { get; set; }
         public long EventPlannerId { get; set; }

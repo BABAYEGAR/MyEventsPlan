@@ -245,7 +245,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     //package data
                     var packageData =
-                        _db.EventPlannerPackages.FirstOrDefault(n => n.Status == PackageStatusEnum.Active.ToString());
+                        _db.EventPlannerPackageSettings.FirstOrDefault(n => n.Status == PackageStatusEnum.Active.ToString());
                     if ((packageData != null) && (packageData.SubscribedEvent < packageData.AllowedEvent))
                         packageData.SubscribedEvent = packageData.SubscribedEvent + 1;
                     if ((packageData != null) && (packageData.SubscribedEvent >= packageData.AllowedEvent))

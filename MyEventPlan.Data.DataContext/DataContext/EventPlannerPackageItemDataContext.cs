@@ -3,7 +3,7 @@ using Event.Data.Objects.Entities;
 
 namespace MyEventPlan.Data.DataContext.DataContext
 {
-    public class PackageDataContext : DbContext
+    public class EventPlannerPackageItemDataContext : DbContext
     {
         // Your context has been configured to use a 'ContactDataContext' connection string from your application's 
         // configuration file (App.config or Web.config). By default, this connection string targets the 
@@ -11,7 +11,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         // 
         // If you wish to target a different database and/or database provider, modify the 'ContactDataContext' 
         // connection string in the application configuration file.
-        public PackageDataContext()
+        public EventPlannerPackageItemDataContext()
             : base("name=Event")
         {
         }
@@ -20,7 +20,8 @@ namespace MyEventPlan.Data.DataContext.DataContext
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
         public virtual DbSet<Event.Data.Objects.Entities.Event> Event { get; set; }
         public virtual DbSet<EventPlanner> EventPlanner { get; set; }
-        public virtual DbSet<Package> Packages { get; set; }
+        public virtual DbSet<EventPlannerPackageItem> EventPlannerPackageItems { get; set; }
+        public virtual DbSet<EventPlannerPackage> EventPlannerPackages { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

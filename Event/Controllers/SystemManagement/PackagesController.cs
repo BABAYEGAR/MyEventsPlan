@@ -14,12 +14,12 @@ namespace MyEventPlan.Controllers.SystemManagement
 {
     public class PackagesController : Controller
     {
-        private PackageDataContext db = new PackageDataContext();
+        private EventPlannerPackageDataContext db = new EventPlannerPackageDataContext();
 
         // GET: Packages
         public ActionResult Index()
         {
-            return View(db.Packages.ToList());
+            return View(db.EventPlannerPackages.ToList());
         }
 
         // GET: Packages/Details/5
@@ -29,7 +29,7 @@ namespace MyEventPlan.Controllers.SystemManagement
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Package package = db.Packages.Find(id);
+            EventPlannerPackage package = db.EventPlannerPackages.Find(id);
             if (package == null)
             {
                 return HttpNotFound();
@@ -48,7 +48,7 @@ namespace MyEventPlan.Controllers.SystemManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PackageId,PackageName,Amount,MaximumEvents")] Package package)
+        public ActionResult Create([Bind(Include = "PackageId,PackageName,Amount,MaximumEvents")] EventPlannerPackage package)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace MyEventPlan.Controllers.SystemManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Packages.Add(package);
+                db.EventPlannerPackages.Add(package);
                 db.SaveChanges();
                 TempData["display"] = "You have successfully added a new package!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -83,7 +83,7 @@ namespace MyEventPlan.Controllers.SystemManagement
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Package package = db.Packages.Find(id);
+            EventPlannerPackage package = db.EventPlannerPackages.Find(id);
             if (package == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace MyEventPlan.Controllers.SystemManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PackageId,PackageName.Amount,MaximumEvents,CreatedBy,DateCreated")] Package package)
+        public ActionResult Edit([Bind(Include = "PackageId,PackageName.Amount,MaximumEvents,CreatedBy,DateCreated")] EventPlannerPackage package)
         {
             if (ModelState.IsValid)
             {
@@ -128,7 +128,7 @@ namespace MyEventPlan.Controllers.SystemManagement
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Package package = db.Packages.Find(id);
+            EventPlannerPackage package = db.EventPlannerPackages.Find(id);
             if (package == null)
             {
                 return HttpNotFound();
@@ -141,8 +141,8 @@ namespace MyEventPlan.Controllers.SystemManagement
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(long id)
         {
-            Package package = db.Packages.Find(id);
-            db.Packages.Remove(package);
+            EventPlannerPackage package = db.EventPlannerPackages.Find(id);
+            db.EventPlannerPackages.Remove(package);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the package!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
