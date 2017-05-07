@@ -2,10 +2,10 @@
 @{
     ViewBag.Title = "Package Invoice";
     ViewBag.Header = "Invoice for subscription";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/Layout/_LayoutForm.cshtml";
 
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    var package = Session["package"] as Package;
+    var package = Session["package"] as EventPlannerPackage;
     var invoice = Session["invoice"] as SubscriptionInvoice;
 }
 <style>
@@ -19,6 +19,7 @@
     .page-header {
         font-size: 22px;
         margin: 10px 0 20px 0;
+        height: 0px;
     }
 </style>
 

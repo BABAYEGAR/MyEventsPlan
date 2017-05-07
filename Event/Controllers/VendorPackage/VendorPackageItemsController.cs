@@ -72,6 +72,13 @@ namespace MyEventPlan.Controllers.VendorPackage
                 }
                 db.VendorPackageItems.Add(vendorPackageItem);
                 db.SaveChanges();
+
+                var package = db.VendorPackages.Find(vendorPackageItem.VendorPackageId);
+                if (package != null) package.Amount = db.VendorPackageItems.Sum(m => m.Amount);
+
+                db.Entry(vendorPackageItem).State = EntityState.Modified;
+                db.SaveChanges();
+
                 TempData["display"] = "You have successfully added an item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index",new{id = vendorPackageItem.VendorPackageId});
@@ -118,6 +125,13 @@ namespace MyEventPlan.Controllers.VendorPackage
                 }
                 db.Entry(vendorPackageItem).State = EntityState.Modified;
                 db.SaveChanges();
+
+                var package = db.VendorPackages.Find(vendorPackageItem.VendorPackageId);
+                if (package != null) package.Amount = db.VendorPackageItems.Sum(m => m.Amount);
+
+                db.Entry(vendorPackageItem).State = EntityState.Modified;
+                db.SaveChanges();
+
                 TempData["display"] = "You have successfully modified the item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -148,6 +162,12 @@ namespace MyEventPlan.Controllers.VendorPackage
             VendorPackageItem vendorPackageItem = db.VendorPackageItems.Find(id);
             db.VendorPackageItems.Remove(vendorPackageItem);
             db.SaveChanges();
+            var package = db.VendorPackages.Find(vendorPackageItem.VendorPackageId);
+            if (package != null) package.Amount = (db.VendorPackageItems.Sum(m => m.Amount) - vendorPackageItem.Amount);
+
+            db.Entry(vendorPackageItem).State = EntityState.Modified;
+            db.SaveChanges();
+
             TempData["display"] = "You have successfully deleted the item!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");

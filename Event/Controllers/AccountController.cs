@@ -49,57 +49,8 @@ namespace MyEventPlan.Controllers
             private set { _userManager = value; }
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        // GET: EventPlanners/Invoice
-        public ActionResult Invoice(long id)
-        {
-            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var selectedPackage = _dbd.EventPlannerPackages.Find(id);
-            var subscriptionInvoice = new SubscriptionInvoice();
-
-            //random number
-            var generator = new Random();
-            var randomNumber = generator.Next(0, 1000000).ToString("D6");
-
-            if (loggedinuser != null)
-            {
-                subscriptionInvoice.AppUserId = loggedinuser.AppUserId;
-                if (loggedinuser.EventPlannerId != null)
-                    subscriptionInvoice.EventPlannerId = (long) loggedinuser.EventPlannerId;
-                subscriptionInvoice.DateCreated = DateTime.Now;
-                subscriptionInvoice.DateLastModified = DateTime.Now;
-                subscriptionInvoice.CreatedBy = loggedinuser.AppUserId;
-                subscriptionInvoice.LastModifiedBy = loggedinuser.AppUserId;
-            }
-            subscriptionInvoice.InvoiceNumber = "#" + randomNumber;
-            if (selectedPackage != null)
-            {
-                subscriptionInvoice.PackageId = selectedPackage.EventPlannerPackageId;
-
-                Session["package"] = selectedPackage;
-            }
-            Session["invoice"] = subscriptionInvoice;
-            return View();
-        }
-
-        [HttpGet]
-        [AllowAnonymous]
-        // GET: EventPlanners/Pricing
-        public ActionResult Pricing()
-        {
-            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var packages = _dbd.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
-
-            var packageSubscribed =
-                packages.SingleOrDefault(
-                    n =>
-                        (n.EventPlannerId == loggedinuser.EventPlannerId) &&
-                        (n.Status == PackageStatusEnum.Active.ToString()));
-            if (packageSubscribed != null)
-                Session["subscribe"] = packageSubscribed;
-            return View(packageSubscribed);
-        }
+     
+    
 
         [HttpGet]
         [AllowAnonymous]
@@ -107,7 +58,7 @@ namespace MyEventPlan.Controllers
         public ActionResult ConfirmPayment()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var package = Session["package"] as EventPlannerPackage;
+            var package = Session["package"] as Event.Data.Objects.Entities.EventPlannerPackage;
             var invoice = Session["invoice"] as SubscriptionInvoice;
             var packageToSubscribed = new EventPlannerPackageSetting();
             var packages = _dbd.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
@@ -149,7 +100,7 @@ namespace MyEventPlan.Controllers
                     packageToSubscribed.AllowedEvent = package.MaximumEvents;
                 }
                 //commit package to database
-                _dbf.EventPlannerPackages.Add(packageToSubscribed);
+                _dbf.EventPlannerPackageSettings.Add(packageToSubscribed);
                 _dbf.SaveChanges();
 
                 //commit invoice to database
@@ -182,7 +133,7 @@ namespace MyEventPlan.Controllers
                 packageToSubscribed.EventPlannerPackageId = package.EventPlannerPackageId;
                 packageToSubscribed.AllowedEvent = package.MaximumEvents;
             }
-            _dbf.EventPlannerPackages.Add(packageToSubscribed);
+            _dbf.EventPlannerPackageSettings.Add(packageToSubscribed);
             _dbf.SaveChanges();
             if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
             _dbe.SaveChanges();
@@ -338,7 +289,7 @@ namespace MyEventPlan.Controllers
                         Session["eventplanner"] = eventPlanner;
                     }
                     var packageSubscribed =
-                        _dbe.EventPlannerPackages.SingleOrDefault(
+                        _dbe.EventPlannerPackageSettings.SingleOrDefault(
                             n =>
                                 (n.EventPlannerId == user.EventPlannerId) &&
                                 (n.Status == PackageStatusEnum.Active.ToString()));

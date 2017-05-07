@@ -172,7 +172,7 @@ namespace MyEventPlan.Data.Service.EmailService
         {
             return
                 new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/NewEventPlanner.html")).ReadToEnd()
-                         .Replace("DISPLAYNAME", eventPlanner.Firstname + " "+ eventPlanner.Lastname)
+                         .Replace("DISPLAYNAME", eventPlanner.Name)
                     .Replace("AppUserId", userId.ToString());
         }
 

@@ -53,7 +53,8 @@ namespace MyEventPlan.Controllers.VendorPackage
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorPackageId,Description,PackageName,Amount")] Event.Data.Objects.Entities.VendorPackage vendorPackage)
+        public ActionResult Create([Bind(Include = "VendorPackageId,Description,PackageName,Amount,PackageGrade")]
+        Event.Data.Objects.Entities.VendorPackage vendorPackage,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
@@ -64,6 +65,8 @@ namespace MyEventPlan.Controllers.VendorPackage
                 {
                     vendorPackage.LastModifiedBy = loggedinuser.AppUserId;
                     vendorPackage.CreatedBy = loggedinuser.AppUserId;
+                    vendorPackage.PackageGrade =
+                        typeof(VendorPackageEnum).GetEnumName(int.Parse(collectedValues["PackageGrade"]));
 
                 }
                 else
@@ -71,6 +74,12 @@ namespace MyEventPlan.Controllers.VendorPackage
                     TempData["login"] = "Your session has expired, Login again!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
+                }
+                if (db.VendorPackages.Any(n => n.PackageGrade == vendorPackage.PackageGrade))
+                {
+                    TempData["display"] = "A package already exist with this package grade, Try again!";
+                    TempData["notificationtype"] = NotificationType.Info.ToString();
+                    return RedirectToAction("Index");
                 }
                 db.VendorPackages.Add(vendorPackage);
                 db.SaveChanges();
@@ -102,7 +111,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VendorPackageId,PackageName,Description,Amount,CreatedBy,DateCreated")] Event.Data.Objects.Entities.VendorPackage vendorPackage)
+        public ActionResult Edit([Bind(Include = "VendorPackageId,PackageName,Description,PackageGrade,Amount,CreatedBy,DateCreated")] Event.Data.Objects.Entities.VendorPackage vendorPackage)
         {
             if (ModelState.IsValid)
             {
@@ -123,7 +132,7 @@ namespace MyEventPlan.Controllers.VendorPackage
                 db.SaveChanges();
                 TempData["display"] = "You have successfully modified the vendor pacakge!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { id = vendorPackage.VendorPackageId });
             }
             return View(vendorPackage);
         }

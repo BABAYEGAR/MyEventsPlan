@@ -1,0 +1,206 @@
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@model IEnumerable<Event.Data.Objects.Entities.EventPlannerPackage>
+@{
+    Layout = "../Shared/Layout/_LayoutSubscription.cshtml";
+
+    var dbEvent = new EventDataContext();
+
+    var lowestPackage = Model.SingleOrDefault(n => n.PackageGrade == EventPlannerPackageEnum.Lowest.ToString());
+    var averagePackage = Model.SingleOrDefault(n => n.PackageGrade == EventPlannerPackageEnum.Average.ToString());
+    var highPackage = Model.SingleOrDefault(n => n.PackageGrade == EventPlannerPackageEnum.High.ToString());
+    var highestPackage = Model.SingleOrDefault(n => n.PackageGrade == EventPlannerPackageEnum.Highest.ToString());
+
+    var lowestPackageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == lowestPackage.EventPlannerPackageId);
+    var averagePackageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == averagePackage.EventPlannerPackageId);
+    var highPackageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == highPackage.EventPlannerPackageId);
+    var highestPackageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == highestPackage.EventPlannerPackageId);
+
+    long lowestPackageAmount = 0;
+    long averagePackageAmount = 0;
+    long highPackageAmount = 0;
+    long highestPacakgeAmount = 0;
+
+    if (lowestPackageItems.ToList().Count > 0)
+    {
+        lowestPackageAmount = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == lowestPackage.EventPlannerPackageId).Sum(m => m.Amount);
+    }
+    if (averagePackageItems.ToList().Count > 0)
+    {
+        averagePackageAmount = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == averagePackage.EventPlannerPackageId).Sum(m => m.Amount);
+    }
+    if (highPackageItems.ToList().Count > 0)
+    {
+        highPackageAmount = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == highPackage.EventPlannerPackageId).Sum(m => m.Amount);
+    }
+    if (highestPackageItems.ToList().Count > 0)
+    {
+        highestPacakgeAmount = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == highestPackage.EventPlannerPackageId).Sum(m => m.Amount);
+    }
+}
+
+<div class="row pricing-container">
+    @if (lowestPackage != null)
+    {
+        <div class="col-md-3 pricing-box pricing-box-regualr">
+            <div class="well-box">
+                <h2 class="price-title">@lowestPackage.PackageName</h2>
+                <h1 class="price-plan">
+                    <span class="dollor-sign">$</span>@lowestPackageAmount<span class="permonth">/month</span>
+                </h1>
+                <p>@lowestPackage.Description</p>
+                <a href="@Url.Action("Invoice", "EventPlannerPackages", new {id = lowestPackage.EventPlannerPackageId})" class="btn btn-default btn-sm">Subscribe</a>
+            </div>
+            <ul class="check-circle list-group">
+                @foreach (var item in lowestPackageItems)
+                {
+                    <li class="list-group-item">@item.ItemName</li>
+                }
+            </ul>
+        </div>
+    }
+    @if (averagePackage != null)
+    {
+        <div class="col-md-3 pricing-box pricing-box-regualr">
+            <div class="well-box">
+                <h2 class="price-title">@averagePackage.PackageName</h2>
+                <h1 class="price-plan">
+                    <span class="dollor-sign">$</span>@averagePackageAmount<span class="permonth">/month</span>
+                </h1>
+                <p>
+                    @averagePackage.Description
+                </p>
+                <a href="@Url.Action("Invoice", "EventPlannerPackages", new {id = lowestPackage.EventPlannerPackageId})" class="btn btn-default btn-sm">Subscribe</a>
+            </div>
+            <ul class="check-circle list-group">
+                @foreach (var item in averagePackageItems)
+                {
+                    <li class="list-group-item">@item.ItemName</li>
+                }
+            </ul>
+        </div>
+    }
+    @if (highPackage != null)
+    {
+        <div class="col-md-3 pricing-box pricing-box-top">
+            <div class="well-box">
+                <h2 class="price-title">@highPackage.PackageName</h2>
+                <h1 class="price-plan">
+                    <span class="dollor-sign">$</span>@highPackageAmount<span class="permonth">/month</span>
+                </h1>
+                <p>
+                    @highPackage.Description
+                </p>
+                <a href="@Url.Action("Invoice", "EventPlannerPackages", new {id = lowestPackage.EventPlannerPackageId})" class="btn btn-default btn-sm">Subscribe</a>
+            </div>
+            <ul class="check-circle list-group">
+                @foreach (var item in highPackageItems)
+                {
+                    <li class="list-group-item">@item.ItemName</li>
+                }
+            </ul>
+        </div>
+    }
+    @if (highestPackage != null)
+    {
+        <div class="col-md-3 pricing-box pricing-box-regualr">
+            <div class="well-box">
+                <h2 class="price-title">@highestPackage.PackageName</h2>
+                <h1 class="price-plan">
+                    <span class="dollor-sign">$</span>@highestPacakgeAmount<span class="permonth">/month</span>
+                </h1>
+                <p>
+                    @highestPackage.Description
+                </p>
+                <a href="@Url.Action("Invoice", "EventPlannerPackages", new {id = lowestPackage.EventPlannerPackageId})" class="btn btn-default btn-sm">Subscribe</a>
+            </div>
+            <ul class="check-circle list-group">
+                @foreach (var item in highestPackageItems)
+                {
+                    <li class="list-group-item">@item.ItemName</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+<div></div>
+<div class="section-space80">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-title mb60 text-center">
+                <h1>Do you have a question ?</h1>
+            </div>
+        </div>
+        <div class="col-md-6 question-block">
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> Which payment methods are supported?
+                </h2>
+                <p>Sed lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam sollicitudin ultriciesleo non viverra neque laoreet amazin consectetur nisl sedblandit turpis enimac urabitur.</p>
+            </div>
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> What uisque ulrices eficiturn interdum justo?
+                </h2>
+                <p>Sed lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam sollicitudin ultriciesleo non viverra neque laoreet amazin consectetur nisl sedblandit turpis enimac urabitur.</p>
+            </div>
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> How ullam diissim nisiege luctus anteui?
+                </h2>
+                <p>Mauris metus leoelemetum condimentum tellus velornare dictum ligula uisque vestibulum molestieerat euleifend turpis fermentum quisras offer massaelit potentiorbi rhoncus pellen tesque exanibus. </p>
+            </div>
+        </div>
+        <div class="col-md-6 question-block">
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> Can I cancel or refund my subscription?
+                </h2>
+                <p>Phasellus quislandit velitorbi aliquet vulputate sagittis usce lobortis velsit amet facilisis imperdiet Integer lacinia sodales eratonec dignissim felisa duivulputat a triiqu nullafelis rhoncus.</p>
+            </div>
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> Why tibulum consectetur lorem sagittis?
+                </h2>
+                <p>Aenean varius ornare diamquis scelerisque. umsociis natoque penatibus etmagnis disarturientsitamet augue suscipit utfringilla velit sollicitudin In velest inturpis one sagittis interdu.</p>
+            </div>
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> Why sociis natoque magnis diaturient montes?
+                </h2>
+                <p>Lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam interdum libero utfringilla cursus tortor magna consectetur nisl sedblandit turpis urabitur.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="well-box feature-left">
+            <div class="feature-icon">
+                <i class="icon-love-letter icon-size-60 icon-default"></i>
+            </div>
+            <div class="feature-content">
+                <h3>Have questions? Contact us at</h3>
+                <p>
+                    We're here to help, 24 hours a day, 7 days a week utfrit inturpis one sagittis interdu.<strong>
+                        <a href="#"> support@weddingvendor.com</a>
+                    </strong>
+                </p>
+            </div>
+            <p></p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="well-box feature-left">
+            <div class="feature-icon">
+                <i class="icon-heart-shaped-balloons icon-size-60 icon-default"></i>
+            </div>
+            <div class=" feature-content">
+                <h3>Want to know how it works ?</h3>
+                <p>
+                    Lacinia lectus sedurna luctus interdumras commodo pro utfringilla cursus tortor magna consectetur nisl sedblandit turpis <a href="#">Go to How it works.</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

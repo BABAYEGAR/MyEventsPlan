@@ -233,6 +233,50 @@
     <Compile Include="Migrations\201705061428559_migrate36.Designer.cs">
       <DependentUpon>201705061428559_migrate36.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705061929492_migrate37.cs" />
+    <Compile Include="Migrations\201705061929492_migrate37.Designer.cs">
+      <DependentUpon>201705061929492_migrate37.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705062037095_migrate38.cs" />
+    <Compile Include="Migrations\201705062037095_migrate38.Designer.cs">
+      <DependentUpon>201705062037095_migrate38.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705062133333_migrate39.cs" />
+    <Compile Include="Migrations\201705062133333_migrate39.Designer.cs">
+      <DependentUpon>201705062133333_migrate39.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705062149061_migrate40.cs" />
+    <Compile Include="Migrations\201705062149061_migrate40.Designer.cs">
+      <DependentUpon>201705062149061_migrate40.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705062156571_migrate41.cs" />
+    <Compile Include="Migrations\201705062156571_migrate41.Designer.cs">
+      <DependentUpon>201705062156571_migrate41.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705062206325_migrate42.cs" />
+    <Compile Include="Migrations\201705062206325_migrate42.Designer.cs">
+      <DependentUpon>201705062206325_migrate42.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705062220060_migrate43.cs" />
+    <Compile Include="Migrations\201705062220060_migrate43.Designer.cs">
+      <DependentUpon>201705062220060_migrate43.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705062317277_migrate44.cs" />
+    <Compile Include="Migrations\201705062317277_migrate44.Designer.cs">
+      <DependentUpon>201705062317277_migrate44.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705062322421_migrate45.cs" />
+    <Compile Include="Migrations\201705062322421_migrate45.Designer.cs">
+      <DependentUpon>201705062322421_migrate45.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705070004533_migrate46.cs" />
+    <Compile Include="Migrations\201705070004533_migrate46.Designer.cs">
+      <DependentUpon>201705070004533_migrate46.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705070005586_migrate47.cs" />
+    <Compile Include="Migrations\201705070005586_migrate47.Designer.cs">
+      <DependentUpon>201705070005586_migrate47.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -351,6 +395,39 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705061428559_migrate36.resx">
       <DependentUpon>201705061428559_migrate36.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705061929492_migrate37.resx">
+      <DependentUpon>201705061929492_migrate37.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705062037095_migrate38.resx">
+      <DependentUpon>201705062037095_migrate38.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705062133333_migrate39.resx">
+      <DependentUpon>201705062133333_migrate39.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705062149061_migrate40.resx">
+      <DependentUpon>201705062149061_migrate40.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705062156571_migrate41.resx">
+      <DependentUpon>201705062156571_migrate41.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705062206325_migrate42.resx">
+      <DependentUpon>201705062206325_migrate42.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705062220060_migrate43.resx">
+      <DependentUpon>201705062220060_migrate43.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705062317277_migrate44.resx">
+      <DependentUpon>201705062317277_migrate44.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705062322421_migrate45.resx">
+      <DependentUpon>201705062322421_migrate45.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705070004533_migrate46.resx">
+      <DependentUpon>201705070004533_migrate46.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705070005586_migrate47.resx">
+      <DependentUpon>201705070005586_migrate47.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

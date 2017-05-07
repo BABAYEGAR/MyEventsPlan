@@ -212,6 +212,9 @@
     <Compile Include="Controllers\EventManagement\NotesController.cs" />
     <Compile Include="Controllers\EventManagement\StaffsController.cs" />
     <Compile Include="Controllers\EventManagement\TasksController.cs" />
+    <Compile Include="Controllers\EventPlannerPackage\EventPlannerPackageItemsController.cs" />
+    <Compile Include="Controllers\EventPlannerPackage\EventPlannerPackagesController.cs" />
+    <Compile Include="Controllers\EventPlannerPackage\EventPlannerPackageSettingsController.cs" />
     <Compile Include="Controllers\FinancialManagement\InvoiceItemsController.cs" />
     <Compile Include="Controllers\FinancialManagement\InvoicePaymentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -228,13 +231,12 @@
     <Compile Include="Controllers\ProspectManagement\ProspectsController.cs" />
     <Compile Include="Controllers\ResourceManagement\ResourcesController.cs" />
     <Compile Include="Controllers\RoleManagement\RolesController.cs" />
-    <Compile Include="Controllers\SystemManagement\EventPlannerPackagesController.cs" />
-    <Compile Include="Controllers\SystemManagement\PackagesController.cs" />
     <Compile Include="Controllers\VendorManagement\LocationsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorsController.cs" />
     <Compile Include="Controllers\VendorManagement\VendorServicesController.cs" />
     <Compile Include="Controllers\VendorPackage\VendorPackageItemsController.cs" />
     <Compile Include="Controllers\VendorPackage\VendorPackagesController.cs" />
+    <Compile Include="Controllers\VendorPackage\VendorPackageSettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1545,11 +1547,6 @@
     <Content Include="Views\Invoices\Index.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreateInvoiceModal.cshtml" />
     <Content Include="Views\Shared\EventPlanning\EditInvoiceModal.cshtml" />
-    <Content Include="Views\Packages\Create.cshtml" />
-    <Content Include="Views\Packages\Delete.cshtml" />
-    <Content Include="Views\Packages\Details.cshtml" />
-    <Content Include="Views\Packages\Edit.cshtml" />
-    <Content Include="Views\Packages\Index.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreatePackageModal.cshtml" />
     <Content Include="Views\Shared\EventPlanning\EditPackageModal.cshtml" />
     <Content Include="Views\InvoiceItems\Create.cshtml" />
@@ -1611,7 +1608,7 @@
     <Content Include="Views\EventPlannerPackages\Edit.cshtml" />
     <Content Include="Views\EventPlannerPackages\Index.cshtml" />
     <Content Include="Views\Account\Pricing.cshtml" />
-    <Content Include="Views\Account\Invoice.cshtml" />
+    <Content Include="Views\EventPlannerPackages\Invoice.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialMaterialSideBar.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialMaterialNavBar.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialMaterialFooter.cshtml" />
@@ -1649,6 +1646,26 @@
     <Content Include="Views\Shared\AppManagement\EditVendorPackageItemModal.cshtml" />
     <Content Include="Views\Shared\AppManagement\EditVendorPackageModal.cshtml" />
     <Content Include="Views\VendorPackages\Pricing.cshtml" />
+    <Content Include="Views\VendorPackageSettings\Create.cshtml" />
+    <Content Include="Views\VendorPackageSettings\Delete.cshtml" />
+    <Content Include="Views\VendorPackageSettings\Details.cshtml" />
+    <Content Include="Views\VendorPackageSettings\Edit.cshtml" />
+    <Content Include="Views\VendorPackageSettings\Index.cshtml" />
+    <Content Include="Views\EventPlannerPackageItems\Create.cshtml" />
+    <Content Include="Views\EventPlannerPackageItems\Delete.cshtml" />
+    <Content Include="Views\EventPlannerPackageItems\Details.cshtml" />
+    <Content Include="Views\EventPlannerPackageItems\Edit.cshtml" />
+    <Content Include="Views\EventPlannerPackageItems\Index.cshtml" />
+    <Content Include="Views\EventPlannerPackageSettings\Create.cshtml" />
+    <Content Include="Views\EventPlannerPackageSettings\Delete.cshtml" />
+    <Content Include="Views\EventPlannerPackageSettings\Details.cshtml" />
+    <Content Include="Views\EventPlannerPackageSettings\Edit.cshtml" />
+    <Content Include="Views\EventPlannerPackageSettings\Index.cshtml" />
+    <Content Include="Views\Shared\AppManagement\CreateEventPlannerPackageModal.cshtml" />
+    <Content Include="Views\Shared\AppManagement\EditEventPlannerPackageModal.cshtml" />
+    <Content Include="Views\Shared\AppManagement\CreateEventPlannerPackageItemModal.cshtml" />
+    <Content Include="Views\Shared\AppManagement\EditEventPlannerPackageItemModal.cshtml" />
+    <Content Include="Views\EventPlannerPackages\Pricing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

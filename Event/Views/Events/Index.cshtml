@@ -5,7 +5,7 @@
     ViewBag.TableHeader = "My Events";
     ViewBag.TableSubHeader = "List of all my events";
       Layout = "../Shared/Layout/_LayoutTable.cshtml";
-    var packageSubscribed = Session["subscribe"] as EventPlannerPackage;
+    var packageSubscribed = Session["subscribe"] as EventPlannerPackageSetting;
     var events = new Event();
 }
 @section add {
@@ -39,7 +39,7 @@
     else
     {
         <div class="alert alert-info" style="margin-left: 12px;">
-            Your Subscription has been exhausted.. Buy a new subscription by clicking <a href="@Url.Action("Pricing", "Account")"> here</a>
+            Your Subscription has been exhausted.. Buy a new subscription by clicking <a href="@Url.Action("Pricing", "EventPlannerPackages")"> here</a>
         </div>
     }
 }

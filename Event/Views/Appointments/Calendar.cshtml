@@ -5,7 +5,7 @@
     ViewBag.Title = "Dashboard";
     ViewBag.Header = "Calendar";
     ViewBag.SubHeader = "Appointment Calendar";
-    Layout = "~/Views/Shared/_LayoutCalendar.cshtml";
+    Layout = "~/Views/Shared/Layout/_LayoutCalendar.cshtml";
 
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 
@@ -35,7 +35,7 @@
                 <h4 class="modal-title" id="myModalLabel">Update Event</h4>
             </div>
             @{
-                Html.RenderPartial("UpdateCalendarAppointment", Model);
+                Html.RenderPartial("EventPlanning/UpdateCalendarAppointment", Model);
             }
         </div>
     </div>
@@ -50,7 +50,7 @@
                 <h4 class="modal-title" id="myModalLabel1">Create New Appointment</h4>
             </div>
             @{
-                Html.RenderPartial("CreateCalendarAppointment", Model);
+                Html.RenderPartial("EventPlanning/CreateCalendarAppointment", Model);
             }
         </div>
     </div>

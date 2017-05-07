@@ -2,157 +2,177 @@
 @using MyEventPlan.Data.Service.Enum
 @model IEnumerable<Event.Data.Objects.Entities.VendorPackage>
 @{
+    Layout = "../Shared/Layout/_LayoutSubscription.cshtml";
+
     var dbEvent = new EventDataContext();
 
-    var silverPackage = Model.SingleOrDefault(n => n.PackageName == VendorPackageEnum.Silver.ToString());
-    var goldPackage = Model.SingleOrDefault(n => n.PackageName == VendorPackageEnum.Gold.ToString());
-    var platinumPackage = Model.SingleOrDefault(n => n.PackageName == VendorPackageEnum.Platinum.ToString());
+    var basicPackage = Model.SingleOrDefault(n => n.PackageGrade == VendorPackageEnum.Basic.ToString());
+    var deluxePackage = Model.SingleOrDefault(n => n.PackageGrade == VendorPackageEnum.Deluxe.ToString());
+    var proPackage = Model.SingleOrDefault(n => n.PackageGrade == VendorPackageEnum.Professional.ToString());
 
-    var silverPacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == silverPackage.VendorPackageId);
-    var goldPacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == goldPackage.VendorPackageId);
-    var platinumPacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == platinumPackage.VendorPackageId);
+    var basicPacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == basicPackage.VendorPackageId).ToList();
+    var deluxePacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == deluxePackage.VendorPackageId).ToList();
+    var proPacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == proPackage.VendorPackageId).ToList();
+
+    long basicPacakgeAmount = 0;
+    long deluxePacakgeAmount = 0;
+    long proPacakgeAmount = 0;
+
+    if (basicPacakgeItems.Count > 0)
+    {
+        basicPacakgeAmount = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == basicPackage.VendorPackageId).Sum(m => m.Amount);
+    }
+    if (deluxePacakgeItems.Count > 0)
+    {
+        deluxePacakgeAmount = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == deluxePackage.VendorPackageId).Sum(m => m.Amount);
+    }
+    if (proPacakgeItems.Count > 0)
+    {
+        proPacakgeAmount = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == proPackage.VendorPackageId).Sum(m => m.Amount);
+    }
 }
-@if (silverPackage != null)
-{
-    <div class="row pricing-container">
+
+<div class="row pricing-container">
+    @if (basicPackage != null)
+    {
         <div class="col-md-4 pricing-box pricing-box-regualr">
             <div class="well-box">
-                <h2 class="price-title">@silverPackage.PackageName</h2>
+                <h2 class="price-title">@basicPackage.PackageName</h2>
                 <h1 class="price-plan">
-                    <span class="dollor-sign">$</span>@silverPackage.Amount<span class="permonth">/month</span>
+                    <span class="dollor-sign">$</span>@basicPacakgeAmount<span class="permonth">/month</span>
                 </h1>
-                <p>@silverPackage.Description</p>
-                <a href="@Url.Action("Register","Vendors",new{id = silverPackage.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
+                <p>@basicPackage.Description</p>
+                <a href="@Url.Action("Register", "Vendors", new {id = basicPackage.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
             </div>
             <ul class="check-circle list-group">
-                @foreach (var item in silverPacakgeItems)
+                @foreach (var item in basicPacakgeItems)
                 {
                     <li class="list-group-item">@item.ItemName</li>
                 }
             </ul>
         </div>
-        }
-        @if (goldPackage != null)
-        {
-            <div class="col-md-4 pricing-box pricing-box-top">
-                <div class="well-box">
-                    <h2 class="price-title">@goldPackage.PackageName</h2>
-                    <h1 class="price-plan">
-                        <span class="dollor-sign">$</span>@goldPackage.Amount<span class="permonth">/month</span>
-                    </h1>
-                    <p>
-                       @goldPackage.Description
-                    </p>
-                    <a href="@Url.Action("Register","Vendors",new{id = goldPackage.VendorPackageId})" class="btn btn-primary btn-sm">Sign Up</a>
-                </div>
-                <ul class="check-circle list-group">
-                    @foreach (var item in goldPacakgeItems)
-                    {
-                        <li class="list-group-item">@item.ItemName</li>
-                    }
-                </ul>
+    }
+    @if (deluxePackage != null)
+    {
+        <div class="col-md-4 pricing-box pricing-box-top">
+            <div class="well-box">
+                <h2 class="price-title">@deluxePackage.PackageName</h2>
+                <h1 class="price-plan">
+                    <span class="dollor-sign">$</span>@deluxePacakgeAmount<span class="permonth">/month</span>
+                </h1>
+                <p>
+                    @deluxePackage.Description
+                </p>
+                <a href="@Url.Action("Register", "Vendors", new {id = deluxePackage.VendorPackageId})" class="btn btn-primary btn-sm">Sign Up</a>
             </div>
-        }
-        @if (platinumPackage != null)
-        {
-            <div class="col-md-4 pricing-box pricing-box-regualr">
-                <div class="well-box">
-                    <h2 class="price-title">@platinumPackage.PackageName</h2>
-                    <h1 class="price-plan">
-                        <span class="dollor-sign">$</span>@platinumPackage.Amount<span class="permonth">/month</span>
-                    </h1>
-                    <p>
-                        @platinumPackage.Description
-                    </p>
-                    <a href="@Url.Action("Register","Vendors",new{id = platinumPackage.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
-                </div>
-                <ul class="check-circle list-group">
-                    @foreach (var item in platinumPacakgeItems)
-                    {
-                        <li class="list-group-item">@item.ItemName</li>
-                    }
-                </ul>
-            </div>
-        }
-    </div>
-    <div></div>
-    <div class="section-space80">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-title mb60 text-center">
-                    <h1>Do you have a question ?</h1>
-                </div>
-            </div>
-            <div class="col-md-6 question-block">
-                <div class="question-answer">
-                    <h2>
-                        <span class="question-sign">Q</span> Which payment methods are supported?
-                    </h2>
-                    <p>Sed lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam sollicitudin ultriciesleo non viverra neque laoreet amazin consectetur nisl sedblandit turpis enimac urabitur.</p>
-                </div>
-                <div class="question-answer">
-                    <h2>
-                        <span class="question-sign">Q</span> What uisque ulrices eficiturn interdum justo?
-                    </h2>
-                    <p>Sed lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam sollicitudin ultriciesleo non viverra neque laoreet amazin consectetur nisl sedblandit turpis enimac urabitur.</p>
-                </div>
-                <div class="question-answer">
-                    <h2>
-                        <span class="question-sign">Q</span> How ullam diissim nisiege luctus anteui?
-                    </h2>
-                    <p>Mauris metus leoelemetum condimentum tellus velornare dictum ligula uisque vestibulum molestieerat euleifend turpis fermentum quisras offer massaelit potentiorbi rhoncus pellen tesque exanibus. </p>
-                </div>
-            </div>
-            <div class="col-md-6 question-block">
-                <div class="question-answer">
-                    <h2>
-                        <span class="question-sign">Q</span> Can I cancel or refund my subscription?
-                    </h2>
-                    <p>Phasellus quislandit velitorbi aliquet vulputate sagittis usce lobortis velsit amet facilisis imperdiet Integer lacinia sodales eratonec dignissim felisa duivulputat a triiqu nullafelis rhoncus.</p>
-                </div>
-                <div class="question-answer">
-                    <h2>
-                        <span class="question-sign">Q</span> Why tibulum consectetur lorem sagittis?
-                    </h2>
-                    <p>Aenean varius ornare diamquis scelerisque. umsociis natoque penatibus etmagnis disarturientsitamet augue suscipit utfringilla velit sollicitudin In velest inturpis one sagittis interdu.</p>
-                </div>
-                <div class="question-answer">
-                    <h2>
-                        <span class="question-sign">Q</span> Why sociis natoque magnis diaturient montes?
-                    </h2>
-                    <p>Lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam interdum libero utfringilla cursus tortor magna consectetur nisl sedblandit turpis urabitur.</p>
-                </div>
-            </div>
+            <ul class="check-circle list-group">
+                @foreach (var item in deluxePacakgeItems)
+                {
+                    <li class="list-group-item">@item.ItemName</li>
+                }
+            </ul>
         </div>
-    </div>
+    }
+    @if (proPackage != null)
+    {
+        <div class="col-md-4 pricing-box pricing-box-regualr">
+            <div class="well-box">
+                <h2 class="price-title">@proPackage.PackageName</h2>
+                <h1 class="price-plan">
+                    <span class="dollor-sign">$</span>@proPacakgeAmount<span class="permonth">/month</span>
+                </h1>
+                <p>
+                    @proPackage.Description
+                </p>
+                <a href="@Url.Action("Register", "Vendors", new {id = proPackage.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
+            </div>
+            <ul class="check-circle list-group">
+                @foreach (var item in proPacakgeItems)
+                {
+                    <li class="list-group-item">@item.ItemName</li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+<div></div>
+<div class="section-space80">
     <div class="row">
-        <div class="col-md-6">
-            <div class="well-box feature-left">
-                <div class="feature-icon">
-                    <i class="icon-love-letter icon-size-60 icon-default"></i>
-                </div>
-                <div class="feature-content">
-                    <h3>Have questions? Contact us at</h3>
-                    <p>
-                        We're here to help, 24 hours a day, 7 days a week utfrit inturpis one sagittis interdu.<strong>
-                            <a href="#"> support@weddingvendor.com</a>
-                        </strong>
-                    </p>
-                </div>
-                <p></p>
+        <div class="col-md-12">
+            <div class="section-title mb60 text-center">
+                <h1>Do you have a question ?</h1>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="well-box feature-left">
-                <div class="feature-icon">
-                    <i class="icon-heart-shaped-balloons icon-size-60 icon-default"></i>
-                </div>
-                <div class=" feature-content">
-                    <h3>Want to know how it works ?</h3>
-                    <p>
-                        Lacinia lectus sedurna luctus interdumras commodo pro utfringilla cursus tortor magna consectetur nisl sedblandit turpis <a href="#">Go to How it works.</a>
-                    </p>
-                </div>
+        <div class="col-md-6 question-block">
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> Which payment methods are supported?
+                </h2>
+                <p>Sed lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam sollicitudin ultriciesleo non viverra neque laoreet amazin consectetur nisl sedblandit turpis enimac urabitur.</p>
+            </div>
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> What uisque ulrices eficiturn interdum justo?
+                </h2>
+                <p>Sed lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam sollicitudin ultriciesleo non viverra neque laoreet amazin consectetur nisl sedblandit turpis enimac urabitur.</p>
+            </div>
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> How ullam diissim nisiege luctus anteui?
+                </h2>
+                <p>Mauris metus leoelemetum condimentum tellus velornare dictum ligula uisque vestibulum molestieerat euleifend turpis fermentum quisras offer massaelit potentiorbi rhoncus pellen tesque exanibus. </p>
+            </div>
+        </div>
+        <div class="col-md-6 question-block">
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> Can I cancel or refund my subscription?
+                </h2>
+                <p>Phasellus quislandit velitorbi aliquet vulputate sagittis usce lobortis velsit amet facilisis imperdiet Integer lacinia sodales eratonec dignissim felisa duivulputat a triiqu nullafelis rhoncus.</p>
+            </div>
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> Why tibulum consectetur lorem sagittis?
+                </h2>
+                <p>Aenean varius ornare diamquis scelerisque. umsociis natoque penatibus etmagnis disarturientsitamet augue suscipit utfringilla velit sollicitudin In velest inturpis one sagittis interdu.</p>
+            </div>
+            <div class="question-answer">
+                <h2>
+                    <span class="question-sign">Q</span> Why sociis natoque magnis diaturient montes?
+                </h2>
+                <p>Lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam interdum libero utfringilla cursus tortor magna consectetur nisl sedblandit turpis urabitur.</p>
             </div>
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="well-box feature-left">
+            <div class="feature-icon">
+                <i class="icon-love-letter icon-size-60 icon-default"></i>
+            </div>
+            <div class="feature-content">
+                <h3>Have questions? Contact us at</h3>
+                <p>
+                    We're here to help, 24 hours a day, 7 days a week utfrit inturpis one sagittis interdu.<strong>
+                        <a href="#"> support@weddingvendor.com</a>
+                    </strong>
+                </p>
+            </div>
+            <p></p>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="well-box feature-left">
+            <div class="feature-icon">
+                <i class="icon-heart-shaped-balloons icon-size-60 icon-default"></i>
+            </div>
+            <div class=" feature-content">
+                <h3>Want to know how it works ?</h3>
+                <p>
+                    Lacinia lectus sedurna luctus interdumras commodo pro utfringilla cursus tortor magna consectetur nisl sedblandit turpis <a href="#">Go to How it works.</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

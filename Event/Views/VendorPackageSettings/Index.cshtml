@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Event.Data.Objects.Entities.VendorPackageSetting>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "Subscriptions";
+    ViewBag.TableSubHeader = "List of all Vendors Subscrition";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
+}
+<div class="card-content table-responsive">
+    <table class="table table-hover">
+        <thead class="text-primary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppUser.DisplayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vendor.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VendorPackage.PackageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th>Action</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppUser.DisplayName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vendor.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VendorPackage.PackageName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "Details", new {id = item.VendorPackageSettingId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
+
+             
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

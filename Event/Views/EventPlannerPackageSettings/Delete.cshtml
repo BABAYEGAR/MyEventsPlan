@@ -1,0 +1,104 @@
+﻿@model Event.Data.Objects.Entities.EventPlannerPackageSetting
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EventPlannerPackageSetting</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppUser.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AppUser.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventPlanner.Firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EventPlannerPackage.PackageName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventPlannerPackage.PackageName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubscribedEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubscribedEvent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AllowedEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AllowedEvent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModifiedBy)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

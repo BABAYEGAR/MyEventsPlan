@@ -23,7 +23,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<AppUser> AppUsers { get; set; }
         public virtual DbSet<SubscriptionInvoice> SubscriptionInvoices { get; set; }
         public virtual DbSet<EventPlanner> EventPlanner { get; set; }
-        public virtual DbSet<EventPlannerPackageSetting> EventPlannerPackages { get; set; }
+        public virtual DbSet<EventPlannerPackageSetting> EventPlannerPackageSettings { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

@@ -8,8 +8,8 @@ namespace MyEventPlan.Data.Service.Enum
 {
     public enum VendorPackageEnum
     {
-        Silver,
-        Gold,
-        Platinum
+        Basic,
+        Deluxe,
+        Professional
     }
 }

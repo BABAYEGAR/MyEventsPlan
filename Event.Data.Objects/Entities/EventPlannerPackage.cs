@@ -11,9 +11,11 @@ namespace Event.Data.Objects.Entities
         [DisplayName("Package Name")]
         public string PackageName { get; set; }
         [Required]
-        [DisplayName("Package Category")]
-        public string PackageCategory { get; set; }
-        public long Amount { get; set; }
+        public string Description { get; set; }
+        [Required]
+        [DisplayName("Package Grade")]
+        public string PackageGrade { get; set; }
+        public long? Amount { get; set; }
         [Required]
         [DisplayName("Maximum Number Of Events")]
         public long MaximumEvents { get; set; }

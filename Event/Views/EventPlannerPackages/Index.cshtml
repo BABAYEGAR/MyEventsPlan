@@ -1,76 +1,72 @@
-﻿@model List<Event.Data.Objects.Entities.EventPlannerPackageSetting>
-
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<EventPlannerPackage>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "Event Planner Package";
+    ViewBag.TableSubHeader = "List of all Event Planner Packages";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    var package = new EventPlannerPackage();
 }
+@section add {
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary  fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Package
+    </button>
 
-<h2>Index</h2>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new Package</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("AppManagement/CreateEventPlannerPackageModal", package);
+                    }
+                </div>
+            </div>
+        </div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Package.PackageName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SubscribedEvent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AllowedEvent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </th>
-        <th></th>
-    </tr>
+    </div>
+}
+<div class="card-content table-responsive">
+    <table class="table table-hover">
+        <thead class="text-primary">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PackageName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Amount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaximumEvents)
+                </th>
+                <th></th>
+            </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventPlanner.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Package.PackageName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SubscribedEvent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AllowedEvent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateCreated)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateLastModified)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastModifiedBy)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {id = item.EventPlannerPackageId}) |
-                @Html.ActionLink("Details", "Details", new {id = item.EventPlannerPackageId}) |
-                @Html.ActionLink("Delete", "Delete", new {id = item.EventPlannerPackageId})
-            </td>
-        </tr>
-    }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PackageName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaximumEvents)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Open", "Details", new { id = item.EventPlannerPackageId }, new { @class = "btn btn-default btn-lg fa fa-folder-open" })
 
-</table>
+                    </td>
+                </tr>
+            }
+
+    </table>
+</div>

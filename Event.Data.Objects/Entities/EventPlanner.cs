@@ -11,11 +11,7 @@ namespace Event.Data.Objects.Entities
         [Required]
         [MaxLength(100, ErrorMessage = "This field is does not support more than 100 characters")]
         [RegularExpression("^[a-zA-Z ]*$")]
-        public string Firstname { get; set; }
-        [Required]
-        [MaxLength(100, ErrorMessage = "This field is does not support more than 100 characters")]
-        [RegularExpression("^[a-zA-Z ]*$")]
-        public string Lastname { get; set; }
+        public string Name { get; set; }
         [Required]
         [MaxLength(100, ErrorMessage = "This field is does not support more than 100 characters")]
         [EmailAddress]
@@ -25,10 +21,6 @@ namespace Event.Data.Objects.Entities
        
         public string Mobile { get; set; }
         public string Type { get; set; }
-        [DisplayName("Business Name")]
-        public string BusinessName { get; set; }
-        [DisplayName("Business Contact")]
-        public string BusinessContact { get; set; }
         [Required]
         [PasswordPropertyText]
         [Compare("ConfirmPassword")]
@@ -59,7 +51,7 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<Resource> Resources { get; set; }
         public IEnumerable<Client> Clients { get; set; }
         public IEnumerable<Invoice> Invoices { get; set; }
-        public IEnumerable<EventPlannerPackageSetting> EventPlannerPackage { get; set; }
+        public IEnumerable<EventPlannerPackageSetting> EventPlannerPackageSettings { get; set; }
         public IEnumerable<SubscriptionInvoice> SubscriptionInvoices { get; set; }
     }
 }

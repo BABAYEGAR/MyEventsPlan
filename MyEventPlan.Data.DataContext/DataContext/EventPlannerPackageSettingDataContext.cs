@@ -19,9 +19,10 @@ namespace MyEventPlan.Data.DataContext.DataContext
         // Add a DbSet for each entity type that you want to include in your model. For more information 
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
         public virtual DbSet<Event.Data.Objects.Entities.Event> Event { get; set; }
-        public virtual DbSet<EventPlannerPackageSetting> EventPlannerPackages { get; set; }
+        public virtual DbSet<EventPlannerPackage> EventPlannerPackages { get; set; }
         public virtual DbSet<EventPlanner> EventPlanner { get; set; }
         public virtual DbSet<EventPlannerPackageSetting> EventPlannerPackageSettings { get; set; }
+        public virtual DbSet<AppUser> AppUsers { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

@@ -1,82 +1,90 @@
-﻿@model Event.Data.Objects.Entities.EventPlannerPackageSetting
-
+﻿@model Event.Data.Objects.Entities.EventPlannerPackage
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "View";
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
+    ViewBag.TableHeader = " Vendor Package";
+    ViewBag.TableSubHeader = "Details of Vendor Package";
 }
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.PackageName)
+    </dt>
 
-<h2>Details</h2>
+    <dd>
+        @Html.DisplayFor(model => model.PackageName)
+    </dd>
 
-<div>
-    <h4>EventPlannerPackage</h4>
-    <hr/>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
-        </dt>
+    <dt>
+        @Html.DisplayNameFor(model => model.Amount)
+    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.EventPlanner.Firstname)
-        </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Amount)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.MaximumEvents)
+    </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Package.PackageName)
-        </dt>
+    <dd>
+        @Html.DisplayFor(model => model.MaximumEvents)
+    </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Package.PackageName)
-        </dd>
+</dl>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary  fa fa-pencil" data-toggle="modal" data-target="#myModal">
+    Edit Staff
+</button>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SubscribedEvent)
-        </dt>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit Package</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("AppManagement/EditEventPlannerPackageModal", Model);
+                }
+            </div>
+        </div>
+    </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.SubscribedEvent)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AllowedEvent)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AllowedEvent)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastModifiedBy)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new {id = Model.EventPlannerPackageId}) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@Html.ActionLink("Package Items", "Index","EventPlannerPackageItems", new { id = Model.EventPlannerPackageId },new{@class = "btn btn-default fa fa-list"}) 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger  fa fa-trash" data-toggle="modal" data-target="#myModal1">
+    Delete
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete Package</h4>
+            </div>@using (Html.BeginForm("Delete", "EventPlannerPackages", new { id = Model.EventPlannerPackageId }))
+                  {
+                      <div class="modal-body">
+
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to delete the package?
+                          </p>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash" />
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
+                      </div>
+                  }
+        </div>
+    </div>
+
+</div>

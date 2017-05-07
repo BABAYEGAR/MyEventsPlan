@@ -50,6 +50,7 @@ namespace Event.Data.Objects.Entities
         public  IEnumerable<Setting> Settings { get; set; }
         public IEnumerable<SubscriptionInvoice> SubscriptionInvoices { get; set; }
         public IEnumerable<VendorPackageSetting> VendorPackageSettings { get; set; }
+        public IEnumerable<EventPlannerPackageSetting> EventPlannerPackageSettings { get; set; }
         public string DisplayName
      => Firstname + " " + Lastname;
 

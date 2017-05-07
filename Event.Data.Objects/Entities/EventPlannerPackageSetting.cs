@@ -8,13 +8,13 @@ namespace Event.Data.Objects.Entities
         public string Status { get; set; }
         public long SubscribedEvent { get; set; }
         public long AllowedEvent { get; set; }
-        public long EventPlannerPackageId { get; set; }
+        public long? EventPlannerPackageId { get; set; }
         [ForeignKey("EventPlannerPackageId")]
         public EventPlannerPackage EventPlannerPackage { get; set; }
-        public long EventPlannerId { get; set; }
+        public long? EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public EventPlanner EventPlanner { get; set; }
-        public long AppUserId { get; set; }
+        public long? AppUserId { get; set; }
         [ForeignKey("AppUserId")]
         public AppUser AppUser { get; set; }
     }

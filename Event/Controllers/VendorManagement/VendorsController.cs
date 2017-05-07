@@ -156,11 +156,12 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Register(
             [Bind(
                 Include =
-                    "VendorId,Name,About,Address,Email,MinimumPrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
-            )] Vendor vendor)
+                    "VendorId,Name,About,Address,Email,MinimumPrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
+            )] Vendor vendor,FormCollection collectedValues)
         {
             var role = dbc.Roles.FirstOrDefault(m => m.Name == "Vendor");
-            long? packageId = ViewBag.packageId;
+            long packageId = Convert.ToInt64(collectedValues["packageId"]);
+            var pacakge = dbd.VendorPackages.Find(packageId);
             if (ModelState.IsValid)
             {
                 vendor.DateCreated = DateTime.Now;
@@ -176,8 +177,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                 vendor.EventPlannerId = null;
                 vendor.EventId = null;
 
-                db.Vendors.Add(vendor);
-                db.SaveChanges();
+                Session["vendor"] = vendor;
+            
 
                 //vendor user account details
                 var appUser = new AppUser();
@@ -194,36 +195,54 @@ namespace MyEventPlan.Controllers.VendorManagement
                 appUser.Verified = false;
                 if (role != null) appUser.RoleId = role.RoleId;
                 appUser.Password = new Hashing().HashPassword(vendor.Password);
-                dbc.AppUsers.Add(appUser);
-                dbc.SaveChanges();
+             
 
-
-                var packageSetting = new VendorPackageSetting();
-                packageSetting.AppUserId = appUser.AppUserId;
-                packageSetting.StartDate = DateTime.Now;
-                packageSetting.EndDate = DateTime.Now.AddMonths(1);
-                packageSetting.Status = PackageStatusEnum.Active.ToString();
-                packageSetting.VendorId = vendor.VendorId;
-                if (packageId != null) packageSetting.VendorPackageId = (long) packageId;
-                packageSetting.DateCreated = DateTime.Now;
-                packageSetting.DateLastModified = DateTime.Now;
-                packageSetting.CreatedBy = 1;
-                packageSetting.LastModifiedBy = 1;
-
-                dbd.VendorPackageSetting.Add(packageSetting);
-                dbd.SaveChanges();
-
-                new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
-                TempData["login"] =
-                    "You have successfully registered as a vendor! Verify access in your email to login";
-                TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Login", "Account");
+                Session["vendoruser"] = appUser;
+                var packageSetting = new VendorPackageSetting
+                {
+                    AppUserId = appUser.AppUserId,
+                    StartDate = DateTime.Now,
+                    EndDate = DateTime.Now.AddMonths(1),
+                    Status = PackageStatusEnum.Active.ToString(),
+                    VendorId = vendor.VendorId,
+                    VendorPackageId = (long) packageId,
+                    DateCreated = DateTime.Now,
+                    DateLastModified = DateTime.Now,
+                    CreatedBy = 1,
+                    LastModifiedBy = 1,
+                    Amount = (long) pacakge.Amount
+                };
+                Session["vendorpackage"] = packageSetting;
+                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",vendor.VendorServiceId);
+                ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name",vendor.LocationId);
+                return View(vendor);
             }
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
             ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
             return View(vendor);
         }
 
+        [HttpGet]
+        public ActionResult ConfirmPayment()
+        {
+            var vendor = Session["vendor"] as Vendor;
+            if (vendor != null) db.Vendors.Add(vendor);
+            db.SaveChanges();
+
+            var appUser = Session["vendoruser"] as AppUser;
+            if (appUser != null) dbc.AppUsers.Add(appUser);
+            dbc.SaveChanges();
+
+            var packageSetting = Session["vendorpackage"] as VendorPackageSetting;
+            if (packageSetting != null) dbd.VendorPackageSetting.Add(packageSetting);
+            dbd.SaveChanges();
+
+            new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
+            TempData["login"] =
+                "You have successfully registered as a vendor! Verify access in your email to login";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Login", "Account");
+        }
         // GET: Vendors/Edit/5
         public ActionResult Edit(long? id)
         {

@@ -16,6 +16,7 @@ namespace MyEventPlan.Controllers.EventManagement
     {
         private readonly EventPlannerDataContext db = new EventPlannerDataContext();
         private readonly AppUserDataContext dbc = new AppUserDataContext();
+        private readonly EventDataContext dbd = new EventDataContext();
 
         // GET: EventPlanners
         public ActionResult Index()
@@ -39,6 +40,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Create(string type)
         {
             ViewBag.type = type;
+            ViewBag.LocationId = new SelectList(dbd.Locations, "LocationId", "Name");
             return View();
         }
 
@@ -48,7 +50,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "EventPlannerId,Firstname,Lastname,LocationId,Email,Mobile,BusinessName,BusinessContact,ConfirmPassword,Password")] EventPlanner
+            [Bind(Include = "EventPlannerId,Name,LocationId,Email,Mobile,ConfirmPassword,Password")] EventPlanner
                 eventPlanner, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
@@ -70,8 +72,8 @@ namespace MyEventPlan.Controllers.EventManagement
 
                 appuser.Email = eventPlanner.Email;
                 appuser.Password = new Hashing().HashPassword(eventPlanner.Password);
-                appuser.Firstname = eventPlanner.Firstname;
-                appuser.Lastname = eventPlanner.Lastname;
+                appuser.Firstname = eventPlanner.Name;
+                appuser.Lastname = eventPlanner.Name;
                 appuser.Mobile = eventPlanner.Mobile;
                 appuser.DateCreated = DateTime.Now;
                 appuser.DateLastModified = DateTime.Now;
@@ -97,6 +99,20 @@ namespace MyEventPlan.Controllers.EventManagement
                 dbc.AppUsers.Add(appuser);
                 dbc.SaveChanges();
 
+                var eventPlannerSetting = new EventPlannerPackageSetting();
+                eventPlannerSetting.EventPlannerId = eventPlanner.EventPlannerId;
+                eventPlannerSetting.AppUserId = appuser.AppUserId;
+                eventPlannerSetting.Status = PackageStatusEnum.Active.ToString();
+                eventPlannerSetting.SubscribedEvent = 0;
+                eventPlannerSetting.AllowedEvent = 10;
+                eventPlannerSetting.EventPlannerPackageId = null;
+                eventPlannerSetting.CreatedBy = null;
+                eventPlannerSetting.LastModifiedBy = null;
+                eventPlannerSetting.DateCreated = DateTime.Now;
+                eventPlannerSetting.DateLastModified = DateTime.Now;
+
+                dbd.EventPlannerPackageSettings.Add(eventPlannerSetting);
+                dbd.SaveChanges();
                 new MailerDaemon().NewEventPlanner(eventPlanner, appuser.AppUserId);
                 TempData["login"] = "You have successfully signed up to PlanMyLeave type!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();

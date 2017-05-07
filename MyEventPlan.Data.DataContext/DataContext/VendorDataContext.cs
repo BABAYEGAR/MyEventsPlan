@@ -21,6 +21,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<Event.Data.Objects.Entities.Event> Event { get; set; }
         public virtual DbSet<Vendor> Vendors { get; set; }
         public virtual DbSet<VendorService> VendorService { get; set; }
+        public virtual DbSet<VendorPackageSetting> VendorPackageSetting { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

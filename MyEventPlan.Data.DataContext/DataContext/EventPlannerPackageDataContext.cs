@@ -21,6 +21,7 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<Event.Data.Objects.Entities.Event> Event { get; set; }
         public virtual DbSet<EventPlanner> EventPlanner { get; set; }
         public virtual DbSet<EventPlannerPackage> EventPlannerPackages { get; set; }
+        public virtual DbSet<EventPlannerPackageSetting> EventPlannerPackageSettings { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }

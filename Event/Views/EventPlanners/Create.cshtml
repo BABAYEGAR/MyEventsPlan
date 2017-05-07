@@ -3,86 +3,72 @@
 @{
     ViewBag.Title = "Create";
     ViewBag.Header = "Sign up to MyEventPlanner";
-    Layout = "../Shared/_LayoutOutterForm.cshtml";
+    Layout = "../Shared/Layout/_LayoutOutterForm.cshtml";
     string type = ViewBag.type;
 }
-@using (Html.BeginForm("Create", "EventPlanners", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
-{
-    @Html.AntiForgeryToken()
-    @Html.Hidden("Type", type)
-    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-    <div class="control-group">
-        @Html.LabelFor(model => model.Firstname, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Firstname, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your first name"}})
-            @Html.ValidationMessageFor(model => model.Firstname, "", new {@class = "text-danger"})
-        </div>
-    </div>
+<div class="col-md-12 profile-dashboard">
+    <div class="row">
+        <div class="col-md-12 dashboard-form">
+            <div class="bg-white pinside40 mb30">
+                @using (Html.BeginForm("Create", "EventPlanners", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal row-fluid"}))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("Type", type)
+                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    <h2 class="form-title">Event planner Sign Up<strong> (Begining with 10 days Free Trail) </strong></h2>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, new {@class = "col-md-4 control-label"})
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Name" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, new {@class = "col-md-4 control-label"})
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Valid Email Address" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Mobile, new {@class = "col-md-4 control-label"})
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Mobile, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Valid Mobile Number" } })
+                            @Html.ValidationMessageFor(model => model.Mobile, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                    if (type == EventPlannerTypeEnum.Organization.ToString())
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LocationId, "Location", new {@class = "col-md-4 control-label"})
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(m => m.LocationId, null,"Select Location", new {@class = "form-control input-md"})
+                                @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
+                            </div>
+                        </div>
+                    }
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, new {@class = "col-md-4 control-label"})
+                        <div class="col-md-8">
+                            @Html.PasswordFor(model => model.Password, new {@class = "form-control input-md", placeholder = "Enter your password"})
+                            @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ConfirmPassword, new {@class = "col-md-4 control-label"})
+                        <div class="col-md-8">
+                            @Html.PasswordFor(model => model.ConfirmPassword,new {@class = "form-control input-md", placeholder = "Confirm password"})
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
+                        </div>
+                    </div>
 
-    <div class="control-group">
-        @Html.LabelFor(model => model.Lastname, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Lastname, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your last name"}})
-            @Html.ValidationMessageFor(model => model.Lastname, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.Email, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your email address"}})
-            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.Mobile, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Mobile, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your mobile number"}})
-            @Html.ValidationMessageFor(model => model.Mobile, "", new {@class = "text-danger"})
-        </div>
-    </div>
-    if (type == EventPlannerTypeEnum.Organization.ToString())
-    {
-        <div class="control-group">
-            @Html.LabelFor(model => model.LocationId, "Location", new {@class = "control-label"})
-            <div class="controls">
-                @Html.DropDownListFor(m => m.LocationId, null, new {@class = "span8"})
-                @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <input type="submit" value="Create Account" class="btn btn-primary"/>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
-        <div class="control-group">
-            @Html.LabelFor(model => model.BusinessName, new {@class = "control-label"})
-            <div class="controls">
-                @Html.EditorFor(model => model.BusinessName, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your buisness name"}})
-                @Html.ValidationMessageFor(model => model.BusinessName, "", new {@class = "text-danger"})
-            </div>
-        </div>
-        <div class="control-group">
-            @Html.LabelFor(model => model.BusinessContact, new {@class = "control-label"})
-            <div class="controls">
-                @Html.EditorFor(model => model.BusinessContact, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your business contact"}})
-                @Html.ValidationMessageFor(model => model.BusinessContact, "", new {@class = "text-danger"})
-            </div>
-        </div>
-    }
-    <div class="control-group">
-        @Html.LabelFor(model => model.Password, new {@class = "control-label"})
-        <div class="controls">
-            @Html.PasswordFor(model => model.Password, new {htmlAttributes = new {@class = "span8", placeholder = "Enter your password"}})
-            @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
-        </div>
     </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.ConfirmPassword, new {@class = "control-label"})
-        <div class="controls">
-            @Html.PasswordFor(model => model.ConfirmPassword, new {htmlAttributes = new {@class = "span8", placeholder = "Confirm password"}})
-            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
-        </div>
-    </div>
-
-
-    <div class="control-group">
-        <div class="controls">
-            <input type="submit" value="Sign-Up" class="btn btn-default"/>
-        </div>
-    </div>
-}
+</div>

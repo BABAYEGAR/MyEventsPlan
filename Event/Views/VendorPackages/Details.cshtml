@@ -22,38 +22,6 @@
             @Html.DisplayFor(model => model.Amount)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedBy)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastModifiedBy)
-        </dd>
-
     </dl>
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary  fa fa-pencil" data-toggle="modal" data-target="#myModal">
@@ -94,7 +62,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <h4 class="modal-title" id="myModalLabel1">Delete Package</h4>
-                </div>@using (Html.BeginForm("Delete", "Staffs", new { id = Model.VendorPackageId }))
+                </div>@using (Html.BeginForm("Delete", "VendorPackages", new { id = Model.VendorPackageId }))
                 {
                     <div class="modal-body">
 

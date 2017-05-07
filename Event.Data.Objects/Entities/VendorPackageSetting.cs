@@ -6,6 +6,7 @@ namespace Event.Data.Objects.Entities
     public class VendorPackageSetting : Transport
     {
         public long VendorPackageSettingId { get; set; }
+        public long Amount { get; set; }
         public long VendorPackageId { get; set; }
         [ForeignKey("VendorPackageId")]
         public VendorPackage VendorPackage { get; set; }
