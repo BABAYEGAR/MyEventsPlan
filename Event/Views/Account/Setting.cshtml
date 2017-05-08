@@ -3,7 +3,7 @@
     ViewBag.Title = "View";
     ViewBag.Header = Model.DisplayName;
     ViewBag.SubHeader = "Account Setting";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/Layout/_LayoutForm.cshtml";
 }
 @section links{
     <ol class="breadcrumb">
@@ -20,11 +20,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title" id="myModalLabel">Edit contact</h4>
+                <h4 class="modal-title" id="myModalLabel">Select Background Color</h4>
             </div>
             <div class="modal-body">
                 @{
-                    Html.RenderPartial("ChangeBackgroundColor", Model);
+                    Html.RenderPartial("Account/ChangeBackgroundColor", Model);
                 }
             </div>
         </div>
@@ -115,9 +115,13 @@
                             </h3>
                         </div>
                         <div class="card-footer">
-                            <div class="stats">
-                                <i class="material-icons">credit_card</i> <a href="@Url.Action("Pricing", "Account")">View Account Subscription</a>
-                            </div>
+                            @if (Model.EventPlannerId != null)
+                            {
+                                <div class="stats">
+                                    <i class="material-icons">credit_card</i> <a href="@Url.Action("Pricing", "EventPlannerPackages")">View Account Subscription</a>
+                                </div> 
+                            }
+                       
                         </div>
                     </div>
                 </div>

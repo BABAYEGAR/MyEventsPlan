@@ -49,8 +49,23 @@ namespace MyEventPlan.Controllers
             private set { _userManager = value; }
         }
 
-     
-    
+
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: EventPlanners/Pricing
+        public ActionResult Pricing()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var packages = _dbd.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
+
+            var packageSubscribed =
+                packages.SingleOrDefault(
+                    n =>
+                        (n.EventPlannerId == loggedinuser.EventPlannerId) &&
+                        (n.Status == PackageStatusEnum.Active.ToString()));
+            return View(packageSubscribed);
+        }
+
 
         [HttpGet]
         [AllowAnonymous]

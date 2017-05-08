@@ -195,8 +195,7 @@
             </div>
         }
     </div>
-    <div class="row">
-        @if (role.ManageStaff)
+        if (role.ManageStaff)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -217,7 +216,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageInvoices)
+        if (role.ManageInvoices)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -238,7 +237,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageContacts)
+        if (role.ManageContacts)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -259,7 +258,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageResources)
+        if (role.ManageResources)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -280,9 +279,8 @@
                 </div>
             </div>
         }
-    </div>
-    <div class="row">
-        @if (role.ManageApplicationUser)
+
+        if (role.ManageApplicationUser)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -302,7 +300,7 @@
                     </div>
                 </div>
             </div>
-        }@if (role.ManageRoles)
+        }if (role.ManageRoles)
          {
              <div class="col-lg-3 col-md-6 col-sm-6">
                  <div class="card card-stats">
@@ -323,7 +321,7 @@
                  </div>
              </div>
          }
-        @if (role.ManagePackages)
+        if (role.ManagePackages)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -362,7 +360,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageEventType)
+        if (role.ManageEventType)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -383,10 +381,7 @@
                 </div>
             </div>
         }
-
-    </div>
-    <div class="row">
-        @if (role.ManageVendorServices)
+        if (role.ManageVendorServices)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -407,7 +402,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageLocations)
+        if (role.ManageLocations)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -428,7 +423,7 @@
                 </div>
             </div>
         }
-    </div>
+
 }
 <div class="row">
     <div class="col-lg-6 col-md-12">

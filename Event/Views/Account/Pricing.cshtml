@@ -1,247 +1,66 @@
 ﻿@using Event.Data.Objects.Entities
 @using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
 @model EventPlannerPackageSetting
 @{
     Layout = null;
     var dbd = new EventDataContext();
-    var packages = dbd.EventPlannerPackages;
-    var packageSubscribed = Session["subscribe"] as EventPlannerPackage;
+    var packages = dbd.EventPlannerPackages.ToList();
+    var packageSubscribed = Session["subscribe"] as EventPlannerPackageSetting;
 }
-<style>
-    body {
-        -webkit-backface-visibility: hidden;
-        -webkit-font-smoothing: antialiased;
-        background: #111d27;
-        color: #111;
-        font-size: 16px;
-        font-weight: 300;
-        line-height: 5.6;
-        min-width: 320px;
-        padding: 50px 20px;
-        position: relative;
-    }
 
-    .pricing {
-        border: 1px solid #f0f0f0;
-        color: #777;
-        font-family: 'Lato';
-        font-size: 14px;
-        margin-bottom: 30px;
-        padding-left: 0;
-        text-align: center;
-    }
-
-    .pricing img {
-        display: block;
-        margin: auto;
-        width: 32px;
-    }
-
-    .pricing li:first-child,
-    .pricing li:last-child { padding: 20px 13px; }
-
-    .pricing li {
-        list-style: none;
-        padding: 13px;
-    }
-
-    .pricing li + li { border-top: 1px solid #f0f0f0; }
-
-    .pricing big { font-size: 32px; }
-
-    .pricing h3 {
-        font-size: 36px;
-        margin-bottom: 0;
-    }
-
-    .pricing span {
-        color: #999;
-        font-size: 12px;
-        font-weight: normal;
-    }
-
-    .pricing li:nth-last-child(2) { padding: 30px 13px; }
-
-    .pricing button {
-        background: #aaa;
-        border: none;
-        border-radius: 50px;
-        color: #fff;
-        font-size: 15px;
-        font-weight: bold;
-        margin: auto;
-        opacity: 1;
-        outline: none;
-        padding: 9px 24px;
-        transition: opacity .2s ease;
-        width: auto;
-    }
-
-    .pricing button:hover { opacity: .9; }
-
-    .pricing button:active { box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1); }
-
-    /* pricing color */
-
-    .p-green big,
-    .p-green h3 { color: #4c7737; }
-
-    .p-green button { background: #4c7737; }
-
-    .p-yel big,
-    .p-yel h3 { color: #ffbb42; }
-
-    .p-yel button { background: #ffbb42; }
-
-    .p-red big,
-    .p-red h3 { color: #e13c4c; }
-
-    .p-red button { background: #e13c4c; }
-
-    .p-blue big,
-    .p-blue h3 { color: #3f4bb8; }
-
-    .p-blue button { background: #3f4bb8; }
-</style>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Subscription</title>
-
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
-</head>
-<body>
-<section class="container">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="@Url.Action("Index", "Home")">My Dashboard</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="@Url.Action("Setting", "Account")">
-                Account Setting
-            </a>
-        </li>
-    </ol>
-    <br/>
-    <ol class="breadcrumb">
-        @if ((packages != null) && (packageSubscribed != null))
+<div class="row pricing-container">
+    @foreach (var item in packages)
+    {
+        if (item.PackageGrade == EventPlannerPackageEnum.High.ToString())
         {
-            <li class="breadcrumb-item">
-                Current Package:
-                @{
-                    var package = packages.Find(packageSubscribed.PackageId);
-                }
-                @if (package != null)
-                {
-                    @package.PackageName
-                }
-            </li>
-            <br/>
-            <li class="breadcrumb-item">
-                Events Left: @(packageSubscribed.AllowedEvent - packageSubscribed.SubscribedEvent)
-            </li>
+            <div class="col-md-4 pricing-box pricing-box-top">
+                <div class="well-box">
+                    <h2 class="price-title">@item.PackageName</h2>
+                    <h1 class="price-plan">
+                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/mo</span>
+                    </h1>
+                    <p>
+                        @item.Description
+                    </p>
+                    <a href="#" class="btn btn-primary btn-sm">Select Plan</a>
+                </div>
+                <ul class="check-circle list-group">
+                    @{
+                        var packageItems = dbd.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == item.EventPlannerPackageId);
+                    }
+                    @foreach (var items in packageItems)
+                    {
+                        <li class="list-group-item">@items.ItemName</li>
+                    }
+                </ul>
+            </div>
         }
         else
         {
-            <li class="breadcrumb-item">
-                Current Package: None
-            </li>
-            <br/>
-            <li class="breadcrumb-item">
-                Events Left: 0
-            </li>
-        }
-    </ol>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <div class="row white">
-        <div class="block">
-            @foreach (var item in packages)
-            {
-                <div class="col-xs-12 col-sm-6 col-md-3">
-                    <ul class="pricing p-green">
-                        <li>
-                            <img src="http://bread.pp.ua/n/settings_g.svg" alt="">
-                            <big>@item.PackageName</big>
-                        </li>
-                        <li>Acces to Vendors</li>
-                        <li>Access to @item.MaximumEvents Event(s)</li>
-                        <li>
-                            <h3>$@item.Amount</h3>
-                            <span>for up to @item.MaximumEvents Event(s)</span>
-                        </li>
-                        <li>
-                            <a href="@Url.Action("Invoice", new {id = item.PackageId})" class="btn p-blue"><i class="fa fa-credit-card"></i> Buy</a>
-                        </li>
-                    </ul>
+            <div class="col-md-4 pricing-box pricing-box-regualr">
+                <div class="well-box">
+                    <h2 class="price-title">@item.PackageName</h2>
+                    <h1 class="price-plan">
+                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/mo</span>
+                    </h1>
+                    <p>
+                        @item.Description
+                    </p>
+                    <a href="#" class="btn btn-primary btn-sm">Select Plan</a>
                 </div>
-            }
-            @*<div class="col-xs-12 col-sm-6 col-md-3">
-                        <ul class="pricing p-yel">
-                            <li>
-                                <img src="http://bread.pp.ua/n/settings_y.svg" alt="">
-                                <big>Deluxe</big>
-                            </li>
-                            <li>Responsive Design</li>
-                            <li>Color Customization</li>
-                            <li>HTML5 & CSS3</li>
-                            <li>Styled elements</li>
-                            <li>
-                                <h3>$299</h3>
-                                <span>per month</span>
-                            </li>
-                            <li>
-                                <button>Join Now</button>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <ul class="pricing p-red">
-                            <li>
-                                <img src="http://bread.pp.ua/n/settings_r.svg" alt="">
-                                <big>Professional</big>
-                            </li>
-                            <li>Responsive Design</li>
-                            <li>Color Customization</li>
-                            <li>HTML5 & CSS3</li>
-                            <li>Styled elements</li>
-                            <li>
-                                <h3>$399</h3>
-                                <span>per month</span>
-                            </li>
-                            <li>
-                                <button>Join Now</button>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="col-xs-12 col-sm-6 col-md-3">
-                        <ul class="pricing p-blue">
-                            <li>
-                                <img src="http://bread.pp.ua/n/settings_b.svg" alt="">
-                                <big>Ultimate</big>
-                            </li>
-                            <li>Responsive Design</li>
-                            <li>Color Customization</li>
-                            <li>HTML5 & CSS3</li>
-                            <li>Styled elements</li>
-                            <li>
-                                <h3>$799</h3>
-                                <span>per month</span>
-                            </li>
-                            <li>
-                                <button>Join Now</button>
-                            </li>
-                        </ul>
-                    </div>*@
+                <ul class="check-circle list-group">
+                    @{
+                        var packageItems = dbd.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == item.EventPlannerPackageId);
+                    }
+                    @foreach (var items in packageItems)
+                    {
+                        <li class="list-group-item">@items.ItemName</li>
+                    }
+                </ul>
+            </div>
+        }
+    }
 
 
-        </div><!-- /block -->
-    </div><!-- /row -->
-</section>
-</body>
-</html>
+</div>

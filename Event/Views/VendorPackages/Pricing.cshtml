@@ -5,95 +5,58 @@
     Layout = "../Shared/Layout/_LayoutSubscription.cshtml";
 
     var dbEvent = new EventDataContext();
-
-    var basicPackage = Model.SingleOrDefault(n => n.PackageGrade == VendorPackageEnum.Basic.ToString());
-    var deluxePackage = Model.SingleOrDefault(n => n.PackageGrade == VendorPackageEnum.Deluxe.ToString());
-    var proPackage = Model.SingleOrDefault(n => n.PackageGrade == VendorPackageEnum.Professional.ToString());
-
-    var basicPacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == basicPackage.VendorPackageId).ToList();
-    var deluxePacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == deluxePackage.VendorPackageId).ToList();
-    var proPacakgeItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == proPackage.VendorPackageId).ToList();
-
-    long basicPacakgeAmount = 0;
-    long deluxePacakgeAmount = 0;
-    long proPacakgeAmount = 0;
-
-    if (basicPacakgeItems.Count > 0)
-    {
-        basicPacakgeAmount = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == basicPackage.VendorPackageId).Sum(m => m.Amount);
-    }
-    if (deluxePacakgeItems.Count > 0)
-    {
-        deluxePacakgeAmount = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == deluxePackage.VendorPackageId).Sum(m => m.Amount);
-    }
-    if (proPacakgeItems.Count > 0)
-    {
-        proPacakgeAmount = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == proPackage.VendorPackageId).Sum(m => m.Amount);
-    }
+    var packages = dbEvent.VendorPackages.ToList();
 }
 
 <div class="row pricing-container">
-    @if (basicPackage != null)
+    @foreach (var item in packages)
     {
-        <div class="col-md-4 pricing-box pricing-box-regualr">
-            <div class="well-box">
-                <h2 class="price-title">@basicPackage.PackageName</h2>
-                <h1 class="price-plan">
-                    <span class="dollor-sign">$</span>@basicPacakgeAmount<span class="permonth">/month</span>
-                </h1>
-                <p>@basicPackage.Description</p>
-                <a href="@Url.Action("Register", "Vendors", new {id = basicPackage.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
+        if (item.PackageGrade == VendorPackageEnum.Deluxe.ToString())
+        {
+            <div class="col-md-4 pricing-box pricing-box-top">
+                <div class="well-box">
+                    <h2 class="price-title">@item.PackageName</h2>
+                    <h1 class="price-plan">
+                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/month</span>
+                    </h1>
+                    <p>@item.Description</p>
+                    <a href="@Url.Action("Register", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
+                </div>
+                <ul class="check-circle list-group">
+                    @{
+                        var packageItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == item.VendorPackageId);
+                    }
+                    @foreach (var items in packageItems)
+                    {
+                        <li class="list-group-item">@items.ItemName</li>
+                    }
+                </ul>
             </div>
-            <ul class="check-circle list-group">
-                @foreach (var item in basicPacakgeItems)
-                {
-                    <li class="list-group-item">@item.ItemName</li>
-                }
-            </ul>
-        </div>
-    }
-    @if (deluxePackage != null)
-    {
-        <div class="col-md-4 pricing-box pricing-box-top">
-            <div class="well-box">
-                <h2 class="price-title">@deluxePackage.PackageName</h2>
-                <h1 class="price-plan">
-                    <span class="dollor-sign">$</span>@deluxePacakgeAmount<span class="permonth">/month</span>
-                </h1>
-                <p>
-                    @deluxePackage.Description
-                </p>
-                <a href="@Url.Action("Register", "Vendors", new {id = deluxePackage.VendorPackageId})" class="btn btn-primary btn-sm">Sign Up</a>
+        }
+        else
+        {
+            <div class="col-md-4 pricing-box pricing-box-regualr">
+                <div class="well-box">
+                    <h2 class="price-title">@item.PackageName</h2>
+                    <h1 class="price-plan">
+                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/month</span>
+                    </h1>
+                    <p>@item.Description</p>
+                    <a href="@Url.Action("Register", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
+                </div>
+                <ul class="check-circle list-group">
+                    @{
+                        var packageItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == item.VendorPackageId);
+                    }
+                    @foreach (var items in packageItems)
+                    {
+                        <li class="list-group-item">@items.ItemName</li>
+                    }
+                </ul>
             </div>
-            <ul class="check-circle list-group">
-                @foreach (var item in deluxePacakgeItems)
-                {
-                    <li class="list-group-item">@item.ItemName</li>
-                }
-            </ul>
-        </div>
+        }
     }
-    @if (proPackage != null)
-    {
-        <div class="col-md-4 pricing-box pricing-box-regualr">
-            <div class="well-box">
-                <h2 class="price-title">@proPackage.PackageName</h2>
-                <h1 class="price-plan">
-                    <span class="dollor-sign">$</span>@proPacakgeAmount<span class="permonth">/month</span>
-                </h1>
-                <p>
-                    @proPackage.Description
-                </p>
-                <a href="@Url.Action("Register", "Vendors", new {id = proPackage.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
-            </div>
-            <ul class="check-circle list-group">
-                @foreach (var item in proPacakgeItems)
-                {
-                    <li class="list-group-item">@item.ItemName</li>
-                }
-            </ul>
-        </div>
-    }
+
 </div>
 <div></div>
 <div class="section-space80">

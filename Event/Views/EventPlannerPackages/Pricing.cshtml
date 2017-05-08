@@ -5,123 +5,63 @@
     Layout = "../Shared/Layout/_LayoutSubscription.cshtml";
 
     var dbEvent = new EventDataContext();
-
-    var lowestPackage = Model.SingleOrDefault(n => n.PackageGrade == EventPlannerPackageEnum.Lowest.ToString());
-    var averagePackage = Model.SingleOrDefault(n => n.PackageGrade == EventPlannerPackageEnum.Average.ToString());
-    var highPackage = Model.SingleOrDefault(n => n.PackageGrade == EventPlannerPackageEnum.High.ToString());
-    var highestPackage = Model.SingleOrDefault(n => n.PackageGrade == EventPlannerPackageEnum.Highest.ToString());
-
-    var lowestPackageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == lowestPackage.EventPlannerPackageId);
-    var averagePackageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == averagePackage.EventPlannerPackageId);
-    var highPackageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == highPackage.EventPlannerPackageId);
-    var highestPackageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == highestPackage.EventPlannerPackageId);
-
-    long lowestPackageAmount = 0;
-    long averagePackageAmount = 0;
-    long highPackageAmount = 0;
-    long highestPacakgeAmount = 0;
-
-    if (lowestPackageItems.ToList().Count > 0)
-    {
-        lowestPackageAmount = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == lowestPackage.EventPlannerPackageId).Sum(m => m.Amount);
-    }
-    if (averagePackageItems.ToList().Count > 0)
-    {
-        averagePackageAmount = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == averagePackage.EventPlannerPackageId).Sum(m => m.Amount);
-    }
-    if (highPackageItems.ToList().Count > 0)
-    {
-        highPackageAmount = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == highPackage.EventPlannerPackageId).Sum(m => m.Amount);
-    }
-    if (highestPackageItems.ToList().Count > 0)
-    {
-        highestPacakgeAmount = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == highestPackage.EventPlannerPackageId).Sum(m => m.Amount);
-    }
+    var packages = dbEvent.EventPlannerPackages.ToList();
 }
 
 <div class="row pricing-container">
-    @if (lowestPackage != null)
+    @foreach (var item in packages)
     {
-        <div class="col-md-3 pricing-box pricing-box-regualr">
-            <div class="well-box">
-                <h2 class="price-title">@lowestPackage.PackageName</h2>
-                <h1 class="price-plan">
-                    <span class="dollor-sign">$</span>@lowestPackageAmount<span class="permonth">/month</span>
-                </h1>
-                <p>@lowestPackage.Description</p>
-                <a href="@Url.Action("Invoice", "EventPlannerPackages", new {id = lowestPackage.EventPlannerPackageId})" class="btn btn-default btn-sm">Subscribe</a>
+        if (item.PackageGrade == EventPlannerPackageEnum.High.ToString())
+        {
+            <div class="col-md-3 pricing-box pricing-box-top">
+                <div class="well-box">
+                    <h2 class="price-title">@item.PackageName</h2>
+                    <h1 class="price-plan">
+                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/mo</span>
+                    </h1>
+                    <p>
+                        @item.Description
+                    </p>
+                    <a href="#" class="btn btn-primary btn-sm">Select Plan</a>
+                </div>
+                <ul class="check-circle list-group">
+                    @{
+                        var packageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == item.EventPlannerPackageId);
+                    }
+                    @foreach (var items in packageItems)
+                    {
+                        <li class="list-group-item">@items.ItemName</li>
+                    }
+                </ul>
             </div>
-            <ul class="check-circle list-group">
-                @foreach (var item in lowestPackageItems)
-                {
-                    <li class="list-group-item">@item.ItemName</li>
-                }
-            </ul>
-        </div>
-    }
-    @if (averagePackage != null)
-    {
-        <div class="col-md-3 pricing-box pricing-box-regualr">
-            <div class="well-box">
-                <h2 class="price-title">@averagePackage.PackageName</h2>
-                <h1 class="price-plan">
-                    <span class="dollor-sign">$</span>@averagePackageAmount<span class="permonth">/month</span>
-                </h1>
-                <p>
-                    @averagePackage.Description
-                </p>
-                <a href="@Url.Action("Invoice", "EventPlannerPackages", new {id = lowestPackage.EventPlannerPackageId})" class="btn btn-default btn-sm">Subscribe</a>
+        }
+        else
+        {
+            <div class="col-md-3 pricing-box pricing-box-regualr">
+                <div class="well-box">
+                    <h2 class="price-title">@item.PackageName</h2>
+                    <h1 class="price-plan">
+                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/mo</span>
+                    </h1>
+                    <p>
+                        @item.Description
+                    </p>
+                    <a href="#" class="btn btn-primary btn-sm">Select Plan</a>
+                </div>
+                <ul class="check-circle list-group">
+                    @{
+                        var packageItems = dbEvent.EventPlannerPackageItems.Where(n => n.EventPlannerPackageId == item.EventPlannerPackageId);
+                    }
+                    @foreach (var items in packageItems)
+                    {
+                        <li class="list-group-item">@items.ItemName</li>
+                    }
+                </ul>
             </div>
-            <ul class="check-circle list-group">
-                @foreach (var item in averagePackageItems)
-                {
-                    <li class="list-group-item">@item.ItemName</li>
-                }
-            </ul>
-        </div>
+        }
     }
-    @if (highPackage != null)
-    {
-        <div class="col-md-3 pricing-box pricing-box-top">
-            <div class="well-box">
-                <h2 class="price-title">@highPackage.PackageName</h2>
-                <h1 class="price-plan">
-                    <span class="dollor-sign">$</span>@highPackageAmount<span class="permonth">/month</span>
-                </h1>
-                <p>
-                    @highPackage.Description
-                </p>
-                <a href="@Url.Action("Invoice", "EventPlannerPackages", new {id = lowestPackage.EventPlannerPackageId})" class="btn btn-default btn-sm">Subscribe</a>
-            </div>
-            <ul class="check-circle list-group">
-                @foreach (var item in highPackageItems)
-                {
-                    <li class="list-group-item">@item.ItemName</li>
-                }
-            </ul>
-        </div>
-    }
-    @if (highestPackage != null)
-    {
-        <div class="col-md-3 pricing-box pricing-box-regualr">
-            <div class="well-box">
-                <h2 class="price-title">@highestPackage.PackageName</h2>
-                <h1 class="price-plan">
-                    <span class="dollor-sign">$</span>@highestPacakgeAmount<span class="permonth">/month</span>
-                </h1>
-                <p>
-                    @highestPackage.Description
-                </p>
-                <a href="@Url.Action("Invoice", "EventPlannerPackages", new {id = lowestPackage.EventPlannerPackageId})" class="btn btn-default btn-sm">Subscribe</a>
-            </div>
-            <ul class="check-circle list-group">
-                @foreach (var item in highestPackageItems)
-                {
-                    <li class="list-group-item">@item.ItemName</li>
-                }
-            </ul>
-        </div>
-    }
+
+
 </div>
 <div></div>
 <div class="section-space80">

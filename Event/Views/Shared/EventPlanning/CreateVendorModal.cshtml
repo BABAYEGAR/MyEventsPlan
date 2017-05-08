@@ -22,20 +22,16 @@
         @Html.LabelFor(model => model.Address)
         @Html.ValidationMessageFor(model => model.Address, "", new {@class = "text-danger"})
     </div>
-    <div class="control-group">
+    <div class="mui-select">
         @Html.LabelFor(model => model.LocationId, "Location", new {@class = "control-label"})
-        <div class="controls">
-            @Html.DropDownListFor(m => m.LocationId, null, new {@class = "span8"})
+            @Html.DropDownListFor(m => m.LocationId, null,"Select Location", new {@class = ""})
             @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
         </div>
-    </div>
-    <div class="control-group">
+    <div class="mui-select">
         @Html.LabelFor(model => model.VendorServiceId, "Vendor Service", new {@class = "control-label"})
-        <div class="controls">
-            @Html.DropDownListFor(m => m.VendorServiceId, null, new {@class = "span8"})
+            @Html.DropDownListFor(m => m.VendorServiceId, null,"Select Vendor Service", new {@class = ""})
             @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
         </div>
-    </div>
 
     <div class="mui-textfield mui-textfield--float-label">
 

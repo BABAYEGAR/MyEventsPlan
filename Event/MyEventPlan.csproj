@@ -1516,7 +1516,6 @@
     <Content Include="Views\Vendors\ListOfVendors.cshtml" />
     <Content Include="Views\Vendors\Register.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialVendorSideBar.cshtml" />
-    <Content Include="Views\Vendors\VendorDetails.cshtml" />
     <Content Include="Views\Clients\Create.cshtml" />
     <Content Include="Views\Clients\Delete.cshtml" />
     <Content Include="Views\Clients\Details.cshtml" />
@@ -1601,6 +1600,8 @@
     <Content Include="Views\PersonalCheckListItems\Edit.cshtml" />
     <Content Include="Views\PersonalCheckListItems\Index.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreateGroupMessageModal.cshtml" />
+    <Content Include="Views\Account\EventPlannerInvoice.cshtml" />
+    <Content Include="Views\Account\VendorInvoice.cshtml" />
     <None Include="Views\Clients\AllMyClients.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreatePersonalCheckListModal.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreatePersonalCheckListItemModal.cshtml" />
@@ -1634,7 +1635,6 @@
     <Content Include="Views\Shared\Partial\_PartialVendorTopMenu.cshtml" />
     <Content Include="Views\Shared\Partial\_PartialVendorUnderMenu.cshtml" />
     <Content Include="Views\Shared\Partial\_AppThemeFooter.cshtml" />
-    <Content Include="Views\Vendors\Subscription.cshtml" />
     <Content Include="Views\Shared\Layout\_LayoutSubscription.cshtml" />
     <Content Include="Views\VendorPackages\Create.cshtml" />
     <Content Include="Views\VendorPackages\Delete.cshtml" />
