@@ -6,6 +6,10 @@
     Layout = "../Shared/Layout/_LayoutVendors.cshtml";
     List<Vendor> vendors = ViewBag.vendors;
 }
+@section css{
+
+    <link href="~/Content/Pagination/simplePagination.css" rel="stylesheet"/>
+}
 <div class="tp-breadcrumb">
     <div class="container">
         <div class="row">
@@ -21,148 +25,162 @@
     </div>
 </div>
 <div class="main-container">
-<div class="container">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="filter-sidebar">
-                <div class="col-md-12 form-title">
-                    <h2>Refine Your Search</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="filter-sidebar">
+                    <div class="col-md-12 form-title">
+                        <h2>Refine Your Search</h2>
+                    </div>
+                    @using (Html.BeginForm("ListOfVendors", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                    {
+                        <div class="col-md-12 form-group">
+                            <label class="control-label" for="VendorServiceId">Vendor Category</label>
+                            @Html.DropDownListFor(m => m.VendorServiceId, null, "Select a category ", new {@class = "form-control", id = "category"})
+                            @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <label class="control-label" for="LocationId">Location</label>
+                            @Html.DropDownListFor(m => m.LocationId, null, "Select a location ", new {@class = "form-control", id = "service"})
+                            @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
+                        </div>
+                        <div class="col-md-12 form-group rating">
+                            <label class="control-label">Select Rating </label>
+                            <div class="checkbox checkbox-success">
+                                <input type="checkbox" name="checkbox" id="checkbox-0" value="1" class="styled">
+                                <label for="checkbox-0" class="control-label">
+                                    <i class="fa fa-star"></i>
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input type="checkbox" name="checkbox" id="checkbox-1" value="2" class="styled">
+                                <label for="checkbox-1" class="control-label">
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input type="checkbox" name="checkbox" id="checkbox-2" value="3" class="styled">
+                                <label for="checkbox-2" class="control-label">
+                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input type="checkbox" name="checkbox" id="checkbox-3" value="4" class="styled">
+                                <label for="checkbox-3" class="control-label">
+                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                </label>
+                            </div>
+                            <div class="checkbox checkbox-success">
+                                <input type="checkbox" name="checkbox" id="checkbox-4" value="5" class="styled">
+                                <label for="checkbox-4" class="control-label">
+                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <div class="price-range default-range">
+                                <label for="amount" class="control-label">Price range:</label>
+                                <input type="text" id="amount" readonly style="border: 0; color: #f6931f; font-weight: bold;">
+                                <div id="slider-range"></div>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <input type="submit" value="Find Vendors" class="btn btn-primary btn-lg"/>
+                        </div>
+                    }
                 </div>
-                @using (Html.BeginForm("ListOfVendors", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data"}))
-                {
-                    <div class="col-md-12 form-group">
-                        <label class="control-label" for="VendorServiceId">Vendor Category</label>
-                        @Html.DropDownListFor(m => m.VendorServiceId, null, "Select a category ", new {@class = "form-control",id = "category"})
-                        @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
-                    </div>
-                    <div class="col-md-12 form-group">
-                        <label class="control-label" for="LocationId">Location</label>
-                        @Html.DropDownListFor(m => m.LocationId,null, "Select a location ", new {@class = "form-control",id = "service"})
-                        @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
-                    </div>
-                    <div class="col-md-12 form-group rating">
-                        <label class="control-label">Select Rating </label>
-                        <div class="checkbox checkbox-success">
-                            <input type="checkbox" name="checkbox" id="checkbox-0" value="1" class="styled">
-                            <label for="checkbox-0" class="control-label">
-                                <i class="fa fa-star"></i>
-                            </label>
-                        </div>
-                        <div class="checkbox checkbox-success">
-                            <input type="checkbox" name="checkbox" id="checkbox-1" value="2" class="styled">
-                            <label for="checkbox-1" class="control-label">
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                            </label>
-                        </div>
-                        <div class="checkbox checkbox-success">
-                            <input type="checkbox" name="checkbox" id="checkbox-2" value="3" class="styled">
-                            <label for="checkbox-2" class="control-label">
-                                <i class="fa fa-star"></i> <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                            </label>
-                        </div>
-                        <div class="checkbox checkbox-success">
-                            <input type="checkbox" name="checkbox" id="checkbox-3" value="4" class="styled">
-                            <label for="checkbox-3" class="control-label">
-                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                            </label>
-                        </div>
-                        <div class="checkbox checkbox-success">
-                            <input type="checkbox" name="checkbox" id="checkbox-4" value="5" class="styled">
-                            <label for="checkbox-4" class="control-label">
-                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-12 form-group">
-                        <div class="price-range default-range">
-                            <label for="amount" class="control-label">Price range:</label>
-                            <input type="text" id="amount" readonly style="border: 0; color: #f6931f; font-weight: bold;">
-                            <div id="slider-range"></div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <input type="submit" value="Find Vendors" class="btn btn-primary btn-lg"/>
-                    </div>
-                }
             </div>
-        </div>
-        <div class="col-md-9">
-            <div class="row">
-                @if (vendors != null)
-                {
-                    foreach (var item in vendors)
-                     {
-                         <!-- /.venue box start-->
-                         <div class="col-md-6 vendor-box">
-                             <!-- venue box start-->
-                             <div class="vendor-image">
-                                 <!-- venue pic -->
-                                 <a href="#">
-                                     <img src="~/Content/AppTheme/images/vendor-8.jpg" alt="wedding venue" class="img-responsive">
-                                 </a>
-                                 @*<div class="favourite-bg">
+            <div class="col-md-9">
+                <div class="row">
+                    @if (vendors != null)
+                    {
+                        foreach (var item in vendors)
+                        {
+                            <!-- /.venue box start-->
+                            <div class="col-md-6 vendor-box">
+                                <!-- venue box start-->
+                                <div class="vendor-image">
+                                    <!-- venue pic -->
+                                    <a href="@Url.Action("Details",new{id = item.VendorId})">
+                                        <img src="~/Content/AppTheme/images/vendor-8.jpg" alt="wedding venue" class="img-responsive">
+                                    </a>
+                                    @*<div class="favourite-bg">
                                      <a href="#" class="">
                                          <i class="fa fa-heart"></i>
                                      </a>
                                  </div>*@
-                             </div>
-                             <!-- /.venue pic -->
-                             <div class="vendor-detail">
-                                 <!-- venue details -->
-                                 <div class="caption">
-                                     <!-- caption -->
-                                     <h2>
-                                         <a href="#" class="title">@item.Name</a>
-                                     </h2>
-                                     <p class="location">
-                                         <i class="fa fa-map-marker"></i> @item.Address
-                                     </p>
-                                     <div class="rating ">
-                                         <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
-                                     </div>
-                                 </div>
-                                 <!-- /.caption -->
-                                 <div class="vendor-price">
-                                     <div class="price">$390 - $600</div>
-                                 </div>
-                             </div>
-                             <!-- venue details -->
-                         </div>
+                                </div>
+                                <!-- /.venue pic -->
+                                <div class="vendor-detail">
+                                    <!-- venue details -->
+                                    <div class="caption">
+                                        <!-- caption -->
+                                        <h2>
+                                            <a href="#" class="title">@item.Name</a>
+                                        </h2>
+                                        <p class="location">
+                                            <i class="fa fa-map-marker"></i> @item.Address
+                                        </p>
+                                        <div class="rating ">
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+                                        </div>
+                                    </div>
+                                    <!-- /.caption -->
+                                    <div class="vendor-price">
+                                        <div class="price">$390 - $600</div>
+                                    </div>
+                                </div>
+                                <!-- venue details -->
+                            </div>
 
-                         <!-- /.venue box start-->
-                     }
-                }
-                <div class="col-md-12 tp-pagination">
-                    <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">Previous</span>
-                            </a>
-                        </li>
-                        <li class="active">
-                            <a href="#">1</a>
-                        </li>
-                        <li>
-                            <a href="#">2</a>
-                        </li>
-                        <li>
-                            <a href="#">3</a>
-                        </li>
-                        <li>
-                            <a href="#">4</a>
-                        </li>
-                        <li>
-                            <a href="#">5</a>
-                        </li>
-                        <li>
-                            <a href="#" aria-label="Next">
-                                <span aria-hidden="true">NEXT</span>
-                            </a>
-                        </li>
-                    </ul>
+                            <!-- /.venue box start-->
+                        }
+                    }
+                    <div class="col-md-12 tp-pagination">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">Previous</span>
+                                </a>
+                            </li>
+                            <li class="active">
+                                <a href="#">1</a>
+                            </li>
+                            <li>
+                                <a href="#">2</a>
+                            </li>
+                            <li>
+                                <a href="#">3</a>
+                            </li>
+                            <li>
+                                <a href="#">4</a>
+                            </li>
+                            <li>
+                                <a href="#">5</a>
+                            </li>
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">NEXT</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
+@section scripts
+{
+
+    <script src="~/Content/Pagination/jquery.simplePagination.js"></script>
+    <script>
+        $(function() {
+            $(selector).pagination({
+                items: 100,
+                itemsOnPage: 10,
+                cssStyle: 'light-theme'
+            });
+        });
+    </script>
+}

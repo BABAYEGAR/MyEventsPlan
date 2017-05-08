@@ -63,6 +63,9 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<VendorPackage> VendorPackages { get; set; }
         public virtual DbSet<VendorPackageItem> VendorPackageItems { get; set; }
         public virtual DbSet<VendorPackageSetting> VendorPackageSettings { get; set; }
+        public virtual DbSet<VendorEnquiry> VendorEnquiries { get; set; }
+        public virtual DbSet<VendorReview> VendorReviews { get; set; }
+        public virtual DbSet<VendorImage> VendorImages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

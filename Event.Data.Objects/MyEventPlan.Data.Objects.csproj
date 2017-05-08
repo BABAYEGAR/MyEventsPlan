@@ -44,6 +44,7 @@
     <Compile Include="Entities\Appointment.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Budget.cs" />
+    <Compile Include="Entities\VendorEnquiry.cs" />
     <Compile Include="Entities\VendorPackageItem.cs" />
     <Compile Include="Entities\VendorPackage.cs" />
     <Compile Include="Entities\EventPlannerPackageItem.cs" />
@@ -85,6 +86,8 @@
     <Compile Include="Entities\Task.cs" />
     <Compile Include="Entities\Transport.cs" />
     <Compile Include="Entities\Vendor.cs" />
+    <Compile Include="Entities\VendorImage.cs" />
+    <Compile Include="Entities\VendorReview.cs" />
     <Compile Include="Entities\VendorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

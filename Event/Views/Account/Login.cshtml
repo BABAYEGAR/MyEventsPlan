@@ -3,46 +3,34 @@
     ViewBag.Title = "Log in";
     Layout = "../Shared/Layout/_LayoutLogin.cshtml";
 }
-<style>
-    .wrapper {
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        -webkit-background-size: cover;
-        background: url('../../Content/Dashboard/images/image2.png') no-repeat 0px 0px;
-        background-size: cover;
-    }
-</style>
-@using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-vertical"}))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-    <div class="module-head">
-        <h3>Sign In</h3>
-    </div>
-    <div class="module-body">
-        <div class="control-group">
-            <div class="controls row-fluid">
-                @Html.TextBoxFor(m => m.Email, new {@class = "span12", placeholder = "Enter your email address"})
+<div class="col-sm-offset-3 col-md-6 st-tabs">
+    <!-- Nav tabs -->
+    <div class="well-box">
+        <h3>Login to Access your dashboard</h3>
+        @using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "form-vertical"}))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group">
+                <label class="control-label" for="Email">E-mail<span class="required">*</span></label>
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control input-md", placeholder = "Enter your email address"})
                 @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
             </div>
-        </div>
-        <div class="control-group">
-            <div class="controls row-fluid">
-                @Html.PasswordFor(m => m.Password, new {@class = "span12", placeholder = "Enter your password"})
+            <div class="form-group">
+                <label class="control-label" for="Password">Password<span class="required">*</span></label>
+                @Html.PasswordFor(m => m.Password, new {@class = "form-control input-md", placeholder = "Enter your password"})
                 @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
             </div>
-        </div>
-    </div>
-    <div class="module-foot">
-        <div class="control-group">
-            <div class="controls clearfix">
 
-                <label class="checkbox">
-                    @Html.CheckBoxFor(m => m.RememberMe) Remember me
-                    <a href="@Url.Action("VerifyEmail")" class="pull-right">Forgot Password?</a>
-                </label>
+            <div class="form-group">
+                @Html.CheckBoxFor(m => m.RememberMe) Remember me
+                <a href="@Url.Action("VerifyEmail")" class="pull-right">Forgot Password?</a>
+
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        }
     </div>
-}
+    <div class="well-box social-login">
+        <a href="#" class="btn facebook-btn"><i class="fa fa-facebook-square"></i>Facebook</a> <a href="#" class="btn twitter-btn"><i class="fa fa-twitter-square"></i>Twitter</a> <a href="#" class="btn google-btn"><i class="fa fa-google-plus-square"></i>Google+</a>
+    </div>
+</div>

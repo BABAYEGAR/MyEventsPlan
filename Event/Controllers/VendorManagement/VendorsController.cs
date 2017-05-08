@@ -26,7 +26,14 @@ namespace MyEventPlan.Controllers.VendorManagement
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
             return View(vendors.ToList());
         }
-
+        // GET: Vendors/Profile
+        public ActionResult Profile()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var vendor =
+                db.Vendors.Find(loggedinuser.VendorId);
+            return View(vendor);
+        }
         // GET: Vendors/Details/5
         public ActionResult Details(long? id)
         {
@@ -91,9 +98,6 @@ namespace MyEventPlan.Controllers.VendorManagement
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             vendor.DateCreated = DateTime.Now;
             vendor.DateLastModified = DateTime.Now;
-            vendor.ImageOne = "131329580750710796.jpg";
-            vendor.ImageTwo = "131329580750710796.jpg";
-            vendor.ImageThree = "131329580750710796.jpg";
             if (loggedinuser != null)
             {
                 var userExist = allUsers.Any(n => n.Email == vendor.Email);

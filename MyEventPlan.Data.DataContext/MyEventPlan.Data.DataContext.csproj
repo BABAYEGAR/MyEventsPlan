@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\VendorEnquiryDataContext.cs" />
+    <Compile Include="DataContext\VendorImageDataContext.cs" />
+    <Compile Include="DataContext\VendorReviewDataContext.cs" />
     <Compile Include="DataContext\VendorPackageSettingDataContext.cs" />
     <Compile Include="DataContext\VendorPackageItemDataContext.cs" />
     <Compile Include="DataContext\VendorPackageDataContext.cs" />
@@ -277,6 +280,14 @@
     <Compile Include="Migrations\201705070005586_migrate47.Designer.cs">
       <DependentUpon>201705070005586_migrate47.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705072008393_migrate48.cs" />
+    <Compile Include="Migrations\201705072008393_migrate48.Designer.cs">
+      <DependentUpon>201705072008393_migrate48.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705072233149_migrate49.cs" />
+    <Compile Include="Migrations\201705072233149_migrate49.Designer.cs">
+      <DependentUpon>201705072233149_migrate49.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -428,6 +439,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705070005586_migrate47.resx">
       <DependentUpon>201705070005586_migrate47.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705072008393_migrate48.resx">
+      <DependentUpon>201705072008393_migrate48.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705072233149_migrate49.resx">
+      <DependentUpon>201705072233149_migrate49.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -21,7 +21,18 @@
                     @Html.Hidden("packageId",packageId)
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-                    <h2 class="form-title">Sign Up</h2>
+                    <h2 class="form-title">Upload Logo</h2>
+                    <!-- File Button -->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <div class="photo-upload"><img src="images/profile-dashbaord.png" alt=""></div>
+                        </div>
+                        <div class="col-md-8 upload-file">
+                            <input id="filebutton" name="filebutton" class="input-file" type="file">
+                        </div>
+                    </div>
+                    <!-- Text input-->
+                    <h2 class="form-title">Vendor Profile</h2>
                     <div class="form-group">
                         @Html.LabelFor(model => model.Name, new {@class = "col-md-4 control-label"})
                         <div class="col-md-8">

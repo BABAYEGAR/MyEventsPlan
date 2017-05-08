@@ -295,7 +295,10 @@ namespace MyEventPlan.Controllers
                                 (n.Status == PackageStatusEnum.Active.ToString()));
                     if (packageSubscribed != null)
                         Session["subscribe"] = packageSubscribed;
-
+                    if (user.VendorId != null)
+                    {
+                        return RedirectToAction("Profile", "Vendors");
+                    }
                     return RedirectToAction("Dashboard", "Home");
                 }
                 TempData["login"] = "Verify your account from your email and try again!";

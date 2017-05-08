@@ -17,11 +17,21 @@ namespace Event.Data.Objects.Entities
         public string ConfirmPassword { get; set; }
         [Required]
         public string Address { get; set; }
+        [DisplayName("Facebook Page Link")]
+        public string FacebookPage { get; set; }
+        [DisplayName("Twitter Page Link")]
+        public string TwitterPage { get; set; }
+        [DisplayName("Instagram Page Link")]
+        public string InstagramPage { get; set; }
+        [DisplayName("Google Plus Page Link")]
+        public string GooglePlusPage { get; set; }
+        [DisplayName("Youtube Page Link")]
+        public string YoutubePage { get; set; }
+        public string Website { get; set; }
         public string About { get; set; }
-        public long MinimumPrice { get; set; }
-        public string ImageOne { get; set; }
-         public string ImageTwo { get; set; }
-        public string ImageThree { get; set; }
+        public string Logo { get; set; }
+        public long AveragePrice { get; set; }
+        public long PricingDetails { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
@@ -45,5 +55,8 @@ namespace Event.Data.Objects.Entities
         public  IEnumerable<EventVendorMapping> EventVendorMappings { get; set; }
         public  IEnumerable<VendorPackageSetting> VendorPackageSettings { get; set; }
         public  IEnumerable<AppUser> AppUsers { get; set; }
+        public  IEnumerable<VendorReview> VendorReviews { get; set; }
+        public  IEnumerable<VendorEnquiry> VendorEnquiries { get; set; }
+        public  IEnumerable<VendorImage> VendorImages { get; set; }
     }
 }

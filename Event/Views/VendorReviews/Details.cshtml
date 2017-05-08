@@ -1,0 +1,98 @@
+﻿@model Event.Data.Objects.Entities.VendorReview
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>VendorReview</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Vendor.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendor.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewerEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewerEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReviewBody)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReviewBody)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLastModified)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLastModified)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastModifiedBy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.VendorReviewId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

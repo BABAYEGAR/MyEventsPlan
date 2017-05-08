@@ -1,90 +1,487 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
-@model Vendor
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@model Event.Data.Objects.Entities.Vendor
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View vendor service";
-    Layout = "../Shared/_LayoutForm.cshtml";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
+    Layout = "../Shared/Layout/_LayoutVendorDetails.cshtml";
+
+    var db = new EventDataContext();
+    var vendorReviews = db.VendorReviews.ToList();
+
+    var images = db.VendorImages.SingleOrDefault(n => n.VendorId == Model.VendorId);
 }
-<dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.VendorService.ServiceName)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.VendorService.ServiceName)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.Name)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.Name)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.Address)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.Address)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.Email)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.Email)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.Mobile)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.Mobile)
-    </dd>
-    @if ((role != null) && (role.Name == "Platform Administrator"))
-    {
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-        </dd>
-    }
-</dl>
-<p>
-    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
-    @Html.ActionLink("Edit", "Edit", new {id = Model.VendorId}, new {@class = "btn btn-primary"})
-
-</p>
+<div class="tp-page-head">
+    <!-- page header -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="page-header text-center">
+                    <h1>Venue Single Tab Style</h1>
+                    <p>You can present your item detail page with tab style.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tp-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Venue Listing</a>
+                    </li>
+                    <li class="active">Wedding Venue Title Goes Here</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-container">
+<div class="container tabbed-page st-tabs">
+<div class="row tab-page-header">
+    <div class="col-md-8 title">
+        <a href="#" class="label-primary">@Model.VendorService.ServiceName</a>
+        <h1>@Model.Name</h1>
+        <p class="location">
+            <i class="fa fa-map-marker"></i>@Model.Address</p>
+        <hr>
+        <div class="rating">
+            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i>
+        </div>
+    </div>
+    <div class="col-md-4 venue-data">
+        <div class="venue-info">
+            <!-- venue-info-->
+            <div class="pricebox">
+                <div>Avg price:</div>
+                <span class="price">$@Model.AveragePrice</span>
+            </div>
+        </div>
+        @*<a href="#inquiry" class="btn btn-default btn-lg btn-block">Book Venue</a>*@
+    </div>
+</div>
+<div class="row">
+<div class="col-md-12">
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+        <a href="#photo" title="Gallery" aria-controls="photo" role="tab" data-toggle="tab">
+            <i class="fa fa-photo"></i> <span class="tab-title">Photos</span>
+        </a>
+    </li>
+    <li role="presentation">
+        <a href="#about" title="about info" aria-controls="about" role="tab" data-toggle="tab">
+            <i class="fa fa-info-circle"></i>
+            <span class="tab-title">About</span>
+        </a>
+    </li>
+    <li role="presentation">
+        <a href="#onmap" title="Location" aria-controls="onmap" role="tab" data-toggle="tab">
+            <i class="fa fa-map-marker"></i> <span class="tab-title">Details</span>
+        </a>
+    </li>
+    <li role="presentation">
+        <a href="#video" title="Video" aria-controls="video" role="tab" data-toggle="tab">
+            <i class="fa fa-youtube-play"></i> <span class="tab-title">Pricing</span>
+        </a>
+    </li>
+    <li role="presentation">
+        <a href="#reviews" title="Review" aria-controls="reviews" role="tab" data-toggle="tab">
+            <i class="fa fa-commenting"></i> <span class="tab-title">Reviews</span>
+        </a>
+    </li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content">
+<!-- tab content start-->
+<div role="tabpanel" class="tab-pane fade in active" id="photo">
+    <div id="sync1" class="owl-carousel">
+        @if (images != null && images.ImageOne != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageOne" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageTwo != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageTwo" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageThree != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageThree" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageFour != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageFour" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageFive != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageFive" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageSix != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageSix" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageSeven != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageSeven" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageEight != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageEight" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageNine != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageNine" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageTen != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageTen" alt="" class="img-responsive">
+            </div>
+        }
+    </div>
+    <div id="sync2" class="owl-carousel">
+        @if (images != null && images.ImageOne != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageOne" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageTwo != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageTwo" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageThree != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageThree" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageFour != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageFour" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageFive != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageFive" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageSix != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageSix" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageSeven != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageSeven" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageEight != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageEight" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageNine != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageNine" alt="" class="img-responsive">
+            </div>
+        }
+        @if (images != null && images.ImageTen != null)
+        {
+            <div class="item">
+                <img src="~/UploadedFiles/VendorImage/@images.ImageTen" alt="" class="img-responsive">
+            </div>
+        }
+    </div>
+</div>
+<div role="tabpanel" class="tab-pane fade" id="about">
+    <div class="venue-details">
+        <h2>About</h2>
+        <p>@Model.About.</p>
+    </div>
+</div>
+<div role="tabpanel" class="tab-pane fade" id="onmap">
+    <div id="googleMap" class="map"></div>
+</div>
+<div role="tabpanel" class="tab-pane fade" id="video">
+    <div class="venue-details">
+        <h2>Pricing Details</h2>
+        <p>@Model.PricingDetails.</p>
+    </div>
+</div>
+<div role="tabpanel" class="tab-pane fade" id="reviews">
+    <!-- comments -->
+    <div class="customer-review">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Vendor Review</h1>
+                <div class="review-list">
+                    <!-- Comment -->
+                    <div class="row">
+                        <div class="col-md-2 col-sm-2 hidden-xs">
+                            <div class="user-pic">
+                                <img class="img-responsive img-circle" src="images/userpic.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-sm-10">
+                            <div class="panel panel-default arrow left">
+                                @foreach (var item in vendorReviews)
+                                {
+                                    <div class="panel-body">
+                                        <div class="text-left">
+                                            <h3>@item.ReviewTitle</h3>
+                                            <div class="rating">
+                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i>
+                                            </div>
+                                        </div>
+                                        <div class="review-post">
+                                            <p> @item.ReviewBody </p>
+                                        </div>
+                                        <div class="review-user">
+                                            By <a href="#">@item.ReviewerName</a>, on <span class="review-date"></span>@item.DateCreated.ToString("D")
+                                        </div>
+                                    </div>
+                                }
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="review">
+                    <a class="btn tp-btn-primary btn-block tp-btn-lg" role="button" data-toggle="collapse" href="#review" aria-expanded="false" aria-controls="review"> Write A Review </a>
+                </div>
+                <div class="collapse review-list review-form" id="review">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h1>Write Your Review</h1>
+                        @using (Html.BeginForm("Create", "VendorReviews", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="VendorId" value="@Model.VendorId"/>
+                            <div class="rating-group">
+                                <div class="radio radio-success radio-inline">
+                                    <input type="radio" name="Rating" id="radio1" value="1">
+                                    <label for="radio1" class="radio-inline">
+                                        <span class="rating">
+                                            <i class="fa fa-star"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="radio radio-success radio-inline">
+                                    <input type="radio" name="Rating" id="radio2" value="2">
+                                    <label for="radio2" class="radio-inline">
+                                        <span class="rating">
+                                            <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="radio radio-success radio-inline">
+                                    <input type="radio" name="Rating" id="radio3" value="3">
+                                    <label for="radio3" class="radio-inline">
+                                        <span class="rating">
+                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="radio radio-success radio-inline">
+                                    <input type="radio" name="radio1" id="radio4" value="4">
+                                    <label for="radio4" class="radio-inline">
+                                        <span class="rating">
+                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="radio radio-success radio-inline">
+                                    <input type="radio" name="Rating" id="radio5" value="5">
+                                    <label for="radio5" class="radio-inline">
+                                        <span class="rating">
+                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class=" control-label" for="name">Reviewer Name</label>
+                                <div class="">
+                                    <input id="name" name="ReviewerName" type="text" placeholder="Reviewer Name" class="form-control input-md" required>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class=" control-label" for="email">Reviewer E-Mail</label>
+                                <div class=" ">
+                                    <input id="email" name="ReviewerEmail" type="text" placeholder="Reviewer E-Mail" class="form-control input-md" required>
+                                </div>
+                            </div>
+                            <!-- Text input-->
+                            <div class="form-group">
+                                <label class=" control-label" for="reviewtitle">Review Title</label>
+                                <div class=" ">
+                                    <input id="reviewtitle" name="ReviewTitle" type="text" placeholder="Review Title" class="form-control input-md" required>
+                                </div>
+                            </div>
+                            <!-- Textarea -->
+                            <div class="form-group">
+                                <label class=" control-label">Write Review</label>
+                                <div class="">
+                                    <textarea class="form-control" name="ReviewBody" rows="8">Write Review</textarea>
+                                </div>
+                            </div>
+                            <!-- Button -->
+                            <div class="form-group">
+                                <button name="submit" class="btn tp-btn-default tp-btn-lg">Submit Review</button>
+                            </div>
+                        }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- /.tab content start-->
+</div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="side-box" id="inquiry">
+            <h2>Send Enquiry to Vendor</h2>
+            <p>Fill in your details and an event date,Specialist will get back to you shortly.</p>
+        @using (Html.BeginForm("Create", "VendorEnquiries", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="VendorId" value="@Model.VendorId"/>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="control-label" for="Name">Name:<span class="required">*</span></label>
+                <div class="">
+                    <input id="name-one" name="Name" type="text" placeholder="Name" class="form-control input-md" required>
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="control-label" for="MobileNumber">Phone:<span class="required">*</span></label>
+                <div class="">
+                    <input id="phone" name="MobileNumber" type="text" placeholder="Phone" class="form-control input-md" required>
+                    <span class="help-block"> </span>
+                </div>
+            </div>
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="control-label" for="Email">E-Mail:<span class="required">*</span></label>
+                <div class="">
+                    <input id="email-one" name="Email" type="text" placeholder="E-Mail" class="form-control input-md" required>
+                </div>
+            </div>
+            <!-- Select Basic -->
+            <div class="default-calender">
+                <div class="form-group">
+                    <label class="control-label" for="EventDate">Event Date<span class="required">*</span></label>
+                    <div class="">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="EventDate" id="weddingdate" placeholder="Wedding Date">
+                            <span class="input-group-addon" id="basic-addon2">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Textarea -->
+            <div class="form-group">
+                <label class=" control-label">Write Note</label>
+                <div class="">
+                    <textarea class="form-control" name="Note" rows="8">Write Note</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <button name="submit" class="btn btn-primary btn-lg btn-block">Book MY Venue now</button>
+            </div>
+        }
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="profile-sidebar side-box">
+            <!-- SIDEBAR USERPIC -->
+            <div class="profile-userpic">
+                <img src="images/profile_user.jpg" class="img-responsive img-circle" alt="">
+            </div>
+            <div class="profile-usertitle">
+                <div class="profile-usertitle-name">
+                    <h2>@Model.Name</h2>
+                </div>
+                <div class="profile-address">
+                    <i class="fa fa-map-marker"></i> @Model.Address
+                </div>
+                <div class="profile-website">
+                    <i class="fa fa-link"></i> <a href="#">@Model.Website</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="social-sidebar side-box">
+            <ul class="listnone follow-icon">
+                <li>
+                    <a href="@Model.FacebookPage">
+                        <i class="fa fa-facebook-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Model.GooglePlusPage">
+                        <i class="fa fa-google-plus-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Model.InstagramPage">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Model.YoutubePage">
+                        <i class="fa fa-youtube-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Model.TwitterPage">
+                        <i class="fa fa-twitter-square"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</div>
