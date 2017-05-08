@@ -6,13 +6,14 @@
     Layout = "../Shared/Layout/_LayoutVendorProfile.cshtml";
     var images = db.VendorImages.SingleOrDefault(n => n.VendorId == Model.VendorId);
     var image = new VendorImage();
+
 }
 @{
     Html.RenderPartial("VendorImagePartial/CreateImage", image);
 }
 
 @{
-    Html.RenderPartial("VendorImagePartial/EditImage",images);
+    Html.RenderPartial("VendorImagePartial/EditImage", images);
 }
 <div class="vendor-page-header">
     <div class="vendor-profile-img"> </div>
@@ -99,18 +100,28 @@
 <div class="container">
 <div class="row">
 <div class="venue-details">
-<div class="col-md-9">
+<div class="col-md-12">
 <div class="st-tabs">
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active">
         <a href="#myListing" title="Gallery" aria-controls="myListing" role="tab" data-toggle="tab">
-            <i class="fa fa-list"></i><span class="tab-title"> My Images</span>
+            <i class="fa fa-list"></i><span class="tab-title"> Vendor Images</span>
         </a>
     </li>
     <li role="presentation">
         <a href="#about" title="about info" aria-controls="about" role="tab" data-toggle="tab">
-            <i class="fa fa-info-circle"></i> <span class="tab-title">Vendor Information</span>
+            <i class="fa fa-user"></i> <span class="tab-title">Vendor Information</span>
+        </a>
+    </li>
+    <li role="presentation">
+        <a href="#price" title="about info" aria-controls="about" role="tab" data-toggle="tab">
+            <i class="fa fa-dollar"></i> <span class="tab-title">Vendor Pricing Information</span>
+        </a>
+    </li>
+    <li role="presentation">
+        <a href="#password" title="about info" aria-controls="about" role="tab" data-toggle="tab">
+            <i class="fa fa-lock"></i> <span class="tab-title">Change Password</span>
         </a>
     </li>
 </ul>
@@ -118,26 +129,288 @@
 <div class="tab-content">
 <!-- tab content start-->
 <div role="tabpanel" class="tab-pane fade in active" id="myListing">
-<div class="row">
-    @{
-        Html.RenderPartial("VendorImagePartial/ImageGrid", images);
-    }
-</div>
+    <div class="row">
+        @{
+            Html.RenderPartial("VendorImagePartial/ImageGrid", images);
+        }
+    </div>
 </div>
 <div role="tabpanel" class="tab-pane fade" id="about">
-    <div class="venue-details">
-        <h2>About Venue Title of Heading</h2>
-        <p>Latin words combined with a handful of model sentence structures, to generate Lorem Ipsum which one looks reasonable. The generated Lorem Ipsum is therefore always free from repetition injected humour or non characteristic words etc.</p>
-        <p>Quisque laoreet mi libero, et tempus lacus venenatis eget. Nulla vitaeipsum inturpis blandit congue ofer ornare inleo. Nulla nibhmi sagittis necaliquet pharetra vitae turpis. Nam tristique mauris necultricies its tristiqu. orbilitelit molestie eget tincidunt luctus consequat sitameturna.</p>
-        <p>Aenean sapienest, rutrum malesuada quamuis tristique tincinibh hasellusut elementum not semlass and aptent taciti sociosqu ad litorarutrum malesuada quamuis tristique torquent per conubia nostra permite inceptos our its it himenaeos aecsed laoreet diam. Crasut auctor ipsusque commodo suscipit onet tristiques viverrarcu idaugue blandit ultricies nibhrhoncus rutrum malesuada tristique.</p>
-        <p>Latin words combined with a handful of model sentence structures to generate Loremere Ipsum which looks reasonable. The generated lorem Ipsum is therefore always free fromes combined with a handful of model repetition injected humour or non characteristic words etc.</p>
-        <h2>Why Our Wedding Venue </h2>
-        <ul class="check-circle">
-            <li>Wedding parties have exclusive use of the venue for the day</li>
-            <li>Last Minute Offer £3,800 inc VAT for any wedding booked in the next 8 weeks.</li>
-            <li>Licensed for civil ceremonies, civil partnerships and outside ceremonies with stunning views.</li>
-            <li>This venue is a superb location for a Wedding Reception catering from 30 to 650 guests.</li>
-        </ul>
+    <div class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 profile-dashboard">
+                    <div class="row">
+                        <div class="col-md-9 dashboard-form">
+                            <div class="bg-white pinside40 mb30">
+                                @using (Html.BeginForm("Edit", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(m => m.VendorId)
+                                    @Html.HiddenFor(m => m.Password)
+                                    @Html.HiddenFor(m => m.ConfirmPassword)
+                                    @Html.HiddenFor(m => m.VendorServiceId)
+                                    @Html.HiddenFor(m => m.AveragePrice)
+                                    @Html.HiddenFor(m => m.EventId)
+                                    @Html.HiddenFor(m => m.PricingDetails)
+                                    @Html.HiddenFor(m => m.CreatedBy)
+                                    @Html.HiddenFor(m => m.DateCreated)
+                                    @Html.HiddenFor(m => m.EventPlannerId)
+                                    @Html.HiddenFor(m => m.Logo)
+                                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                                    <h2 class="form-title">Upload Logo</h2>
+                                    <!-- File Button -->
+                                    <div class="form-group">
+                                        <div class="col-md-4">
+                                            <div class="photo-upload">
+                                                <img src="~/UploadedFiles/VendorLogo/@Model.Logo" alt="" height="132px" width="132px">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 upload-file">
+                                            <input id="filebutton" name="logo" class="input-file" type="file">
+                                        </div>
+                                    </div>
+                                    <!-- Text input-->
+                                    <h2 class="form-title">Vendor Profile</h2>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Name, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Name"}})
+                                            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.LocationId, "Location", new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(m => m.LocationId, null, "Select Location", new {@class = "form-control input-md"})
+                                            @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Address, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Valid Address"}})
+                                            @Html.ValidationMessageFor(model => model.Address, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.VendorServiceId, "Vendor Service", new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Service Rendered", new {@class = "form-control input-md"})
+                                            @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Email, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.Email, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Valid Email Address"}})
+                                            @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Mobile, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.Mobile, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Valid Mobile Number"}})
+                                            @Html.ValidationMessageFor(model => model.Mobile, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Website, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.Website, new {@class = "form-control input-md", placeholder = "Enter Website Url"})
+                                            @Html.ValidationMessageFor(model => model.Website, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.About, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextAreaFor(model => model.About, new {@class = "form-control input-md", placeholder = "Enter About You"})
+                                            @Html.ValidationMessageFor(model => model.About, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <h2 class="form-title">Socail Media Profile</h2>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.FacebookPage, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.FacebookPage, new {@class = "form-control input-md", placeholder = "Enter Your Facebook Url"})
+                                            @Html.ValidationMessageFor(model => model.FacebookPage, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.TwitterPage, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.TwitterPage, new {@class = "form-control input-md", placeholder = "Enter Your Twitter Url"})
+                                            @Html.ValidationMessageFor(model => model.TwitterPage, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.InstagramPage, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.InstagramPage, new {@class = "form-control input-md", placeholder = "Enter Instagram Url"})
+                                            @Html.ValidationMessageFor(model => model.InstagramPage, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.YoutubePage, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.YoutubePage, new {@class = "form-control input-md", placeholder = "Enter Youtube Url"})
+                                            @Html.ValidationMessageFor(model => model.YoutubePage, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.GooglePlusPage, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.GooglePlusPage, new {@class = "form-control input-md", placeholder = "Enter Google Plus Url"})
+                                            @Html.ValidationMessageFor(model => model.GooglePlusPage, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="submit"></label>
+                                        <div class="col-md-4">
+                                            <button id="submit" name="submit" class="btn btn-primary">Update Profile</button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div role="tabpanel" class="tab-pane fade" id="price">
+    <div class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 profile-dashboard">
+                    <div class="row">
+                        <div class="col-md-9 dashboard-form">
+                            <div class="bg-white pinside40 mb30">
+                                @using (Html.BeginForm("Edit", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(m => m.VendorId)
+                                    @Html.HiddenFor(m => m.Password)
+                                    @Html.HiddenFor(m => m.ConfirmPassword)
+                                    @Html.HiddenFor(m => m.VendorServiceId)
+                                    @Html.HiddenFor(m => m.EventId)
+                                    @Html.HiddenFor(m => m.CreatedBy)
+                                    @Html.HiddenFor(m => m.DateCreated)
+                                    @Html.HiddenFor(m => m.EventPlannerId)
+                                    @Html.HiddenFor(m => m.LocationId)
+                                    @Html.HiddenFor(m => m.Logo)
+                                    @Html.HiddenFor(m => m.Name)
+                                    @Html.HiddenFor(m => m.Mobile)
+                                    @Html.HiddenFor(m => m.Email)
+                                    @Html.HiddenFor(m => m.Address)
+                                    @Html.HiddenFor(m => m.Website)
+                                    @Html.HiddenFor(m => m.FacebookPage)
+                                    @Html.HiddenFor(m => m.InstagramPage)
+                                    @Html.HiddenFor(m => m.TwitterPage)
+                                    @Html.HiddenFor(m => m.YoutubePage)
+                                    @Html.HiddenFor(m => m.GooglePlusPage)
+                                    @Html.HiddenFor(m => m.About)
+                                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                                    <!-- Text input-->
+                                    <h2 class="form-title">Vendor Pricing Information</h2>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.AveragePrice, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.EditorFor(model => model.AveragePrice, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Average Price"}})
+                                            @Html.ValidationMessageFor(model => model.AveragePrice, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.PricingDetails, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextAreaFor(model => model.PricingDetails, new {@class = "form-control input-md", placeholder = "Enter Your Pricing Details"})
+                                            @Html.ValidationMessageFor(model => model.PricingDetails, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="submit"></label>
+                                        <div class="col-md-4">
+                                            <button id="submit" name="submit" class="btn btn-primary">Update Pricing</button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div role="tabpanel" class="tab-pane fade" id="password">
+    <div class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 profile-dashboard">
+                    <div class="row">
+                        <div class="col-md-9 dashboard-form">
+                            <div class="bg-white pinside40 mb30">
+                                @using (Html.BeginForm("Edit", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(m => m.VendorId)
+                                    @Html.HiddenFor(m => m.VendorServiceId)
+                                    @Html.HiddenFor(m => m.AveragePrice)
+                                    @Html.HiddenFor(m => m.EventId)
+                                    @Html.HiddenFor(m => m.PricingDetails)
+                                    @Html.HiddenFor(m => m.CreatedBy)
+                                    @Html.HiddenFor(m => m.DateCreated)
+                                    @Html.HiddenFor(m => m.EventPlannerId)
+                                    @Html.HiddenFor(m => m.LocationId)
+                                    @Html.HiddenFor(m => m.Logo)
+                                    @Html.HiddenFor(m => m.Name)
+                                    @Html.HiddenFor(m => m.Mobile)
+                                    @Html.HiddenFor(m => m.Email)
+                                    @Html.HiddenFor(m => m.Address)
+                                    @Html.HiddenFor(m => m.Website)
+                                    @Html.HiddenFor(m => m.FacebookPage)
+                                    @Html.HiddenFor(m => m.InstagramPage)
+                                    @Html.HiddenFor(m => m.TwitterPage)
+                                    @Html.HiddenFor(m => m.YoutubePage)
+                                    @Html.HiddenFor(m => m.GooglePlusPage)
+                                    @Html.HiddenFor(m => m.About)
+                                    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                                    <!-- Text input-->
+                                    <h2 class="form-title">Vendor Pricing Information</h2>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Password, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.PasswordFor(model => model.Password, new {@class = "form-control input-md", placeholder = "Enter Password"})
+                                            @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ConfirmPassword, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.PasswordFor(model => model.ConfirmPassword, new {@class = "form-control input-md", placeholder = "Confirm Password"})
+                                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <!-- Button -->
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="submit"></label>
+                                        <div class="col-md-4">
+                                            <button id="submit" name="submit" class="btn btn-primary">Change Password</button>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </div>

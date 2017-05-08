@@ -97,12 +97,12 @@
                         foreach (var item in vendors)
                         {
                             <!-- /.venue box start-->
-                            <div class="col-md-6 vendor-box">
+                            <div class="col-md-4 vendor-box">
                                 <!-- venue box start-->
                                 <div class="vendor-image">
                                     <!-- venue pic -->
                                     <a href="@Url.Action("Details",new{id = item.VendorId})">
-                                        <img src="~/Content/AppTheme/images/vendor-8.jpg" alt="wedding venue" class="img-responsive">
+                                        <img src="~/UploadedFiles/VendorLogo/@item.Logo" alt="wedding venue" class="img-responsive" width="715px" height="400px">
                                     </a>
                                     @*<div class="favourite-bg">
                                      <a href="#" class="">

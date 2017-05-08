@@ -1712,6 +1712,8 @@
     <Content Include="Views\Shared\VendorImagePartial\EditImage.cshtml" />
     <Content Include="Views\Shared\VendorImagePartial\CreateImage.cshtml" />
     <Content Include="Views\Shared\VendorImagePartial\ImageGrid.cshtml" />
+    <Content Include="Views\Shared\Layout\_LayoutEventVendor.cshtml" />
+    <Content Include="Views\Vendors\EventVendors.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

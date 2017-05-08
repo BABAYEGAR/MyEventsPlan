@@ -52,17 +52,31 @@
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.BusinessName, new {htmlAttributes = new {placeholder = "Enter Vendor Business Name"}})
-        @Html.LabelFor(model => model.BusinessName)
-        @Html.ValidationMessageFor(model => model.BusinessName, "", new {@class = "text-danger"})
+        @Html.EditorFor(model => model.AveragePrice, new {htmlAttributes = new {placeholder = "Enter Average Price"}})
+        @Html.LabelFor(model => model.AveragePrice)
+        @Html.ValidationMessageFor(model => model.AveragePrice, "", new {@class = "text-danger"})
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.BusinessContact, new {htmlAttributes = new {placeholder = "Enter Vendor Business Contact"}})
-        @Html.LabelFor(model => model.BusinessContact)
-        @Html.ValidationMessageFor(model => model.BusinessContact, "", new {@class = "text-danger"})
+        @Html.EditorFor(model => model.Website, new {htmlAttributes = new {placeholder = "Enter Website Url"}})
+        @Html.LabelFor(model => model.Website)
+        @Html.ValidationMessageFor(model => model.Website, "", new {@class = "text-danger"})
     </div>
+    <div id="password">
+        <div class="mui-textfield mui-textfield--float-label">
 
+            @Html.EditorFor(model => model.Password, new {htmlAttributes = new {placeholder = "Enter Website Url"}})
+            @Html.LabelFor(model => model.Password)
+            @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+        </div>
+        <div class="mui-textfield mui-textfield--float-label">
+
+            @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {placeholder = "Enter Website Url"}})
+            @Html.LabelFor(model => model.ConfirmPassword)
+            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
+        </div>
+    </div>
+   
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Add Vendor" class="btn btn-default"/>

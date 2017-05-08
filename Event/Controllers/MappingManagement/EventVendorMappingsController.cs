@@ -12,6 +12,7 @@ namespace MyEventPlan.Controllers.MappingManagement
     public class EventVendorMappingsController : Controller
     {
         private readonly EventVendorMappingDataContext _db = new EventVendorMappingDataContext();
+        private readonly EventDataContext dbc = new EventDataContext();
 
         // GET: EventVendorMappings
         public ActionResult Index(long? id)
@@ -27,6 +28,8 @@ namespace MyEventPlan.Controllers.MappingManagement
                 select a;
 
             ViewBag.VendorId = new SelectList(_db.Vendors.Except(vedors), "VendorId", "Name");
+            ViewBag.VendorServiceId = new SelectList(dbc.VendorServices, "VendorServiceId", "ServiceName");
+            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
             var eventVendorMapping =
                 _db.EventVendorMapping.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId)
                     .Include(e => e.Event)
@@ -161,7 +164,7 @@ namespace MyEventPlan.Controllers.MappingManagement
             var eventVendorMapping = _db.EventVendorMapping.SingleOrDefault(n => n.EventId == eventId && n.VendorId == vendorId );
             _db.EventVendorMapping.Remove(eventVendorMapping);
             _db.SaveChanges();
-            return RedirectToAction("Index", new { id = eventId });
+            return RedirectToAction("EventVendors", "Vendors");
         }
         // POST: EventVendorMappings/Delete/5
         [HttpPost]
@@ -202,9 +205,9 @@ namespace MyEventPlan.Controllers.MappingManagement
                 _db.SaveChanges();
                 TempData["display"] = "You have successfully assigned the vendor to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("ListOfVendors", "Vendors");
+                return RedirectToAction("EventVendors", "Vendors");
             }
-            return RedirectToAction("ListOfVendors", "Vendors");
+            return RedirectToAction("EventVendors", "Vendors");
         }
 
         protected override void Dispose(bool disposing)

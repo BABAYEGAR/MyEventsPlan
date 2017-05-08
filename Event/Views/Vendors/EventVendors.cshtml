@@ -1,0 +1,145 @@
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model Vendor
+@{
+    ViewBag.Title = "List";
+    ViewBag.Header = "List of all vendors";
+    Layout = "../Shared/Layout/_LayoutEventVendor.cshtml";
+    List<Vendor> vendors = ViewBag.vendors;
+    var db = new EventDataContext();
+    var events = Session["event"] as Event;
+}
+<div class="tp-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li class="active">Vendors</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="filter-box">
+    <div class="container">
+        <div class="row filter-form">
+            <div class="col-md-12">
+                <h4>Refine Your Search</h4>
+            </div>
+            @using (Html.BeginForm("EventVendors", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                <div class="col-md-3 form-group">
+                    <label class="control-label" for="VendorServiceId">Vendor Category</label>
+                    @Html.DropDownListFor(m => m.VendorServiceId, null, "Select a category ", new {@class = "form-control", id = "category"})
+                    @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
+                </div>
+                <div class="col-md-3 form-group">
+                    <label class="control-label" for="LocationId">Location</label>
+                    @Html.DropDownListFor(m => m.LocationId, null, "Select a location ", new {@class = "form-control", id = "service"})
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
+                </div>
+                <div class="col-md-3">
+                    <div class="price-range default-range">
+                        <label for="amount">Price range:</label>
+                        <input type="text" id="amount" readonly style="border: 0; color: #f6931f; font-weight: bold;">
+                        <div id="slider-range"></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-block">Refine Your Search</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="main-container">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in vendors)
+            {
+                <div class="col-md-3 vendor-box">
+                    <!-- venue box start-->
+                    <div class="vendor-image">
+                        <!-- venue pic -->
+                        <a href="#">
+                            <img src="~/UploadedFiles/VendorLogo/@item.Logo" alt="wedding venue" class="img-responsive">
+                        </a>
+                        @*<div class="favourite-bg"><a href="#" class=""><i class="fa fa-heart"></i></a>
+                        </div>*@
+                    </div>
+                    <!-- /.venue pic -->
+                    <div class="vendor-detail">
+                        <!-- venue details -->
+                        <div class="caption">
+                            <!-- caption -->
+                            <h2>
+                                <a href="#" class="title">@item.Name</a>
+                            </h2>
+                            <p class="location">
+                                <i class="fa fa-map-marker"></i>@item.Address, @item.Location.Name
+                            </p>
+                            <div class="rating">
+                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i> <span class="rating-count">(22)</span>
+                            </div>
+                        </div>
+                        <!-- /.caption -->
+                        <div class="vendor-price">
+                            <div class="price">$390 - $600</div>
+                            <br/>
+                            @{
+                                var mapping = db.EventVendorMappings.Where(n => n.EventId == events.EventId && n.VendorId == item.VendorId).ToList();
+                            }
+                            @if (mapping.Count > 0)
+                            {
+                                <a href="@Url.Action("RemoveVendorFromEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventId = events.EventId})" class="btn btn-danger btn-block fa fa-remove">Remove Vendor</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Action("AddVendorToEvent", "EventVendorMappings", new {vendorId = item.VendorId, eventId = events.EventId})" class="btn btn-success btn-block fa fa-check">Add Vendor</a>
+                            }
+
+
+                        </div>
+                    </div>
+                    <!-- venue details -->
+                </div>
+            }
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 tp-pagination">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">Previous</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">NEXT</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,27 +11,31 @@ namespace Event.Data.Objects.Entities
         [Required]
         public string Name { get; set; }
         [PasswordPropertyText]
+        [Required]
         public string Password { get; set; }
+        [Required]
         [PasswordPropertyText]
         [DisplayName("Confirm Password")]
+        [Compare("Password")]
         public string ConfirmPassword { get; set; }
         [Required]
         public string Address { get; set; }
-        [DisplayName("Facebook Page Link")]
+        [DisplayName("Facebook Url")]
         public string FacebookPage { get; set; }
-        [DisplayName("Twitter Page Link")]
+        [DisplayName("Twitter Url")]
         public string TwitterPage { get; set; }
-        [DisplayName("Instagram Page Link")]
+        [DisplayName("Instagram Url")]
         public string InstagramPage { get; set; }
-        [DisplayName("Google Plus Page Link")]
+        [DisplayName("Google Plus Url")]
         public string GooglePlusPage { get; set; }
-        [DisplayName("Youtube Page Link")]
+        [DisplayName("Youtube Url")]
         public string YoutubePage { get; set; }
         public string Website { get; set; }
         public string About { get; set; }
         public string Logo { get; set; }
         public long AveragePrice { get; set; }
-        public long PricingDetails { get; set; }
+        [DisplayName("Pricing Details")]
+        public string PricingDetails { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }

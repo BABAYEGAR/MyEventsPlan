@@ -20,15 +20,14 @@
     @Html.HiddenFor(m=>m.CreatedBy)
     @Html.HiddenFor(m=>m.DateCreated)
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="control-group">
-        @Html.LabelFor(model => model.ImageSeven, new { @class = "control-label" })
+    <div class="form-group">
         <div class="controls">
-            <input type="file" name="imageSeven" />
+            <input type="file" name="imageSeven" class="form-control input-md" />
             @Html.ValidationMessageFor(model => model.ImageSeven, "", new { @class = "text-danger" })
         </div>
     </div>
-    <div class="control-group">
-        <div class="controls">
+    <div class="form-group">
+        <div class="col-md-4">
             <input type="submit" value="Upload Image" class="btn btn-default" />
         </div>
     </div>

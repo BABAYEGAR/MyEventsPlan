@@ -4,13 +4,38 @@
     var events = Session["event"] as Event;
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all vedors assigned to " + events?.Name + "!";
-      Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var mapping = new EventVendorMapping();
+    var vendor = new Vendor();
 }
 @section add {
     @if (events != null)
     {
-        @Html.ActionLink("Add vendors", "ListOfVendors", "Vendors", null, new {@class = "btn btn-xs btn-primary pull-right"})
+        @Html.ActionLink("Add General Vendors", "EventVendors", "Vendors", null, new {@class = "btn btn-xs btn-primary pull-right"})
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary  fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
+            Add Personal Vendor
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Add a Personal Vendor</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            Html.RenderPartial("EventPlanning/CreateVendorModal", vendor);
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
     }
 
 

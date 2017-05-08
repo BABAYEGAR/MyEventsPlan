@@ -8,6 +8,7 @@ using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Enum;
+using MyEventPlan.Data.Service.FileUploader;
 
 namespace MyEventPlan.Controllers.VendorManagement
 {
@@ -26,14 +27,22 @@ namespace MyEventPlan.Controllers.VendorManagement
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
             return View(vendors.ToList());
         }
+
         // GET: Vendors/Profile
         public ActionResult Profile()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var vendor =
                 db.Vendors.Find(loggedinuser.VendorId);
+            if (vendor != null)
+            {
+                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+                    vendor.VendorServiceId);
+                ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
+            }
             return View(vendor);
         }
+
         // GET: Vendors/Details/5
         public ActionResult Details(long? id)
         {
@@ -67,11 +76,33 @@ namespace MyEventPlan.Controllers.VendorManagement
                 locationId = Convert.ToInt64(collectedValues["LocationId"]);
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
             ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", locationId);
+            ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
+                                                    n.EventId == null)
+                .ToList();
+            return View();
+        }
 
+        // GET: Vendors/ListOfVendors/SearchParameters
+        public ActionResult EventVendors(FormCollection collectedValues)
+        {
+            long? serviceId = null;
+            long? locationId = null;
+            if (collectedValues["VendorServiceId"] != "")
+                serviceId = Convert.ToInt64(collectedValues["VendorServiceId"]);
+            if (collectedValues["VendorServiceId"] != "")
+                locationId = Convert.ToInt64(collectedValues["LocationId"]);
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
+            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", locationId);
+            if (locationId == 0 && serviceId == 0)
+            {
+                ViewBag.vendors = db.Vendors.ToList();
+                return View();
+            }
             ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId)
                 .ToList();
             return View();
         }
+
         // GET: Vendors/Create
         public ActionResult Create()
         {
@@ -88,8 +119,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Create(
             [Bind(
                 Include =
-                    "VendorId,Name,Address,Email,Mobile,MinimumPrice,LocationId,About,VendorServiceId,BusinessName,BusinessContact"
-            )] Vendor vendor)
+                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage,AveragePrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
+            )] Vendor vendor, FormCollection collectedValues)
         {
             var allUsers = dbc.AppUsers;
 
@@ -112,8 +143,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                     vendor.CreatedBy = loggedinuser.AppUserId;
                     vendor.EventPlannerId = loggedinuser.EventPlannerId;
                     if (events != null) vendor.EventId = events.EventId;
-                    vendor.Password = new Hashing().HashPassword("password");
-                    vendor.ConfirmPassword = new Hashing().HashPassword("password");
+                    vendor.Password = new Hashing().HashPassword(vendor.Password);
+                    vendor.ConfirmPassword = new Hashing().HashPassword(vendor.ConfirmPassword);
                 }
             }
             else
@@ -137,11 +168,36 @@ namespace MyEventPlan.Controllers.VendorManagement
 
             dbc.EventVendorMappings.Add(mapping);
             dbc.SaveChanges();
-            TempData["display"] = "You have successfully added a vendor to your event!";
+            TempData["display"] = "You have successfully added a personal vendor to your event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("ListOfVendors");
         }
 
+        public ActionResult ChangePassword(
+            [Bind(
+                Include =
+                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage,AveragePrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
+            )] Vendor vendor, FormCollection collectedValues)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            AppUser user = null;
+            if (loggedinuser != null)
+            {
+                user = dbc.AppUsers.Find(loggedinuser.AppUserId);
+                if (user != null)
+                {
+                    user.Password = new Hashing().HashPassword(vendor.ConfirmPassword);
+                    vendor.Password = null;
+                    vendor.ConfirmPassword = null;
+
+                    dbc.Entry(user).State = EntityState.Modified;
+                    dbc.Entry(vendor).State = EntityState.Modified;
+                }
+            }
+            dbc.SaveChanges();
+            loggedinuser = user;
+            return View("Profile");
+        }
 
         // GET: Vendors/Create
         public ActionResult Register(long? id)
@@ -160,11 +216,12 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Register(
             [Bind(
                 Include =
-                    "VendorId,Name,About,Address,Email,MinimumPrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
-            )] Vendor vendor,FormCollection collectedValues)
+                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage,AveragePrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
+            )] Vendor vendor, FormCollection collectedValues)
         {
+            var logo = Request.Files["logo"];
             var role = dbc.Roles.FirstOrDefault(m => m.Name == "Vendor");
-            long packageId = Convert.ToInt64(collectedValues["packageId"]);
+            var packageId = Convert.ToInt64(collectedValues["packageId"]);
             var pacakge = dbd.VendorPackages.Find(packageId);
             if (ModelState.IsValid)
             {
@@ -180,9 +237,11 @@ namespace MyEventPlan.Controllers.VendorManagement
                 vendor.CreatedBy = 1;
                 vendor.EventPlannerId = null;
                 vendor.EventId = null;
+                if (logo != null && logo.FileName != "")
+                    vendor.Logo = new FileUploader().UploadFile(logo, UploadType.vendorLogo);
 
                 Session["vendor"] = vendor;
-            
+
 
                 //vendor user account details
                 var appUser = new AppUser();
@@ -199,7 +258,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                 appUser.Verified = false;
                 if (role != null) appUser.RoleId = role.RoleId;
                 appUser.Password = new Hashing().HashPassword(vendor.Password);
-             
+
 
                 Session["vendoruser"] = appUser;
                 var packageSetting = new VendorPackageSetting
@@ -209,7 +268,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                     EndDate = DateTime.Now.AddMonths(1),
                     Status = PackageStatusEnum.Active.ToString(),
                     VendorId = vendor.VendorId,
-                    VendorPackageId = (long) packageId,
+                    VendorPackageId = packageId,
                     DateCreated = DateTime.Now,
                     DateLastModified = DateTime.Now,
                     CreatedBy = 1,
@@ -217,12 +276,14 @@ namespace MyEventPlan.Controllers.VendorManagement
                     Amount = (long) pacakge.Amount
                 };
                 Session["vendorpackage"] = packageSetting;
-                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",vendor.VendorServiceId);
-                ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name",vendor.LocationId);
+                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+                    vendor.VendorServiceId);
+                ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
                 return View(vendor);
             }
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
+            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+                vendor.VendorServiceId);
+            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
             return View(vendor);
         }
 
@@ -247,6 +308,7 @@ namespace MyEventPlan.Controllers.VendorManagement
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Login", "Account");
         }
+
         // GET: Vendors/Edit/5
         public ActionResult Edit(long? id)
         {
@@ -268,16 +330,20 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Edit(
             [Bind(
                 Include =
-                    "VendorId,Name,Address,Email,Mobile,LocationId,ConfirmPassword,Password,VendorServiceId,EventPlannerId,BusinessName,BusinessContact"
+                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage" +
+                    ",AveragePrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,CreatedBy,DateCreated"
             )] Vendor vendor)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                var logo = Request.Files["logo"];
                 vendor.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
                 {
                     vendor.LastModifiedBy = loggedinuser.AppUserId;
+                    if (logo != null && logo.FileName != "")
+                        vendor.Logo = new FileUploader().UploadFile(logo, UploadType.vendorLogo);
                 }
                 else
                 {
@@ -289,11 +355,11 @@ namespace MyEventPlan.Controllers.VendorManagement
                 db.SaveChanges();
                 TempData["vendor"] = "You have successfully modified a vendor!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-                return RedirectToAction("Index");
+                return RedirectToAction("Profile");
             }
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
                 vendor.VendorServiceId);
+            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
             return View(vendor);
         }
 
