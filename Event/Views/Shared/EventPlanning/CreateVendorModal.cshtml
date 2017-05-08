@@ -65,13 +65,13 @@
     <div id="password">
         <div class="mui-textfield mui-textfield--float-label">
 
-            @Html.EditorFor(model => model.Password, new {htmlAttributes = new {placeholder = "Enter Website Url"}})
+            @Html.EditorFor(model => model.Password, new {htmlAttributes = new {id = "pass"}})
             @Html.LabelFor(model => model.Password)
             @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
         </div>
         <div class="mui-textfield mui-textfield--float-label">
 
-            @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {placeholder = "Enter Website Url"}})
+            @Html.EditorFor(model => model.ConfirmPassword, new {htmlAttributes = new {id = "pass1"}})
             @Html.LabelFor(model => model.ConfirmPassword)
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
         </div>
@@ -82,4 +82,12 @@
             <input type="submit" value="Add Vendor" class="btn btn-default"/>
         </div>
     </div>
+}
+@section scripts{
+    <script>
+        $("#pass").val('password');
+        $("#pass1").val('password');
+        $("#password").hide();
+
+    </script>
 }

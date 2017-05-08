@@ -143,8 +143,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                     vendor.CreatedBy = loggedinuser.AppUserId;
                     vendor.EventPlannerId = loggedinuser.EventPlannerId;
                     if (events != null) vendor.EventId = events.EventId;
-                    vendor.Password = new Hashing().HashPassword(vendor.Password);
-                    vendor.ConfirmPassword = new Hashing().HashPassword(vendor.ConfirmPassword);
+                    vendor.Password = new Hashing().HashPassword("password");
+                    vendor.ConfirmPassword = vendor.Password;
                 }
             }
             else
