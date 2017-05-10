@@ -14,6 +14,7 @@ namespace MyEventPlan.Controllers.VendorManagement
     public class VendorReviewsController : Controller
     {
         private VendorReviewDataContext db = new VendorReviewDataContext();
+        private VendorDataContext dbc = new VendorDataContext();
 
         // GET: VendorReviews
         public ActionResult Index()
@@ -49,14 +50,38 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorReviewId,ReviewerName,ReviewerEmail,ReviewTitle,ReviewBody,Rating,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] VendorReview vendorReview)
+        public ActionResult Create([Bind(Include = "VendorReviewId,ReviewerName,ReviewerEmail,ReviewTitle,ReviewBody,Rating,VendorId,CreatedBy" +
+                                                   ",DateCreated,DateLastModified,LastModifiedBy")] VendorReview vendorReview,FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
+                var rating = collectedValues["Rating"];
+                vendorReview.Rating = Convert.ToInt64(rating);
                 vendorReview.DateCreated = DateTime.Now;
                 vendorReview.DateLastModified = DateTime.Now;
+
                 db.VendorReviews.Add(vendorReview);
                 db.SaveChanges();
+
+                var vendor = dbc.Vendors.Find(vendorReview.VendorId);
+                var reviews = db.VendorReviews.Where(n => n.VendorId == vendorReview.VendorId).ToList();
+                long? totalRatings = 0;
+                long? totalPossibleRatings = 0;
+                double? ratingValue = 0;
+                long ratings = 0;
+                if (reviews.Count > 0)
+                {
+                    totalRatings = reviews.Sum(n => n.Rating);
+                    totalPossibleRatings = reviews.Count * 5;
+                    ratingValue = totalRatings * 5 / totalPossibleRatings;
+                    if (ratingValue != null)
+                    {
+                        ratings = (long)Math.Round((double)ratingValue);
+                        vendor.AverageRating = ratings;
+                    }
+                }
+                dbc.Entry(vendor).State = EntityState.Modified;
+                dbc.SaveChanges();
                 return RedirectToAction("Details", "Vendors", new { id = vendorReview.VendorId });
             }
             return View(vendorReview);

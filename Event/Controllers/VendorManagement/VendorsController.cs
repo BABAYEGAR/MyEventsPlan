@@ -56,17 +56,6 @@ namespace MyEventPlan.Controllers.VendorManagement
             return View(vendor);
         }
 
-        // GET: Vendors/Details/5
-        public ActionResult VendorDetails(long? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendor = db.Vendors.Find(id);
-            if (vendor == null)
-                return HttpNotFound();
-            return View(vendor);
-        }
-
         // GET: Vendors/ListOfVendors/SearchParameters
         public ActionResult ListOfVendors(FormCollection collectedValues)
         {
@@ -78,13 +67,17 @@ namespace MyEventPlan.Controllers.VendorManagement
                 locationId = Convert.ToInt64(collectedValues["LocationId"]);
             long minimumPrice = 0;
             long maximumPrice = 0;
-            int rating = 0;
+            int ratingOne = 0;
+            int ratingTwo = 0;
+            int ratingThree = 0;
+            int ratingFour = 0;
+            int ratingFive = 0;
             if (collectedValues["Price"] != null)
             {
                 var price = collectedValues["Price"];
                 var index = price.IndexOf("-", StringComparison.Ordinal);
-                var min = (index > 0 ? price.Substring(0, index) : "").Replace("$", "");
-                var max = price.Substring(price.LastIndexOf('-') + 1).Replace("$", "");
+                var min = (index > 0 ? price.Substring(0, index) : "").Replace("N", "");
+                var max = price.Substring(price.LastIndexOf('-') + 1).Replace("N", "");
 
                 minimumPrice = Convert.ToInt64(min);
                 maximumPrice = Convert.ToInt64(max);
@@ -92,8 +85,39 @@ namespace MyEventPlan.Controllers.VendorManagement
             if (collectedValues["checkbox"] != null)
             {
                 var start = collectedValues["checkbox"];
-                rating = (int) Convert.ToInt64(start);
+                if (start.Contains("1"))
+                {
+                    ratingOne = 1;
+                }
+                if (start.Contains("2"))
+                {
+                    ratingTwo = 2;
+                }
+                if (start.Contains("3"))
+                {
+                    ratingThree = 3;
+                }
+                if (start.Contains("4"))
+                {
+                    ratingFour = 4;
+                }
+                if (start.Contains("5"))
+                {
+                    ratingFive = 5;
+                }
 
+            }
+            if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] == "" &&
+                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
+            {
+                ViewBag.vendors = db.Vendors.Where(n => n.VendorServiceId == serviceId &&
+                                                        n.EventId == null).ToList();
+            }
+            if (collectedValues["VendorServiceId"] == "" && collectedValues["LocationId"] != "" &&
+                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
+            {
+                ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId &&
+                                                        n.EventId == null).ToList();
             }
             if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] != "" &&
                 collectedValues["Price"] == null && collectedValues["checkbox"] == null)
@@ -114,12 +138,21 @@ namespace MyEventPlan.Controllers.VendorManagement
 
                 ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
                                                         n.EventId == null && n.MinimumPrice >= minimumPrice &&
-                                                        n.MaximumPrice >= maximumPrice && n.Rating == rating).ToList();
+                                                        n.MaximumPrice >= maximumPrice && (n.AverageRating == ratingOne || n.AverageRating == ratingTwo || n.AverageRating == ratingThree
+                                                        || n.AverageRating == ratingFour || n.AverageRating == ratingFive)).ToList();
+            }
+            if (collectedValues["VendorServiceId"] == "" && collectedValues["LocationId"] == "" &&
+                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
+            {
+                ViewBag.vendors = db.Vendors.Where(n=> n.EventId == null).ToList();
             }
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
             ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", locationId);
-            ViewBag.rate = rating;
-         
+            ViewBag.rate1 = ratingOne;
+            ViewBag.rate2 = ratingTwo;
+            ViewBag.rate3 = ratingThree;
+            ViewBag.rate4 = ratingFour;
+            ViewBag.rate5 = ratingFive;
             return View();
         }
 
@@ -160,7 +193,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Create(
             [Bind(
                 Include =
-                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage,AveragePrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
+                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails" +
+                    ",YoutubePage,GooglePlusPage,MaximumPrice,MinimumPrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
             )] Vendor vendor, FormCollection collectedValues)
         {
             var allUsers = dbc.AppUsers;
@@ -217,7 +251,9 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult ChangePassword(
             [Bind(
                 Include =
-                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage,AveragePrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
+                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage" +
+                    ",InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage,MaximumPrice,MinimumPrice" +
+                    ",Logo,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
             )] Vendor vendor, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -257,7 +293,9 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Register(
             [Bind(
                 Include =
-                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage,AveragePrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
+                    "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website," +
+                    "PricingDetails,YoutubePage,GooglePlusPage,MaximumPrice,MinimumPrice,LocationId,ConfirmPassword," +
+                    "Password,Mobile,VendorServiceId,EventPlannerId"
             )] Vendor vendor, FormCollection collectedValues)
         {
             var logo = Request.Files["logo"];
@@ -526,19 +564,21 @@ namespace MyEventPlan.Controllers.VendorManagement
             [Bind(
                 Include =
                     "VendorId,Name,About,Address,Email,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails,YoutubePage,GooglePlusPage" +
-                    ",AveragePrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId,CreatedBy,DateCreated"
-            )] Vendor vendor)
+                    ",MaximumPrice,MinimumPrice,LocationId,ConfirmPassword,Logo,Password,Mobile,VendorServiceId,EventPlannerId,CreatedBy,DateCreated"
+            )] Vendor vendor, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 var logo = Request.Files["logo"];
+                var vendorUser = _dbd.AppUsers.SingleOrDefault(n => n.VendorId == vendor.VendorId);
                 vendor.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
                 {
                     vendor.LastModifiedBy = loggedinuser.AppUserId;
                     if (logo != null && logo.FileName != "")
                         vendor.Logo = new FileUploader().UploadFile(logo, UploadType.vendorLogo);
+
                 }
                 else
                 {
@@ -548,6 +588,17 @@ namespace MyEventPlan.Controllers.VendorManagement
                 }
                 db.Entry(vendor).State = EntityState.Modified;
                 db.SaveChanges();
+                if (vendorUser != null)
+                {
+                    vendorUser.DateLastModified = DateTime.Now;
+                    vendorUser.Email = vendor.Email;
+                    vendorUser.Firstname = vendor.Name;
+                    vendorUser.Lastname = vendor.Name;
+                    vendorUser.Mobile = vendor.Mobile;
+                    vendorUser.ProfileImage = vendor.Logo;
+                }
+                _dbd.Entry(vendorUser).State = EntityState.Modified;
+                _dbd.SaveChanges();
                 TempData["vendor"] = "You have successfully modified a vendor!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Profile");
@@ -576,6 +627,39 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult DeleteConfirmed(long id)
         {
             var vendor = db.Vendors.Find(id);
+            var user = dbc.AppUsers.SingleOrDefault(n => n.VendorId == vendor.VendorId);
+            var eventMapping = dbc.EventVendorMappings.Where(n => n.VendorId == vendor.VendorId);
+            var reviews = dbc.VendorReviews.Where(n => n.VendorId == vendor.VendorId);
+            var subscription = dbc.SubscriptionInvoices.Where(n => n.VendorId == vendor.VendorId);
+            var images = dbc.VendorImages.Where(n => n.VendorId == vendor.VendorId);
+            var enquiries = dbc.VendorEnquiries.Where(n => n.VendorId == vendor.VendorId);
+            var settings = dbc.VendorPackageSettings.Where(n => n.VendorId == vendor.VendorId);
+            if (user != null) dbc.AppUsers.Remove(user);
+            foreach (var item in eventMapping)
+            {
+                dbc.EventVendorMappings.Remove(item);
+            }
+            foreach (var item in reviews)
+            {
+                dbc.VendorReviews.Remove(item);
+            }
+            foreach (var item in subscription)
+            {
+                dbc.SubscriptionInvoices.Remove(item);
+            }
+            foreach (var item in images)
+            {
+                dbc.VendorImages.Remove(item);
+            }
+            foreach (var item in enquiries)
+            {
+                dbc.VendorEnquiries.Remove(item);
+            }
+            foreach (var item in settings)
+            {
+                dbc.VendorPackageSettings.Remove(item);
+            }
+            dbc.SaveChanges();
             db.Vendors.Remove(vendor);
             db.SaveChanges();
             return RedirectToAction("Index");

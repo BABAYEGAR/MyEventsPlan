@@ -42,7 +42,7 @@ namespace Event.Data.Objects.Entities
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        public int Rating { get; set; }
+        public long? AverageRating { get; set; }
         [Required]
         public string Mobile { get; set; }
         [Required]

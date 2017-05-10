@@ -155,7 +155,8 @@
                                     @Html.HiddenFor(m => m.Password)
                                     @Html.HiddenFor(m => m.ConfirmPassword)
                                     @Html.HiddenFor(m => m.VendorServiceId)
-                                    @Html.HiddenFor(m => m.AveragePrice)
+                                    @Html.HiddenFor(m => m.MinimumPrice)
+                                    @Html.HiddenFor(m => m.MaximumPrice)
                                     @Html.HiddenFor(m => m.EventId)
                                     @Html.HiddenFor(m => m.PricingDetails)
                                     @Html.HiddenFor(m => m.CreatedBy)
@@ -322,16 +323,23 @@
                                     <!-- Text input-->
                                     <h2 class="form-title">Vendor Pricing Information</h2>
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.AveragePrice, new {@class = "col-md-4 control-label"})
+                                        @Html.LabelFor(model => model.MinimumPrice, new {@class = "col-md-4 control-label"})
                                         <div class="col-md-8">
-                                            @Html.EditorFor(model => model.AveragePrice, new {htmlAttributes = new {@class = "form-control input-md", placeholder = "Enter Average Price"}})
-                                            @Html.ValidationMessageFor(model => model.AveragePrice, "", new {@class = "text-danger"})
+                                            @Html.TextBoxFor(model => model.MinimumPrice, new {@class = "form-control input-md", placeholder = "Enter Your Minimum Price"})
+                                            @Html.ValidationMessageFor(model => model.MinimumPrice, "", new {@class = "text-danger"})
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.MaximumPrice, new {@class = "col-md-4 control-label"})
+                                        <div class="col-md-8">
+                                            @Html.TextBoxFor(model => model.MaximumPrice, new {@class = "form-control input-md", placeholder = "Enter Your Maximum Price"})
+                                            @Html.ValidationMessageFor(model => model.MaximumPrice, "", new {@class = "text-danger"})
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.PricingDetails, new {@class = "col-md-4 control-label"})
                                         <div class="col-md-8">
-                                            @Html.TextAreaFor(model => model.PricingDetails, new {@class = "form-control input-md", placeholder = "Enter Your Pricing Details"})
+                                            @Html.TextAreaFor(model => model.PricingDetails, new {@class = "form-control input-md", placeholder = "Enter Other Pricing Details"})
                                             @Html.ValidationMessageFor(model => model.PricingDetails, "", new {@class = "text-danger"})
                                         </div>
                                     </div>
@@ -365,7 +373,8 @@
                                     @Html.AntiForgeryToken()
                                     @Html.HiddenFor(m => m.VendorId)
                                     @Html.HiddenFor(m => m.VendorServiceId)
-                                    @Html.HiddenFor(m => m.AveragePrice)
+                                    @Html.HiddenFor(m => m.MinimumPrice)
+                                    @Html.HiddenFor(m => m.MaximumPrice)
                                     @Html.HiddenFor(m => m.EventId)
                                     @Html.HiddenFor(m => m.PricingDetails)
                                     @Html.HiddenFor(m => m.CreatedBy)
@@ -427,12 +436,12 @@
                         <div class="col-md-9 dashboard-form">
                             <div class="bg-white pinside40 mb30">
                               
-                                    <div class="form-group">
-                                        <label class="col-md-4 control-label" for="submit"></label>
-                                        <div class="col-md-4">
-                                            <a class="btn btn-primary" href="@Url.Action("Pricing","Vendors")">Manage Subscription</a>
-                                        </div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label" for="submit"></label>
+                                    <div class="col-md-4">
+                                        <a class="btn btn-primary" href="@Url.Action("Pricing","Vendors")">Manage Subscription</a>
                                     </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -449,3 +458,18 @@
 </div>
 </div>
 </div>
+@section scripts
+{
+    <script>
+        $(function() {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 1000000,
+                slide: function(event, ui) {
+                    $("#amount").val("N" + ui.values[0] + " - N" + ui.values[1]);
+                }
+            });
+        });
+    </script>
+}

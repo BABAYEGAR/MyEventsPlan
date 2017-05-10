@@ -6,7 +6,7 @@
     Layout = "../Shared/Layout/_LayoutVendorDetails.cshtml";
 
     var db = new EventDataContext();
-    var vendorReviews = db.VendorReviews.ToList();
+    var vendorReviews = db.VendorReviews.Where(n=>n.VendorId == Model.VendorId).ToList();
 
     var images = db.VendorImages.SingleOrDefault(n => n.VendorId == Model.VendorId);
 }
@@ -57,8 +57,8 @@
         <div class="venue-info">
             <!-- venue-info-->
             <div class="pricebox">
-                <div>Avg price:</div>
-                <span class="price">$@Model.AveragePrice</span>
+                <div>Avg price: N@((Model.MinimumPrice + Model.MaximumPrice)/2)</div>
+                <span class="price"></span>
             </div>
         </div>
         @*<a href="#inquiry" class="btn btn-default btn-lg btn-block">Book Venue</a>*@
@@ -248,32 +248,34 @@
                 <div class="review-list">
                     <!-- Comment -->
                     <div class="row">
-                        <div class="col-md-2 col-sm-2 hidden-xs">
+                        @*<div class="col-md-2 col-sm-2 hidden-xs">
                             <div class="user-pic">
                                 <img class="img-responsive img-circle" src="images/userpic.jpg" alt="">
                             </div>
-                        </div>
+                        </div>*@
                         <div class="col-md-10 col-sm-10">
+                        @foreach (var item in vendorReviews)
+                        {
                             <div class="panel panel-default arrow left">
-                                @foreach (var item in vendorReviews)
-                                {
-                                    <div class="panel-body">
-                                        <div class="text-left">
-                                            <h3>@item.ReviewTitle</h3>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i>
-                                            </div>
-                                        </div>
-                                        <div class="review-post">
-                                            <p> @item.ReviewBody </p>
-                                        </div>
-                                        <div class="review-user">
-                                            By <a href="#">@item.ReviewerName</a>, on <span class="review-date"></span>@item.DateCreated.ToString("D")
+
+                                <div class="panel-body">
+                                    <div class="text-left">
+                                        <h3>@item.ReviewTitle</h3>
+                                        <div class="rating">
+                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i>
                                         </div>
                                     </div>
-                                }
-                                
+                                    <div class="review-post">
+                                        <p> @item.ReviewBody </p>
+                                    </div>
+                                    <div class="review-user">
+                                        By <a href="#">@item.ReviewerName</a>, on <span class="review-date"></span>@item.DateCreated.ToString("D")
+                                    </div>
+                                </div>
+
+
                             </div>
+                        }
                         </div>
                     </div>
                 </div>
@@ -436,7 +438,7 @@
         <div class="profile-sidebar side-box">
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
-                <img src="images/profile_user.jpg" class="img-responsive img-circle" alt="">
+                <img src="~/UploadedFiles/VendorLogo/@Model.Logo" class="img-responsive img-circle" alt="">
             </div>
             <div class="profile-usertitle">
                 <div class="profile-usertitle-name">

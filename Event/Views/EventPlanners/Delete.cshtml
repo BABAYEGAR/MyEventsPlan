@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Delete";
     ViewBag.Header = "Delete event planner";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/Layout/_LayoutForm.cshtml";
 }
 <dl class="dl-horizontal">
     <dt>
@@ -14,19 +14,11 @@
     </dd>
 
     <dt>
-        @Html.DisplayNameFor(model => model.Firstname)
+        @Html.DisplayNameFor(model => model.Name)
     </dt>
 
     <dd>
-        @Html.DisplayFor(model => model.Firstname)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.Lastname)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.Lastname)
+        @Html.DisplayFor(model => model.Name)
     </dd>
 
     <dt>
@@ -46,14 +38,37 @@
     </dd>
 
 </dl>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger  fa fa-trash" data-toggle="modal" data-target="#myModal6">
+    Delete
+</button>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<!-- Modal -->
+<div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel6">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete Staff</h4>
+            </div>@using (Html.BeginForm("Delete", "EventPlanners", new { id = Model.EventPlannerId }))
+                  {
+                      <div class="modal-body">
 
-    <div class="form-actions no-color">
-        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
-        <input type="submit" value="Delete" class="btn btn-danger"/>
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to delete the Vendor?<br/>
+                              Deleting the event planner would also delete information  associated with this planner! 
+                          </p>
 
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash" />
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
+                      </div>
+                  }
+        </div>
     </div>
-}
+
+</div>

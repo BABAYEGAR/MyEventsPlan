@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Delete";
     ViewBag.Header = "Delete vendor";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/Layout/_LayoutForm.cshtml";
     var userDb = new AppUserDataContext();
 }
 <dl class="dl-horizontal">
@@ -47,13 +47,37 @@
         @Html.DisplayFor(model => model.Mobile)
     </dd>
 </dl>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger  fa fa-trash" data-toggle="modal" data-target="#myModal6">
+    Delete
+</button>
 
-    <div class="form-actions no-color">
-        @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
-        <input type="submit" value="Delete" class="btn btn-danger"/>
+<!-- Modal -->
+<div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel6">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete Staff</h4>
+            </div>@using (Html.BeginForm("Delete", "Vendors", new { id = Model.VendorId }))
+            {
+                <div class="modal-body">
 
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to delete the Vendor?<br/>
+                        Deleting the vendor would also delete information such as the vendor reviews, vendor attachements to events and all other data associated with this vendor! 
+                    </p>
+
+                </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash" />
+                        <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
+                    </div>
+            }
+        </div>
     </div>
-}
+
+</div>

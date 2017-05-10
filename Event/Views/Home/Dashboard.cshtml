@@ -300,6 +300,42 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="purple">
+                        <i class="material-icons">event_seat</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Vendors</p>
+                        <h3 class="title">
+                            @events.Count<small> Users</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "Vendors")">View Users</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header" data-background-color="purple">
+                        <i class="material-icons">event_seat</i>
+                    </div>
+                    <div class="card-content">
+                        <p class="category">Event Planners</p>
+                        <h3 class="title">
+                            @events.Count<small> Users</small>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "EventPlanners")">View Users</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }if (role.ManageRoles)
          {
              <div class="col-lg-3 col-md-6 col-sm-6">
@@ -424,7 +460,7 @@
             </div>
         }
 
-}
+
 <div class="row">
     <div class="col-lg-6 col-md-12">
         <div class="card card-nav-tabs">

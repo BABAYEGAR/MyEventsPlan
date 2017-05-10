@@ -14,6 +14,7 @@ namespace MyEventPlan.Controllers.EventManagement
     public class AppUsersController : Controller
     {
         private readonly AppUserDataContext db = new AppUserDataContext();
+        private readonly EventPlannerDataContext dbc = new EventPlannerDataContext();
 
         // GET: AppUsers
         public ActionResult Index()
@@ -77,6 +78,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult ImageUpload(FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var plannerUser = dbc.EventPlanners.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             AppUser user = null;
             HttpPostedFileBase image = Request.Files["image_file"];
             if (loggedinuser != null)

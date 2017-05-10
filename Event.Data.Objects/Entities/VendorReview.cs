@@ -19,7 +19,7 @@ namespace Event.Data.Objects.Entities
         public string ReviewTitle { get; set; }
         [Required]
         public string ReviewBody { get; set; }
-        public string Rating { get; set; }
+        public long? Rating { get; set; }
         public long? VendorId { get; set; }
         [ForeignKey("VendorId")]
         public  Vendor Vendor { get; set; }

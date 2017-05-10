@@ -17,6 +17,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly EventPlannerDataContext db = new EventPlannerDataContext();
         private readonly AppUserDataContext dbc = new AppUserDataContext();
         private readonly EventDataContext dbd = new EventDataContext();
+        private readonly ProspectDataContext dbe = new ProspectDataContext();
 
         // GET: EventPlanners
         public ActionResult Index()
@@ -169,6 +170,72 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             var eventPlanner = db.EventPlanners.Find(id);
+            var user = dbd.AppUsers.SingleOrDefault(n => n.EventPlannerId == id);
+            var events = dbe.Event.Where(n => n.EventPlannerId == id);
+            var prospects = dbe.Prospects.Where(n => n.EventPlannerId == id);
+            var appointments = dbd.Appointments.Where(n => n.EventPlannerId == id);
+            var subscription = dbd.SubscriptionInvoices.Where(n => n.EventPlannerId == id);
+            var settings = dbd.EventPlannerPackageSettings.Where(n => n.EventPlannerId == id);
+            var staff = dbd.Staff.Where(n => n.EventPlannerId == id);
+            var clients = dbd.Clients.Where(n => n.EventPlannerId == id);
+            var guestList = dbd.GuestLists.Where(n => n.EventPlannerId == id);
+            var invoices = dbd.Invoices.Where(n => n.EventPlannerId == id);
+            var resources = dbd.Resources.Where(n => n.EventPlannerId == id);
+            if (user != null) dbd.AppUsers.Remove(user);
+            foreach (var item in events)
+            {
+                item.EventPlannerId = null;
+                dbe.Entry(item).State = EntityState.Modified;
+            }
+            foreach (var item in prospects)
+            {
+                item.EventPlannerId = null;
+                dbe.Entry(item).State = EntityState.Modified;
+            }
+            foreach (var item in appointments)
+            {
+                item.EventPlannerId = null;
+                dbd.Entry(item).State = EntityState.Modified;
+            }
+            foreach (var item in subscription)
+            {
+                dbd.SubscriptionInvoices.Remove(item);
+            }
+            foreach (var item in staff)
+            {
+                item.EventPlannerId = null;
+                dbd.Entry(item).State = EntityState.Modified;
+            }
+            foreach (var item in resources)
+            {
+                dbd.Resources.Remove(item);
+                var eventResources = dbd.EventResourceMapping.Where(n => n.ResourceId == item.ResourceId);
+                foreach (var items in eventResources)
+                {
+                    dbd.EventResourceMapping.Remove(items);
+                }
+            }
+            foreach (var item in clients)
+            {
+                item.EventPlannerId = null;
+                dbd.Entry(item).State = EntityState.Modified;
+            }
+            foreach (var item in invoices)
+            {
+                item.EventPlannerId = null;
+                dbd.Entry(item).State = EntityState.Modified;
+            }
+            foreach (var item in guestList)
+            {
+                item.EventPlannerId = null;
+                dbd.Entry(item).State = EntityState.Modified;
+            }
+            foreach (var item in settings)
+            {
+                dbd.EventPlannerPackageSettings.Remove(item);
+            }
+            dbe.SaveChanges();
+            dbd.SaveChanges();
             db.EventPlanners.Remove(eventPlanner);
             db.SaveChanges();
             return RedirectToAction("Index");

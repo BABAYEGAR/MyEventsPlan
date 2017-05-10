@@ -1,7 +1,13 @@
-﻿@using Event.Data.Objects.Entities
-@model Vendor
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@model Event.Data.Objects.Entities.Vendor
 @{
     Layout = "../Shared/Layout/_LayoutAppTheme.cshtml";
+    var db = new EventDataContext();
+    var allVendors = db.Vendors.OrderByDescending(n => n.AverageRating).ToList();
+    var countedVendors = allVendors.Take(6);
+
+    var allPlanners = db.AppUsers.Where(n => n.EventPlannerId != null).ToList();
+    var countedPlanners = allPlanners.Take(3);
 }
 <div class="slider-bg">
     <!-- slider start-->
@@ -13,7 +19,7 @@
             <img src="~/Content/Dashboard/images/slider-2.jpg" alt="Wedding couple just married"/>
         </div>
         <div class="item slider-shade">
-         
+
             <img src="~/Content/Dashboard/images/slider-3.jpg" alt="Wedding couple just married"/>
         </div>
     </div>
@@ -33,11 +39,11 @@
                         {
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    @Html.DropDownListFor(m => m.VendorServiceId, (SelectList) ViewBag.categoryId, "Select a category ", new {@class = "form-control",id = "category"})
+                                    @Html.DropDownListFor(m => m.VendorServiceId, (SelectList) ViewBag.categoryId, "Select a category ", new {@class = "form-control", id = "category"})
                                     @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group col-md-4">
-                                    @Html.DropDownListFor(m => m.LocationId, (SelectList) ViewBag.locationId, "Select a location ", new {@class = "form-control",id = "service"})
+                                    @Html.DropDownListFor(m => m.LocationId, (SelectList) ViewBag.locationId, "Select a location ", new {@class = "form-control", id = "service"})
                                     @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group col-md-4">
@@ -130,130 +136,34 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <div class="vendor-total-list mb30">
-                    <!-- vendor-total-list -->
-                    <div class="vendor-total-thumb">
-                        <!-- vendor-total-thumb -->
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/vendor-total-thumb-1.jpg" class="img-responsive" alt="">
-                        </a>
+            @foreach (var item in countedVendors)
+            {
+                <div class="col-md-4">
+                    <div class="vendor-total-list mb30">
+                        <!-- vendor-total-list -->
+                        <div class="vendor-total-thumb">
+                            <!-- vendor-total-thumb -->
+                            <a href="@Url.Action("Details", "Vendors", new {id = item.VendorId})">
+                                <img src="~/UploadedFiles/VendorLogo/@item.Logo" class="img-responsive" alt="" height="360px" width="250px">
+                            </a>
+                        </div>
+                        <!-- /.vendor-total-thumb -->
+                        <div class="well-box vendor-total-info">
+                            <!-- vendor-total-info -->
+                            <h2 class="vendor-total-title">
+                                <a href="@Url.Action("Details", "Vendors", new {id = item.VendorId})" class="title">@item.Name </a><span class="badge badge-primary"></span>
+                            </h2>
+                        </div>
+                        <!-- /.vendor-total-info -->
                     </div>
-                    <!-- /.vendor-total-thumb -->
-                    <div class="well-box vendor-total-info">
-                        <!-- vendor-total-info -->
-                        <h2 class="vendor-total-title">
-                            <a href="#" class="title">Wedding Venues </a><span class="badge badge-primary">12+</span>
-                        </h2>
-                    </div>
-                    <!-- /.vendor-total-info -->
+                    <!-- /.vendor-total-list -->
                 </div>
-                <!-- /.vendor-total-list -->
-            </div>
-            <div class="col-md-4">
-                <div class="vendor-total-list mb30">
-                    <!-- vendor-total-list -->
-                    <div class="vendor-total-thumb">
-                        <!-- vendor-total-thumb -->
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/vendor-total-thumb-2.jpg" class="img-responsive" alt="">
-                        </a>
-                    </div>
-                    <!-- /.vendor-total-thumb -->
-                    <div class="well-box vendor-total-info">
-                        <!-- vendor-total-info -->
-                        <h2 class="vendor-total-title">
-                            <a href="#" class="title">Wedding Cakes </a><span class="badge badge-primary">10+</span>
-                        </h2>
-                    </div>
-                    <!-- /.vendor-total-info -->
-                </div>
-                <!-- /.vendor-total-list -->
-            </div>
-            <div class="col-md-4">
-                <div class="vendor-total-list mb30">
-                    <!-- vendor-total-list -->
-                    <div class="vendor-total-thumb">
-                        <!-- vendor-total-thumb -->
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/vendor-total-thumb-3.jpg" class="img-responsive" alt="">
-                        </a>
-                    </div>
-                    <!-- /.vendor-total-thumb -->
-                    <div class="well-box vendor-total-info">
-                        <!-- vendor-total-info -->
-                        <h2 class="vendor-total-title">
-                            <a href="#" class="title">Wedding Venues </a><span class="badge badge-primary">12+</span>
-                        </h2>
-                    </div>
-                    <!-- /.vendor-total-info -->
-                </div>
-                <!-- /.vendor-total-list -->
-            </div>
-            <div class="col-md-4">
-                <div class="vendor-total-list mb30">
-                    <!-- vendor-total-list -->
-                    <div class="vendor-total-thumb">
-                        <!-- vendor-total-thumb -->
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/vendor-total-thumb-4.jpg" class="img-responsive" alt="">
-                        </a>
-                    </div>
-                    <!-- /.vendor-total-thumb -->
-                    <div class="well-box vendor-total-info">
-                        <!-- vendor-total-info -->
-                        <h2 class="vendor-total-title">
-                            <a href="#" class="title">Wedding Venues </a><span class="badge badge-primary">12+</span>
-                        </h2>
-                    </div>
-                    <!-- /.vendor-total-info -->
-                </div>
-                <!-- /.vendor-total-list -->
-            </div>
-            <div class="col-md-4">
-                <div class="vendor-total-list mb30">
-                    <!-- vendor-total-list -->
-                    <div class="vendor-total-thumb">
-                        <!-- vendor-total-thumb -->
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/vendor-total-thumb-5.jpg" class="img-responsive" alt="">
-                        </a>
-                    </div>
-                    <!-- /.vendor-total-thumb -->
-                    <div class="well-box vendor-total-info">
-                        <!-- vendor-total-info -->
-                        <h2 class="vendor-total-title">
-                            <a href="#" class="title">Wedding Venues </a><span class="badge badge-primary">12+</span>
-                        </h2>
-                    </div>
-                    <!-- /.vendor-total-info -->
-                </div>
-                <!-- /.vendor-total-list -->
-            </div>
-            <div class="col-md-4">
-                <div class="vendor-total-list mb30">
-                    <!-- vendor-total-list -->
-                    <div class="vendor-total-thumb">
-                        <!-- vendor-total-thumb -->
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/vendor-total-thumb-6.jpg" class="img-responsive" alt="">
-                        </a>
-                    </div>
-                    <!-- /.vendor-total-thumb -->
-                    <div class="well-box vendor-total-info">
-                        <!-- vendor-total-info -->
-                        <h2 class="vendor-total-title">
-                            <a href="#" class="title">Wedding Venues </a><span class="badge badge-primary">12+</span>
-                        </h2>
-                    </div>
-                    <!-- /.vendor-total-info -->
-                </div>
-                <!-- /.vendor-total-list -->
-            </div>
+            }
+
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <a href="#" class="btn btn-default btn-lg">View All Vendor</a>
+                <a href="@Url.Action("ListOfVendors", "Vendors")" class="btn btn-default btn-lg">View All Vendor</a>
             </div>
         </div>
     </div>
@@ -264,69 +174,35 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title mb60 text-center">
-                    <h1>Be inspired by Real Weddings</h1>
+                    <h1>Be inspired by the Best Event Planners</h1>
                     <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text.</p>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4">
-                <div class="real-wedding-block mb30">
-                    <!-- real wedding block -->
-                    <div class="real-wedding-img">
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/real-wedding-1.jpg" alt="" class="img-responsive">
-                        </a>
+            @foreach (var item in countedPlanners)
+            {
+                <div class="col-md-4">
+                    <div class="real-wedding-block mb30">
+                        <!-- real wedding block -->
+                        <div class="real-wedding-img">
+                            <a href="#">
+                                <img src="~/UploadedFiles/ProfileImage/@item.ProfileImage" alt="" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="real-wedding-info well-box text-center">
+                            <h2 class="real-wedding-title">
+                                <a href="#" class="title">@item.DisplayName</a>
+                            </h2>
+                            @*<p class="real-wed-meta">
+                                <span class="wed-day-meta"><i class="icon-wedding-day icon-size-18"></i> 5 june,2016</span> <span class="wed-location-meta"> <i class="icon-wedding-location icon-size-18"></i> Surat, @item.Mobile</span>
+                            </p>*@
+                        </div>
                     </div>
-                    <div class="real-wedding-info well-box text-center">
-                        <h2 class="real-wedding-title">
-                            <a href="#" class="title">Caitlin &amp; Hentze</a>
-                        </h2>
-                        <p class="real-wed-meta">
-                            <span class="wed-day-meta"><i class="icon-wedding-day icon-size-18"></i> 5 june,2016</span> <span class="wed-location-meta"> <i class="icon-wedding-location icon-size-18"></i> Surat, India</span>
-                        </p>
-                    </div>
+                    <!-- /.real wedding block -->
                 </div>
-                <!-- /.real wedding block -->
-            </div>
-            <div class="col-md-4">
-                <div class="real-wedding-block mb30">
-                    <!-- real wedding block -->
-                    <div class="real-wedding-img">
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/real-wedding-2.jpg" alt="" class="img-responsive">
-                        </a>
-                    </div>
-                    <div class="real-wedding-info well-box text-center">
-                        <h2 class="real-wedding-title">
-                            <a href="#" class="title">Lewers &amp; Isabella</a>
-                        </h2>
-                        <p class="real-wed-meta">
-                            <span class="wed-day-meta"><i class="icon-wedding-day icon-size-18"></i> 4 june,2016</span> <span class="wed-location-meta"> <i class="icon-wedding-location icon-size-18"></i> Surat, India</span>
-                        </p>
-                    </div>
-                </div>
-                <!-- /.real wedding block -->
-            </div>
-            <div class="col-md-4">
-                <div class="real-wedding-block mb30">
-                    <!-- real wedding block -->
-                    <div class="real-wedding-img">
-                        <a href="#">
-                            <img src="~/Content/AppTheme/images/real-wedding-3.jpg" alt="" class="img-responsive">
-                        </a>
-                    </div>
-                    <div class="real-wedding-info well-box text-center">
-                        <h2 class="real-wedding-title">
-                            <a href="#" class="title">Castleton &amp; Sean </a>
-                        </h2>
-                        <p class="real-wed-meta">
-                            <span class="wed-day-meta"><i class="icon-wedding-day icon-size-18"></i> 3 june,2016</span> <span class="wed-location-meta"> <i class="icon-wedding-location icon-size-18"></i> Surat, India</span>
-                        </p>
-                    </div>
-                </div>
-                <!-- /.real wedding block -->
-            </div>
+            }
+
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
