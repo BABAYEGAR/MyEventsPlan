@@ -33,12 +33,16 @@ namespace Event.Data.Objects.Entities
         public string Website { get; set; }
         public string About { get; set; }
         public string Logo { get; set; }
-        public long AveragePrice { get; set; }
+        [DisplayName("Minimum Price")]
+        public long? MinimumPrice { get; set; }
+        [DisplayName("Maximum Price")]
+        public long? MaximumPrice { get; set; }
         [DisplayName("Pricing Details")]
         public string PricingDetails { get; set; }
         [Required]
         [EmailAddress]
         public string Email { get; set; }
+        public int Rating { get; set; }
         [Required]
         public string Mobile { get; set; }
         [Required]
@@ -62,5 +66,6 @@ namespace Event.Data.Objects.Entities
         public  IEnumerable<VendorReview> VendorReviews { get; set; }
         public  IEnumerable<VendorEnquiry> VendorEnquiries { get; set; }
         public  IEnumerable<VendorImage> VendorImages { get; set; }
+        public  IEnumerable<SubscriptionInvoice> SubscriptionInvoices { get; set; }
     }
 }

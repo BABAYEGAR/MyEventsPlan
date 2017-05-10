@@ -15,8 +15,11 @@ namespace Event.Data.Objects.Entities
         public EventPlannerPackage Package { get; set; }
         public long AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-        public long EventPlannerId { get; set; }
+        public long? EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public EventPlanner EventPlanner { get; set; }
+        public long? VendorId { get; set; }
+        [ForeignKey("VendorId")]
+        public Vendor Vendor { get; set; }
     }
 }

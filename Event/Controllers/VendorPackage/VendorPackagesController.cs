@@ -41,6 +41,39 @@ namespace MyEventPlan.Controllers.VendorPackage
             }
             return View(vendorPackage);
         }
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: EventPlanners/Invoice
+        public ActionResult Invoice(long id)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var selectedPackage = db.VendorPackages.Find(id);
+            var subscriptionInvoice = new SubscriptionInvoice();
+
+            //random number
+            var generator = new Random();
+            var randomNumber = generator.Next(0, 1000000).ToString("D6");
+
+            if (loggedinuser != null)
+            {
+                subscriptionInvoice.AppUserId = loggedinuser.AppUserId;
+                if (loggedinuser.VendorId != null)
+                    subscriptionInvoice.VendorId = (long)loggedinuser.VendorId;
+                subscriptionInvoice.DateCreated = DateTime.Now;
+                subscriptionInvoice.DateLastModified = DateTime.Now;
+                subscriptionInvoice.CreatedBy = loggedinuser.AppUserId;
+                subscriptionInvoice.LastModifiedBy = loggedinuser.AppUserId;
+            }
+            subscriptionInvoice.InvoiceNumber = "#" + randomNumber;
+            if (selectedPackage != null)
+            {
+                subscriptionInvoice.PackageId = selectedPackage.VendorPackageId;
+
+                Session["package"] = selectedPackage;
+            }
+            Session["invoice"] = subscriptionInvoice;
+            return View();
+        }
 
         // GET: VendorPackages/Create
         public ActionResult Create()

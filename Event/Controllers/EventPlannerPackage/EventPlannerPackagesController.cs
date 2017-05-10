@@ -12,6 +12,9 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
     public class EventPlannerPackagesController : Controller
     {
         private readonly EventPlannerPackageDataContext db = new EventPlannerPackageDataContext();
+        private readonly EventDataContext _dbd = new EventDataContext();
+        private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
+        private readonly EventPlannerPackageSettingDataContext _dbf = new EventPlannerPackageSettingDataContext();
 
         // GET: EventPlannerPackages
         public ActionResult Index()
@@ -69,6 +72,100 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
             return View();
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: EventPlanners/Pricing
+        public ActionResult ConfirmPayment()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var package = Session["package"] as Event.Data.Objects.Entities.EventPlannerPackage;
+            var invoice = Session["invoice"] as SubscriptionInvoice;
+            var packageToSubscribed = new EventPlannerPackageSetting();
+            var packages = _dbd.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
+            //current subscription
+            var packageSubscribed =
+                packages.SingleOrDefault(
+                    n =>
+                        (n.EventPlannerId == loggedinuser.EventPlannerId) &&
+                        (n.Status == PackageStatusEnum.Active.ToString()));
+
+
+            if (packageSubscribed != null)
+            {
+                //make the current package inactive
+                packageSubscribed.Status = PackageStatusEnum.Inactive.ToString();
+                packageSubscribed.DateLastModified = DateTime.Now;
+                _dbf.Entry(packageSubscribed).State = EntityState.Modified;
+                _dbf.SaveChanges();
+
+                //populate new package
+                if ((loggedinuser != null) && (loggedinuser.EventPlannerId != null))
+                    packageToSubscribed.EventPlannerId = (long)loggedinuser.EventPlannerId;
+                if (loggedinuser != null)
+                {
+                    packageToSubscribed.CreatedBy = loggedinuser.AppUserId;
+                    packageToSubscribed.LastModifiedBy = loggedinuser.AppUserId;
+                    packageToSubscribed.AppUserId = loggedinuser.AppUserId;
+                }
+
+                packageToSubscribed.DateCreated = DateTime.Now;
+                packageToSubscribed.DateLastModified = DateTime.Now;
+                packageToSubscribed.Status = PackageStatusEnum.Active.ToString();
+                packageToSubscribed.SubscribedEvent = 0;
+
+                //package data
+                if (package != null)
+                {
+                    packageToSubscribed.EventPlannerPackageId = package.EventPlannerPackageId;
+                    packageToSubscribed.AllowedEvent = package.MaximumEvents;
+                }
+                //commit package to database
+                _dbf.EventPlannerPackageSettings.Add(packageToSubscribed);
+                _dbf.SaveChanges();
+
+                //commit invoice to database
+                if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
+                _dbe.SaveChanges();
+                Session["package"] = null;
+                Session["invoice"] = null;
+                //display notification
+                TempData["display"] = "You have successfully subscribed to the package!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Setting", "Account");
+            }
+            if (loggedinuser != null)
+            {
+                if (loggedinuser.EventPlannerId != null)
+                    packageToSubscribed.EventPlannerId = (long)loggedinuser.EventPlannerId;
+                packageToSubscribed.CreatedBy = loggedinuser.AppUserId;
+                packageToSubscribed.LastModifiedBy = loggedinuser.AppUserId;
+                packageToSubscribed.AppUserId = loggedinuser.AppUserId;
+            }
+            packageToSubscribed.DateCreated = DateTime.Now;
+            packageToSubscribed.DateLastModified = DateTime.Now;
+            packageToSubscribed.Status = PackageStatusEnum.Active.ToString();
+            packageToSubscribed.SubscribedEvent = 0;
+
+
+            //package data
+            if (package != null)
+            {
+                packageToSubscribed.EventPlannerPackageId = package.EventPlannerPackageId;
+                packageToSubscribed.AllowedEvent = package.MaximumEvents;
+            }
+            _dbf.EventPlannerPackageSettings.Add(packageToSubscribed);
+            _dbf.SaveChanges();
+            if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
+            _dbe.SaveChanges();
+
+            Session["package"] = null;
+            Session["invoice"] = null;
+
+            //display notification
+            TempData["display"] = "You have successfully subscribed to the package!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Setting", "Account");
+        }
         // GET: EventPlannerPackages/Details/5
         public ActionResult Details(long? id)
         {

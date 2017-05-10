@@ -5,7 +5,7 @@
     var role = Session["role"] as Role;
     var messageDb = new MessageDataContext();
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    long unreadMessages = messageDb.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false).ToList().Count;
+    //long unreadMessages = messageDb.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false).ToList().Count;
     string color = null;
     if (loggedinuser != null)
     {
@@ -40,7 +40,7 @@
     -->
 
     <div class="logo">
-        <a href="#" class="simple-text">
+        <a href="@Url.Action("Index","Home")" class="simple-text">
             MyEventsPlan
         </a>
     </div>

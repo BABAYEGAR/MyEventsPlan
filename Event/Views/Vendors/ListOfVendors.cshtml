@@ -5,10 +5,11 @@
     ViewBag.Header = "List of all vendors";
     Layout = "../Shared/Layout/_LayoutVendors.cshtml";
     List<Vendor> vendors = ViewBag.vendors;
+    int? star = ViewBag.rate;
 }
 @section css{
 
-    <link href="~/Content/Pagination/simplePagination.css" rel="stylesheet"/>
+  
 }
 <div class="tp-breadcrumb">
     <div class="container">
@@ -46,41 +47,102 @@
                         </div>
                         <div class="col-md-12 form-group rating">
                             <label class="control-label">Select Rating </label>
-                            <div class="checkbox checkbox-success">
-                                <input type="checkbox" name="checkbox" id="checkbox-0" value="1" class="styled">
-                                <label for="checkbox-0" class="control-label">
-                                    <i class="fa fa-star"></i>
-                                </label>
-                            </div>
-                            <div class="checkbox checkbox-success">
-                                <input type="checkbox" name="checkbox" id="checkbox-1" value="2" class="styled">
-                                <label for="checkbox-1" class="control-label">
-                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i>
-                                </label>
-                            </div>
-                            <div class="checkbox checkbox-success">
-                                <input type="checkbox" name="checkbox" id="checkbox-2" value="3" class="styled">
-                                <label for="checkbox-2" class="control-label">
-                                    <i class="fa fa-star"></i> <i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                </label>
-                            </div>
-                            <div class="checkbox checkbox-success">
-                                <input type="checkbox" name="checkbox" id="checkbox-3" value="4" class="styled">
-                                <label for="checkbox-3" class="control-label">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                </label>
-                            </div>
-                            <div class="checkbox checkbox-success">
-                                <input type="checkbox" name="checkbox" id="checkbox-4" value="5" class="styled">
-                                <label for="checkbox-4" class="control-label">
-                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
-                                </label>
-                            </div>
+                            @if (star == 1 && star > 0)
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" checked="checked" id="checkbox-0" value="1" class="styled">
+                                    <label for="checkbox-0" class="control-label">
+                                        <i class="fa fa-star"></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" id="checkbox-0" value="1" class="styled">
+                                    <label for="checkbox-0" class="control-label">
+                                        <i class="fa fa-star"></i>
+                                    </label>
+                                </div>
+                            }
+                            @if (star == 2 && star > 0)
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" id="checkbox-1" checked="checked" value="2" class="styled">
+                                    <label for="checkbox-1" class="control-label">
+                                        <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" id="checkbox-1" value="2" class="styled">
+                                    <label for="checkbox-1" class="control-label">
+                                        <i class="fa fa-star"></i> <i class="fa fa-star"></i>
+                                    </label>
+                                </div> 
+                            }
+                            @if (star == 3 && star > 0)
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" id="checkbox-2" checked="checked" value="3" class="styled">
+                                    <label for="checkbox-2" class="control-label">
+                                        <i class="fa fa-star"></i> <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" id="checkbox-2" value="3" class="styled">
+                                    <label for="checkbox-2" class="control-label">
+                                        <i class="fa fa-star"></i> <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    </label>
+                                </div>
+                                                                
+                            }
+                            @if (star == 4 && star > 0)
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" id="checkbox-3" checked="checked" value="4" class="styled">
+                                    <label for="checkbox-3" class="control-label">
+                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" id="checkbox-3" value="4" class="styled">
+                                    <label for="checkbox-3" class="control-label">
+                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    </label>
+                                </div>
+                            }
+                            @if (star == 5 && star > 0)
+                            {
+                                <div class="checkbox checkbox-success">
+                                    <input type="checkbox" name="checkbox" id="checkbox-4" checked="checked" value="5" class="styled">
+                                    <label for="checkbox-4" class="control-label">
+                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                    </label>
+                                </div>
+                            }
+                            else
+                            { <div class="checkbox checkbox-success">
+                                  <input type="checkbox" name="checkbox" id="checkbox-4" value="5" class="styled">
+                                  <label for="checkbox-4" class="control-label">
+                                      <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                  </label>
+                              </div>
+                                
+                            }
                         </div>
                         <div class="col-md-12 form-group">
                             <div class="price-range default-range">
                                 <label for="amount" class="control-label">Price range:</label>
-                                <input type="text" id="amount" readonly style="border: 0; color: #f6931f; font-weight: bold;">
+                                <input type="text" id="amount" name="Price" readonly style="border: 0; color: #f6931f; font-weight: bold;">
                                 <div id="slider-range"></div>
                             </div>
                         </div>
@@ -97,7 +159,7 @@
                         foreach (var item in vendors)
                         {
                             <!-- /.venue box start-->
-                            <div class="col-md-4 vendor-box">
+                            <div class="col-md-4 vendor-box paginateContent">
                                 <!-- venue box start-->
                                 <div class="vendor-image">
                                     <!-- venue pic -->
@@ -136,34 +198,7 @@
                             <!-- /.venue box start-->
                         }
                     }
-                    <div class="col-md-12 tp-pagination">
-                        <ul class="pagination">
-                            <li>
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">Previous</span>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="#">1</a>
-                            </li>
-                            <li>
-                                <a href="#">2</a>
-                            </li>
-                            <li>
-                                <a href="#">3</a>
-                            </li>
-                            <li>
-                                <a href="#">4</a>
-                            </li>
-                            <li>
-                                <a href="#">5</a>
-                            </li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">NEXT</span>
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="col-md-12 tp-pagination" id="page-selection">
                     </div>
                 </div>
             </div>
@@ -172,15 +207,25 @@
 </div>
 @section scripts
 {
-
-    <script src="~/Content/Pagination/jquery.simplePagination.js"></script>
+    <script src="~/Content/Pagination/jquery.bootpag.min.js">  </script>
     <script>
-        $(function() {
-            $(selector).pagination({
-                items: 100,
-                itemsOnPage: 10,
-                cssStyle: 'light-theme'
+        $( function() {
+            $("#slider-range").slider({
+                range: true,
+                min: 0,
+                max: 1000000000,
+                slide: function( event, ui ) {
+                    $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+                }
             });
+        } );
+    </script>
+    <script>
+        // init bootpag
+        $('#page-selection').bootpag({
+            total: 2
+        }).on("page", function(event, /* page number here */ num){
+            $(".paginateContent").html(); // some ajax content loading...
         });
     </script>
 }

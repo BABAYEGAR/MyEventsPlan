@@ -5,6 +5,13 @@
     ViewBag.SubHeader = "Account Setting";
     Layout = "../Shared/Layout/_LayoutForm.cshtml";
 }
+@section css{
+    <style>
+        .main-panel > .content {
+            margin-top: 10px;
+        }
+    </style>
+}
 @section links{
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -31,7 +38,7 @@
     </div>
 
 </div>
-<div class="content">
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -127,4 +134,4 @@
                 </div>
             </div>
         </div>
-    </div>
+

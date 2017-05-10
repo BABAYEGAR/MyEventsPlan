@@ -18,7 +18,11 @@
                     {
                         if (loggedinuser.VendorId != null)
                         {
-                            <li><a href="@Url.Action("Profile", "Vendors")">Manage Account</a></li>
+                            <li><a href="@Url.Action("Profile", "Vendors")">Dashboard</a></li>
+                        }
+                        if (loggedinuser.EventPlannerId != null)
+                        {
+                            <li><a href="@Url.Action("Dashboard", "Home")">Dashboard</a></li>
                         }
                         <li><a href="@Url.Action("LogOff", "Account")">Log Out</a></li>
                     }

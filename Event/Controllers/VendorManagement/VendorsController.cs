@@ -14,6 +14,8 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorsController : Controller
     {
+        private readonly AppUserDataContext _dbd = new AppUserDataContext();
+        private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
         private readonly VendorDataContext db = new VendorDataContext();
         private readonly EventDataContext dbc = new EventDataContext();
         private readonly VendorPackageSettingDataContext dbd = new VendorPackageSettingDataContext();
@@ -72,13 +74,52 @@ namespace MyEventPlan.Controllers.VendorManagement
             long? locationId = null;
             if (collectedValues["VendorServiceId"] != "")
                 serviceId = Convert.ToInt64(collectedValues["VendorServiceId"]);
-            if (collectedValues["VendorServiceId"] != "")
+            if (collectedValues["LocationId"] != "")
                 locationId = Convert.ToInt64(collectedValues["LocationId"]);
+            long minimumPrice = 0;
+            long maximumPrice = 0;
+            int rating = 0;
+            if (collectedValues["Price"] != null)
+            {
+                var price = collectedValues["Price"];
+                var index = price.IndexOf("-", StringComparison.Ordinal);
+                var min = (index > 0 ? price.Substring(0, index) : "").Replace("$", "");
+                var max = price.Substring(price.LastIndexOf('-') + 1).Replace("$", "");
+
+                minimumPrice = Convert.ToInt64(min);
+                maximumPrice = Convert.ToInt64(max);
+            }
+            if (collectedValues["checkbox"] != null)
+            {
+                var start = collectedValues["checkbox"];
+                rating = (int) Convert.ToInt64(start);
+
+            }
+            if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] != "" &&
+                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
+            {
+                ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
+                                                        n.EventId == null).ToList();
+            }
+            if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] != "" &&
+                collectedValues["Price"] != null && collectedValues["checkbox"] == null)
+            {
+                ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
+                                                        n.EventId == null && n.MinimumPrice >= minimumPrice &&
+                                                        n.MaximumPrice >= maximumPrice).ToList();
+            }
+            if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] != "" &&
+                collectedValues["Price"] != null && collectedValues["checkbox"] != null)
+            {
+
+                ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
+                                                        n.EventId == null && n.MinimumPrice >= minimumPrice &&
+                                                        n.MaximumPrice >= maximumPrice && n.Rating == rating).ToList();
+            }
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
             ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", locationId);
-            ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
-                                                    n.EventId == null)
-                .ToList();
+            ViewBag.rate = rating;
+         
             return View();
         }
 
@@ -265,7 +306,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                 {
                     AppUserId = appUser.AppUserId,
                     StartDate = DateTime.Now,
-                    EndDate = DateTime.Now.AddMonths(1),
+                    EndDate = DateTime.Now.AddDays(1),
                     Status = PackageStatusEnum.Active.ToString(),
                     VendorId = vendor.VendorId,
                     VendorPackageId = packageId,
@@ -279,12 +320,157 @@ namespace MyEventPlan.Controllers.VendorManagement
                 ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
                     vendor.VendorServiceId);
                 ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
-                return View(vendor);
+                return RedirectToAction("Invoice", "VendorPackages", new {id = packageSetting.VendorPackageId});
             }
             ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
                 vendor.VendorServiceId);
             ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
             return View(vendor);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: EventPlanners/Pricing
+        public ActionResult Pricing()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var packages = db.VendorPackageSetting.Include(n => n.VendorPackage);
+
+            var packageSubscribed =
+                packages.SingleOrDefault(
+                    n =>
+                        n.VendorId == loggedinuser.VendorId &&
+                        n.Status == PackageStatusEnum.Active.ToString());
+            if (packageSubscribed != null)
+                Session["subscribe"] = packageSubscribed;
+            return View(dbc.VendorPackages.ToList());
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        // GET: EventPlanners/Invoice
+        public ActionResult Invoice(long id)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var selectedPackage = dbd.VendorPackages.Find(id);
+            var subscriptionInvoice = new SubscriptionInvoice();
+
+            //random number
+            var generator = new Random();
+            var randomNumber = generator.Next(0, 1000000).ToString("D6");
+
+            if (loggedinuser != null)
+            {
+                subscriptionInvoice.AppUserId = loggedinuser.AppUserId;
+                if (loggedinuser.VendorId != null)
+                    subscriptionInvoice.VendorId = (long) loggedinuser.VendorId;
+                subscriptionInvoice.DateCreated = DateTime.Now;
+                subscriptionInvoice.DateLastModified = DateTime.Now;
+                subscriptionInvoice.CreatedBy = loggedinuser.AppUserId;
+                subscriptionInvoice.LastModifiedBy = loggedinuser.AppUserId;
+            }
+            subscriptionInvoice.InvoiceNumber = "#" + randomNumber;
+            if (selectedPackage != null)
+            {
+                subscriptionInvoice.PackageId = selectedPackage.VendorPackageId;
+
+                Session["package"] = selectedPackage;
+            }
+            Session["invoice"] = subscriptionInvoice;
+            return View();
+        }
+
+        public ActionResult ConfirmPostAccountPayment()
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var package = Session["package"] as Event.Data.Objects.Entities.VendorPackage;
+            var invoice = Session["invoice"] as SubscriptionInvoice;
+            var packageToSubscribed = new VendorPackageSetting();
+            var packageSetting = dbd.VendorPackageSetting.Include(n => n.VendorPackage);
+            //current subscription
+            var packageSubscribed =
+                packageSetting.SingleOrDefault(
+                    n =>
+                        n.VendorId == loggedinuser.VendorId &&
+                        n.Status == PackageStatusEnum.Active.ToString());
+
+            if (packageSubscribed != null)
+            {
+                //make the current package inactive
+                packageSubscribed.Status = PackageStatusEnum.Inactive.ToString();
+                packageSubscribed.DateLastModified = DateTime.Now;
+                dbd.Entry(packageSubscribed).State = EntityState.Modified;
+                dbd.SaveChanges();
+
+                //populate new package
+                if (loggedinuser != null && loggedinuser.VendorId != null)
+                    packageToSubscribed.VendorId = (long) loggedinuser.VendorId;
+                if (loggedinuser != null)
+                {
+                    packageToSubscribed.CreatedBy = loggedinuser.AppUserId;
+                    packageToSubscribed.LastModifiedBy = loggedinuser.AppUserId;
+                    packageToSubscribed.AppUserId = loggedinuser.AppUserId;
+                }
+
+                packageToSubscribed.DateCreated = DateTime.Now;
+                packageToSubscribed.DateLastModified = DateTime.Now;
+                packageToSubscribed.Status = PackageStatusEnum.Active.ToString();
+                packageToSubscribed.StartDate = packageSubscribed.DateCreated;
+                packageToSubscribed.EndDate = packageSubscribed.DateCreated.AddMonths(1);
+
+                //package data
+                if (package != null)
+                {
+                    packageToSubscribed.VendorPackageId = package.VendorPackageId;
+                    if (package.Amount != null) packageToSubscribed.Amount = (long) package.Amount;
+                }
+                //commit package to database
+                dbd.VendorPackageSetting.Add(packageToSubscribed);
+                dbd.SaveChanges();
+
+                //commit invoice to database
+                if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
+                _dbe.SaveChanges();
+                Session["package"] = null;
+                Session["invoice"] = null;
+                //display notification
+                TempData["display"] = "You have successfully subscribed to the package!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Setting", "Account");
+            }
+            if (loggedinuser != null)
+            {
+                if (loggedinuser.VendorId != null)
+                    packageToSubscribed.VendorId = (long) loggedinuser.VendorId;
+                packageToSubscribed.CreatedBy = loggedinuser.AppUserId;
+                packageToSubscribed.LastModifiedBy = loggedinuser.AppUserId;
+                packageToSubscribed.AppUserId = loggedinuser.AppUserId;
+            }
+            packageToSubscribed.DateCreated = DateTime.Now;
+            packageToSubscribed.DateLastModified = DateTime.Now;
+            packageToSubscribed.Status = PackageStatusEnum.Active.ToString();
+            packageToSubscribed.StartDate = DateTime.Now;
+            packageToSubscribed.EndDate = DateTime.Now.AddMonths(1);
+
+
+            //package data
+            if (package != null)
+            {
+                packageToSubscribed.VendorPackageId = package.VendorPackageId;
+                if (package.Amount != null) packageToSubscribed.Amount = (long) package.Amount;
+            }
+            dbd.VendorPackageSetting.Add(packageToSubscribed);
+            dbd.SaveChanges();
+            if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
+            _dbe.SaveChanges();
+
+            Session["package"] = null;
+            Session["invoice"] = null;
+
+            //display notification
+            TempData["display"] = "You have successfully topped up your account with this package!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Profile", "Vendors");
         }
 
         [HttpGet]
@@ -295,14 +481,23 @@ namespace MyEventPlan.Controllers.VendorManagement
             db.SaveChanges();
 
             var appUser = Session["vendoruser"] as AppUser;
-            if (appUser != null) dbc.AppUsers.Add(appUser);
-            dbc.SaveChanges();
+            if (vendor != null)
+                if (appUser != null)
+                {
+                    appUser.VendorId = vendor.VendorId;
+                    _dbd.AppUsers.Add(appUser);
+                    _dbd.SaveChanges();
 
-            var packageSetting = Session["vendorpackage"] as VendorPackageSetting;
-            if (packageSetting != null) dbd.VendorPackageSetting.Add(packageSetting);
-            dbd.SaveChanges();
+                    var packageSetting = Session["vendorpackage"] as VendorPackageSetting;
+                    if (packageSetting != null)
+                    {
+                        packageSetting.AppUserId = appUser.AppUserId;
+                        dbd.VendorPackageSetting.Add(packageSetting);
+                    }
+                    dbd.SaveChanges();
 
-            new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
+                    new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
+                }
             TempData["login"] =
                 "You have successfully registered as a vendor! Verify access in your email to login";
             TempData["notificationtype"] = NotificationType.Success.ToString();

@@ -106,22 +106,27 @@
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active">
         <a href="#myListing" title="Gallery" aria-controls="myListing" role="tab" data-toggle="tab">
-            <i class="fa fa-list"></i><span class="tab-title"> Vendor Images</span>
+            <i class="fa fa-list"></i><span class="tab-title">Images</span>
         </a>
     </li>
     <li role="presentation">
         <a href="#about" title="about info" aria-controls="about" role="tab" data-toggle="tab">
-            <i class="fa fa-user"></i> <span class="tab-title">Vendor Information</span>
+            <i class="fa fa-user"></i> <span class="tab-title">Profile</span>
         </a>
     </li>
     <li role="presentation">
         <a href="#price" title="about info" aria-controls="about" role="tab" data-toggle="tab">
-            <i class="fa fa-dollar"></i> <span class="tab-title">Vendor Pricing Information</span>
+            <i class="fa fa-dollar"></i> <span class="tab-title">Pricing</span>
         </a>
     </li>
     <li role="presentation">
         <a href="#password" title="about info" aria-controls="about" role="tab" data-toggle="tab">
             <i class="fa fa-lock"></i> <span class="tab-title">Change Password</span>
+        </a>
+    </li>
+    <li role="presentation">
+        <a href="#package" title="about info" aria-controls="about" role="tab" data-toggle="tab">
+            <i class="fa fa-lock"></i> <span class="tab-title">Subscription</span>
         </a>
     </li>
 </ul>
@@ -405,6 +410,29 @@
                                     </div>
                                 }
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div role="tabpanel" class="tab-pane fade" id="package">
+    <div class="main-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 profile-dashboard">
+                    <div class="row">
+                        <div class="col-md-9 dashboard-form">
+                            <div class="bg-white pinside40 mb30">
+                              
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="submit"></label>
+                                        <div class="col-md-4">
+                                            <a class="btn btn-primary" href="@Url.Action("Pricing","Vendors")">Manage Subscription</a>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
