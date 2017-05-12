@@ -48,7 +48,7 @@
                             @foreach (var item in services)
                             {
                                 <li>
-                                    <a href="venue-listing.html">@item.ServiceName</a>
+                                    <a href="@Url.Action("ListOfVendors", "Vendors",new{categoryId = item.VendorServiceId})">@item.ServiceName</a>
                                 </li>  
                             }
                         </ul>

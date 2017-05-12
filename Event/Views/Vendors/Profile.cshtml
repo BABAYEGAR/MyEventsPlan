@@ -13,7 +13,10 @@
 }
 
 @{
-    Html.RenderPartial("VendorImagePartial/EditImage", images);
+    if (images != null)
+    {
+        Html.RenderPartial("VendorImagePartial/EditImage", images);
+    }
 }
 <div class="vendor-page-header">
     <div class="vendor-profile-img"> </div>
@@ -136,7 +139,10 @@
 <div role="tabpanel" class="tab-pane fade in active" id="myListing">
     <div class="row">
         @{
-            Html.RenderPartial("VendorImagePartial/ImageGrid", images);
+            if (images != null)
+            {
+                Html.RenderPartial("VendorImagePartial/ImageGrid", images);
+            }
         }
     </div>
 </div>

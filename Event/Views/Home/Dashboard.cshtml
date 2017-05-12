@@ -31,7 +31,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">System Log-Out</h4>
-            </div>@using (Html.BeginForm("LogOff", "Account",FormMethod.Get))
+            </div>@using (Html.BeginForm("LogOff", "Account", FormMethod.Get))
                   {
                       <div class="modal-body">
 
@@ -112,490 +112,494 @@
 @if (role != null)
 {
     <div class="row">
-        @if (role.ManageEvents)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">event_seat</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">My Events</p>
-                        <h3 class="title">
-                            @events.Count<small> Events</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "Events")">View Events</a>
-                        </div>
+    @if (role.ManageEvents)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">event_seat</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">My Events</p>
+                    <h3 class="title">
+                        @events.Count<small> Events</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "Events")">View Events</a>
                     </div>
                 </div>
             </div>
-        }
+        </div>
+    }
 
-        @if (role.ManageCalendar)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="green">
-                        <i class="material-icons">today</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Events Calendar</p>
-                        <h3 class="title">
-                            @upComingvents.Count<small> Events</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">today</i> <a href="@Url.Action("Calendar", "Events")">View Event Calendar</a>
-                        </div>
+    @if (role.ManageCalendar)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="green">
+                    <i class="material-icons">today</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Events Calendar</p>
+                    <h3 class="title">
+                        @upComingvents.Count<small> Events</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">today</i> <a href="@Url.Action("Calendar", "Events")">View Event Calendar</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">today</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Appointment Calendar</p>
-                        <h3 class="title">
-                            @appointments.Count<small> Appointments</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">today</i> <a href="@Url.Action("Calendar", "Appointments")">View Appointment Calendar</a>
-                        </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">today</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Appointment Calendar</p>
+                    <h3 class="title">
+                        @appointments.Count<small> Appointments</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">today</i> <a href="@Url.Action("Calendar", "Appointments")">View Appointment Calendar</a>
                     </div>
                 </div>
             </div>
-        }
-        @if (role.ManageProspects)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="deep_orange">
-                        <i class="material-icons">assignment</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Prospects</p>
-                        <h3 class="title">
-                            @prospects.Count<small> Prospects</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">assignment</i> <a href="@Url.Action("Index", "Prospects")">View Prospects</a>
-                        </div>
+        </div>
+    }
+    @if (role.ManageProspects)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="deep_orange">
+                    <i class="material-icons">assignment</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Prospects</p>
+                    <h3 class="title">
+                        @prospects.Count<small> Prospects</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">assignment</i> <a href="@Url.Action("Index", "Prospects")">View Prospects</a>
                     </div>
                 </div>
             </div>
-        }
-    </div>
-        if (role.ManageStaff)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="amber">
-                        <i class="material-icons">supervisor_account</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Staff</p>
-                        <h3 class="title">
-                            @staff.Count<small> Staff</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">supervisor_account</i> <a href="@Url.Action("Index", "Staffs")">View all my Staff</a>
-                        </div>
+        </div>
+    }
+    @if (role.ManageStaff)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="amber">
+                    <i class="material-icons">supervisor_account</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Staff</p>
+                    <h3 class="title">
+                        @staff.Count<small> Staff</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">supervisor_account</i> <a href="@Url.Action("Index", "Staffs")">View all my Staff</a>
                     </div>
                 </div>
             </div>
-        }
-        if (role.ManageInvoices)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="green">
-                        <i class="material-icons">description</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Invoice</p>
-                        <h3 class="title">
-                            @invoice.Count<small> Invoices</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">description</i> <a href="@Url.Action("Index", "Invoices")">View Invoices</a>
-                        </div>
+        </div>
+    }
+    @if (role.ManageInvoices)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="green">
+                    <i class="material-icons">description</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Invoice</p>
+                    <h3 class="title">
+                        @invoice.Count<small> Invoices</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">description</i> <a href="@Url.Action("Index", "Invoices")">View Invoices</a>
                     </div>
                 </div>
             </div>
-        }
-        if (role.ManageContacts)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="blue">
-                        <i class="material-icons">contacts</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Contacts</p>
-                        <h3 class="title">
-                            @contacts.Count <small>Contacts</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">contacts</i> <a href="@Url.Action("Index", "Contacts")">View Contacts</a>
-                        </div>
+        </div>
+    }
+    @if (role.ManageContacts)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="blue">
+                    <i class="material-icons">contacts</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Contacts</p>
+                    <h3 class="title">
+                        @contacts.Count <small>Contacts</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">contacts</i> <a href="@Url.Action("Index", "Contacts")">View Contacts</a>
                     </div>
                 </div>
             </div>
-        }
-        if (role.ManageResources)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="teal">
-                        <i class="material-icons">cloud</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Resources</p>
-                        <h3 class="title">
-                            @resources.Count <small>Resource Items</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">cloud</i> <a href="@Url.Action("Index", "Resources")">View Resources</a>
-                        </div>
+        </div>
+    }
+    @if (role.ManageResources)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="teal">
+                    <i class="material-icons">cloud</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Resources</p>
+                    <h3 class="title">
+                        @resources.Count <small>Resource Items</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">cloud</i> <a href="@Url.Action("Index", "Resources")">View Resources</a>
                     </div>
                 </div>
             </div>
-        }
+        </div>
+    }
 
-        if (role.ManageApplicationUser)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">event_seat</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Users</p>
-                        <h3 class="title">
-                            @events.Count<small> Users</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "AppUsers")">View Users</a>
-                        </div>
+    @if (role.ManageApplicationUser)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">event_seat</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Users</p>
+                    <h3 class="title">
+                        @events.Count<small> Users</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "AppUsers")">View Users</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">event_seat</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Vendors</p>
-                        <h3 class="title">
-                            @events.Count<small> Users</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "Vendors")">View Users</a>
-                        </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">event_seat</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Vendors</p>
+                    <h3 class="title">
+                        @events.Count<small> Users</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "Vendors")">View Users</a>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">event_seat</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Event Planners</p>
-                        <h3 class="title">
-                            @events.Count<small> Users</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "EventPlanners")">View Users</a>
-                        </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">event_seat</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Event Planners</p>
+                    <h3 class="title">
+                        @events.Count<small> Users</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "EventPlanners")">View Users</a>
                     </div>
                 </div>
             </div>
-        }if (role.ManageRoles)
-         {
-             <div class="col-lg-3 col-md-6 col-sm-6">
-                 <div class="card card-stats">
-                     <div class="card-header" data-background-color="green">
-                         <i class="material-icons">today</i>
-                     </div>
-                     <div class="card-content">
-                         <p class="category">Roles & Priviledges</p>
-                         <h3 class="title">
-                             @upComingvents.Count<small> Roles</small>
-                         </h3>
-                     </div>
-                     <div class="card-footer">
-                         <div class="stats">
-                             <i class="material-icons">today</i> <a href="@Url.Action("Index", "Roles")">View Roles</a>
-                         </div>
+        </div>
+    }@if (role.ManageRoles)
+     {
+         <div class="col-lg-3 col-md-6 col-sm-6">
+             <div class="card card-stats">
+                 <div class="card-header" data-background-color="green">
+                     <i class="material-icons">today</i>
+                 </div>
+                 <div class="card-content">
+                     <p class="category">Roles & Priviledges</p>
+                     <h3 class="title">
+                         @upComingvents.Count<small> Roles</small>
+                     </h3>
+                 </div>
+                 <div class="card-footer">
+                     <div class="stats">
+                         <i class="material-icons">today</i> <a href="@Url.Action("Index", "Roles")">View Roles</a>
                      </div>
                  </div>
              </div>
-         }
-        if (role.ManagePackages)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">today</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Event Planner Packages</p>
-                        <h3 class="title">
-                            @appointments.Count<small> Packages</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">today</i> <a href="@Url.Action("Index", "EventPlannerPackages")">View Packages</a>
-                        </div>
-                    </div>
+         </div>
+     }
+    @if (role.ManagePackages)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">today</i>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">today</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Vendor Packages</p>
-                        <h3 class="title">
-                            @appointments.Count<small> Packages</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">today</i> <a href="@Url.Action("Index", "VendorPackages")">View Packages</a>
-                        </div>
-                    </div>
+                <div class="card-content">
+                    <p class="category">Event Planner Packages</p>
+                    <h3 class="title">
+                        @appointments.Count<small> Packages</small>
+                    </h3>
                 </div>
-            </div>
-        }
-        if (role.ManageEventType)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="deep_orange">
-                        <i class="material-icons">Event Types</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Event Category</p>
-                        <h3 class="title">
-                            @prospects.Count<small> Event Categories</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">assignment</i> <a href="@Url.Action("Index", "EventTypes")">View Categories</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        if (role.ManageVendorServices)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">event_seat</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Vendor Services</p>
-                        <h3 class="title">
-                            @events.Count<small> Services</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "VendorServices")">View Services</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        if (role.ManageLocations)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="purple">
-                        <i class="material-icons">event_seat</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Location</p>
-                        <h3 class="title">
-                            @events.Count<small> Locations</small>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "Locations")">View Location</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-
-
-<div class="row">
-    <div class="col-lg-6 col-md-12">
-        <div class="card card-nav-tabs">
-            <div class="card-header" data-background-color="purple">
-                <div class="nav-tabs-navigation">
-                    <div class="nav-tabs-wrapper">
-                        <span class="nav-tabs-title">Quick Lunch:</span>
-                        <ul class="nav nav-tabs" data-tabs="tabs">
-                            <li class="active">
-                                <a href="#" data-toggle="tab">
-                                    <i class="material-icons">cloud</i>
-                                    Get Started
-                                    <div class="ripple-container"></div>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card-content">
-                <div class="tab-content">
-                    <div class="panel panel-default drag-group" id="177777" style="border: none;">
-                        <div class="panel-heading">
-                            <span class="font-white"><h3 style="display: inline-block; margin: 0;">Quick Launch To Event Tools</h3></span>
-                        </div>
-                        <div class="panel-body">
-
-                            @using (Html.BeginForm("QuickLunch", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = ""}))
-                            {
-                                @Html.AntiForgeryToken()
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div class="form-group">
-                                            <select name="quickLaunchJob" id="nav-quick-launch-job-panel" class="form-control">
-                                                <option value="0">- Select Booked Event -</option>
-                                                @foreach (var item in events)
-                                                {
-                                                    <option value="@item.EventId">
-                                                        @item.Name
-                                                    </option>
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div class="form-group">
-                                            <select name="quickLaunchTool" id="nav-quick-launch-tool-panel" class="form-control" disabled="disabled">
-
-                                                <option value="0">- Select Tool -</option>
-                                                <option value="eventDashboard">Dashboard</option>
-                                                <option value="appointments">Appointments</option>
-                                                <option value="attendees">Attendees</option>
-                                                <option value="budgets">Budget</option>
-                                                <option value="calendar">Calendar</option>
-                                                <option value="checklists">Checklists</option>
-                                                <option value="notes">Notes</option>
-                                                <option value="invoices"> Invoices</option>
-
-
-                                            </select>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <input type="submit" class="btn btn-default" id="go-quick-launch-panel" value="Go"/>
-                            }
-                        </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">today</i> <a href="@Url.Action("Index", "EventPlannerPackages")">View Packages</a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-lg-6 col-md-12">
-        <div class="card">
-            <div class="card-header" data-background-color="green">
-                <h4 class="title">Newest Events</h4>
-                <p class="category">Latest Events Closest to @DateTime.Now.ToShortDateString()</p>
-            </div>
-            <div class="card-content table-responsive">
-                <table class="table table-hover">
-                    <thead class="text-success">
-                    <tr>
-                        <th>
-                            @Html.DisplayName("Event Name")
-                        </th>
-                        <th>
-                            @Html.DisplayName("Start Date")
-                        </th>
-
-                        <th>
-                            @Html.DisplayName("End Date")
-                        </th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var item in upComingvents.Take(4))
-                    {
-                        <tr>
-                            @if (item.EventDate > DateTime.Now)
-                            {
-                                <td style="color: green">
-                                    @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>
-                                </td>
-                            }
-                            else
-                            {
-                                <td style="color: red">
-                                    @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-down"></i>
-                                </td>
-                            }
-
-                            <td>
-                                @item.StartDate.ToShortDateString()
-                            </td>
-                            <td>
-                                @item.EndDate.ToShortDateString()
-                            </td>
-                            <td>
-                                @Html.ActionLink("Open", "Details", "Events", new {id = item.EventId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">today</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Vendor Packages</p>
+                    <h3 class="title">
+                        @appointments.Count<small> Packages</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">today</i> <a href="@Url.Action("Index", "VendorPackages")">View Packages</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-
+    }
+    @if (role.ManageEventType)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="deep_orange">
+                    <i class="material-icons">Event Types</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Event Category</p>
+                    <h3 class="title">
+                        @prospects.Count<small> Event Categories</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">assignment</i> <a href="@Url.Action("Index", "EventTypes")">View Categories</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (role.ManageVendorServices)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">event_seat</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Vendor Services</p>
+                    <h3 class="title">
+                        @events.Count<small> Services</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "VendorServices")">View Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (role.ManageLocations)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header" data-background-color="purple">
+                    <i class="material-icons">event_seat</i>
+                </div>
+                <div class="card-content">
+                    <p class="category">Location</p>
+                    <h3 class="title">
+                        @events.Count<small> Locations</small>
+                    </h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <i class="material-icons">event_seat</i> <a href="@Url.Action("Index", "Locations")">View Location</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 
 </div>
+    <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="card card-nav-tabs">
+                <div class="card-header" data-background-color="purple">
+                    <div class="nav-tabs-navigation">
+                        <div class="nav-tabs-wrapper">
+                            <span class="nav-tabs-title">Quick Lunch:</span>
+                            <ul class="nav nav-tabs" data-tabs="tabs">
+                                <li class="active">
+                                    <a href="#" data-toggle="tab">
+                                        <i class="material-icons">cloud</i>
+                                        Get Started
+                                        <div class="ripple-container"></div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-content">
+                    <div class="tab-content">
+                        <div class="panel panel-default drag-group" id="177777" style="border: none;">
+                            <div class="panel-heading">
+                                <span class="font-white">
+                                    <h3 style="display: inline-block; margin: 0;">Quick Launch To Event Tools</h3>
+                                </span>
+                            </div>
+                            <div class="panel-body">
+
+                                @using (Html.BeginForm("QuickLunch", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = ""}))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <select name="quickLaunchJob" id="nav-quick-launch-job-panel" class="form-control">
+                                                    <option value="0">- Select Booked Event -</option>
+                                                    @foreach (var item in events)
+                                                    {
+                                                        <option value="@item.EventId">
+                                                            @item.Name
+                                                        </option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <select name="quickLaunchTool" id="nav-quick-launch-tool-panel" class="form-control" disabled="disabled">
+
+                                                    <option value="0">- Select Tool -</option>
+                                                    <option value="eventDashboard">Dashboard</option>
+                                                    <option value="appointments">Appointments</option>
+                                                    <option value="attendees">Attendees</option>
+                                                    <option value="budgets">Budget</option>
+                                                    <option value="calendar">Calendar</option>
+                                                    <option value="checklists">Checklists</option>
+                                                    <option value="notes">Notes</option>
+                                                    <option value="invoices"> Invoices</option>
+
+
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="submit" class="btn btn-default" id="go-quick-launch-panel" value="Go"/>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header" data-background-color="green">
+                    <h4 class="title">Newest Events</h4>
+                    <p class="category">Latest Events Closest to @DateTime.Now.ToShortDateString()</p>
+                </div>
+                <div class="card-content table-responsive">
+                    <table class="table table-hover">
+                        <thead class="text-success">
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Event Name")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Start Date")
+                            </th>
+
+                            <th>
+                                @Html.DisplayName("End Date")
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in upComingvents.Take(4))
+                        {
+                            <tr>
+                                @if (item.EventDate > DateTime.Now)
+                                {
+                                    <td style="color: green">
+                                        @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="color: red">
+                                        @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-down"></i>
+                                    </td>
+                                }
+
+                                <td>
+                                    @item.StartDate.ToShortDateString()
+                                </td>
+                                <td>
+                                    @item.EndDate.ToShortDateString()
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Open", "Details", "Events", new {id = item.EventId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
 }
 </div>
+
+}
 </div>
 @section scripts{
     <script>

@@ -128,6 +128,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                 _dbe.SaveChanges();
                 Session["package"] = null;
                 Session["invoice"] = null;
+                Session["subscribe"] = packageSubscribed;
                 //display notification
                 TempData["display"] = "You have successfully subscribed to the package!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -160,11 +161,12 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
 
             Session["package"] = null;
             Session["invoice"] = null;
+            Session["subscribe"] = packageToSubscribed;
 
             //display notification
             TempData["display"] = "You have successfully subscribed to the package!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Setting", "Account");
+            return RedirectToAction("Dashboard", "Home");
         }
         // GET: EventPlannerPackages/Details/5
         public ActionResult Details(long? id)

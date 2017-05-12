@@ -9,7 +9,7 @@
     var events = new Event();
 }
 @section add {
-    @if ((packageSubscribed != null) && (packageSubscribed.AllowedEvent > packageSubscribed.SubscribedEvent))
+    @if (packageSubscribed != null && packageSubscribed.AllowedEvent > packageSubscribed.SubscribedEvent)
     {
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
@@ -39,7 +39,7 @@
     else
     {
         <div class="alert alert-info" style="margin-left: 12px;">
-            Your Subscription has been exhausted.. Buy a new subscription by clicking <a href="@Url.Action("Pricing", "EventPlannerPackages")"> here</a>
+            Your Subscription has been exhausted.. Buy a new subscription by clicking <a href="@Url.Action("Pricing", "EventPlannerPackages")" style="color: purple"> here</a>
         </div>
     }
 }

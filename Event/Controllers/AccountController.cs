@@ -112,6 +112,7 @@ namespace MyEventPlan.Controllers
             user.Verified = true;
             _db.Entry(user).State = EntityState.Modified;
             _db.SaveChanges();
+            Session["myeventplanloggedinuser"] = user;
             return RedirectToAction("Dashboard", "Home");
         }
 

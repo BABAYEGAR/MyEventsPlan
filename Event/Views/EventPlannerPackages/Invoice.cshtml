@@ -23,7 +23,7 @@
     }
 </style>
 
-<section class="content content_content" style="margin: auto; width: 70%;">
+<section class="content content_content" style="margin: auto; width: 90%;">
     <section class="invoice">
         <!-- title row -->
         <div class="row">
@@ -139,6 +139,7 @@
             callback: function(response) {
                 ConfirmPayment();
                 alert('success. transaction ref is ' + response.reference);
+                @(Url.Action("Dashboard","Home"))
             },
             onClose: function() {
                 alert('window closed');
@@ -149,7 +150,7 @@
 
     function ConfirmPayment() {
         $.ajax({
-            url: '@Url.Action("ConfirmPayment", "Account")',
+            url: '@Url.Action("ConfirmPayment", "EventPlannerPackages")',
             type: 'GET',
             dataType: 'json',
             // we set cache: false because GET requests are often cached by browsers

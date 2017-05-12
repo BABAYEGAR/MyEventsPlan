@@ -19,6 +19,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         private readonly VendorDataContext db = new VendorDataContext();
         private readonly EventDataContext dbc = new EventDataContext();
         private readonly VendorPackageSettingDataContext dbd = new VendorPackageSettingDataContext();
+        private readonly VendorImageDataContext dbf = new VendorImageDataContext();
 
         // GET: Vendors
         public ActionResult Index()
@@ -57,7 +58,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: Vendors/ListOfVendors/SearchParameters
-        public ActionResult ListOfVendors(FormCollection collectedValues)
+        public ActionResult ListOfVendors(long? categoryId,FormCollection collectedValues)
         {
             long? serviceId = null;
             long? locationId = null;
@@ -107,6 +108,12 @@ namespace MyEventPlan.Controllers.VendorManagement
                 }
 
             }
+            if (categoryId != null && collectedValues["VendorServiceId"] == "" && collectedValues["LocationId"] == "" &&
+                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
+            {
+                ViewBag.vendors = db.Vendors.Where(n => n.VendorServiceId == categoryId &&
+                                                        n.EventId == null).ToList();
+            }
             if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] == "" &&
                 collectedValues["Price"] == null && collectedValues["checkbox"] == null)
             {
@@ -146,7 +153,14 @@ namespace MyEventPlan.Controllers.VendorManagement
             {
                 ViewBag.vendors = db.Vendors.Where(n=> n.EventId == null).ToList();
             }
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
+            if (serviceId != null)
+            {
+                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
+            }
+            if (categoryId != null)
+            {
+                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", categoryId);
+            }
             ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", locationId);
             ViewBag.rate1 = ratingOne;
             ViewBag.rate2 = ratingTwo;
@@ -334,7 +348,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                 appUser.DateLastModified = DateTime.Now;
                 appUser.VendorId = vendor.VendorId;
                 appUser.Mobile = vendor.Mobile;
-                appUser.Verified = false;
+                appUser.Verified = true;
                 if (role != null) appUser.RoleId = role.RoleId;
                 appUser.Password = new Hashing().HashPassword(vendor.Password);
 
@@ -355,6 +369,25 @@ namespace MyEventPlan.Controllers.VendorManagement
                     Amount = (long) pacakge.Amount
                 };
                 Session["vendorpackage"] = packageSetting;
+                var vendorImage = new VendorImage
+                {
+                    ImageOne = null,
+                    ImageTwo = null,
+                    ImageThree = null,
+                    ImageFour = null,
+                    ImageFive = null,
+                    ImageSix = null,
+                    ImageSeven = null,
+                    ImageEight = null,
+                    ImageNine = null,
+                    ImageTen = null,
+                    DateLastModified = DateTime.Now,
+                    DateCreated = DateTime.Now,
+                    CreatedBy = 1,
+                    LastModifiedBy = 1
+                };
+                Session["vendorimage"] = vendorImage;
+               
                 ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
                     vendor.VendorServiceId);
                 ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
@@ -417,7 +450,8 @@ namespace MyEventPlan.Controllers.VendorManagement
             Session["invoice"] = subscriptionInvoice;
             return View();
         }
-
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult ConfirmPostAccountPayment()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -512,6 +546,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult ConfirmPayment()
         {
             var vendor = Session["vendor"] as Vendor;
@@ -530,11 +565,22 @@ namespace MyEventPlan.Controllers.VendorManagement
                     if (packageSetting != null)
                     {
                         packageSetting.AppUserId = appUser.AppUserId;
+                        packageSetting.VendorId = vendor.VendorId;
                         dbd.VendorPackageSetting.Add(packageSetting);
                     }
+                    var vendorImage = Session["vendorimage"] as VendorImage;
+                    if (vendorImage != null)
+                    {
+                        vendorImage.VendorId = vendor.VendorId;
+                        dbf.VendorImages.Add(vendorImage);
+                        dbf.SaveChanges();
+                    }
                     dbd.SaveChanges();
-
                     new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
+                    TempData["login"] =
+                        "You have successfully registered as a vendor! Verify access in your email to login";
+                    TempData["notificationtype"] = NotificationType.Success.ToString();
+                    return RedirectToAction("Login", "Account");
                 }
             TempData["login"] =
                 "You have successfully registered as a vendor! Verify access in your email to login";

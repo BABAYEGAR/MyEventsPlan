@@ -56,7 +56,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (ModelState.IsValid)
             {
-                var password = new Md5Ecryption().ConvertStringToMd5Hash(collectedValues["ConfirmPassword"]);
+                var password  = new Hashing().HashPassword(collectedValues["ConfirmPassword"]);
                 var role = db.Roles.FirstOrDefault(m => m.Name == "Event Planner");
                 eventPlanner.RoleId = role?.RoleId;
                 eventPlanner.Password = password;
@@ -72,7 +72,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 var appuser = new AppUser();
 
                 appuser.Email = eventPlanner.Email;
-                appuser.Password = new Hashing().HashPassword(eventPlanner.Password);
+                appuser.Password = password;
                 appuser.Firstname = eventPlanner.Name;
                 appuser.Lastname = eventPlanner.Name;
                 appuser.Mobile = eventPlanner.Mobile;
@@ -80,7 +80,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 appuser.DateLastModified = DateTime.Now;
                 appuser.LastModifiedBy = null;
                 appuser.CreatedBy = null;
-                appuser.Verified = false;
+                appuser.Verified = true;
 
                 var checkeventPlanner = db.EventPlanners.SingleOrDefault(n => n.Email == eventPlanner.Email);
                 if (checkeventPlanner != null)
@@ -115,7 +115,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 dbd.EventPlannerPackageSettings.Add(eventPlannerSetting);
                 dbd.SaveChanges();
                 new MailerDaemon().NewEventPlanner(eventPlanner, appuser.AppUserId);
-                TempData["login"] = "You have successfully signed up to PlanMyLeave type!";
+                TempData["login"] = "You have successfully signed up to MyEventsPlan!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Login", "Account");
             }
