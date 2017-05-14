@@ -50,8 +50,15 @@ namespace MyEventPlan.Controllers.EventManagement
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 guestList.DateCreated = DateTime.Now;
                 guestList.DateLastModified = DateTime.Now;
+                var listExist = db.GuestLists.Where(m => m.EventId == guestList.EventId && m.Name == guestList.Name).ToList();
                 if (loggedinuser != null)
                 {
+                    if (listExist.Count > 0)
+                    {
+                        TempData["display"] = "A guest-list with the same name exist, try another name!";
+                        TempData["notificationtype"] = NotificationType.Error.ToString();
+                        return RedirectToAction("Index", new { eventId = guestList.EventId });
+                    }
                     guestList.LastModifiedBy = loggedinuser.AppUserId;
                     guestList.CreatedBy = loggedinuser.AppUserId;
                 }

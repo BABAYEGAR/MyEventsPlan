@@ -1,4 +1,5 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
+﻿@using System.Data.Entity
+@using MyEventPlan.Data.DataContext.DataContext
 @model Event.Data.Objects.Entities.Vendor
 @{
     Layout = "../Shared/Layout/_LayoutAppTheme.cshtml";
@@ -6,7 +7,7 @@
     var allVendors = db.Vendors.OrderByDescending(n => n.AverageRating).ToList();
     var countedVendors = allVendors.Take(6);
 
-    var allPlanners = db.AppUsers.Where(n => n.EventPlannerId != null).ToList();
+    var allPlanners = db.EventPlanners.Include(m => m.Location).ToList();
     var countedPlanners = allPlanners.Take(3);
 }
 <div class="slider-bg">
@@ -186,13 +187,13 @@
                     <div class="real-wedding-block mb30">
                         <!-- real wedding block -->
                         <div class="real-wedding-img">
-                            <a href="#">
-                                <img src="~/UploadedFiles/ProfileImage/@item.ProfileImage" alt="" class="img-responsive">
+                            <a href="@Url.Action("EventPlannerDetails","EventPlanners",new{id = item.EventPlannerId})">
+                                <img src="~/UploadedFiles/EventPlannerLogo/@item.Logo" alt="" class="img-responsive">
                             </a>
                         </div>
                         <div class="real-wedding-info well-box text-center">
                             <h2 class="real-wedding-title">
-                                <a href="#" class="title">@item.DisplayName</a>
+                                <a href="#" class="title">@item.Name</a>
                             </h2>
                             @*<p class="real-wed-meta">
                                 <span class="wed-day-meta"><i class="icon-wedding-day icon-size-18"></i> 5 june,2016</span> <span class="wed-location-meta"> <i class="icon-wedding-location icon-size-18"></i> Surat, @item.Mobile</span>

@@ -1,0 +1,71 @@
+﻿@model Event.Data.Objects.Entities.EventPlanner
+@{
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+}
+@using (Html.BeginForm("Edit", "EventPlanners", FormMethod.Post, new {@class = "form-horizontal"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m=>m.EventPlannerId)
+    @Html.HiddenFor(m=>m.Type)
+    @Html.HiddenFor(m=>m.Email)
+    @Html.HiddenFor(m=>m.Name)
+    @Html.HiddenFor(m=>m.Password)
+    @Html.HiddenFor(m=>m.ConfirmPassword)
+    @Html.HiddenFor(m=>m.LocationId)
+    @Html.HiddenFor(m=>m.Logo)
+    @Html.HiddenFor(m=>m.RoleId)
+    @Html.HiddenFor(m=>m.PricingDetails)
+    @Html.HiddenFor(m=>m.MaximumPrice)
+    @Html.HiddenFor(m=>m.MinimumPrice)
+    @Html.HiddenFor(m=>m.Mobile)
+    @Html.HiddenFor(m=>m.AverageRating)
+    @Html.ValidationSummary("", new {@class = "text-danger"})
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.Website, new {htmlAttributes = new {placeholder = "Enter Facebook URL"}})
+        @Html.LabelFor(model => model.Website)
+        @Html.ValidationMessageFor(model => model.Website, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.About, new {htmlAttributes = new {placeholder = "About Me"}})
+        @Html.LabelFor(model => model.About)
+        @Html.ValidationMessageFor(model => model.About, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.FacebookPage, new {htmlAttributes = new {placeholder = "Enter Facebook URL"}})
+        @Html.LabelFor(model => model.FacebookPage)
+        @Html.ValidationMessageFor(model => model.FacebookPage, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.TwitterPage, new {htmlAttributes = new {placeholder = "Enter Twitter URL"}})
+        @Html.LabelFor(model => model.TwitterPage)
+        @Html.ValidationMessageFor(model => model.TwitterPage, "", new {@class = "text-danger"})
+    </div>
+
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.InstagramPage, new {htmlAttributes = new {placeholder = "Enter Instagram URL"}})
+        @Html.LabelFor(model => model.InstagramPage)
+        @Html.ValidationMessageFor(model => model.InstagramPage, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.YoutubePage, new {htmlAttributes = new {placeholder = "Enter Youtube URL"}})
+        @Html.LabelFor(model => model.YoutubePage)
+        @Html.ValidationMessageFor(model => model.YoutubePage, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.GooglePlusPage, new {htmlAttributes = new {placeholder = "Enter Google Plus URL"}})
+        @Html.LabelFor(model => model.GooglePlusPage)
+        @Html.ValidationMessageFor(model => model.GooglePlusPage, "", new {@class = "text-danger"})
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Update Web Setting" class="btn btn-default"/>
+        </div>
+    </div>
+}

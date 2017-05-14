@@ -324,14 +324,20 @@ namespace MyEventPlan.Controllers.VendorManagement
                 vendor.DateLastModified = DateTime.Now;
                 if (dbc.AppUsers.Any(n => n.Email == vendor.Email))
                 {
-                    TempData["outterform"] = "The email entered already exist! Try another one!";
+                    
+                    TempData["display"] = "The email entered already exist! Try another one!";
                     TempData["notificationtype"] = NotificationType.Error.ToString();
+                    ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
+                    ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
+                    ViewBag.packageId = packageId;
                     return View(vendor);
                 }
                 vendor.LastModifiedBy = 1;
                 vendor.CreatedBy = 1;
                 vendor.EventPlannerId = null;
                 vendor.EventId = null;
+                vendor.Password = new Hashing().HashPassword(vendor.Password);
+                vendor.ConfirmPassword = new Hashing().HashPassword(vendor.ConfirmPassword);
                 if (logo != null && logo.FileName != "")
                     vendor.Logo = new FileUploader().UploadFile(logo, UploadType.vendorLogo);
 
@@ -350,9 +356,9 @@ namespace MyEventPlan.Controllers.VendorManagement
                 appUser.DateLastModified = DateTime.Now;
                 appUser.VendorId = vendor.VendorId;
                 appUser.Mobile = vendor.Mobile;
-                appUser.Verified = true;
+                appUser.Status = UserAccountStatus.Enabled.ToString();
                 if (role != null) appUser.RoleId = role.RoleId;
-                appUser.Password = new Hashing().HashPassword(vendor.Password);
+                appUser.Password = vendor.Password;
 
 
                 Session["vendoruser"] = appUser;
@@ -643,7 +649,6 @@ namespace MyEventPlan.Controllers.VendorManagement
                     vendorUser.Firstname = vendor.Name;
                     vendorUser.Lastname = vendor.Name;
                     vendorUser.Mobile = vendor.Mobile;
-                    vendorUser.ProfileImage = vendor.Logo;
                 }
                 _dbd.Entry(vendorUser).State = EntityState.Modified;
                 _dbd.SaveChanges();

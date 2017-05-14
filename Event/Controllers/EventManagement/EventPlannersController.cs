@@ -25,7 +25,16 @@ namespace MyEventPlan.Controllers.EventManagement
             var eventPlanners = db.EventPlanners.Include(e => e.Role);
             return View(eventPlanners.ToList());
         }
-
+        // GET: EventPlanners/Details/5
+        public ActionResult EventPlannerDetails(long? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var eventPlanner = db.EventPlanners.Find(id);
+            if (eventPlanner == null)
+                return HttpNotFound();
+            return View(eventPlanner);
+        }
         // GET: EventPlanners/Details/5
         public ActionResult Details(long? id)
         {
@@ -51,9 +60,10 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "EventPlannerId,Name,LocationId,Email,Mobile,ConfirmPassword,Password")] EventPlanner
-                eventPlanner, FormCollection collectedValues)
-        {
+                [Bind(Include = "EventPlannerId,Name,LocationId,Email,Mobile,ConfirmPassword,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails" +
+                                ",YoutubePage,GooglePlusPage,MaximumPrice,MinimumPrice,About,AverageRating,Password,Type,RoleId")] EventPlanner
+                    eventPlanner, FormCollection collectedValues)
+        { 
             if (ModelState.IsValid)
             {
                 var password  = new Hashing().HashPassword(collectedValues["ConfirmPassword"]);
@@ -80,7 +90,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 appuser.DateLastModified = DateTime.Now;
                 appuser.LastModifiedBy = null;
                 appuser.CreatedBy = null;
-                appuser.Verified = true;
+                appuser.Status = UserAccountStatus.Enabled.ToString();
 
                 var checkeventPlanner = db.EventPlanners.SingleOrDefault(n => n.Email == eventPlanner.Email);
                 if (checkeventPlanner != null)
@@ -141,16 +151,47 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(
-            [Bind(Include = "EventPlannerId,Firstname,Lastname,Email,Mobile,BusinessName,BusinessContact,Type,RoleId")] EventPlanner eventPlanner)
+            [Bind(Include = "EventPlannerId,Name,LocationId,Email,Mobile,ConfirmPassword,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails" +
+                            ",YoutubePage,GooglePlusPage,MaximumPrice,MinimumPrice,About,AverageRating,Password,Type,RoleId")] EventPlanner
+                eventPlanner, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(eventPlanner).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                //create app user
+                if (loggedinuser != null)
+                {
+                    var appuser = dbc.AppUsers.Find(loggedinuser.AppUserId);
+
+                    if (appuser != null)
+                    {
+                        appuser.Email = eventPlanner.Email;
+                        appuser.Firstname = eventPlanner.Name;
+                        appuser.Lastname = eventPlanner.Name;
+                        appuser.Mobile = eventPlanner.Mobile;
+                        appuser.DateLastModified = DateTime.Now;
+                        appuser.LastModifiedBy = null;
+
+                        db.Entry(eventPlanner).State = EntityState.Modified;
+                        db.SaveChanges();
+                        dbc.Entry(appuser).State = EntityState.Modified;
+                        dbc.SaveChanges();
+
+                        Session["eventplanner"] = eventPlanner;
+                        Session["myeventplanloggedinuser"] = appuser;
+                    }
+                }
+
+
+                TempData["display"] = "You have successfully modified your profile!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Setting", "Account");
             }
-            return View(eventPlanner);
+            TempData["display"] = " Unable to update profile!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Setting", "Account");
         }
+
 
         // GET: EventPlanners/Delete/5
         public ActionResult Delete(long? id)

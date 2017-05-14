@@ -7,7 +7,13 @@
       Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var guest = new Guest();
     var events = Session["event"] as Event;
-    var guestListId = Model.FirstOrDefault().GuestListId;
+    Guest first = null;
+    foreach (var guest1 in Model)
+    {
+        first = guest1;
+        break;
+    }
+    var guestListId = first.GuestListId;
 }
 @section links{
     <ol class="breadcrumb">

@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Event.Data.Objects.Entities.EventPlannerReview>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EventPlanner.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewerEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReviewBody)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateLastModified)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastModifiedBy)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EventPlanner.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewerEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReviewBody)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateCreated)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateLastModified)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastModifiedBy)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EventPlannerReviewId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EventPlannerReviewId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EventPlannerReviewId })
+        </td>
+    </tr>
+}
+
+</table>

@@ -80,10 +80,17 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = db.Roles.SingleOrDefault(n => n.Name == "Staff");
+            var listExist = db.Staff.Where(m => m.EventPlannerId == staff.EventPlannerId && m.Email == staff.Email).ToList();
             if (ModelState.IsValid)
             {
                 if ((loggedinuser != null))
                 {
+                    if (listExist.Count > 0)
+                    {
+                        TempData["display"] = "A staff with the same email exist, try another email!";
+                        TempData["notificationtype"] = NotificationType.Error.ToString();
+                        return RedirectToAction("Index");
+                    }
                     staff.CreatedBy = loggedinuser.AppUserId;
                     staff.DateCreated = DateTime.Now;
                     staff.DateLastModified = DateTime.Now;

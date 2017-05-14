@@ -5,6 +5,16 @@
     ViewBag.TableHeader = " Vendor Package";
     ViewBag.TableSubHeader = "Details of Vendor Package";
 }
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "VendorPackages")">Vendor Packages</a>
+        </li>
+    </ol>
+}
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.PackageName)

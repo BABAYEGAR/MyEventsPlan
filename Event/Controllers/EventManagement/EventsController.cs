@@ -218,6 +218,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
+          
 
             if (ModelState.IsValid)
             {
@@ -232,6 +233,14 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.EventPlannerId = loggedinuser.EventPlannerId;
                     @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     @event.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                    var listExist = _db.Event.Where(m => m.EventPlannerId == @event.EventPlannerId && m.Name == @event.Name).ToList();
+
+                    if (listExist.Count > 0)
+                    {
+                        TempData["display"] = "An event with the same name exist, try another name!";
+                        TempData["notificationtype"] = NotificationType.Error.ToString();
+                        return RedirectToAction("Index");
+                    }
                 }
                 else
                 {

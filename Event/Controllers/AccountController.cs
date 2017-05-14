@@ -23,7 +23,6 @@ namespace MyEventPlan.Controllers
         private readonly PasswordResetDataContext _dbc = new PasswordResetDataContext();
         private readonly EventDataContext _dbd = new EventDataContext();
         private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
-        private readonly EventPlannerPackageSettingDataContext _dbf = new EventPlannerPackageSettingDataContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -39,14 +38,14 @@ namespace MyEventPlan.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
-            private set { _signInManager = value; }
+            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            private set => _signInManager = value;
         }
 
         public ApplicationUserManager UserManager
         {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            private set { _userManager = value; }
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
         }
 
 
@@ -61,11 +60,10 @@ namespace MyEventPlan.Controllers
             var packageSubscribed =
                 packages.SingleOrDefault(
                     n =>
-                        (n.EventPlannerId == loggedinuser.EventPlannerId) &&
-                        (n.Status == PackageStatusEnum.Active.ToString()));
+                        n.EventPlannerId == loggedinuser.EventPlannerId &&
+                        n.Status == PackageStatusEnum.Active.ToString());
             return View(packageSubscribed);
         }
-
 
 
         [HttpGet]
@@ -98,7 +96,7 @@ namespace MyEventPlan.Controllers
             var email = collectedValues["Email"];
             var user = _db.AppUsers.SingleOrDefault(n => n.Email == email);
 
-            Session["myeventplanloggedinuser"] = user;
+            Session["user"] = user;
             TempData["display"] = "Your email has been successfully verified. Change your password!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("PasswordReset", "Account");
@@ -109,13 +107,42 @@ namespace MyEventPlan.Controllers
         public ActionResult VerifyAccount(long id)
         {
             var user = _db.AppUsers.Find(id);
-            user.Verified = true;
             _db.Entry(user).State = EntityState.Modified;
             _db.SaveChanges();
             Session["myeventplanloggedinuser"] = user;
             return RedirectToAction("Dashboard", "Home");
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ChangeClientPassword(long? id)
+        {
+            var user = _db.AppUsers.Find(id);
+            Session["user"] = user;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult ChangeClientPassword(FormCollection collectedValues)
+        {
+            var loggedinuser = Session["user"] as AppUser;
+            var password = collectedValues["ConfirmPassword"];
+            if (loggedinuser != null)
+            {
+                var user = _db.AppUsers.Find(loggedinuser.AppUserId);
+                if (user != null)
+                {
+                    user.Password = new Hashing().HashPassword(password);
+                    _db.Entry(user).State = EntityState.Modified;
+                }
+            }
+            _db.SaveChanges();
+            Session["user"] = null;
+            TempData["login"] = "You have successfully changed your password!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Login", "Account");
+        }
         [HttpGet]
         [AllowAnonymous]
         public ActionResult ChangePassword()
@@ -132,8 +159,11 @@ namespace MyEventPlan.Controllers
             if (loggedinuser != null)
             {
                 var user = _db.AppUsers.Find(loggedinuser.AppUserId);
-                user.Password = new Hashing().HashPassword(password);
-                _db.Entry(user).State = EntityState.Modified;
+                if (user != null)
+                {
+                    user.Password = new Hashing().HashPassword(password);
+                    _db.Entry(user).State = EntityState.Modified;
+                }
             }
             _db.SaveChanges();
             Session["myeventplanloggedinuser"] = loggedinuser;
@@ -153,15 +183,18 @@ namespace MyEventPlan.Controllers
         [AllowAnonymous]
         public ActionResult PasswordReset(FormCollection collectedValues)
         {
-            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var loggedinuser = Session["user"] as AppUser;
 
             var reset = new PasswordReset();
             var password = collectedValues["ConfirmPassword"];
             if (loggedinuser != null)
             {
                 var user = _db.AppUsers.Find(loggedinuser.AppUserId);
-                user.Password = new Hashing().HashPassword(password);
-                _db.Entry(user).State = EntityState.Modified;
+                if (user != null)
+                {
+                    user.Password = new Hashing().HashPassword(password);
+                    _db.Entry(user).State = EntityState.Modified;
+                }
             }
             var generator = new Random();
             var number = Convert.ToInt64(generator.Next(0, 1000000).ToString("D6"));
@@ -174,7 +207,7 @@ namespace MyEventPlan.Controllers
             _db.SaveChanges();
             //_dbc.SaveChanges();
 
-            Session["myeventplanloggedinuser"] = null;
+            Session["user"] = null;
             TempData["login"] = "Welcome Back! You have successfully changed your password.. Login to continue!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Login", "Account");
@@ -201,30 +234,37 @@ namespace MyEventPlan.Controllers
             var user = new AuthenticationFactory().AuthenticateAppUserLogin(model.Email, model.Password);
             if (user != null)
             {
-                if (user.Verified)
+                if (user.Status != UserAccountStatus.Disabled.ToString())
                 {
                     Session["myeventplanloggedinuser"] = user;
                     Session["role"] = user.Role;
+
+                    //package setting
+                    var packageSubscribed =
+                        _dbe.EventPlannerPackageSettings.SingleOrDefault(
+                            n =>
+                                n.EventPlannerId == user.EventPlannerId &&
+                                n.Status == PackageStatusEnum.Active.ToString());
+                    if (packageSubscribed != null)
+                    {
+                        Session["subscribe"] = packageSubscribed;
+                    }
                     if (user.EventPlannerId != null)
                     {
                         var eventPlanner = _db.EventPlanners.Find(user.EventPlannerId);
                         Session["eventplanner"] = eventPlanner;
+                        return RedirectToAction("Dashboard", "Home");
                     }
-                    var packageSubscribed =
-                        _dbe.EventPlannerPackageSettings.SingleOrDefault(
-                            n =>
-                                (n.EventPlannerId == user.EventPlannerId) &&
-                                (n.Status == PackageStatusEnum.Active.ToString()));
-                    if (packageSubscribed != null)
-                        Session["subscribe"] = packageSubscribed;
                     if (user.VendorId != null)
                     {
+                        var vendor = _dbd.Vendors.Find(user.VendorId);
+                        Session["vendor"] = vendor;
                         return RedirectToAction("Profile", "Vendors");
                     }
                     return RedirectToAction("Dashboard", "Home");
                 }
-                TempData["login"] = "Verify your account from your email and try again!";
-                TempData["notificationtype"] = NotificationType.Error.ToString();
+                TempData["login"] = "Your account has been disabled, Contact the support team";
+                TempData["notificationtype"] = NotificationType.Info.ToString();
                 return View(model);
             }
             TempData["login"] = "Inavlid email/password, Try again!";
@@ -317,7 +357,7 @@ namespace MyEventPlan.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
-            if ((userId == null) || (code == null))
+            if (userId == null || code == null)
                 return View("Error");
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
@@ -341,7 +381,7 @@ namespace MyEventPlan.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if ((user == null) || !await UserManager.IsEmailConfirmedAsync(user.Id))
+                if (user == null || !await UserManager.IsEmailConfirmedAsync(user.Id))
                     return View("ForgotPasswordConfirmation");
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -462,7 +502,6 @@ namespace MyEventPlan.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new {ReturnUrl = returnUrl, RememberMe = false});
-                case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
@@ -506,14 +545,18 @@ namespace MyEventPlan.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
+
         // POST: /Account/LogOff
         [HttpGet]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
-        {
+       {
             Session["myeventplanloggedinuser"] = null;
             Session["role"] = null;
             Session["event"] = null;
+            Session["vendor"] = null;
+            Session["eventplanner"] = null;
+            Session["subscribe"] = null;
+
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
             return RedirectToAction("Index", "Home");
         }
@@ -551,10 +594,7 @@ namespace MyEventPlan.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get { return HttpContext.GetOwinContext().Authentication; }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {

@@ -50,8 +50,15 @@ namespace MyEventPlan.Controllers.EventManagement
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 checkList.DateCreated = DateTime.Now;
                 checkList.DateLastModified = DateTime.Now;
+                var listExist = db.CheckLists.Where(m => m.EventId == checkList.EventId && m.Name == checkList.Name).ToList();
                 if (loggedinuser != null)
                 {
+                    if (listExist.Count > 0)
+                    {
+                        TempData["display"] = "A check-list with the same name exist, try another name!";
+                        TempData["notificationtype"] = NotificationType.Error.ToString();
+                        return RedirectToAction("Index", new { eventId = checkList.EventId });
+                    }
                     checkList.LastModifiedBy = loggedinuser.AppUserId;
                     checkList.CreatedBy = loggedinuser.AppUserId;
                     checkList.Status = ChecklistStatusEnum.Incomplete.ToString();

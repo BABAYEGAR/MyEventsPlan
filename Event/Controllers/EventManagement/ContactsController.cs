@@ -50,8 +50,15 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 if (loggedinuser != null) contact.EventPlannerId = loggedinuser.EventPlannerId;
+                var contactExist = db.Contact.Where(m => m.Email == contact.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
                 if (loggedinuser != null)
                 {
+                    if (contactExist.Count > 0)
+                    {
+                        TempData["display"] = "A contact with the same email exist, try another email!";
+                        TempData["notificationtype"] = NotificationType.Error.ToString();
+                        return RedirectToAction("Index");
+                    }
                     contact.CreatedBy = loggedinuser.AppUserId;
                     contact.DateCreated = DateTime.Now;
                     contact.DateLastModified = DateTime.Now;
@@ -83,7 +90,8 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(
-            [Bind(Include = "ContactId,Title,Firstname,Lastname,Email,Mobile,EventPlannerId,CreatedBy,DateCreated")] Contact contact)
+            [Bind(Include = "ContactId,Title,Firstname,Lastname,Email,Mobile,EventPlannerId,CreatedBy,DateCreated")]
+            Contact contact)
         {
             if (ModelState.IsValid)
             {

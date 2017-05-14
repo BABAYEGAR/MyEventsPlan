@@ -60,18 +60,17 @@ namespace MyEventPlan.Controllers.EventManagement
             appUser.DateLastModified = DateTime.Now;
             appUser.DateCreated = DateTime.Now;
             appUser.Password = new Hashing().HashPassword("Password");
+            appUser.Status = UserAccountStatus.Enabled.ToString();
             if (loggedinuser != null)
             {
                 appUser.CreatedBy = loggedinuser.AppUserId;
                 appUser.LastModifiedBy = loggedinuser.AppUserId;
                 appUser.ClientId = id;
-                appUser.ProfileImage = "131329580750710796.jpg";
-                appUser.Verified = false;
             }
             dbc.AppUsers.Add(appUser);
             dbc.SaveChanges();
             if (events != null) new MailerDaemon().NewClientLogin(client, appUser.AppUserId,events.Name);
-            TempData["display"] = "The login credentials has been successfully sent to the clients email!";
+            TempData["display"] = "The login acces link has been successfully sent to the clients email!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new {id = client.EventId});
         }
@@ -96,8 +95,15 @@ namespace MyEventPlan.Controllers.EventManagement
                 client.DateCreated = DateTime.Now;
                 client.DateLastModified = DateTime.Now;
                 if (events != null) client.EventId = events.EventId;
+                var clientExist = db.Clients.Where(m => m.Email == client.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
                 if (loggedinuser != null)
                 {
+                    if (clientExist.Count > 0)
+                    {
+                        TempData["display"] = "A client with the same email exist, try another email!";
+                        TempData["notificationtype"] = NotificationType.Error.ToString();
+                        return RedirectToAction("Index", new { id = client.EventId });
+                    }
                     client.LastModifiedBy = loggedinuser.AppUserId;
                     client.CreatedBy = loggedinuser.AppUserId;
                     client.EventPlannerId = loggedinuser.EventPlannerId;

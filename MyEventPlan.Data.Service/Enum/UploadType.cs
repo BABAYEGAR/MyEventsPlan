@@ -5,7 +5,8 @@
         ProfileImage,
         NewsImage,
         vendorImage,
-        vendorLogo
+        vendorLogo,
+        EventPlannerLogo,
 
     }
 }

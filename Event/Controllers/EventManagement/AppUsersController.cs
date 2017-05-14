@@ -79,16 +79,19 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var plannerUser = dbc.EventPlanners.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId);
-            AppUser user = null;
+            EventPlanner user = null;
             HttpPostedFileBase image = Request.Files["image_file"];
             if (loggedinuser != null)
             {
-                user = db.AppUsers.Find(loggedinuser.AppUserId);
-                user.ProfileImage = new FileUploader().UploadFile(image, UploadType.ProfileImage);
-                db.Entry(user).State = EntityState.Modified;
+                user = dbc.EventPlanners.Find(loggedinuser.EventPlannerId);
+                if (user != null)
+                {
+                    user.Logo = new FileUploader().UploadFile(image,UploadType.EventPlannerLogo);
+                    dbc.Entry(user).State = EntityState.Modified;
+                }
             }
-            db.SaveChanges();
-            Session["myeventplanloggedinuser"] = user;
+            dbc.SaveChanges();
+            Session["eventplanner"] = user;
             TempData["display"] = "You have successfully changed your logo/image!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Setting", "Account");
@@ -122,7 +125,8 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Create(
             [Bind(
                  Include =
-                     "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,EventPlannerId,ProfileImage,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+                     "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,BackgroundColor" +
+                     ",EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
              )] AppUser appUser)
         {
             if (ModelState.IsValid)
@@ -182,16 +186,29 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult UpdateProfile(
             [Bind(
                  Include =
-                     "AppUserId,Firstname,Lastname,Email,Mobile,Status,Password,RoleId,VendorId,ClientId,Verified,EventPlannerId,ProfileImage,CreatedBy,DateCreated"
+                     "AppUserId,Firstname,Lastname,Email,Mobile,Status,Password,BackgroundColor" +
+                     ",RoleId,VendorId,ClientId,EventPlannerId,CreatedBy,DateCreated"
              )] AppUser appUser)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 appUser.DateLastModified = DateTime.Now;
-                if (loggedinuser != null)
+                if (loggedinuser != null )
                 {
-                    appUser.LastModifiedBy = loggedinuser.AppUserId;
+                    if (loggedinuser.EventPlannerId != null)
+                    {
+                        var planner = dbc.EventPlanners.Find(loggedinuser.EventPlannerId);
+                        if (planner != null)
+                        {
+                            planner.Name = appUser.Firstname + " " + appUser.Lastname;
+                            planner.Email = appUser.Email;
+                            planner.Mobile = appUser.Mobile;
+
+                            dbc.Entry(planner).State = EntityState.Modified;
+                        }
+                        dbc.SaveChanges();
+                    }
                 }
                 else
                 {
@@ -206,7 +223,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("UserProfile","Account");
             }
-            return View(appUser);
+            return RedirectToAction("Dashboard","Home");
         }
         // GET: AppUsers/Delete/5
         public ActionResult Delete(long? id)
@@ -226,6 +243,13 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             var appUser = db.AppUsers.Find(id);
+
+            var subscriptionSetting = db.EventPlannerPackageSettings.Where(n => n.AppUserId == id);
+            foreach (var item in subscriptionSetting)
+            {
+                db.EventPlannerPackageSettings.Remove(item);
+
+            }
             db.AppUsers.Remove(appUser);
             db.SaveChanges();
             return RedirectToAction("Index");

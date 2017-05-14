@@ -12,11 +12,10 @@
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.HiddenFor(m => m.DateCreated)
     @Html.HiddenFor(m => m.Password)
-    @Html.HiddenFor(m => m.Verified)
     @Html.HiddenFor(m => m.Status)
     @Html.HiddenFor(m => m.StaffId)
     @Html.HiddenFor(m => m.RoleId)
-    @Html.HiddenFor(m => m.ProfileImage)
+    @Html.HiddenFor(m => m.BackgroundColor)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.Firstname, new {@class = ""})

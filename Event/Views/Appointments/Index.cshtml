@@ -3,7 +3,13 @@
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of my appointments";
-    ViewBag.TableSubHeader = "List of all " + Model.FirstOrDefault()?.Event.Name + " appointments";
+    Appointment first = null;
+    foreach (var appointment1 in Model)
+    {
+        first = appointment1;
+        break;
+    }
+    ViewBag.TableSubHeader = "List of all " + first.Event.Name + " appointments";
       Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var appointment = new Appointment();
     var events = Session["event"] as Event;

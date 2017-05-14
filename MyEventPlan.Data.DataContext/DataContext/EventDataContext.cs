@@ -66,6 +66,8 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<VendorEnquiry> VendorEnquiries { get; set; }
         public virtual DbSet<VendorReview> VendorReviews { get; set; }
         public virtual DbSet<VendorImage> VendorImages { get; set; }
+        public virtual DbSet<EventPlannerReview> EventPlannerReviews { get; set; }
+        public virtual DbSet<EventPlannerEnquiry> EventPlannerEnquiries { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -49,8 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContext\EventPlannerEnquiryDataContext.cs" />
     <Compile Include="DataContext\VendorEnquiryDataContext.cs" />
     <Compile Include="DataContext\VendorImageDataContext.cs" />
+    <Compile Include="DataContext\EventPlannerReviewDataContext.cs" />
     <Compile Include="DataContext\VendorReviewDataContext.cs" />
     <Compile Include="DataContext\VendorPackageSettingDataContext.cs" />
     <Compile Include="DataContext\VendorPackageItemDataContext.cs" />
@@ -340,6 +342,22 @@
     <Compile Include="Migrations\201705132319337_migrate64.Designer.cs">
       <DependentUpon>201705132319337_migrate64.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705140036299_migrate65.cs" />
+    <Compile Include="Migrations\201705140036299_migrate65.Designer.cs">
+      <DependentUpon>201705140036299_migrate65.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705140037379_migrate66.cs" />
+    <Compile Include="Migrations\201705140037379_migrate66.Designer.cs">
+      <DependentUpon>201705140037379_migrate66.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705141150040_migrate67.cs" />
+    <Compile Include="Migrations\201705141150040_migrate67.Designer.cs">
+      <DependentUpon>201705141150040_migrate67.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705141254348_migrate68.cs" />
+    <Compile Include="Migrations\201705141254348_migrate68.Designer.cs">
+      <DependentUpon>201705141254348_migrate68.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -536,6 +554,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705132319337_migrate64.resx">
       <DependentUpon>201705132319337_migrate64.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705140036299_migrate65.resx">
+      <DependentUpon>201705140036299_migrate65.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705140037379_migrate66.resx">
+      <DependentUpon>201705140037379_migrate66.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705141150040_migrate67.resx">
+      <DependentUpon>201705141150040_migrate67.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705141254348_migrate68.resx">
+      <DependentUpon>201705141254348_migrate68.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

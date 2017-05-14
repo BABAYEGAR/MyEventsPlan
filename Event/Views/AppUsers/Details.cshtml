@@ -1,22 +1,24 @@
 ﻿@using Event.Data.Objects.Entities
 @using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
 @model AppUser
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View users";
-    Layout = "../Shared/_LayoutForm.cshtml";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
+    Layout = "../Shared/Layout/_LayoutForm.cshtml";
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "AppUsers")">Application Users</a>
+        </li>
+    </ol>
 }
 <dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.EventPlanner.Firstname)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.EventPlanner.Firstname)
-    </dd>
-
     <dt>
         @Html.DisplayNameFor(model => model.Role.Name)
     </dt>
@@ -64,54 +66,48 @@
     <dd>
         @Html.DisplayFor(model => model.Password)
     </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.ProfileImage)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.ProfileImage)
-    </dd>
-
-    @if ((role != null) && (role.Name == "Platform Administrator"))
-    {
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.CreatedBy).Lastname + "" + userDb.AppUsers.Find(Model.CreatedBy).Firstname)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLastModified)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLastModified)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastModifiedBy)
-        </dt>
-
-        <dd>
-            @(userDb.AppUsers.Find(Model.LastModifiedBy).Firstname + " " + userDb.AppUsers.Find(Model.LastModifiedBy).Lastname)
-        </dd>
-    }
-
 </dl>
+@if (Model.Status == UserAccountStatus.Enabled.ToString())
+{
+    @Html.ActionLink("Disable User", "DisableUser", new{id  = Model.AppUserId}, new {@class = "btn btn-danger fa fa-stop"})
+ 
+}
+@if (Model.Status == UserAccountStatus.Disabled.ToString())
+{
+    @Html.ActionLink("Enable User", "DisableUser", new{id = Model.AppUserId}, new {@class = "btn btn-danger fa fa-stop"})
+   
+}
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal7">
+    Delete User
+</button>
 
-<p>
-    @Html.ActionLink("Back to List", "Index", null, new {@class = "btn btn-default"})
-    @Html.ActionLink("Enable User", "EnableUser", null, new {@class = "btn btn-success"})
-    @Html.ActionLink("Disable User", "DisableUser", null, new {@class = "btn btn-danger"})
-</p>
+<!-- Modal -->
+<div class="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel7">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete User</h4>
+            </div>
+            @using (Html.BeginForm("Delete", "AppUsers", new {id = Model.AppUserId}))
+            {
+                <div class="modal-body">
+
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to delete the user?
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                    <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>

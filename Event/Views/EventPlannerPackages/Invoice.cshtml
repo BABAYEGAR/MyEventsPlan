@@ -139,7 +139,7 @@
             callback: function(response) {
                 ConfirmPayment();
                 alert('success. transaction ref is ' + response.reference);
-                @(Url.Action("Dashboard","Home"))
+                location.href = "@Url.Action("Dashboard","Home")";
             },
             onClose: function() {
                 alert('window closed');

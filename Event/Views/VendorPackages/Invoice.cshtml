@@ -137,6 +137,7 @@
             callback: function(response) {
                 ConfirmPayment();
                 alert('success. transaction ref is ' + response.reference);
+                location.href = "@Url.Action("Login","Account")";
             },
             onClose: function() {
                 alert('window closed');

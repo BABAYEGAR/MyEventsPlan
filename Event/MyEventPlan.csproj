@@ -1,7 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
-  <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -70,10 +68,6 @@
     </Reference>
     <Reference Include="Microsoft.ApplicationInsights, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net46\Microsoft.ApplicationInsights.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -212,6 +206,8 @@
     <Compile Include="Controllers\EventManagement\NotesController.cs" />
     <Compile Include="Controllers\EventManagement\StaffsController.cs" />
     <Compile Include="Controllers\EventManagement\TasksController.cs" />
+    <Compile Include="Controllers\EventPlannerManagement\EventPlannerEnquiriesController.cs" />
+    <Compile Include="Controllers\EventPlannerManagement\EventPlannerReviewsController.cs" />
     <Compile Include="Controllers\EventPlannerPackage\EventPlannerPackageItemsController.cs" />
     <Compile Include="Controllers\EventPlannerPackage\EventPlannerPackagesController.cs" />
     <Compile Include="Controllers\EventPlannerPackage\EventPlannerPackageSettingsController.cs" />
@@ -292,6 +288,10 @@
     <Content Include="Content\AppTheme\images\hero-image-3.jpg" />
     <Content Include="Content\AppTheme\images\hero-image.jpg" />
     <Content Include="Content\AppTheme\images\hero-to-do.png" />
+    <Content Include="Content\AppTheme\images\image1.jpg" />
+    <Content Include="Content\AppTheme\images\image3.jpg" />
+    <Content Include="Content\AppTheme\images\image4.jpg" />
+    <Content Include="Content\AppTheme\images\image5.jpg" />
     <Content Include="Content\AppTheme\images\jwellery.png" />
     <Content Include="Content\AppTheme\images\list.svg" />
     <Content Include="Content\AppTheme\images\location-pic-2.jpg" />
@@ -1182,6 +1182,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UploadedFiles\EventPlannerLogo\131392483741351060.jpg" />
     <Content Include="UploadedFiles\NewsImage\131329580750710796.jpg" />
     <Content Include="UploadedFiles\ProfileImage\131349876343899675.JPG" />
     <Content Include="UploadedFiles\vendorImage\131386706544695714.jpg" />
@@ -1499,6 +1500,7 @@
     <Content Include="Views\Shared\EventPlanning\CreateGroupMessageModal.cshtml" />
     <Content Include="Views\Account\EventPlannerInvoice.cshtml" />
     <Content Include="Views\Account\VendorInvoice.cshtml" />
+    <Content Include="Views\Account\ChangeClientPassword.cshtml" />
     <None Include="Views\Clients\AllMyClients.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreatePersonalCheckListModal.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreatePersonalCheckListItemModal.cshtml" />
@@ -1614,8 +1616,20 @@
     <Content Include="Views\Vendors\Invoice.cshtml" />
     <Content Include="Views\Vendors\Pricing.cshtml" />
     <Content Include="Views\VendorPackages\Invoice.cshtml" />
-    <Content Include="Views\Shared\Layout\_LayoutEventPlanners.cshtml" />
     <Content Include="Views\Shared\EventPlanning\FollowUpProspectModal.cshtml" />
+    <Content Include="Views\EventPlanners\EventPlannerDetails.cshtml" />
+    <Content Include="Views\Shared\Account\SocialMediaModal.cshtml" />
+    <Content Include="Views\Shared\Account\PricingModal.cshtml" />
+    <Content Include="Views\EventPlannerReviews\Create.cshtml" />
+    <Content Include="Views\EventPlannerReviews\Delete.cshtml" />
+    <Content Include="Views\EventPlannerReviews\Details.cshtml" />
+    <Content Include="Views\EventPlannerReviews\Edit.cshtml" />
+    <Content Include="Views\EventPlannerReviews\Index.cshtml" />
+    <Content Include="Views\EventPlannerEnquiries\Create.cshtml" />
+    <Content Include="Views\EventPlannerEnquiries\Delete.cshtml" />
+    <Content Include="Views\EventPlannerEnquiries\Details.cshtml" />
+    <Content Include="Views\EventPlannerEnquiries\Edit.cshtml" />
+    <Content Include="Views\EventPlannerEnquiries\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1667,13 +1681,6 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

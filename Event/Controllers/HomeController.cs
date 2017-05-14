@@ -32,6 +32,11 @@ namespace MyEventPlan.Controllers
             ViewBag.appointments = _dbEvent.Appointments.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
             ViewBag.invoice = _dbEvent.Invoices.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
             ViewBag.staff = _dbEvent.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+            ViewBag.vendors = _dbEvent.Vendors.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+            ViewBag.vendors = _dbEvent.Vendors.ToList();
+            ViewBag.planners = _dbEvent.EventPlanners.ToList();
+            ViewBag.vendorpackage = _dbEvent.VendorPackages.ToList();
+            ViewBag.plannerpackage = _dbEvent.EventPlannerPackages.ToList();
             return View();
         }
 

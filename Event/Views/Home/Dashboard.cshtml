@@ -16,8 +16,13 @@
     List<Appointment> appointments = ViewBag.appointments;
     List<Invoice> invoice = ViewBag.invoice;
     List<Staff> staff = ViewBag.staff;
+    List<Vendor> vendors = ViewBag.vendors;
+    List<EventPlanner> planners = ViewBag.planners;
+    List<VendorPackage> vendorPackage = ViewBag.vendorpackage;
+    List<EventPlannerPackage> plannerPackage = ViewBag.plannerpackage;
 
     var role = Session["role"] as Role;
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
 }
 <style>
     body { font-size: 12px; }
@@ -50,63 +55,64 @@
     </div>
 
 </div>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body" style="padding-bottom: 0;">
-                <h1 class="text-center" style="margin-bottom: 0;">Welcome to MyEventsPlan!</h1>
-                <h3 class="text-center">
-                    <small>Thank you for choosing to plan with us. Since the day we launched, we have helped people streamline how they manage events by providing easy tools that keeps everything organized. We are excited to help you, too, and we invite you to start your journey by taking the Welcome Tours below.</small>
-                </h3>
-                <h3 class="text-center" style="color: #cb16d6; font-family: 'Satisfy', cursive;">Nengi</h3>
-                <div class="small text-center">MYEVENTPLAN FOUNDER</div>
-                <div class="row margin-top-2em well" style="-moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; margin-bottom: 0; padding-bottom: 0;">
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="margin-bottom-1em text-center">
-                                    <span class="fa-stack fa-3x">
-                                        <i class="fa fa-circle fa-stack-2x" style="color: #cb16d6;"></i>
-                                        <i class="fa fa-book fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </div>
-                                <h4 class="text-center"><span class="font-bold">Create</span><br>Your First Event</h4>
-                                <p class="text-center text-muted">Dive in and start managing attendees, registrations/RSVPs, budgets, check-lists and more.</p>
-                                <div class="text-center">
-                                    <a href="" class="btn btn-success startTour" data-starttour="createFirstEvent" data-dismiss="modal">Start Tour</a>
+@if (loggedinuser != null && loggedinuser.EventPlannerId != null)
+{
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body" style="padding-bottom: 0;">
+                    <h1 class="text-center" style="margin-bottom: 0;">Welcome to MyEventsPlan!</h1>
+                    <h3 class="text-center">
+                        <small>Thank you for choosing to plan with us. Since the day we launched, we have helped people streamline how they manage events by providing easy tools that keeps everything organized. We are excited to help you, too, and we invite you to start your journey by taking the Welcome Tours below.</small>
+                    </h3>
+                    <h3 class="text-center" style="color: #cb16d6; font-family: 'Satisfy', cursive;">Nengi</h3>
+                    <div class="small text-center">MYEVENTPLAN FOUNDER</div>
+                    <div class="row margin-top-2em well" style="-moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; margin-bottom: 0; padding-bottom: 0;">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="margin-bottom-1em text-center">
+                                        <span class="fa-stack fa-3x">
+                                            <i class="fa fa-circle fa-stack-2x" style="color: #cb16d6;"></i>
+                                            <i class="fa fa-book fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </div>
+                                    <h4 class="text-center"><span class="font-bold">Create</span><br>Your First Event</h4>
+                                    <p class="text-center text-muted">Dive in and start managing attendees, registrations/RSVPs, budgets, check-lists and more.</p>
+                                    <div class="text-center">
+                                        <a href="" class="btn btn-success startTour" data-starttour="createFirstEvent" data-dismiss="modal">Start Tour</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="margin-bottom-1em text-center">
-                                    <span class="fa-stack fa-3x">
-                                        <i class="fa fa-circle fa-stack-2x" style="color: #FF9800;"></i>
-                                        <i class="fa fa-map fa-stack-1x fa-inverse"></i>
-                                    </span>
-                                </div>
-                                <h4 class="text-center"><span class="font-bold">Explore</span><br>MyEventPlan</h4>
-                                <p class="text-center text-muted">Need a quick walk-through before you start clicking around? Let us show you the highlights of our system.</p>
-                                <div class="text-center">
-                                    <a href="" class="btn btn-success startTour" data-starttour="explorePP" data-dismiss="modal">Start Tour</a>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="margin-bottom-1em text-center">
+                                        <span class="fa-stack fa-3x">
+                                            <i class="fa fa-circle fa-stack-2x" style="color: #FF9800;"></i>
+                                            <i class="fa fa-map fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </div>
+                                    <h4 class="text-center"><span class="font-bold">Explore</span><br>MyEventPlan</h4>
+                                    <p class="text-center text-muted">Need a quick walk-through before you start clicking around? Let us show you the highlights of our system.</p>
+                                    <div class="text-center">
+                                        <a href="" class="btn btn-success startTour" data-starttour="explorePP" data-dismiss="modal">Start Tour</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="hide-welcome-message btn btn-danger" data-dismiss="modal">Never Show This Again</button>
-                <button type="button" id="tour-reminder-trigger" class="btn btn-primary" data-dismiss="modal">Skip Tours For Now</button>
+                <div class="modal-footer">
+                    <button type="button" class="hide-welcome-message btn btn-danger" data-dismiss="modal">Never Show This Again</button>
+                    <button type="button" id="tour-reminder-trigger" class="btn btn-primary" data-dismiss="modal">Skip Tours For Now</button>
+                </div>
             </div>
         </div>
+
     </div>
-
-</div>
-
+}
 <div class="content">
 <div class="container-fluid">
 @if (role != null)
@@ -301,13 +307,13 @@
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
-                <div class="card-header" data-background-color="purple">
+                <div class="card-header" data-background-color="deep_orange">
                     <i class="material-icons">event_seat</i>
                 </div>
                 <div class="card-content">
                     <p class="category"></p>
                     <h3 class="title">
-                        @events.Count<small> Users</small>
+                        @vendors.Count<small> Vendors</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -319,13 +325,13 @@
         </div>
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
-                <div class="card-header" data-background-color="purple">
+                <div class="card-header" data-background-color="amber">
                     <i class="material-icons">event_seat</i>
                 </div>
                 <div class="card-content">
                     <p class="category"></p>
                     <h3 class="title">
-                        @events.Count<small> Users</small>
+                        @planners.Count<small> Event Planners</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -360,13 +366,13 @@
     {
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
-                <div class="card-header" data-background-color="purple">
-                    <i class="material-icons">today</i>
+                <div class="card-header" data-background-color="blue">
+                    <i class="material-icons">card_giftcard</i>
                 </div>
                 <div class="card-content">
                     <p class="category"></p>
                     <h3 class="title">
-                        @appointments.Count<small> Packages</small>
+                        @plannerPackage.Count<small> Eventplanner Packages</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -379,12 +385,12 @@
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="purple">
-                    <i class="material-icons">today</i>
+                    <i class="material-icons">card_giftcard</i>
                 </div>
                 <div class="card-content">
                     <p class="category"></p>
                     <h3 class="title">
-                        @appointments.Count<small> Packages</small>
+                        @vendorPackage.Count<small> Vendor Packages</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -441,8 +447,8 @@
     {
         <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
-                <div class="card-header" data-background-color="purple">
-                    <i class="material-icons">event_seat</i>
+                <div class="card-header" data-background-color="yellow">
+                    <i class="material-icons">location_on</i>
                 </div>
                 <div class="card-content">
                     <p class="category"></p>
@@ -459,143 +465,145 @@
         </div>
     }
 
-</div>
-    <div class="row">
-        <div class="col-lg-6 col-md-12">
-            <div class="card card-nav-tabs">
-                <div class="card-header" data-background-color="purple">
-                    <div class="nav-tabs-navigation">
-                        <div class="nav-tabs-wrapper">
-                            <span class="nav-tabs-title">Quick Lunch:</span>
-                            <ul class="nav nav-tabs" data-tabs="tabs">
-                                <li class="active">
-                                    <a href="#" data-toggle="tab">
-                                        <i class="material-icons">cloud</i>
-                                        Get Started
-                                        <div class="ripple-container"></div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-content">
-                    <div class="tab-content">
-                        <div class="panel panel-default drag-group" id="177777" style="border: none;">
-                            <div class="panel-heading">
-                                <span class="font-white">
-                                    <h3 style="display: inline-block; margin: 0;">Quick Launch To Event Tools</h3>
-                                </span>
-                            </div>
-                            <div class="panel-body">
-
-                                @using (Html.BeginForm("QuickLunch", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = ""}))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <div class="form-group">
-                                                <select name="quickLaunchJob" id="nav-quick-launch-job-panel" class="form-control">
-                                                    <option value="0">- Select Booked Event -</option>
-                                                    @foreach (var item in events)
-                                                    {
-                                                        <option value="@item.EventId">
-                                                            @item.Name
-                                                        </option>
-                                                    }
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                            <div class="form-group">
-                                                <select name="quickLaunchTool" id="nav-quick-launch-tool-panel" class="form-control" disabled="disabled">
-
-                                                    <option value="0">- Select Tool -</option>
-                                                    <option value="eventDashboard">Dashboard</option>
-                                                    <option value="appointments">Appointments</option>
-                                                    <option value="attendees">Attendees</option>
-                                                    <option value="budgets">Budget</option>
-                                                    <option value="calendar">Calendar</option>
-                                                    <option value="checklists">Checklists</option>
-                                                    <option value="notes">Notes</option>
-                                                    <option value="invoices"> Invoices</option>
-
-
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <input type="submit" class="btn btn-default" id="go-quick-launch-panel" value="Go"/>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-6 col-md-12">
-            <div class="card">
-                <div class="card-header" data-background-color="green">
-                    <h4 class="title">Newest Events</h4>
-                    <p class="category">Latest Events Closest to @DateTime.Now.ToShortDateString()</p>
-                </div>
-                <div class="card-content table-responsive">
-                    <table class="table table-hover">
-                        <thead class="text-success">
-                        <tr>
-                            <th>
-                                @Html.DisplayName("Event Name")
-                            </th>
-                            <th>
-                                @Html.DisplayName("Start Date")
-                            </th>
-
-                            <th>
-                                @Html.DisplayName("End Date")
-                            </th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach (var item in upComingvents.Take(4))
-                        {
-                            <tr>
-                                @if (item.EventDate > DateTime.Now)
-                                {
-                                    <td style="color: green">
-                                        @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td style="color: red">
-                                        @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-down"></i>
-                                    </td>
-                                }
-
-                                <td>
-                                    @item.StartDate.ToShortDateString()
-                                </td>
-                                <td>
-                                    @item.EndDate.ToShortDateString()
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Open", "Details", "Events", new {id = item.EventId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
-                                </td>
-                            </tr>
-                        }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-
     </div>
+    if (loggedinuser != null && loggedinuser.EventPlannerId != null)
+     {
+         <div class="row">
+             <div class="col-lg-6 col-md-12">
+                 <div class="card card-nav-tabs">
+                     <div class="card-header" data-background-color="purple">
+                         <div class="nav-tabs-navigation">
+                             <div class="nav-tabs-wrapper">
+                                 <span class="nav-tabs-title">Quick Lunch:</span>
+                                 <ul class="nav nav-tabs" data-tabs="tabs">
+                                     <li class="active">
+                                         <a href="#" data-toggle="tab">
+                                             <i class="material-icons">cloud</i>
+                                             Get Started
+                                             <div class="ripple-container"></div>
+                                         </a>
+                                     </li>
+                                 </ul>
+                             </div>
+                         </div>
+                     </div>
 
+                     <div class="card-content">
+                         <div class="tab-content">
+                             <div class="panel panel-default drag-group" id="177777" style="border: none;">
+                                 <div class="panel-heading">
+                                     <span class="font-white">
+                                         <h3 style="display: inline-block; margin: 0;">Quick Launch To Event Tools</h3>
+                                     </span>
+                                 </div>
+                                 <div class="panel-body">
+
+                                     @using (Html.BeginForm("QuickLunch", "Events", FormMethod.Post, new {enctype = "multipart/form-data", @class = ""}))
+                                     {
+                                         @Html.AntiForgeryToken()
+                                         <div class="row">
+                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                 <div class="form-group">
+                                                     <select name="quickLaunchJob" id="nav-quick-launch-job-panel" class="form-control">
+                                                         <option value="0">- Select Booked Event -</option>
+                                                         @foreach (var item in events)
+                                                         {
+                                                             <option value="@item.EventId">
+                                                                 @item.Name
+                                                             </option>
+                                                         }
+                                                     </select>
+                                                 </div>
+                                             </div>
+                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                 <div class="form-group">
+                                                     <select name="quickLaunchTool" id="nav-quick-launch-tool-panel" class="form-control" disabled="disabled">
+
+                                                         <option value="0">- Select Tool -</option>
+                                                         <option value="eventDashboard">Dashboard</option>
+                                                         <option value="appointments">Appointments</option>
+                                                         <option value="attendees">Attendees</option>
+                                                         <option value="budgets">Budget</option>
+                                                         <option value="calendar">Calendar</option>
+                                                         <option value="checklists">Checklists</option>
+                                                         <option value="notes">Notes</option>
+                                                         <option value="invoices"> Invoices</option>
+
+
+                                                     </select>
+
+                                                 </div>
+                                             </div>
+                                         </div>
+                                         <input type="submit" class="btn btn-default" id="go-quick-launch-panel" value="Go"/>
+                                     }
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="col-lg-6 col-md-12">
+                 <div class="card">
+                     <div class="card-header" data-background-color="green">
+                         <h4 class="title">Newest Events</h4>
+                         <p class="category">Latest Events Closest to @DateTime.Now.ToShortDateString()</p>
+                     </div>
+                     <div class="card-content table-responsive">
+                         <table class="table table-hover">
+                             <thead class="text-success">
+                             <tr>
+                                 <th>
+                                     @Html.DisplayName("Event Name")
+                                 </th>
+                                 <th>
+                                     @Html.DisplayName("Start Date")
+                                 </th>
+
+                                 <th>
+                                     @Html.DisplayName("End Date")
+                                 </th>
+                                 <th>Action</th>
+                             </tr>
+                             </thead>
+                             <tbody>
+                             @foreach (var item in upComingvents.Take(4))
+                             {
+                                 <tr>
+                                     @if (item.EventDate > DateTime.Now)
+                                     {
+                                         <td style="color: green">
+                                             @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-up"></i>
+                                         </td>
+                                     }
+                                     else
+                                     {
+                                         <td style="color: red">
+                                             @Html.DisplayFor(modelItem => item.Name)<i class="icon-arrow-down"></i>
+                                         </td>
+                                     }
+
+                                     <td>
+                                         @item.StartDate.ToShortDateString()
+                                     </td>
+                                     <td>
+                                         @item.EndDate.ToShortDateString()
+                                     </td>
+                                     <td>
+                                         @Html.ActionLink("Open", "Details", "Events", new {id = item.EventId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
+                                     </td>
+                                 </tr>
+                             }
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+
+
+         </div>
+     }
 }
 </div>
 

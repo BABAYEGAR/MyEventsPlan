@@ -3,8 +3,19 @@
 @{
     ViewBag.Title = "Profile";
     ViewBag.Header = "My Profile Details";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/Layout/_LayoutForm.cshtml";
     var reset = new PasswordReset();
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Setting", "Account")">My Settings</a>
+        </li>
+    </ol>
 }
 <style>
     .user-row { margin-bottom: 14px; }
@@ -32,18 +43,6 @@
 
 </style>
 <div class="row">
-    @if (Model.ProfileImage != null)
-    {
-        <div class="col-md-3 col-lg-3 " align="center">
-            <img alt="User Pic" src="~/UploadedFiles/ProfileImage/@Model.ProfileImage" class="img-circle img-responsive">
-        </div>
-    }
-    else
-    {
-        <div class="col-md-3 col-lg-3 " align="center">
-            <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive">
-        </div>
-    }
     <div class="col-md-6 col-lg-9 col-md-offset-9 shift">
         <table class="table table-user-information">
             <tbody>
@@ -67,61 +66,60 @@
 </div>
 <div class="panel-footer">
     <a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary">
-        <i class="icon-envelope"></i>
+        <i class="fa fa-envelope"></i>
     </a>
     <span class="pull-right">
-                            <!-- Button trigger modal -->
-                            <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                                <i class="icon-pencil"></i>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            <i class="fa fa-pencil"></i>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">Edit Profile Data</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        @{
-                                            Html.RenderPartial("EditUserModal", Model);
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal1">
-                    <i class="icon-key"></i>
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h4 class="modal-title" id="myModalLabel1">Change Password</h4>
-                            </div>
-                            <div class="modal-body">
-                                @{
-                                    Html.RenderPartial("ChangePasswordModal", reset);
-                                }
-                            </div>
-                        </div>
+                        <h4 class="modal-title" id="myModalLabel">Edit Profile Data</h4>
                     </div>
-
+                    <div class="modal-body">
+                        @{
+                            Html.RenderPartial("EventPlanning/EditUserModal", Model);
+                        }
+                    </div>
                 </div>
+            </div>
+
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal1">
+            <i class="fa fa-key"></i>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel1">Change Password</h4>
+                    </div>
+                    <div class="modal-body">
+                        @{
+                            Html.RenderPartial("Account/ChangePasswordModal", reset);
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
-
-                    </span>
+    </span>
 </div>
 <script>
     $(document)

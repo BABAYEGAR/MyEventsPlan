@@ -41,11 +41,9 @@ namespace Event.Data.Objects.Entities
         public long? ClientId { get; set; }
         [ForeignKey("ClientId")]
         public virtual Client Client { get; set; }
-        public string ProfileImage { get; set; }
         public string Status { get; set; }
         [DisplayName("Background Color")]
         public string BackgroundColor { get; set; }
-        public bool Verified { get; set; }
         public  IEnumerable<Message> Messages { get; set; }
         public  IEnumerable<Setting> Settings { get; set; }
         public IEnumerable<SubscriptionInvoice> SubscriptionInvoices { get; set; }

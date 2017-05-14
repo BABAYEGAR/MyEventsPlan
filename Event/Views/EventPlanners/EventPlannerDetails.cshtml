@@ -1,0 +1,395 @@
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@model Event.Data.Objects.Entities.EventPlanner
+@{
+    ViewBag.Title = "View";
+    ViewBag.Header = "View vendor service";
+    Layout = "../Shared/Layout/_LayoutVendorDetails.cshtml";
+
+    var db = new EventDataContext();
+    var plannerReviews = db.EventPlannerReviews.Where(n => n.EventPlannerId == Model.EventPlannerId).ToList();
+    var events = db.Event.Where(n => n.EventPlannerId == Model.EventPlannerId);
+}
+<div class="tp-page-head">
+    <!-- page header -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="page-header text-center">
+                    <h1>Venue Single Tab Style</h1>
+                    <p>You can present your item detail page with tab style.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tp-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ol class="breadcrumb">
+                    <li>
+                        <a href="#">Home</a>
+                    </li>
+                    <li>
+                        <a href="#">Venue Listing</a>
+                    </li>
+                    <li class="active">Wedding Venue Title Goes Here</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-container">
+<div class="container tabbed-page st-tabs">
+<div class="row tab-page-header">
+    <div class="col-md-8 title">
+        <h1>@Model.Name</h1>
+        <p class="location">
+            @if (Model.LocationId != null)
+            {
+                <i class="fa fa-map-marker">@Model.Location.Name</i>
+            }
+        </p>
+        <hr>
+        <div class="rating">
+            @if (Model.AverageRating == 1 && Model.AverageRating > 0)
+            {
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            }
+            
+            @if (Model.AverageRating == 2 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            }
+            @if (Model.AverageRating == 3 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            }
+            @if (Model.AverageRating == 4 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            }
+            @if (Model.AverageRating == 5 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            }
+        </div>
+    </div>
+    <div class="col-md-4 venue-data">
+        <div class="venue-info">
+            <!-- venue-info-->
+            <div class="pricebox">
+                <div>Avg price: N@((Model.MinimumPrice + Model.MaximumPrice) / 2)</div>
+                <span class="price"></span>
+            </div>
+        </div>
+        @*<a href="#inquiry" class="btn btn-default btn-lg btn-block">Book Venue</a>*@
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#photo" title="Gallery" aria-controls="photo" role="tab" data-toggle="tab">
+                    <i class="fa fa-photo"></i> <span class="tab-title">Events</span>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#video" title="Video" aria-controls="video" role="tab" data-toggle="tab">
+                    <i class="fa fa-youtube-play"></i> <span class="tab-title">Pricing Details</span>
+                </a>
+            </li>
+            <li role="presentation">
+                <a href="#reviews" title="Review" aria-controls="reviews" role="tab" data-toggle="tab">
+                    <i class="fa fa-commenting"></i> <span class="tab-title">Reviews</span>
+                </a>
+            </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- tab content start-->
+            <div role="tabpanel" class="tab-pane fade in active" id="photo">
+                <div class="venue-details">
+                    <h2>Events</h2>
+                    @foreach (var item in events)
+                    {
+                        <p>@item.Name</p>
+                    }
+
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="video">
+                <div class="venue-details">
+                    <h2>Pricing Details</h2>
+                    <p>@Model.PricingDetails.</p>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="reviews">
+                <!-- comments -->
+                <div class="customer-review">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Vendor Review</h1>
+                            <div class="review-list">
+                                <!-- Comment -->
+                                <div class="row">
+                                    @*<div class="col-md-2 col-sm-2 hidden-xs">
+                            <div class="user-pic">
+                                <img class="img-responsive img-circle" src="images/userpic.jpg" alt="">
+                            </div>
+                        </div>*@
+                                    <div class="col-md-10 col-sm-10">
+                                        @foreach (var item in plannerReviews)
+                                        {
+                                            <div class="panel panel-default arrow left">
+
+                                                <div class="panel-body">
+                                                    <div class="text-left">
+                                                        <h3>@item.ReviewTitle</h3>
+                                                        <div class="rating">
+                                                            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="review-post">
+                                                        <p> @item.ReviewBody </p>
+                                                    </div>
+                                                    <div class="review-user">
+                                                        By <a href="#">@item.ReviewerName</a>, on <span class="review-date"></span>@item.DateCreated.ToString("D")
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="review">
+                                <a class="btn tp-btn-primary btn-block tp-btn-lg" role="button" data-toggle="collapse" href="#review" aria-expanded="false" aria-controls="review"> Write A Review </a>
+                            </div>
+                            <div class="collapse review-list review-form" id="review">
+                                <div class="panel panel-default">
+                                    <div class="panel-body">
+                                        <h1>Write Your Review</h1>
+                                        @using (Html.BeginForm("Create", "EventPlannerReviews", FormMethod.Post, new {enctype = "multipart/form-data"}))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="EventPlannerId" value="@Model.EventPlannerId"/>
+                                            <div class="rating-group">
+                                                <div class="radio radio-success radio-inline">
+                                                    <input type="radio" name="Rating" id="radio1" value="1">
+                                                    <label for="radio1" class="radio-inline">
+                                                        <span class="rating">
+                                                            <i class="fa fa-star"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="radio radio-success radio-inline">
+                                                    <input type="radio" name="Rating" id="radio2" value="2">
+                                                    <label for="radio2" class="radio-inline">
+                                                        <span class="rating">
+                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="radio radio-success radio-inline">
+                                                    <input type="radio" name="Rating" id="radio3" value="3">
+                                                    <label for="radio3" class="radio-inline">
+                                                        <span class="rating">
+                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="radio radio-success radio-inline">
+                                                    <input type="radio" name="radio1" id="radio4" value="4">
+                                                    <label for="radio4" class="radio-inline">
+                                                        <span class="rating">
+                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                <div class="radio radio-success radio-inline">
+                                                    <input type="radio" name="Rating" id="radio5" value="5">
+                                                    <label for="radio5" class="radio-inline">
+                                                        <span class="rating">
+                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group">
+                                                <label class=" control-label" for="name">Reviewer Name</label>
+                                                <div class="">
+                                                    <input id="name" name="ReviewerName" type="text" placeholder="Reviewer Name" class="form-control input-md" required>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group">
+                                                <label class=" control-label" for="email">Reviewer E-Mail</label>
+                                                <div class=" ">
+                                                    <input id="email" name="ReviewerEmail" type="text" placeholder="Reviewer E-Mail" class="form-control input-md" required>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group">
+                                                <label class=" control-label" for="reviewtitle">Review Title</label>
+                                                <div class=" ">
+                                                    <input id="reviewtitle" name="ReviewTitle" type="text" placeholder="Review Title" class="form-control input-md" required>
+                                                </div>
+                                            </div>
+                                            <!-- Textarea -->
+                                            <div class="form-group">
+                                                <label class=" control-label">Write Review</label>
+                                                <div class="">
+                                                    <textarea class="form-control" name="ReviewBody" rows="8">Write Review</textarea>
+                                                </div>
+                                            </div>
+                                            <!-- Button -->
+                                            <div class="form-group">
+                                                <button name="submit" class="btn tp-btn-default tp-btn-lg">Submit Review</button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.tab content start-->
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="side-box" id="inquiry">
+            <h2>Send Enquiry to Vendor</h2>
+            <p>Fill in your details and an event date,Specialist will get back to you shortly.</p>
+            @using (Html.BeginForm("Create", "EventPlannerEnquiries", FormMethod.Post, new {enctype = "multipart/form-data"}))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="EventPlannerId" value="@Model.EventPlannerId"/>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="Name">Name:<span class="required">*</span></label>
+                    <div class="">
+                        <input id="name-one" name="Name" type="text" placeholder="Name" class="form-control input-md" required>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="MobileNumber">Phone:<span class="required">*</span></label>
+                    <div class="">
+                        <input id="phone" name="MobileNumber" type="text" placeholder="Phone" class="form-control input-md" required>
+                        <span class="help-block"> </span>
+                    </div>
+                </div>
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="control-label" for="Email">E-Mail:<span class="required">*</span></label>
+                    <div class="">
+                        <input id="email-one" name="Email" type="text" placeholder="E-Mail" class="form-control input-md" required>
+                    </div>
+                </div>
+                <!-- Select Basic -->
+                <div class="default-calender">
+                    <div class="form-group">
+                        <label class="control-label" for="EventDate">Event Date<span class="required">*</span></label>
+                        <div class="">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="EventDate" id="weddingdate" placeholder="Wedding Date">
+                                <span class="input-group-addon" id="basic-addon2">
+                                    <i class="fa fa-calendar"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Textarea -->
+                <div class="form-group">
+                    <label class=" control-label">Write Note</label>
+                    <div class="">
+                        <textarea class="form-control" name="Note" rows="8">Write Note</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button name="submit" class="btn btn-primary btn-lg btn-block">Book MY Venue now</button>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="profile-sidebar side-box">
+            <!-- SIDEBAR USERPIC -->
+            <div class="profile-userpic">
+                <img src="~/UploadedFiles/EventPlannerLogo/@Model.Logo" class="img-responsive img-circle" alt="">
+            </div>
+            <div class="profile-usertitle">
+                <div class="profile-usertitle-name">
+                    <h2>@Model.Name</h2>
+                </div>
+                <div class="profile-address">
+                    <i class="fa fa-map-marker"></i> @Model.Location.Name
+                </div>
+                <div class="profile-website">
+                    <i class="fa fa-link"></i> <a href="#">@Model.Website</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="social-sidebar side-box">
+            <ul class="listnone follow-icon">
+                <li>
+                    <a href="@Model.FacebookPage">
+                        <i class="fa fa-facebook-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Model.GooglePlusPage">
+                        <i class="fa fa-google-plus-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Model.InstagramPage">
+                        <i class="fa fa-instagram"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Model.YoutubePage">
+                        <i class="fa fa-youtube-square"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Model.TwitterPage">
+                        <i class="fa fa-twitter-square"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+</div>

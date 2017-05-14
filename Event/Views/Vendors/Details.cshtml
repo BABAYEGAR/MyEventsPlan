@@ -50,7 +50,47 @@
             <i class="fa fa-map-marker"></i>@Model.Address</p>
         <hr>
         <div class="rating">
-            <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star"></i> <i class="fa fa-star-o"></i>
+            @if (Model.AverageRating == 1 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            }
+            
+            @if (Model.AverageRating == 2 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            }
+            @if (Model.AverageRating == 3 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+            }
+            @if (Model.AverageRating == 4 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            }
+            @if (Model.AverageRating == 5 && Model.AverageRating > 0)
+            {
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            }
         </div>
     </div>
     <div class="col-md-4 venue-data">
