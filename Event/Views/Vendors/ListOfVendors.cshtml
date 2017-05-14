@@ -3,7 +3,8 @@
 @model Vendor
 @{
     ViewBag.Title = "List";
-    ViewBag.Header = "List of all vendors";
+    ViewBag.PageHeader = "List of all vendors";
+    ViewBag.SubPageHeader = "List of all vendors based on your search critereas";
     Layout = "../Shared/Layout/_LayoutVendors.cshtml";
     List<Vendor> vendors = ViewBag.vendors;
     int? star1 = ViewBag.rate1;

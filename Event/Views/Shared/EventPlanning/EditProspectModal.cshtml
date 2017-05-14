@@ -8,15 +8,32 @@
 <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
 <link href="~/Content/Color/spectrum.css" rel="stylesheet"/>
 
-@using (Html.BeginForm("Create", "Prospects", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
+@using (Html.BeginForm("Edit", "Prospects", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m=>m.ProspectId)
+    @Html.HiddenFor(m=>m.Status)
+    @Html.HiddenFor(m=>m.EventPlannerId)
+    @Html.HiddenFor(m=>m.CreatedBy)
+    @Html.HiddenFor(m=>m.DateCreated)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="mui-textfield mui-textfield--float-label">
 
         @Html.EditorFor(model => model.Name, new {htmlAttributes = new {placeholder = "Enter Event Name"}})
         @Html.LabelFor(model => model.Name)
         @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {placeholder = "Enter Event Name"}})
+        @Html.LabelFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.PhoneNumber, new {htmlAttributes = new {placeholder = "Enter Event Name"}})
+        @Html.LabelFor(model => model.PhoneNumber)
+        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new {@class = "text-danger"})
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
@@ -55,7 +72,7 @@
 
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Create Event" class="btn btn-default"/>
+            <input type="submit" value="Update Prospect" class="btn btn-default"/>
         </div>
     </div>
 }

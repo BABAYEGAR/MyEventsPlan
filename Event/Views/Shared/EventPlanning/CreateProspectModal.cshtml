@@ -25,6 +25,18 @@
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
+        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {placeholder = "Enter Event Name"}})
+        @Html.LabelFor(model => model.Email)
+        @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
+        @Html.EditorFor(model => model.PhoneNumber, new {htmlAttributes = new {placeholder = "Enter Event Name"}})
+        @Html.LabelFor(model => model.PhoneNumber)
+        @Html.ValidationMessageFor(model => model.PhoneNumber, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+
         @Html.EditorFor(model => model.Color, new {htmlAttributes = new {id = "color", placeholder = "Select the Event Color"}})
         @Html.LabelFor(model => model.Color)
         @Html.ValidationMessageFor(model => model.Color, "", new {@class = "text-danger"})
@@ -35,7 +47,7 @@
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "number", id = "color", placeholder = "Enter the tartget Budget"}})
+        @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "number", id = "color", placeholder = "Enter the target Budget"}})
         @Html.LabelFor(model => model.TargetBudget)
         @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
     </div>

@@ -33,7 +33,7 @@
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "number", id = "color", placeholder = "Enter the tartget Budget"}})
+        @Html.EditorFor(model => model.TargetBudget, new {htmlAttributes = new {@class = "number", id = "color", placeholder = "Enter the target Budget"}})
         @Html.LabelFor(model => model.TargetBudget)
         @Html.ValidationMessageFor(model => model.TargetBudget, "", new {@class = "text-danger"})
     </div>
@@ -94,7 +94,7 @@
             format: 'm-d-Y H:i',
             onShow: function() {
                 this.setOptions({
-                    minDate: jQuery('#datetimepicker6').val()
+                    minDate: $('#datetimepicker6').val()
                 });
             }
         });

@@ -11,9 +11,14 @@ namespace Event.Data.Objects.Entities
         [DisplayName("Event Name")]
         [Required]
         public string Name { get; set; }
-        [Required]
         [DisplayName("Event Color")]
         public string Color { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
+        [DisplayName("Phone Number")]
+        public string PhoneNumber { get; set; }
         [Required]
         [DisplayName("Event Type")]
         public long? EventTypeId { get; set; }

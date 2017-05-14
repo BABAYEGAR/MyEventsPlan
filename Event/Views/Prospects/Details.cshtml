@@ -1,14 +1,10 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
-@using MyEventPlan.Data.Service.Enum
-@model Prospect
+﻿@using MyEventPlan.Data.Service.Enum
+@model Event.Data.Objects.Entities.Prospect
 @{
     ViewBag.Title = "View";
-  Layout = "../Shared/Layout/_LayoutView.cshtml";
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
     ViewBag.TableHeader = Model.Name + " Prospect (Lead)";
     ViewBag.TableSubHeader = "Details of Prospect";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
 }
 @section links{
 
@@ -23,7 +19,7 @@
 }
 <dl class="dl-horizontal">
     <dt>
-        @Html.DisplayNameFor(model => model.EventType.Name)
+        @Html.DisplayName("Event Type")
     </dt>
 
     <dd>
@@ -116,6 +112,34 @@
     <span>|</span>
     @Html.ActionLink("Convert To Event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn  btn-success"})
 }
+<button type="button" class="btn btn-success fa fa-mail-forward" data-toggle="modal" data-target="#myModal3">
+    Follow Up
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel3">Follow Up Prospect</h4>
+            </div>
+            <div class="modal-body">
+
+                @{
+                    Html.RenderPartial("EventPlanning/FollowUpProspectModal", Model);
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete

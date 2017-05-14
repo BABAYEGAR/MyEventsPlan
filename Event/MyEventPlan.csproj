@@ -262,6 +262,7 @@
     <Content Include="Content\AppTheme\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\AppTheme\images\app-screen.png" />
     <Content Include="Content\AppTheme\images\arrow.png" />
+    <Content Include="Content\AppTheme\images\avatar.jpg" />
     <Content Include="Content\AppTheme\images\big-cake-icon.svg" />
     <Content Include="Content\AppTheme\images\budget-hero.png" />
     <Content Include="Content\AppTheme\images\button-app-store.png" />
@@ -278,6 +279,7 @@
     <Content Include="Content\AppTheme\images\cycle-graphic.png" />
     <Content Include="Content\AppTheme\images\dashboard-page-header.jpg" />
     <Content Include="Content\AppTheme\images\dress.png" />
+    <Content Include="Content\AppTheme\images\event1.jpg" />
     <Content Include="Content\AppTheme\images\favicon.ico" />
     <Content Include="Content\AppTheme\images\favour-gift.png" />
     <Content Include="Content\AppTheme\images\feature-label.png" />
@@ -582,6 +584,7 @@
     <Content Include="Content\Pagination\jquery.bootpag.min.js" />
     <Content Include="Content\Timer\jquery.countdown.min.js" />
     <Content Include="EmailTemplates\ClientLogin.html" />
+    <Content Include="EmailTemplates\FollowUp.html" />
     <Content Include="EmailTemplates\NewVendor.html" />
     <Content Include="EmailTemplates\NewEventPlanner.html" />
     <Content Include="EmailTemplates\GuestStatus.html" />
@@ -1611,6 +1614,8 @@
     <Content Include="Views\Vendors\Invoice.cshtml" />
     <Content Include="Views\Vendors\Pricing.cshtml" />
     <Content Include="Views\VendorPackages\Invoice.cshtml" />
+    <Content Include="Views\Shared\Layout\_LayoutEventPlanners.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\FollowUpProspectModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

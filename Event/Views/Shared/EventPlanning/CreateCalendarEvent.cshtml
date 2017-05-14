@@ -41,7 +41,7 @@
             @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
         </div>
         <div class="mui-textfield mui-textfield--float-label">
-            @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {placeholder = "Select the Event Start Date", id = "eventEndDate"}})
+            @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {placeholder = "Select the Event End Date", id = "eventEndDate"}})
             @Html.LabelFor(model => model.EndDate)
             @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
         </div>

@@ -229,8 +229,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 if (loggedinuser != null)
                 {
                     appointment.LastModifiedBy = loggedinuser.AppUserId;
-                    appointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
-                    appointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                    appointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToString("HH:mm");
+                    appointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToString("HH:mm");
                 }
                 else
                 {

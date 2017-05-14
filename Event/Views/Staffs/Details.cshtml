@@ -6,15 +6,17 @@
     ViewBag.TableHeader = Model.DisplayName + " Staff Card";
     ViewBag.TableSubHeader = "Details of Staff";
 }
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Events")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Staffs")">My Staff</a>
+        </li>
+    </ol>
+}
 <dl class="dl-horizontal">
-    <dt>
-        @Html.DisplayNameFor(model => model.Role.Name)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.Role.Name)
-    </dd>
-
     <dt>
         @Html.DisplayNameFor(model => model.Firstname)
     </dt>

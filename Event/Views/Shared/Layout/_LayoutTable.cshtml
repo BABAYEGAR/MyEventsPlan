@@ -25,6 +25,8 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href="http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel="stylesheet" type="text/css">
     <link href="~/Content/MaterialDesign/assets/css/CustomCss.css" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css" rel="stylesheet"/>
+
     @RenderSection("css", false)
 </head>
 
@@ -121,4 +123,17 @@
 
 <!-- Material Dashboard javascript methods -->
 <script src="~/Content/MaterialDesign/assets/js/material-dashboard.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.material.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#grid').DataTable( {
+            columnDefs: [
+                {
+                    targets: [ 0, 1, 2 ],
+                    className: 'mdl-data-table__cell--non-numeric'
+                }
+            ]
+        } );
+    } );
+</script>
 @RenderSection("scripts", false)

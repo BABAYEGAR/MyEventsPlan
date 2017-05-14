@@ -152,6 +152,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                 collectedValues["Price"] == null && collectedValues["checkbox"] == null)
             {
                 ViewBag.vendors = db.Vendors.Where(n=> n.EventId == null).ToList();
+                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
+                ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
             }
             if (serviceId != null)
             {

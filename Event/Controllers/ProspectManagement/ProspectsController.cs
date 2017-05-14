@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Enum;
 using Event = Event.Data.Objects.Entities.Event;
 
@@ -25,6 +26,21 @@ namespace MyEventPlan.Controllers.ProspectManagement
                     .Include(p => p.EventType)
                     .Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(prospects.ToList());
+        }
+
+        public ActionResult FollowUp(FormCollection collectedValues)
+        {
+            long prospectId = Convert.ToInt64(collectedValues["id"]);
+            var prospect = db.Prospects.Find(prospectId);
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var message = collectedValues["Message"];
+            if (new MailerDaemon().FolowUpProspect(prospect, loggedinuser,message))
+            {
+                TempData["display"] = "You have successfully sent a follow up email to the prospect!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Details", "Prospects", new { id = prospectId });
+            }
+            return RedirectToAction("Details", "Prospects", new {id = prospectId });
         }
 
         // GET: Prospects/Details/5
@@ -53,7 +69,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(
-            [Bind(Include = "ProspectId,Name,Color,EventTypeId,EventDate,TargetBudget,StartDate,EndDate")] Prospect prospect,FormCollection collectedValues)
+            [Bind(Include = "ProspectId,Name,Color,EventTypeId,EventDate,TargetBudget,StartDate,EndDate,Email,PhoneNumber")] Prospect prospect,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -162,7 +178,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult Edit(
             [Bind(
                  Include =
-                     "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventDate,EventPlannerId,StartDate,EndDate,CreatedBy,DateCreated"
+                     "ProspectId,Name,Color,Status,EventTypeId,TargetBudget,EventDate,EventPlannerId,StartDate,EndDate,CreatedBy,DateCreated,Email,PhoneNumber"
              )] Prospect prospect,FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;

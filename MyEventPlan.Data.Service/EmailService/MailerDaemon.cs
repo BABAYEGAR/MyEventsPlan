@@ -177,6 +177,52 @@ namespace MyEventPlan.Data.Service.EmailService
         }
 
         /// <summary>
+        ///     This method sends an email to follow up a prospect
+        /// </summary>
+        /// <param name="prospect"></param>
+        /// <param name="user"></param>
+        /// <param name="text"></param>
+        public bool FolowUpProspect(Prospect prospect,AppUser user,string text)
+        {
+            var message = new MailMessage
+            {
+                From = new MailAddress(user.Email),
+                Subject = "Follow Up",
+                Priority = MailPriority.High,
+                SubjectEncoding = Encoding.UTF8,
+                Body = GetEmailBody_FollowUpProspect(prospect,user,text),
+                IsBodyHtml = true
+            };
+            //message.To.Add(Config.DevEmailAddress);
+            message.To.Add(prospect.Email);
+            try
+            {
+                new SmtpClient().Send(message);
+                return true;
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+            return false;
+        }
+
+        /// <summary>
+        ///     Html page content for the new user email
+        /// </summary>
+        /// <param name="prospect"></param>
+        /// <param name="user"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private static string GetEmailBody_FollowUpProspect(Prospect prospect, AppUser user,string text)
+        {
+            return
+                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/FollowUp.html")).ReadToEnd()
+                    .Replace("DISPLAYNAME", prospect.Name)
+                    .Replace("BODY", text);
+        }
+
+        /// <summary>
         ///     This method sends an email containing a username and password to a newly created user
         /// </summary>
         /// <param name="guest"></param>
