@@ -39,6 +39,7 @@
                 From
                 <address>
                     <strong>
+                        MyEventsPlan
                     </strong>
                 </address>
             </div><!-- /.col -->
@@ -57,8 +58,8 @@
             <div class="col-sm-4 invoice-col">
                 <b>Invoice #007612</b><br>
                 <br>
-                <b>Order ID:</b> 4F3S8J<br>
-                <b>Payment Due:</b> 2/22/2014<br>
+                <b>Order ID:</b> <br>
+                <b>Payment Due:</b>@DateTime.Now.ToString("D")<br>
                 <b>Account:</b> 968-34567
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -138,7 +139,7 @@
             callback: function(response) {
                 ConfirmPayment();
                 alert('success. transaction ref is ' + response.reference);
-                location.href = "@Url.Action("Profile","Vendors")";
+              
             },
             onClose: function() {
                 alert('window closed');
@@ -147,7 +148,7 @@
         handler.openIframe();
     }
 
-    function ConfirmPayment() {
+    function  ConfirmPayment() {
         $.ajax({
             url: '@Url.Action("ConfirmPostAccountPayment", "Vendors")',
             type: 'GET',
@@ -156,6 +157,7 @@
             // IE is particularly aggressive in that respect
             cache: false
         });
+        location.href = "@Url.Action("Profile","Vendors")";
     }
 
 </script>

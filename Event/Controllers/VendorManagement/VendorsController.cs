@@ -336,8 +336,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                 vendor.CreatedBy = 1;
                 vendor.EventPlannerId = null;
                 vendor.EventId = null;
-                vendor.Password = new Hashing().HashPassword(vendor.Password);
-                vendor.ConfirmPassword = new Hashing().HashPassword(vendor.ConfirmPassword);
+                vendor.Password = new Hashing().HashPassword(vendor.ConfirmPassword);
+                vendor.ConfirmPassword = vendor.Password;
                 if (logo != null && logo.FileName != "")
                     vendor.Logo = new FileUploader().UploadFile(logo, UploadType.vendorLogo);
 
@@ -585,15 +585,27 @@ namespace MyEventPlan.Controllers.VendorManagement
                     }
                     dbd.SaveChanges();
                     new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
+                    var invoice = Session["invoice"] as SubscriptionInvoice;
+                    if (invoice != null)
+                        invoice.AppUserId = appUser.AppUserId;
+                    if (invoice != null)
+                    {
+                        invoice.VendorId = vendor.VendorId;
+                        invoice.CreatedBy = appUser.AppUserId;
+                        invoice.LastModifiedBy = appUser.AppUserId;
+                        
+                        _dbe.SubscriptionInvoices.Add(invoice);
+                    }
+                    _dbe.SaveChanges();
                     TempData["login"] =
-                        "You have successfully registered as a vendor! Verify access in your email to login";
+                        "You have successfully registered as a vendor! Enter credentials to login";
                     TempData["notificationtype"] = NotificationType.Success.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-            TempData["login"] =
-                "You have successfully registered as a vendor! Verify access in your email to login";
+            TempData["display"] =
+                "There might have been an ssue while trying to create the account, Try again!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Pricing", "Vendors");
         }
 
         // GET: Vendors/Edit/5

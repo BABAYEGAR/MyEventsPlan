@@ -2,7 +2,8 @@
 @model Event.Data.Objects.Entities.Vendor
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View vendor service";
+    ViewBag.PageHeader = "Vendor Details";
+    ViewBag.PageSubHeader = "View vendor details, review vendor and make enquiries";
     Layout = "../Shared/Layout/_LayoutVendorDetails.cshtml";
 
     var db = new EventDataContext();
@@ -10,31 +11,18 @@
 
     var images = db.VendorImages.SingleOrDefault(n => n.VendorId == Model.VendorId);
 }
-<div class="tp-page-head">
-    <!-- page header -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                <div class="page-header text-center">
-                    <h1>Venue Single Tab Style</h1>
-                    <p>You can present your item detail page with tab style.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="tp-breadcrumb">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
                 <ol class="breadcrumb">
                     <li>
-                        <a href="#">Home</a>
+                        <a href="@Url.Action("Index","Home")">Home</a>
                     </li>
                     <li>
-                        <a href="#">Venue Listing</a>
+                        <a href="@Url.Action("ListOfVendors","Vendors")">Vendor Listing</a>
                     </li>
-                    <li class="active">Wedding Venue Title Goes Here</li>
+                    <li class="active">@Model.Name</li>
                 </ol>
             </div>
         </div>

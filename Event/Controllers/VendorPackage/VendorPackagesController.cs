@@ -53,17 +53,11 @@ namespace MyEventPlan.Controllers.VendorPackage
             //random number
             var generator = new Random();
             var randomNumber = generator.Next(0, 1000000).ToString("D6");
-
-            if (loggedinuser != null)
-            {
-                subscriptionInvoice.AppUserId = loggedinuser.AppUserId;
-                if (loggedinuser.VendorId != null)
-                    subscriptionInvoice.VendorId = (long)loggedinuser.VendorId;
+            subscriptionInvoice.AppUserId = null;
                 subscriptionInvoice.DateCreated = DateTime.Now;
                 subscriptionInvoice.DateLastModified = DateTime.Now;
-                subscriptionInvoice.CreatedBy = loggedinuser.AppUserId;
-                subscriptionInvoice.LastModifiedBy = loggedinuser.AppUserId;
-            }
+            subscriptionInvoice.CreatedBy = null;
+            subscriptionInvoice.LastModifiedBy = null;
             subscriptionInvoice.InvoiceNumber = "#" + randomNumber;
             if (selectedPackage != null)
             {

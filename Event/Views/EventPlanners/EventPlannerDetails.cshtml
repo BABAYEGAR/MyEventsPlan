@@ -2,38 +2,24 @@
 @model Event.Data.Objects.Entities.EventPlanner
 @{
     ViewBag.Title = "View";
-    ViewBag.Header = "View vendor service";
+    ViewBag.PageHeader = "EventPlanner Details";
+    ViewBag.PageSubHeader = "View EventPlanner details, review EventPlanner and make enquiries";
     Layout = "../Shared/Layout/_LayoutVendorDetails.cshtml";
 
     var db = new EventDataContext();
     var plannerReviews = db.EventPlannerReviews.Where(n => n.EventPlannerId == Model.EventPlannerId).ToList();
     var events = db.Event.Where(n => n.EventPlannerId == Model.EventPlannerId);
 }
-<div class="tp-page-head">
-    <!-- page header -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                <div class="page-header text-center">
-                    <h1>Venue Single Tab Style</h1>
-                    <p>You can present your item detail page with tab style.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="tp-breadcrumb">
     <div class="container">
         <div class="row">
             <div class="col-md-8">
                 <ol class="breadcrumb">
                     <li>
-                        <a href="#">Home</a>
+                        <a href="@Url.Action("Index","Home")">Home</a>
                     </li>
-                    <li>
-                        <a href="#">Venue Listing</a>
-                    </li>
-                    <li class="active">Wedding Venue Title Goes Here</li>
+                    <li class="active">@Model.Name</li>
                 </ol>
             </div>
         </div>
@@ -131,10 +117,10 @@
             <!-- tab content start-->
             <div role="tabpanel" class="tab-pane fade in active" id="photo">
                 <div class="venue-details">
-                    <h2>Events</h2>
+                    <h2>Planned Events</h2>
                     @foreach (var item in events)
                     {
-                        <p>@item.Name</p>
+                        <li>@item.Name</li>
                     }
 
                 </div>
@@ -350,9 +336,12 @@
                 <div class="profile-usertitle-name">
                     <h2>@Model.Name</h2>
                 </div>
+            @if (Model.LocationId != null)
+            {
                 <div class="profile-address">
                     <i class="fa fa-map-marker"></i> @Model.Location.Name
                 </div>
+            }
                 <div class="profile-website">
                     <i class="fa fa-link"></i> <a href="#">@Model.Website</a>
                 </div>

@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Wedding Vendor | Find The Best Wedding Vendors</title>
+    <title>@ViewBag.Title</title>
     <!-- Bootstrap -->
     <link href="~/Content/AppTheme/css/bootstrap.min.css" rel="stylesheet">
     <!-- Template style.css -->
@@ -34,6 +34,19 @@
 <body>
 @{ Html.RenderPartial("Partial/_PartialVendorTopMenu"); }
 @{ Html.RenderPartial("Partial/_PartialVendorUnderMenu"); }
+<div class="tp-page-head">
+    <!-- page header -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <div class="page-header text-center">
+                    <h1>@ViewBag.PageHeader</h1>
+                    <p>@ViewBag.PageSubHeader</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @if (TempData["display"] != null)
 {
     if (TempData["notificationtype"].Equals(NotificationType.Success.ToString()))
@@ -55,6 +68,7 @@
         </div>
     }
 }
+
 @RenderBody()
 @{
     Html.RenderPartial("Partial/_AppThemeFooter");
