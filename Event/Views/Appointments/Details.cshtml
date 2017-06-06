@@ -2,7 +2,7 @@
 @model Appointment
 @{
     ViewBag.Title = "View";
-  Layout = "../Shared/Layout/_LayoutView.cshtml";
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
     ViewBag.Header = Model.Name + " Appointment";
     ViewBag.SubHeader = "Details of Appointment";
     var events = Session["event"] as Event;
@@ -40,7 +40,7 @@
         @(Model.Name)
     </dd>
     <dt>
-        @Html.DisplayNameFor(m=>m.StartDate)
+        @Html.DisplayNameFor(m => m.StartDate)
     </dt>
 
     <dd>

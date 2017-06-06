@@ -59,59 +59,60 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Vendor.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageOne)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageTwo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageThree)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageFour)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageFive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageSix)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageSeven)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageEight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageNine)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ImageTen)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateLastModified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastModifiedBy)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.VendorImageId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.VendorImageId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.VendorImageId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vendor.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageOne)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageTwo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageThree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageFour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageFive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageSix)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageSeven)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageEight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageNine)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageTen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateLastModified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifiedBy)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.VendorImageId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.VendorImageId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.VendorImageId})
+            </td>
+        </tr>
+    }
 
 </table>

@@ -52,20 +52,20 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Delete Staff</h4>
-            </div>@using (Html.BeginForm("Delete", "EventPlanners", new { id = Model.EventPlannerId }))
+            </div>@using (Html.BeginForm("Delete", "EventPlanners", new {id = Model.EventPlannerId}))
                   {
                       <div class="modal-body">
 
                           @Html.AntiForgeryToken()
                           <p>
                               Are you sure you want to delete the Vendor?<br/>
-                              Deleting the event planner would also delete information  associated with this planner! 
+                              Deleting the event planner would also delete information associated with this planner!
                           </p>
 
                       </div>
                       <div class="modal-footer">
-                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash" />
-                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
                       </div>
                   }
         </div>

@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.MessageManagement
@@ -17,6 +18,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         private readonly EventDataContext dbd = new EventDataContext();
 
         // GET: Messages
+        [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -29,29 +31,21 @@ namespace MyEventPlan.Controllers.MessageManagement
                     n =>
                         n.AppUserId != loggedinuser.AppUserId && n.AppUserId != 4 && n.ClientId != null &&
                         n.VendorId != null);
-            var eventPlannerEvents = dbd.Event.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
-            var eventPlannerEventsMapping = dbd.EventVendorMappings.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId);
-            List<AppUser> users = new List<AppUser>();
+            var eventPlannerEvents = dbd.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            var eventPlannerEventsMapping =
+                dbd.EventVendorMappings.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            var users = new List<AppUser>();
             foreach (var item in allUsers)
             {
                 if (item.ClientId != null)
                 {
                     var client = dbd.Clients.Find(item.ClientId);
-                        if (eventPlannerEvents.Any(n => n.EventId == client.EventId))
-                        {
-                            users.Add(item);
-                        } 
-                    
+                    if (eventPlannerEvents.Any(n => n.EventId == client.EventId))
+                        users.Add(item);
                 }
                 if (item.VendorId != null)
-                {
                     if (eventPlannerEventsMapping.Any(n => n.VendorId == item.VendorId))
-                    {
                         users.Add(item);
-                    }
-
-                }
-
             }
             ViewBag.AppUserId = new SelectList(users,
                 "AppUserId", "DisplayName");
@@ -60,6 +54,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: Messages
+        [SessionExpire]
         public ActionResult SentMessages()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -74,7 +69,8 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: Messages/Details/5
-        public ActionResult Details(long? id,long? notificationId)
+        [SessionExpire]
+        public ActionResult Details(long? id, long? notificationId)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
@@ -90,6 +86,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: Messages/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname");
@@ -102,6 +99,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(Include = "MessageId,Subject,Body,AttachedFile,AppUserId,MessageGroupId")] Message message)
         {
@@ -201,6 +199,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: Messages/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -218,11 +217,12 @@ namespace MyEventPlan.Controllers.MessageManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "MessageId,Subject,AttachedFile,Sender,AppUserId,MessageGroupId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
-             )] Message message)
+                Include =
+                    "MessageId,Subject,AttachedFile,Sender,AppUserId,MessageGroupId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+            )] Message message)
         {
             if (ModelState.IsValid)
             {
@@ -236,6 +236,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: Messages/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -250,6 +251,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var message = db.Messages.Find(id);

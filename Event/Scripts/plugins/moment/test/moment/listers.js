@@ -6,10 +6,10 @@ module("listers");
 test("default",
     function(assert) {
         assert.deepEqual(moment.months(),
-        [
-            "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-            "November", "December"
-        ]);
+            [
+                "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
+                "November", "December"
+            ]);
         assert.deepEqual(moment.monthsShort(),
             ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]);
         assert.deepEqual(moment.weekdays(),
@@ -48,14 +48,14 @@ test("localized",
             };
 
         moment.locale("numerologists",
-        {
-            months: months,
-            monthsShort: monthsShort,
-            weekdays: weekdays,
-            weekdaysShort: weekdaysShort,
-            weekdaysMin: weekdaysMin,
-            week: week
-        });
+            {
+                months: months,
+                monthsShort: monthsShort,
+                weekdays: weekdays,
+                weekdaysShort: weekdaysShort,
+                weekdaysMin: weekdaysMin,
+                week: week
+            });
 
         assert.deepEqual(moment.months(), months);
         assert.deepEqual(moment.monthsShort(), monthsShort);
@@ -95,12 +95,12 @@ test("with functions",
                 .split("_");
 
         moment.locale("difficult",
-        {
-            monthsShort: function(m, format) {
-                var arr = format.match(/-MMM-/) ? monthsShortWeird : monthsShort;
-                return arr[m.month()];
-            }
-        });
+            {
+                monthsShort: function(m, format) {
+                    var arr = format.match(/-MMM-/) ? monthsShortWeird : monthsShort;
+                    return arr[m.month()];
+                }
+            });
 
         assert.deepEqual(moment.monthsShort(), monthsShort);
         assert.deepEqual(moment.monthsShort("MMM"), monthsShort);

@@ -17,7 +17,7 @@
             <div class="col-md-8">
                 <ol class="breadcrumb">
                     <li>
-                        <a href="@Url.Action("Index","Home")">Home</a>
+                        <a href="@Url.Action("Index", "Home")">Home</a>
                     </li>
                     <li class="active">@Model.Name</li>
                 </ol>
@@ -40,13 +40,13 @@
         <div class="rating">
             @if (Model.AverageRating == 1 && Model.AverageRating > 0)
             {
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
                 <i class="fa fa-star-o"></i>
             }
-            
+
             @if (Model.AverageRating == 2 && Model.AverageRating > 0)
             {
                 <i class="fa fa-star"></i>
@@ -336,12 +336,12 @@
                 <div class="profile-usertitle-name">
                     <h2>@Model.Name</h2>
                 </div>
-            @if (Model.LocationId != null)
-            {
-                <div class="profile-address">
-                    <i class="fa fa-map-marker"></i> @Model.Location.Name
-                </div>
-            }
+                @if (Model.LocationId != null)
+                {
+                    <div class="profile-address">
+                        <i class="fa fa-map-marker"></i> @Model.Location.Name
+                    </div>
+                }
                 <div class="profile-website">
                     <i class="fa fa-link"></i> <a href="#">@Model.Website</a>
                 </div>

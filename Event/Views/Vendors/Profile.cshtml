@@ -6,7 +6,6 @@
     Layout = "../Shared/Layout/_LayoutVendorProfile.cshtml";
     var images = db.VendorImages.SingleOrDefault(n => n.VendorId == Model.VendorId);
     var image = new VendorImage();
-
 }
 @{
     Html.RenderPartial("VendorImagePartial/CreateImage", image);
@@ -441,11 +440,11 @@
                     <div class="row">
                         <div class="col-md-9 dashboard-form">
                             <div class="bg-white pinside40 mb30">
-                              
+
                                 <div class="form-group">
                                     <label class="col-md-4 control-label" for="submit"></label>
                                     <div class="col-md-4">
-                                        <a class="btn btn-primary fa fa-gift" href="@Url.Action("Pricing","Vendors")">Manage Subscription</a>
+                                        <a class="btn btn-primary fa fa-gift" href="@Url.Action("Pricing", "Vendors")">Manage Subscription</a>
                                     </div>
                                 </div>
                             </div>

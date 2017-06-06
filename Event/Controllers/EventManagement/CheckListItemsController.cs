@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -15,6 +16,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly CheckListDataContext dbc = new CheckListDataContext();
 
         // GET: CheckListItems
+        [SessionExpire]
         public ActionResult Index(long? checkListId)
         {
             var checkListItems =
@@ -26,6 +28,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckListItems/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -39,6 +42,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // GET: CheckItem
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult CheckItem(int[] table_records, FormCollection collectedValues)
         {
             var allMappings = db.CheckListItems.ToList();
@@ -53,8 +57,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     if (
                         allMappings.Any(
                             n =>
-                                (n.CheckListItemId == id) &&
-                                (n.CheckListId == checkListId) && n.Checked))
+                                n.CheckListItemId == id &&
+                                n.CheckListId == checkListId && n.Checked))
                     {
                     }
                     else
@@ -90,6 +94,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckListItems/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -100,6 +105,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(Include = "CheckListItemId,Name,Checked,EventId,CheckListId")] CheckListItem checkListItem)
         {
@@ -130,6 +136,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckListItems/UncheckItem/5
+        [SessionExpire]
         public ActionResult UncheckItem(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -147,6 +154,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckListItems/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -162,6 +170,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "CheckListItemId,Name,Checked,EventId,CheckListId,CreatedBy,DateCreated")] CheckListItem
                 checkListItem)
@@ -190,6 +199,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckListItems/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -204,6 +214,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var checkListItem = db.CheckListItems.Find(id);

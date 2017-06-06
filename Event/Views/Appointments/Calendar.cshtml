@@ -1,5 +1,4 @@
 ﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
 @model Appointment
 @{
     ViewBag.Title = "Dashboard";
@@ -8,8 +7,6 @@
     Layout = "~/Views/Shared/Layout/_LayoutCalendar.cshtml";
 
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-
-  
 }
 @section links{
 
@@ -100,7 +97,6 @@
                 format: 'm-d-Y H:i',
                 onShow: function() {
                     this.setOptions({
-                    
                     });
                 }
             });
@@ -109,7 +105,6 @@
                 format: 'm-d-Y H:i',
                 onShow: function() {
                     this.setOptions({
-                    
                     });
                 }
             });

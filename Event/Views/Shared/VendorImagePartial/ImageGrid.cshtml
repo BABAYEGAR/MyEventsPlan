@@ -1,5 +1,5 @@
 ﻿@model Event.Data.Objects.Entities.VendorImage
-@{ var images = Model;}
+@{ var images = Model; }
 <div class="col-md-6">
     <div class="vendor-list-block mb30">
         <!-- vendor list block -->
@@ -47,27 +47,27 @@
     <div class="vendor-list-block mb30">
         <!-- vendor list block -->
         <div class="vendor-img">
-        @if (images != null)
-        {
-            if (images.ImageTwo != null)
+            @if (images != null)
             {
-                <a href="#" data-toggle="modal" data-target="#myModal12">
-                    <img src="~/UploadedFiles/VendorImage/@images.ImageTwo" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
+                if (images.ImageTwo != null)
+                {
+                    <a href="#" data-toggle="modal" data-target="#myModal12">
+                        <img src="~/UploadedFiles/VendorImage/@images.ImageTwo" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                    </a>
+                }
+                else
+                {
+                    <a href="#" data-toggle="modal" data-target="#myModal12">
+                        <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                    </a>
+                }
             }
             else
             {
-                <a href="#" data-toggle="modal" data-target="#myModal12">
+                <a href="#" data-toggle="modal" data-target="#myModal2">
                     <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                 </a>
             }
-        }
-        else
-        {
-            <a href="#" data-toggle="modal" data-target="#myModal2">
-                <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-            </a>
-        }
             <div class="favorite-action">
                 <a href="#" class="fav-icon">
                     <i class="fa fa-heart"></i>
@@ -104,7 +104,6 @@
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-
             }
             else
             {

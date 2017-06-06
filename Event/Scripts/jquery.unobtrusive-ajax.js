@@ -99,33 +99,34 @@
         duration = parseInt(element.getAttribute("data-ajax-loading-duration"), 10) || 0;
 
         $.extend(options,
-        {
-            type: element.getAttribute("data-ajax-method") || undefined,
-            url: element.getAttribute("data-ajax-url") || undefined,
-            cache: !!element.getAttribute("data-ajax-cache"),
-            beforeSend: function(xhr) {
-                var result;
-                asyncOnBeforeSend(xhr, method);
-                result = getFunction(element.getAttribute("data-ajax-begin"), ["xhr"]).apply(element, arguments);
-                if (result !== false) {
-                    loading.show(duration);
+            {
+                type: element.getAttribute("data-ajax-method") || undefined,
+                url: element.getAttribute("data-ajax-url") || undefined,
+                cache: !!element.getAttribute("data-ajax-cache"),
+                beforeSend: function(xhr) {
+                    var result;
+                    asyncOnBeforeSend(xhr, method);
+                    result = getFunction(element.getAttribute("data-ajax-begin"), ["xhr"]).apply(element, arguments);
+                    if (result !== false) {
+                        loading.show(duration);
+                    }
+                    return result;
+                },
+                complete: function() {
+                    loading.hide(duration);
+                    getFunction(element.getAttribute("data-ajax-complete"), ["xhr", "status"])
+                        .apply(element, arguments);
+                },
+                success: function(data, status, xhr) {
+                    asyncOnSuccess(element, data, xhr.getResponseHeader("Content-Type") || "text/html");
+                    getFunction(element.getAttribute("data-ajax-success"), ["data", "status", "xhr"])
+                        .apply(element, arguments);
+                },
+                error: function() {
+                    getFunction(element.getAttribute("data-ajax-failure"), ["xhr", "status", "error"])
+                        .apply(element, arguments);
                 }
-                return result;
-            },
-            complete: function() {
-                loading.hide(duration);
-                getFunction(element.getAttribute("data-ajax-complete"), ["xhr", "status"]).apply(element, arguments);
-            },
-            success: function(data, status, xhr) {
-                asyncOnSuccess(element, data, xhr.getResponseHeader("Content-Type") || "text/html");
-                getFunction(element.getAttribute("data-ajax-success"), ["data", "status", "xhr"])
-                    .apply(element, arguments);
-            },
-            error: function() {
-                getFunction(element.getAttribute("data-ajax-failure"), ["xhr", "status", "error"])
-                    .apply(element, arguments);
-            }
-        });
+            });
 
         options.data.push({ name: "X-Requested-With", value: "XMLHttpRequest" });
 
@@ -149,11 +150,11 @@
             function(evt) {
                 evt.preventDefault();
                 asyncRequest(this,
-                {
-                    url: this.href,
-                    type: "GET",
-                    data: []
-                });
+                    {
+                        url: this.href,
+                        type: "GET",
+                        data: []
+                    });
             });
 
     $(document)
@@ -166,10 +167,10 @@
                     offset = target.offset();
 
                 form.data(data_click,
-                [
-                    { name: name + ".x", value: Math.round(evt.pageX - offset.left) },
-                    { name: name + ".y", value: Math.round(evt.pageY - offset.top) }
-                ]);
+                    [
+                        { name: name + ".x", value: Math.round(evt.pageX - offset.left) },
+                        { name: name + ".y", value: Math.round(evt.pageY - offset.top) }
+                    ]);
 
                 setTimeout(function() {
                         form.removeData(data_click);
@@ -207,10 +208,10 @@
                     return;
                 }
                 asyncRequest(this,
-                {
-                    url: this.action,
-                    type: this.method || "GET",
-                    data: clickInfo.concat($(this).serializeArray())
-                });
+                    {
+                        url: this.action,
+                        type: this.method || "GET",
+                        data: clickInfo.concat($(this).serializeArray())
+                    });
             });
 }(jQuery));

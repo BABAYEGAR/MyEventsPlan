@@ -9,7 +9,7 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
-        </li>     
+        </li>
         <li class="breadcrumb-item">
             <a href="@Url.Action("Index", "EventPlannerPackages")">Event Planner Packages</a>
         </li>
@@ -64,7 +64,7 @@
     </div>
 
 </div>
-@Html.ActionLink("Package Items", "Index","EventPlannerPackageItems", new { id = Model.EventPlannerPackageId },new{@class = "btn btn-default fa fa-list"}) 
+@Html.ActionLink("Package Items", "Index", "EventPlannerPackageItems", new {id = Model.EventPlannerPackageId}, new {@class = "btn btn-default fa fa-list"})
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger  fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete
@@ -79,7 +79,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Delete Package</h4>
-            </div>@using (Html.BeginForm("Delete", "EventPlannerPackages", new { id = Model.EventPlannerPackageId }))
+            </div>@using (Html.BeginForm("Delete", "EventPlannerPackages", new {id = Model.EventPlannerPackageId}))
                   {
                       <div class="modal-body">
 
@@ -90,8 +90,8 @@
 
                       </div>
                       <div class="modal-footer">
-                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash" />
-                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
                       </div>
                   }
         </div>

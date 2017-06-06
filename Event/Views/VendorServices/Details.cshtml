@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View vendor service";
-  Layout = "../Shared/Layout/_LayoutView.cshtml";
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
     ViewBag.TableHeader = Model.ServiceName + " Service Card";
     ViewBag.TableSubHeader = "Details of Vendor Service";
 }
@@ -24,14 +24,6 @@
 
     <dd>
         @Html.DisplayFor(model => model.ServiceName)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.Scale)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.Scale)
     </dd>
 </dl>
 <!-- Button trigger modal -->

@@ -2,7 +2,7 @@
 @model Client
 @{
     ViewBag.Title = "View";
-  Layout = "../Shared/Layout/_LayoutView.cshtml";
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
     ViewBag.TableHeader = Model.Name + " Client Card";
     ViewBag.TableSubHeader = "Details of Client";
     var events = Session["event"] as Event;
@@ -98,20 +98,20 @@
                 <h4 class="modal-title" id="myModalLabel1">Delete Client</h4>
             </div>
             @using (Html.BeginForm("Delete", "Clients", new {id = Model.ClientId}))
-                  {
-                      <div class="modal-body">
+            {
+                <div class="modal-body">
 
-                          @Html.AntiForgeryToken()
-                          <p>
-                              Are you sure you want to delete the client?
-                          </p>
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to delete the client?
+                    </p>
 
-                      </div>
-                      <div class="modal-footer">
-                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
-                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
-                      </div>
-                  }
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                    <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                </div>
+            }
         </div>
     </div>
 

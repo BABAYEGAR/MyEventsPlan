@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 
 namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorEnquiriesController : Controller
     {
-        private VendorEnquiryDataContext db = new VendorEnquiryDataContext();
+        private readonly VendorEnquiryDataContext db = new VendorEnquiryDataContext();
 
         // GET: VendorEnquiries
+       
         public ActionResult Index()
         {
             var vendorEnquiries = db.VendorEnquiries.Include(v => v.Vendor);
@@ -23,21 +22,19 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorEnquiries/Details/5
+       
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorEnquiry vendorEnquiry = db.VendorEnquiries.Find(id);
+            var vendorEnquiry = db.VendorEnquiries.Find(id);
             if (vendorEnquiry == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorEnquiry);
         }
 
         // GET: VendorEnquiries/Create
+       
         public ActionResult Create()
         {
             ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name");
@@ -49,32 +46,32 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorEnquiryId,Name,Email,MobileNumber,EventDate,Note,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] VendorEnquiry vendorEnquiry)
+       
+        public ActionResult Create(
+            [Bind(Include =
+                "VendorEnquiryId,Name,Email,MobileNumber,EventDate,Note,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
+            VendorEnquiry vendorEnquiry)
         {
             if (ModelState.IsValid)
-            { 
-
-             vendorEnquiry.DateCreated = DateTime.Now;
-            vendorEnquiry.DateLastModified = DateTime.Now;
-            db.VendorEnquiries.Add(vendorEnquiry);
-            db.SaveChanges();
-            return RedirectToAction("Details","Vendors",new{id=  vendorEnquiry.VendorId});
+            {
+                vendorEnquiry.DateCreated = DateTime.Now;
+                vendorEnquiry.DateLastModified = DateTime.Now;
+                db.VendorEnquiries.Add(vendorEnquiry);
+                db.SaveChanges();
+                return RedirectToAction("Details", "Vendors", new {id = vendorEnquiry.VendorId});
             }
             return View(vendorEnquiry);
         }
 
         // GET: VendorEnquiries/Edit/5
+       
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorEnquiry vendorEnquiry = db.VendorEnquiries.Find(id);
+            var vendorEnquiry = db.VendorEnquiries.Find(id);
             if (vendorEnquiry == null)
-            {
                 return HttpNotFound();
-            }
             ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorEnquiry.VendorId);
             return View(vendorEnquiry);
         }
@@ -84,7 +81,11 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VendorEnquiryId,Name,Email,MobileNumber,EventDate,Note,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] VendorEnquiry vendorEnquiry)
+       
+        public ActionResult Edit(
+            [Bind(Include =
+                "VendorEnquiryId,Name,Email,MobileNumber,EventDate,Note,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
+            VendorEnquiry vendorEnquiry)
         {
             if (ModelState.IsValid)
             {
@@ -97,26 +98,25 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorEnquiries/Delete/5
+       
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorEnquiry vendorEnquiry = db.VendorEnquiries.Find(id);
+            var vendorEnquiry = db.VendorEnquiries.Find(id);
             if (vendorEnquiry == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorEnquiry);
         }
 
         // POST: VendorEnquiries/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+       
         public ActionResult DeleteConfirmed(long id)
         {
-            VendorEnquiry vendorEnquiry = db.VendorEnquiries.Find(id);
+            var vendorEnquiry = db.VendorEnquiries.Find(id);
             db.VendorEnquiries.Remove(vendorEnquiry);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -125,9 +125,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

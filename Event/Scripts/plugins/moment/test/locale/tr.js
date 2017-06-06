@@ -5,7 +5,8 @@ localeModule("tr");
 test("parse",
     function(assert) {
         var tests =
-                "Ocak Oca_Şubat Şub_Mart Mar_Nisan Nis_Mayıs May_Haziran Haz_Temmuz Tem_Ağustos Ağu_Eylül Eyl_Ekim Eki_Kasım Kas_Aralık Ara".split("_"),
+                "Ocak Oca_Şubat Şub_Mart Mar_Nisan Nis_Mayıs May_Haziran Haz_Temmuz Tem_Ağustos Ağu_Eylül Eyl_Ekim Eki_Kasım Kas_Aralık Ara"
+                    .split("_"),
             i;
 
         function equalTest(input, mmm, i) {
@@ -111,7 +112,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "Ocak Oca_Şubat Şub_Mart Mar_Nisan Nis_Mayıs May_Haziran Haz_Temmuz Tem_Ağustos Ağu_Eylül Eyl_Ekim Eki_Kasım Kas_Aralık Ara".split("_"),
+                "Ocak Oca_Şubat Şub_Mart Mar_Nisan Nis_Mayıs May_Haziran Haz_Temmuz Tem_Ağustos Ağu_Eylül Eyl_Ekim Eki_Kasım Kas_Aralık Ara"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);

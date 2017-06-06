@@ -5,7 +5,8 @@ localeModule("fo");
 test("parse",
     function(assert) {
         var tests =
-                "januar jan_februar feb_mars mar_apríl apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des".split("_"),
+                "januar jan_februar feb_mars mar_apríl apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des"
+                    .split("_"),
             i;
 
         function equalTest(input, mmm, i) {
@@ -100,7 +101,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "januar jan_februar feb_mars mar_apríl apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des".split("_"),
+                "januar jan_februar feb_mars mar_apríl apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -110,7 +112,8 @@ test("format month",
 test("format week",
     function(assert) {
         var expected =
-                "sunnudagur sun su_mánadagur mán má_týsdagur týs tý_mikudagur mik mi_hósdagur hós hó_fríggjadagur frí fr_leygardagur ley le".split("_"),
+                "sunnudagur sun su_mánadagur mán má_týsdagur týs tý_mikudagur mik mi_hósdagur hós hó_fríggjadagur frí fr_leygardagur ley le"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

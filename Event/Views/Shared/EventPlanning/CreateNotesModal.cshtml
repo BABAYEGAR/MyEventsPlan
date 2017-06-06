@@ -4,7 +4,7 @@
     long eventId = ViewBag.eventId;
 }
 @{
-       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Create", "Notes", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {

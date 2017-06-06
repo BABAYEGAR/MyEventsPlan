@@ -5,7 +5,8 @@ localeModule("x-pseudo");
 test("parse",
     function(assert) {
         var tests =
-                "J~áñúá~rý J~áñ_F~ébrú~árý ~Féb_~Márc~h ~Már_Áp~ríl ~Ápr_~Máý ~Máý_~Júñé~ ~Júñ_Júl~ý ~Júl_Áú~gúst~ ~Áúg_Sép~témb~ér ~Sép_Ó~ctób~ér ~Óct_Ñ~óvém~bér ~Ñóv_~Décé~mbér ~Déc".split("_"),
+                "J~áñúá~rý J~áñ_F~ébrú~árý ~Féb_~Márc~h ~Már_Áp~ríl ~Ápr_~Máý ~Máý_~Júñé~ ~Júñ_Júl~ý ~Júl_Áú~gúst~ ~Áúg_Sép~témb~ér ~Sép_Ó~ctób~ér ~Óct_Ñ~óvém~bér ~Ñóv_~Décé~mbér ~Déc"
+                    .split("_"),
             i;
 
         function equalTest(input, mmm, i) {
@@ -100,7 +101,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "J~áñúá~rý J~áñ_F~ébrú~árý ~Féb_~Márc~h ~Már_Áp~ríl ~Ápr_~Máý ~Máý_~Júñé~ ~Júñ_Júl~ý ~Júl_Áú~gúst~ ~Áúg_Sép~témb~ér ~Sép_Ó~ctób~ér ~Óct_Ñ~óvém~bér ~Ñóv_~Décé~mbér ~Déc".split("_"),
+                "J~áñúá~rý J~áñ_F~ébrú~árý ~Féb_~Márc~h ~Már_Áp~ríl ~Ápr_~Máý ~Máý_~Júñé~ ~Júñ_Júl~ý ~Júl_Áú~gúst~ ~Áúg_Sép~témb~ér ~Sép_Ó~ctób~ér ~Óct_Ñ~óvém~bér ~Ñóv_~Décé~mbér ~Déc"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -110,7 +112,8 @@ test("format month",
 test("format week",
     function(assert) {
         var expected =
-                "S~úñdá~ý S~úñ S~ú_Mó~ñdáý~ ~Móñ Mó~_Túé~sdáý~ ~Túé Tú_Wéd~ñésd~áý ~Wéd ~Wé_T~húrs~dáý ~Thú T~h_~Fríd~áý ~Frí Fr~_S~átúr~dáý ~Sát Sá".split("_"),
+                "S~úñdá~ý S~úñ S~ú_Mó~ñdáý~ ~Móñ Mó~_Túé~sdáý~ ~Túé Tú_Wéd~ñésd~áý ~Wéd ~Wé_T~húrs~dáý ~Thú T~h_~Fríd~áý ~Frí Fr~_S~átúr~dáý ~Sát Sá"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

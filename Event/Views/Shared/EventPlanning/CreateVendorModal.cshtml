@@ -2,7 +2,7 @@
 @model Event.Data.Objects.Entities.Vendor
 @{
     var dbc = new EventDataContext();
-       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
     ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
 }
 @using (Html.BeginForm("Create", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
@@ -24,14 +24,14 @@
     </div>
     <div class="mui-select">
         @Html.LabelFor(model => model.LocationId, "Location", new {@class = "control-label"})
-            @Html.DropDownListFor(m => m.LocationId, null,"Select Location", new {@class = ""})
-            @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
-        </div>
+        @Html.DropDownListFor(m => m.LocationId, null, "Select Location", new {@class = ""})
+        @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
+    </div>
     <div class="mui-select">
         @Html.LabelFor(model => model.VendorServiceId, "Vendor Service", new {@class = "control-label"})
-            @Html.DropDownListFor(m => m.VendorServiceId, null,"Select Vendor Service", new {@class = ""})
-            @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
-        </div>
+        @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Vendor Service", new {@class = ""})
+        @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
+    </div>
 
     <div class="mui-textfield mui-textfield--float-label">
 
@@ -72,7 +72,7 @@
             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new {@class = "text-danger"})
         </div>
     </div>
-   
+
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Add Vendor" class="btn btn-default"/>

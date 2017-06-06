@@ -362,6 +362,14 @@
     <Compile Include="Migrations\201705150020549_migrate69.Designer.cs">
       <DependentUpon>201705150020549_migrate69.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706021606539_migrate70.cs" />
+    <Compile Include="Migrations\201706021606539_migrate70.Designer.cs">
+      <DependentUpon>201706021606539_migrate70.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706030730188_MigrateSeventTwo.cs" />
+    <Compile Include="Migrations\201706030730188_MigrateSeventTwo.Designer.cs">
+      <DependentUpon>201706030730188_MigrateSeventTwo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -573,6 +581,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705150020549_migrate69.resx">
       <DependentUpon>201705150020549_migrate69.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706021606539_migrate70.resx">
+      <DependentUpon>201706021606539_migrate70.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706030730188_MigrateSeventTwo.resx">
+      <DependentUpon>201706030730188_MigrateSeventTwo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

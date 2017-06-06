@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -15,16 +16,19 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly StaffDataContext dbc = new StaffDataContext();
 
         // GET: Tasks
+        [SessionExpire]
         public ActionResult Index(long? eventId)
         {
-            var tasks = db.Tasks.Where(n => n.EventId == eventId).Include(t => t.Event).Include(t=>t.Staff);
+            var tasks = db.Tasks.Where(n => n.EventId == eventId).Include(t => t.Event).Include(t => t.Staff);
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.eventId = eventId;
-            ViewBag.StaffId = new SelectList(dbc.Staff.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId), "StaffId", "DisplayName");
+            ViewBag.StaffId = new SelectList(dbc.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+                "StaffId", "DisplayName");
             return View(tasks.ToList());
         }
 
         // GET: Tasks/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -36,6 +40,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Tasks/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
@@ -47,6 +52,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "TaskId,Name,Description,EventId,DueDate,StaffId")] Task task)
         {
             if (ModelState.IsValid)
@@ -76,6 +82,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Tasks/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -91,6 +98,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "TaskId,Name,Description,EventId,CreatedBy,DateCreated,DueDate,Status,StaffId")] Task task)
         {
@@ -118,6 +126,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Tasks/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -132,6 +141,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var task = db.Tasks.Find(id);

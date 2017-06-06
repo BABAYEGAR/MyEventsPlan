@@ -2,7 +2,7 @@
 @model Task
 @{
     ViewBag.Title = "View task";
-  Layout = "../Shared/Layout/_LayoutView.cshtml";
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
     ViewBag.TableHeader = Model.Name + " Task Card";
     ViewBag.TableSubHeader = "Details of Task";
     var events = Session["event"] as Event;

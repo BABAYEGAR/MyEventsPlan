@@ -1,6 +1,5 @@
 ﻿@using Event.Data.Objects.Entities
 @using MyEventPlan.Data.DataContext.DataContext
-@using MyEventPlan.Data.Service.Enum
 @{
     var db = new AppUserDataContext();
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -65,15 +64,19 @@
 
                                 </tbody>
                             </table>
-                            @if ((loggedinuser != null) && (user.AppUserId == loggedinuser.AppUserId))
+                            @if (loggedinuser != null && user.AppUserId == loggedinuser.AppUserId)
                             {
                                 <a href="@Url.Action("Dashboard", "Home")" data-original-title="Return to Dashboard" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary">
                                     <i class="fa fa-backward"></i>
                                 </a>
                                 <span class="pull-right">
-                                        <a href="@Url.Action("Edit", "AppUsers", new {Id = user.AppUserId})" data-original-title="Edit" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
-                                        <a href="@Url.Action("ChangePassword")" data-original-title="Change Password" data-toggle="tooltip" type="button" class="btn btn-sm btn-success"><i class="glyphicon glyphicon-lock"></i></a>
-                                    </span>
+                                    <a href="@Url.Action("Edit", "AppUsers", new {Id = user.AppUserId})" data-original-title="Edit" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning">
+                                        <i class="glyphicon glyphicon-edit"></i>
+                                    </a>
+                                    <a href="@Url.Action("ChangePassword")" data-original-title="Change Password" data-toggle="tooltip" type="button" class="btn btn-sm btn-success">
+                                        <i class="glyphicon glyphicon-lock"></i>
+                                    </a>
+                                </span>
                             }
                         </div>
                     </div>

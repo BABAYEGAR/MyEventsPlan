@@ -30,7 +30,7 @@
                             <li>
                                 <a href="@Url.Action("Create", "EventPlanners", new {type = organization})">We are Event Planners (Organization)</a>
                             </li>
-                         
+
                         </ul>
                     </li>
                     <li>
@@ -47,8 +47,8 @@
                             @foreach (var item in services)
                             {
                                 <li>
-                                    <a href="@Url.Action("ListOfVendors", "Vendors",new{categoryId = item.VendorServiceId})">@item.ServiceName</a>
-                                </li>  
+                                    <a href="@Url.Action("ListOfVendors", "Vendors", new {categoryId = item.VendorServiceId})">@item.ServiceName</a>
+                                </li>
                             }
                         </ul>
                     </li>

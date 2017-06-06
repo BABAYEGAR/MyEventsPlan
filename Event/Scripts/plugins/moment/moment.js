@@ -8,7 +8,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined"
         ? module.exports = factory()
-        : typeof define === "function" && define.amd ? define(factory) : global.moment = factory();
+        : typeof define === "function" && define.amd
+        ? define(factory)
+        : global.moment = factory();
 }(this,
     function() {
         "use strict";
@@ -1091,7 +1093,9 @@
                     ? MINUTE
                     : a[SECOND] < 0 || a[SECOND] > 59
                     ? SECOND
-                    : a[MILLISECOND] < 0 || a[MILLISECOND] > 999 ? MILLISECOND : -1;
+                    : a[MILLISECOND] < 0 || a[MILLISECOND] > 999
+                    ? MILLISECOND
+                    : -1;
 
                 if (getParsingFlags(m)._overflowDayOfYear && (overflow < YEAR || overflow > DATE)) {
                     overflow = DATE;
@@ -2276,7 +2280,13 @@
                     ? "lastWeek"
                     : diff < 0
                     ? "lastDay"
-                    : diff < 1 ? "sameDay" : diff < 2 ? "nextDay" : diff < 7 ? "nextWeek" : "sameElse";
+                    : diff < 1
+                    ? "sameDay"
+                    : diff < 2
+                    ? "nextDay"
+                    : diff < 7
+                    ? "nextWeek"
+                    : "sameElse";
 
             var output = formats && (isFunction(formats[format]) ? formats[format]() : formats[format]);
 
@@ -3595,7 +3605,9 @@
         momentPrototype__proto.years = deprecate("years accessor is deprecated. Use year instead", getSetYear);
         momentPrototype__proto
             .zone =
-            deprecate("moment().zone is deprecated, use moment().utcOffset instead. https://github.com/moment/moment/issues/1779", getSetZone);
+            deprecate(
+                "moment().zone is deprecated, use moment().utcOffset instead. https://github.com/moment/moment/issues/1779",
+                getSetZone);
 
         var momentPrototype = momentPrototype__proto;
 
@@ -3838,16 +3850,22 @@
         }
 
         locale_locales__getSetGlobalLocale("en",
-        {
-            ordinalParse: /\d{1,2}(th|st|nd|rd)/,
-            ordinal: function(number) {
-                var b = number % 10,
-                    output = (toInt(number % 100 / 10) === 1)
-                        ? "th"
-                        : (b === 1) ? "st" : (b === 2) ? "nd" : (b === 3) ? "rd" : "th";
-                return number + output;
-            }
-        });
+            {
+                ordinalParse: /\d{1,2}(th|st|nd|rd)/,
+                ordinal: function(number) {
+                    var b = number % 10,
+                        output = (toInt(number % 100 / 10) === 1)
+                            ? "th"
+                            : (b === 1)
+                            ? "st"
+                            : (b === 2)
+                            ? "nd"
+                            : (b === 3)
+                            ? "rd"
+                            : "th";
+                    return number + output;
+                }
+            });
 
         // Side effect imports
         utils_hooks__hooks.lang = deprecate("moment.lang is deprecated. Use moment.locale instead.",

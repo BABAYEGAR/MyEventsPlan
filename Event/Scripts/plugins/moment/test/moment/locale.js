@@ -4,48 +4,48 @@ import each from "../helpers/each";
 import indexOf from "../../lib/utils/index-of";
 
 module("locale",
-{
-    setup: function() {
-        // TODO: Remove once locales are switched to ES6
-        each([
-                {
-                    name: "en-gb",
-                    data: {}
-                }, {
-                    name: "en-ca",
-                    data: {}
-                }, {
-                    name: "es",
-                    data: {
-                        relativeTime: { past: "hace %s", s: "unos segundos", d: "un día" },
-                        months:
-                            "enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre"
-                                .split("_")
+    {
+        setup: function() {
+            // TODO: Remove once locales are switched to ES6
+            each([
+                    {
+                        name: "en-gb",
+                        data: {}
+                    }, {
+                        name: "en-ca",
+                        data: {}
+                    }, {
+                        name: "es",
+                        data: {
+                            relativeTime: { past: "hace %s", s: "unos segundos", d: "un día" },
+                            months:
+                                "enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre"
+                                    .split("_")
+                        }
+                    }, {
+                        name: "fr",
+                        data: {}
+                    }, {
+                        name: "fr-ca",
+                        data: {}
+                    }, {
+                        name: "it",
+                        data: {}
+                    }, {
+                        name: "zh-cn",
+                        data: {
+                            months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_")
+                        }
                     }
-                }, {
-                    name: "fr",
-                    data: {}
-                }, {
-                    name: "fr-ca",
-                    data: {}
-                }, {
-                    name: "it",
-                    data: {}
-                }, {
-                    name: "zh-cn",
-                    data: {
-                        months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_")
+                ],
+                function(locale) {
+                    if (moment.locale(locale.name) !== locale.name) {
+                        moment.defineLocale(locale.name, locale.data);
                     }
-                }
-            ],
-            function(locale) {
-                if (moment.locale(locale.name) !== locale.name) {
-                    moment.defineLocale(locale.name, locale.data);
-                }
-            });
-        moment.locale("en");
-    }
-});
+                });
+            moment.locale("en");
+        }
+    });
 
 test("library getters and setters",
     function(assert) {
@@ -107,11 +107,12 @@ test("library getter locale array and substrings",
 test("library ensure inheritance",
     function(assert) {
         moment.locale("made-up",
-        {
-            // I put them out of order
-            months: "February_March_April_May_June_July_August_September_October_November_December_January".split("_")
-            // the rest of the properties should be inherited.
-        });
+            {
+                // I put them out of order
+                months: "February_March_April_May_June_July_August_September_October_November_December_January"
+                    .split("_")
+                // the rest of the properties should be inherited.
+            });
 
         assert.equal(moment([2012, 5, 6]).format("MMMM"), "July", "Override some of the configs");
         assert.equal(moment([2012, 5, 6]).format("MMM"), "Jun", "But not all of them");
@@ -122,23 +123,23 @@ test("library ensure inheritance LT L LL LLL LLLL",
         var locale = "test-inherit-lt";
 
         moment.defineLocale(locale,
-        {
-            longDateFormat: {
-                LT: "-[LT]-",
-                L: "-[L]-",
-                LL: "-[LL]-",
-                LLL: "-[LLL]-",
-                LLLL: "-[LLLL]-"
-            },
-            calendar: {
-                sameDay: "[sameDay] LT",
-                nextDay: "[nextDay] L",
-                nextWeek: "[nextWeek] LL",
-                lastDay: "[lastDay] LLL",
-                lastWeek: "[lastWeek] LLLL",
-                sameElse: "L"
-            }
-        });
+            {
+                longDateFormat: {
+                    LT: "-[LT]-",
+                    L: "-[L]-",
+                    LL: "-[LL]-",
+                    LLL: "-[LLL]-",
+                    LLLL: "-[LLLL]-"
+                },
+                calendar: {
+                    sameDay: "[sameDay] LT",
+                    nextDay: "[nextDay] L",
+                    nextWeek: "[nextWeek] LL",
+                    lastDay: "[lastDay] LLL",
+                    lastWeek: "[lastWeek] LLLL",
+                    sameElse: "L"
+                }
+            });
 
         moment.locale("es");
 
@@ -416,13 +417,13 @@ test("month name callback function",
         }
 
         moment.locale("made-up-2",
-        {
-            months: fakeReplace,
-            monthsShort: fakeReplace,
-            weekdays: fakeReplace,
-            weekdaysShort: fakeReplace,
-            weekdaysMin: fakeReplace
-        });
+            {
+                months: fakeReplace,
+                monthsShort: fakeReplace,
+                weekdays: fakeReplace,
+                weekdaysShort: fakeReplace,
+                weekdaysMin: fakeReplace
+            });
 
         assert.equal(moment().format("[test] dd ddd dddd MMM MMMM"),
             "test test test test test test",
@@ -440,18 +441,18 @@ test("changing parts of a locale config",
         test.expectedDeprecations("defineLocaleOverride");
 
         moment.locale("partial-lang",
-        {
-            months: "a b c d e f g h i j k l".split(" ")
-        });
+            {
+                months: "a b c d e f g h i j k l".split(" ")
+            });
 
         assert.equal(moment([2011, 0, 1]).format("MMMM"),
             "a",
             "should be able to set locale values when creating the localeuage");
 
         moment.locale("partial-lang",
-        {
-            monthsShort: "A B C D E F G H I J K L".split(" ")
-        });
+            {
+                monthsShort: "A B C D E F G H I J K L".split(" ")
+            });
 
         assert.equal(moment([2011, 0, 1]).format("MMMM MMM"),
             "a A",
@@ -463,11 +464,11 @@ test("changing parts of a locale config",
 test("start/endOf week feature for first-day-is-monday locales",
     function(assert) {
         moment.locale("monday-lang",
-        {
-            week: {
-                dow: 1 // Monday is the first day of the week
-            }
-        });
+            {
+                week: {
+                    dow: 1 // Monday is the first day of the week
+                }
+            });
 
         moment.locale("monday-lang");
         assert.equal(moment([2013, 0, 1]).startOf("week").day(),
@@ -482,12 +483,12 @@ test("start/endOf week feature for first-day-is-monday locales",
 test("meridiem parsing",
     function(assert) {
         moment.locale("meridiem-parsing",
-        {
-            meridiemParse: /[bd]/i,
-            isPM: function(input) {
-                return input === "b";
-            }
-        });
+            {
+                meridiemParse: /[bd]/i,
+                isPM: function(input) {
+                    return input === "b";
+                }
+            });
 
         moment.locale("meridiem-parsing");
         assert.equal(moment("2012-01-01 3b", "YYYY-MM-DD ha").hour(), 15, "Custom parsing of meridiem should work");
@@ -498,9 +499,9 @@ test("meridiem parsing",
 test("invalid date formatting",
     function(assert) {
         moment.locale("has-invalid",
-        {
-            invalidDate: "KHAAAAAAAAAAAN!"
-        });
+            {
+                invalidDate: "KHAAAAAAAAAAAN!"
+            });
 
         assert.equal(moment.invalid().format(), "KHAAAAAAAAAAAN!");
         assert.equal(moment.invalid().format("YYYY-MM-DD"), "KHAAAAAAAAAAAN!");

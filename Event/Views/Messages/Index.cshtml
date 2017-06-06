@@ -6,12 +6,12 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Messages";
     ViewBag.TableSubHeader = "My Inbox Messages";
-      Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var appUserDb = new AppUserDataContext();
     var messageDb = new MessageDataContext();
     var message = new Message();
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    long unreadMessages = messageDb.Messages.Where(n => (n.AppUserId == loggedinuser.AppUserId) && (n.Read == false)).ToList().Count;
+    long unreadMessages = messageDb.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false).ToList().Count;
 }
 <div class="span9">
     <div class="content">

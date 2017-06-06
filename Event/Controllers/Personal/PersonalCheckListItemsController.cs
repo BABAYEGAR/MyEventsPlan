@@ -1,46 +1,45 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.Personal
 {
     public class PersonalCheckListItemsController : Controller
     {
-        private PersonalCheckListItemDataContext db = new PersonalCheckListItemDataContext();
+        private readonly PersonalCheckListItemDataContext db = new PersonalCheckListItemDataContext();
 
         // GET: PersonalCheckListItems
+        [SessionExpire]
         public ActionResult Index(long? checkListId)
         {
-            var personalCheckListItems = db.PersonalCheckListItems.Where(n=>n.PersonalCheckListId == checkListId).Include(p => p.PersonalCheckList);
+            var personalCheckListItems = db.PersonalCheckListItems.Where(n => n.PersonalCheckListId == checkListId)
+                .Include(p => p.PersonalCheckList);
             ViewBag.checkListId = checkListId;
             return View(personalCheckListItems.ToList());
         }
 
         // GET: PersonalCheckListItems/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PersonalCheckListItem personalCheckListItem = db.PersonalCheckListItems.Find(id);
+            var personalCheckListItem = db.PersonalCheckListItems.Find(id);
             if (personalCheckListItem == null)
-            {
                 return HttpNotFound();
-            }
             return View(personalCheckListItem);
         }
+
         // GET: CheckItem
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult CheckItem(int[] table_records, FormCollection collectedValues)
         {
             var allMappings = db.PersonalCheckListItems.ToList();
@@ -55,8 +54,8 @@ namespace MyEventPlan.Controllers.Personal
                     if (
                         allMappings.Any(
                             n =>
-                                (n.PersonalCheckListItemId == id) &&
-                                (n.PersonalCheckListId == checkListId) && n.Checked))
+                                n.PersonalCheckListItemId == id &&
+                                n.PersonalCheckListId == checkListId && n.Checked))
                     {
                     }
                     else
@@ -86,11 +85,13 @@ namespace MyEventPlan.Controllers.Personal
             {
                 TempData["display"] = "no item has been selected!";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
-                return RedirectToAction("Index", new { checkListId });
+                return RedirectToAction("Index", new {checkListId});
             }
-            return RedirectToAction("Index", new { checkListId });
+            return RedirectToAction("Index", new {checkListId});
         }
+
         // GET: PersonalCheckListItems/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -101,7 +102,10 @@ namespace MyEventPlan.Controllers.Personal
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PersonalCheckListItemId,Name,Checked,PersonalCheckListId")] PersonalCheckListItem personalCheckListItem)
+        [SessionExpire]
+        public ActionResult Create(
+            [Bind(Include = "PersonalCheckListItemId,Name,Checked,PersonalCheckListId")]
+            PersonalCheckListItem personalCheckListItem)
         {
             if (ModelState.IsValid)
             {
@@ -124,24 +128,22 @@ namespace MyEventPlan.Controllers.Personal
                 db.SaveChanges();
                 TempData["display"] = "Your have successfully created a new item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index", new { checkListId = personalCheckListItem.PersonalCheckListId });
+                return RedirectToAction("Index", new {checkListId = personalCheckListItem.PersonalCheckListId});
             }
             return View(personalCheckListItem);
         }
 
         // GET: PersonalCheckListItems/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PersonalCheckListItem personalCheckListItem = db.PersonalCheckListItems.Find(id);
+            var personalCheckListItem = db.PersonalCheckListItems.Find(id);
             if (personalCheckListItem == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.PersonalCheckListId = new SelectList(db.PersonalCheckLists, "PersonalCheckListId", "Name", personalCheckListItem.PersonalCheckListId);
+            ViewBag.PersonalCheckListId = new SelectList(db.PersonalCheckLists, "PersonalCheckListId", "Name",
+                personalCheckListItem.PersonalCheckListId);
             return View(personalCheckListItem);
         }
 
@@ -150,7 +152,10 @@ namespace MyEventPlan.Controllers.Personal
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PersonalCheckListItemId,Name,Checked,PersonalCheckListId,CreatedBy,DateCreated")] PersonalCheckListItem personalCheckListItem)
+        [SessionExpire]
+        public ActionResult Edit(
+            [Bind(Include = "PersonalCheckListItemId,Name,Checked,PersonalCheckListId,CreatedBy,DateCreated")]
+            PersonalCheckListItem personalCheckListItem)
         {
             if (ModelState.IsValid)
             {
@@ -170,45 +175,42 @@ namespace MyEventPlan.Controllers.Personal
                 db.SaveChanges();
                 TempData["display"] = "Your have successfully modified the item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {checkListId = personalCheckListItem.PersonalCheckListId});
+                return RedirectToAction("Index", new {checkListId = personalCheckListItem.PersonalCheckListId});
             }
             return View(personalCheckListItem);
         }
 
         // GET: PersonalCheckListItems/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PersonalCheckListItem personalCheckListItem = db.PersonalCheckListItems.Find(id);
+            var personalCheckListItem = db.PersonalCheckListItems.Find(id);
             if (personalCheckListItem == null)
-            {
                 return HttpNotFound();
-            }
             return View(personalCheckListItem);
         }
 
         // POST: PersonalCheckListItems/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            PersonalCheckListItem personalCheckListItem = db.PersonalCheckListItems.Find(id);
+            var personalCheckListItem = db.PersonalCheckListItems.Find(id);
             db.PersonalCheckListItems.Remove(personalCheckListItem);
             db.SaveChanges();
             TempData["display"] = "Your have successfully deleted the item!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { checkListId = personalCheckListItem.PersonalCheckListId });
+            return RedirectToAction("Index", new {checkListId = personalCheckListItem.PersonalCheckListId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

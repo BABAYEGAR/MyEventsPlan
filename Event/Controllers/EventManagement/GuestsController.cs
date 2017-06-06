@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Enum;
 
@@ -15,6 +16,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly GuestDataContext db = new GuestDataContext();
 
         // GET: Guests
+        [SessionExpire]
         public ActionResult Index(long? guestListId)
         {
             var guests =
@@ -24,6 +26,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Guests/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -35,6 +38,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Guests/GuestAttending/5
+        [SessionExpire]
         public ActionResult GuestAttending(long? id)
         {
             var guest = db.Guests.Find(id);
@@ -45,6 +49,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Guests/GuestNotAttending/5
+        [SessionExpire]
         public ActionResult GuestNotAttending(long? id)
         {
             var guest = db.Guests.Find(id);
@@ -53,27 +58,31 @@ namespace MyEventPlan.Controllers.EventManagement
             db.SaveChanges();
             return RedirectToAction("Index", new {guestListId = guest.GuestListId});
         }
+
         // GET: Guests/GuestAttending/5
+        [SessionExpire]
         public ActionResult LoggedInGuestAttending(long? id)
         {
             var guest = db.Guests.Find(id);
             guest.Status = GuestStatusEnum.Attending.ToString();
             db.Entry(guest).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index", new { guestListId = guest.GuestListId });
+            return RedirectToAction("Index", new {guestListId = guest.GuestListId});
         }
 
         // GET: Guests/GuestNotAttending/5
+        [SessionExpire]
         public ActionResult LoggedInGuestNotAttending(long? id)
         {
             var guest = db.Guests.Find(id);
             guest.Status = GuestStatusEnum.NotAttending.ToString();
             db.Entry(guest).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index", new { guestListId = guest.GuestListId });
+            return RedirectToAction("Index", new {guestListId = guest.GuestListId});
         }
 
         // GET: Guests/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -84,6 +93,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "GuestId,Name,Email,PhoneNumber,EventId,GuestListId")] Guest guest)
         {
             if (ModelState.IsValid)
@@ -104,9 +114,9 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 db.Guests.Add(guest);
                 db.SaveChanges();
-               
+
                 var eventName = db.Event.Find(guest.EventId);
-                new MailerDaemon().NewGuest(guest,eventName.Name);
+                new MailerDaemon().NewGuest(guest, eventName.Name);
                 TempData["display"] = "You have successfully added the guest!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {guestListId = guest.GuestListId});
@@ -115,6 +125,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Guests/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -130,8 +141,10 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
-            [Bind(Include = "GuestId,Name,Email,PhoneNumber,EventId,GuestListId,EventPlannerId,CreatedBy,DateCreated")] Guest guest)
+            [Bind(Include = "GuestId,Name,Email,PhoneNumber,EventId,GuestListId,EventPlannerId,CreatedBy,DateCreated")]
+            Guest guest)
         {
             if (ModelState.IsValid)
             {
@@ -157,6 +170,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Guests/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -171,6 +185,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var guest = db.Guests.Find(id);

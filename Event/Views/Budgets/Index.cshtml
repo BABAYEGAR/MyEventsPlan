@@ -5,7 +5,7 @@
     var events = Session["event"] as Event;
     ViewBag.TableSubHeader = "List of budgets for " + events?.Name + "!";
     ViewBag.TableHeader = "Event Budget";
-      Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var budget = new Budget();
 }
 @section links{

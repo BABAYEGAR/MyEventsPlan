@@ -860,9 +860,9 @@
                     if (data.results == null || data.results.length === 0) {
                         if (this.$results.children().length === 0) {
                             this.trigger("results:message",
-                            {
-                                message: "noResults"
-                            });
+                                {
+                                    message: "noResults"
+                                });
                         }
 
                         return;
@@ -1020,9 +1020,9 @@
                         }
 
                         var $childrenContainer = $("<ul></ul>",
-                        {
-                            'class': "select2-results__options select2-results__options--nested"
-                        });
+                            {
+                                'class': "select2-results__options select2-results__options--nested"
+                            });
 
                         $childrenContainer.append($children);
 
@@ -1133,9 +1133,9 @@
                                 self.trigger("close", {});
                             } else {
                                 self.trigger("select",
-                                {
-                                    data: data
-                                });
+                                    {
+                                        data: data
+                                    });
                             }
                         });
 
@@ -1251,10 +1251,10 @@
                             if ($this.attr("aria-selected") === "true") {
                                 if (self.options.get("multiple")) {
                                     self.trigger("unselect",
-                                    {
-                                        originalEvent: evt,
-                                        data: data
-                                    });
+                                        {
+                                            originalEvent: evt,
+                                            data: data
+                                        });
                                 } else {
                                     self.trigger("close", {});
                                 }
@@ -1263,10 +1263,10 @@
                             }
 
                             self.trigger("select",
-                            {
-                                originalEvent: evt,
-                                data: data
-                            });
+                                {
+                                    originalEvent: evt,
+                                    data: data
+                                });
                         });
 
                     this.$results.on("mouseenter",
@@ -1278,10 +1278,10 @@
                                 .removeClass("select2-results__option--highlighted");
 
                             self.trigger("results:focus",
-                            {
-                                data: data,
-                                element: $(this)
-                            });
+                                {
+                                    data: data,
+                                    element: $(this)
+                                });
                         });
                 };
 
@@ -1586,9 +1586,9 @@
                             }
 
                             self.trigger("toggle",
-                            {
-                                originalEvent: evt
-                            });
+                                {
+                                    originalEvent: evt
+                                });
                         });
 
                     this.$selection.on("focus",
@@ -1680,9 +1680,9 @@
                     this.$selection.on("click",
                         function(evt) {
                             self.trigger("toggle",
-                            {
-                                originalEvent: evt
-                            });
+                                {
+                                    originalEvent: evt
+                                });
                         });
 
                     this.$selection.on(
@@ -1700,10 +1700,10 @@
                             var data = $selection.data("data");
 
                             self.trigger("unselect",
-                            {
-                                originalEvent: evt,
-                                data: data
-                            });
+                                {
+                                    originalEvent: evt,
+                                    data: data
+                                });
                         }
                     );
                 };
@@ -2118,9 +2118,9 @@
                         var input = this.$search.val();
 
                         this.trigger("query",
-                        {
-                            term: input
-                        });
+                            {
+                                term: input
+                            });
                     }
 
                     this._keyUpPrevented = false;
@@ -2128,9 +2128,9 @@
 
                 Search.prototype.searchRemoveChoice = function(decorated, item) {
                     this.trigger("unselect",
-                    {
-                        data: item
-                    });
+                        {
+                            data: item
+                        });
 
                     this.$search.val(item.text);
                     this.handleSearch();
@@ -2187,9 +2187,9 @@
 
                             // Generate the jQuery event for the Select2 event
                             var evt = $.Event("select2:" + name,
-                            {
-                                params: params
-                            });
+                                {
+                                    params: params
+                                });
 
                             self.$element.trigger(evt);
 
@@ -3610,9 +3610,9 @@
                                 }
 
                                 self.trigger("results:message",
-                                {
-                                    message: "errorLoading"
-                                });
+                                    {
+                                        message: "errorLoading"
+                                    });
                             });
 
                         self._request = $request;
@@ -3813,9 +3813,9 @@
 
                     function select(data) {
                         self.trigger("select",
-                        {
-                            data: data
-                        });
+                            {
+                                data: data
+                            });
                     }
 
                     params.term = params.term || "";
@@ -3901,14 +3901,14 @@
 
                     if (params.term.length < this.minimumInputLength) {
                         this.trigger("results:message",
-                        {
-                            message: "inputTooShort",
-                            args: {
-                                minimum: this.minimumInputLength,
-                                input: params.term,
-                                params: params
-                            }
-                        });
+                            {
+                                message: "inputTooShort",
+                                args: {
+                                    minimum: this.minimumInputLength,
+                                    input: params.term,
+                                    params: params
+                                }
+                            });
 
                         return;
                     }
@@ -3935,14 +3935,14 @@
                     if (this.maximumInputLength > 0 &&
                         params.term.length > this.maximumInputLength) {
                         this.trigger("results:message",
-                        {
-                            message: "inputTooLong",
-                            args: {
-                                maximum: this.maximumInputLength,
-                                input: params.term,
-                                params: params
-                            }
-                        });
+                            {
+                                message: "inputTooLong",
+                                args: {
+                                    maximum: this.maximumInputLength,
+                                    input: params.term,
+                                    params: params
+                                }
+                            });
 
                         return;
                     }
@@ -3972,12 +3972,12 @@
                             if (self.maximumSelectionLength > 0 &&
                                 count >= self.maximumSelectionLength) {
                                 self.trigger("results:message",
-                                {
-                                    message: "maximumSelected",
-                                    args: {
-                                        maximum: self.maximumSelectionLength
-                                    }
-                                });
+                                    {
+                                        message: "maximumSelected",
+                                        args: {
+                                            maximum: self.maximumSelectionLength
+                                        }
+                                    });
                                 return;
                             }
                             decorated.call(self, params, callback);
@@ -4130,9 +4130,9 @@
                         var input = this.$search.val();
 
                         this.trigger("query",
-                        {
-                            term: input
-                        });
+                            {
+                                term: input
+                            });
                     }
 
                     this._keyUpPrevented = false;
@@ -4385,10 +4385,10 @@
                         $watchers.each(function() {
                             $(this)
                                 .data("select2-scroll-position",
-                                {
-                                    x: $(this).scrollLeft(),
-                                    y: $(this).scrollTop()
-                                });
+                                    {
+                                        x: $(this).scrollLeft(),
+                                        y: $(this).scrollTop()
+                                    });
                         });
 
                         $watchers.on(scrollEvent,
@@ -4605,9 +4605,9 @@
                     }
 
                     this.trigger("select",
-                    {
-                        data: data
-                    });
+                        {
+                            data: data
+                        });
                 };
 
                 return SelectOnClose;
@@ -4644,10 +4644,10 @@
                     }
 
                     this.trigger("close",
-                    {
-                        originalEvent: originalEvent,
-                        originalSelect2Event: evt
-                    });
+                        {
+                            originalEvent: originalEvent,
+                            originalSelect2Event: evt
+                        });
                 };
 
                 return CloseOnSelect;
@@ -5309,9 +5309,9 @@
                     // Set the initial state
                     this.dataAdapter.current(function(initialData) {
                         self.trigger("selection:update",
-                        {
-                            data: initialData
-                        });
+                            {
+                                data: initialData
+                            });
                     });
 
                     // Hide the original select
@@ -5415,9 +5415,9 @@
                         function() {
                             self.dataAdapter.current(function(data) {
                                 self.trigger("selection:update",
-                                {
-                                    data: data
-                                });
+                                    {
+                                        data: data
+                                    });
                             });
                         });
 
@@ -5443,11 +5443,11 @@
                             $.each(mutations, self._syncS);
                         });
                         this._observer.observe(this.$element[0],
-                        {
-                            attributes: true,
-                            childList: true,
-                            subtree: false
-                        });
+                            {
+                                attributes: true,
+                                childList: true,
+                                subtree: false
+                            });
                     } else if (this.$element[0].addEventListener) {
                         this.$element[0].addEventListener(
                             "DOMAttrModified",
@@ -5555,10 +5555,10 @@
                             this.dataAdapter.query(params,
                                 function(data) {
                                     self.trigger("results:all",
-                                    {
-                                        data: data,
-                                        query: params
-                                    });
+                                        {
+                                            data: data,
+                                            query: params
+                                        });
                                 });
                         });
 
@@ -5567,10 +5567,10 @@
                             this.dataAdapter.query(params,
                                 function(data) {
                                     self.trigger("results:append",
-                                    {
-                                        data: data,
-                                        query: params
-                                    });
+                                        {
+                                            data: data,
+                                            query: params
+                                        });
                                 });
                         });
 
@@ -5664,9 +5664,9 @@
                     if (changed) {
                         this.dataAdapter.current(function(currentData) {
                             self.trigger("selection:update",
-                            {
-                                data: currentData
-                            });
+                                {
+                                    data: currentData
+                                });
                         });
                     }
                 };

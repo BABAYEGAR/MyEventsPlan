@@ -5,7 +5,8 @@ localeModule("sr");
 test("parse",
     function(assert) {
         var tests =
-                "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec.".split("_"),
+                "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec."
+                    .split("_"),
             i;
 
         function equalTest(input, mmm, i) {
@@ -100,7 +101,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec.".split("_"),
+                "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec."
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -110,7 +112,8 @@ test("format month",
 test("format week",
     function(assert) {
         var expected =
-                "nedelja ned. ne_ponedeljak pon. po_utorak uto. ut_sreda sre. sr_četvrtak čet. če_petak pet. pe_subota sub. su".split("_"),
+                "nedelja ned. ne_ponedeljak pon. po_utorak uto. ut_sreda sre. sr_četvrtak čet. če_petak pet. pe_subota sub. su"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

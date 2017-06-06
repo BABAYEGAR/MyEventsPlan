@@ -1,7 +1,9 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
+        : "object" == typeof exports
+        ? module.exports = e(require("jquery"), require("moment"))
+        : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         function e(e, a, t, i) {
@@ -42,52 +44,53 @@
         var t = "nolla yksi kaksi kolme neljä viisi kuusi seitsemän kahdeksan yhdeksän".split(" "),
             i = ["nolla", "yhden", "kahden", "kolmen", "neljän", "viiden", "kuuden", t[7], t[8], t[9]],
             n = a.defineLocale("fi",
-            {
-                months:
-                    "tammikuu_helmikuu_maaliskuu_huhtikuu_toukokuu_kesäkuu_heinäkuu_elokuu_syyskuu_lokakuu_marraskuu_joulukuu".split("_"),
-                monthsShort: "tammi_helmi_maalis_huhti_touko_kesä_heinä_elo_syys_loka_marras_joulu".split("_"),
-                weekdays: "sunnuntai_maanantai_tiistai_keskiviikko_torstai_perjantai_lauantai".split("_"),
-                weekdaysShort: "su_ma_ti_ke_to_pe_la".split("_"),
-                weekdaysMin: "su_ma_ti_ke_to_pe_la".split("_"),
-                longDateFormat: {
-                    LT: "HH.mm",
-                    LTS: "HH.mm.ss",
-                    L: "DD.MM.YYYY",
-                    LL: "Do MMMM[ta] YYYY",
-                    LLL: "Do MMMM[ta] YYYY, [klo] HH.mm",
-                    LLLL: "dddd, Do MMMM[ta] YYYY, [klo] HH.mm",
-                    l: "D.M.YYYY",
-                    ll: "Do MMM YYYY",
-                    lll: "Do MMM YYYY, [klo] HH.mm",
-                    llll: "ddd, Do MMM YYYY, [klo] HH.mm"
-                },
-                calendar: {
-                    sameDay: "[tänään] [klo] LT",
-                    nextDay: "[huomenna] [klo] LT",
-                    nextWeek: "dddd [klo] LT",
-                    lastDay: "[eilen] [klo] LT",
-                    lastWeek: "[viime] dddd[na] [klo] LT",
-                    sameElse: "L"
-                },
-                relativeTime: {
-                    future: "%s päästä",
-                    past: "%s sitten",
-                    s: e,
-                    m: e,
-                    mm: e,
-                    h: e,
-                    hh: e,
-                    d: e,
-                    dd: e,
-                    M: e,
-                    MM: e,
-                    y: e,
-                    yy: e
-                },
-                ordinalParse: /\d{1,2}\./,
-                ordinal: "%d.",
-                week: { dow: 1, doy: 4 }
-            });
+                {
+                    months:
+                        "tammikuu_helmikuu_maaliskuu_huhtikuu_toukokuu_kesäkuu_heinäkuu_elokuu_syyskuu_lokakuu_marraskuu_joulukuu"
+                            .split("_"),
+                    monthsShort: "tammi_helmi_maalis_huhti_touko_kesä_heinä_elo_syys_loka_marras_joulu".split("_"),
+                    weekdays: "sunnuntai_maanantai_tiistai_keskiviikko_torstai_perjantai_lauantai".split("_"),
+                    weekdaysShort: "su_ma_ti_ke_to_pe_la".split("_"),
+                    weekdaysMin: "su_ma_ti_ke_to_pe_la".split("_"),
+                    longDateFormat: {
+                        LT: "HH.mm",
+                        LTS: "HH.mm.ss",
+                        L: "DD.MM.YYYY",
+                        LL: "Do MMMM[ta] YYYY",
+                        LLL: "Do MMMM[ta] YYYY, [klo] HH.mm",
+                        LLLL: "dddd, Do MMMM[ta] YYYY, [klo] HH.mm",
+                        l: "D.M.YYYY",
+                        ll: "Do MMM YYYY",
+                        lll: "Do MMM YYYY, [klo] HH.mm",
+                        llll: "ddd, Do MMM YYYY, [klo] HH.mm"
+                    },
+                    calendar: {
+                        sameDay: "[tänään] [klo] LT",
+                        nextDay: "[huomenna] [klo] LT",
+                        nextWeek: "dddd [klo] LT",
+                        lastDay: "[eilen] [klo] LT",
+                        lastWeek: "[viime] dddd[na] [klo] LT",
+                        sameElse: "L"
+                    },
+                    relativeTime: {
+                        future: "%s päästä",
+                        past: "%s sitten",
+                        s: e,
+                        m: e,
+                        mm: e,
+                        h: e,
+                        hh: e,
+                        d: e,
+                        dd: e,
+                        M: e,
+                        MM: e,
+                        y: e,
+                        yy: e
+                    },
+                    ordinalParse: /\d{1,2}\./,
+                    ordinal: "%d.",
+                    week: { dow: 1, doy: 4 }
+                });
         return n;
     }(), e.fullCalendar.datepickerLocale("fi",
         "fi",
@@ -113,10 +116,10 @@
             showMonthAfterYear: !1,
             yearSuffix: ""
         }), e.fullCalendar.locale("fi",
-    {
-        buttonText: { month: "Kuukausi", week: "Viikko", day: "Päivä", list: "Tapahtumat" },
-        allDayText: "Koko päivä",
-        eventLimitText: "lisää",
-        noEventsMessage: "Ei tapahtumia näytettäviä"
-    });
+        {
+            buttonText: { month: "Kuukausi", week: "Viikko", day: "Päivä", list: "Tapahtumat" },
+            allDayText: "Koko päivä",
+            eventLimitText: "lisää",
+            noEventsMessage: "Ei tapahtumia näytettäviä"
+        });
 });

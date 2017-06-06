@@ -6,7 +6,8 @@ test("parse",
     function(assert) {
         var i,
             tests =
-                "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc.".split("_");
+                "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc."
+                    .split("_");
 
         function equalTest(input, mmm, i) {
             assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -102,7 +103,8 @@ test("format month",
     function(assert) {
         var i,
             expected =
-                "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc.".split("_");
+                "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc."
+                    .split("_");
 
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -113,7 +115,8 @@ test("format week",
     function(assert) {
         var i,
             expected =
-                "dimanche dim. Di_lundi lun. Lu_mardi mar. Ma_mercredi mer. Me_jeudi jeu. Je_vendredi ven. Ve_samedi sam. Sa".split("_");
+                "dimanche dim. Di_lundi lun. Lu_mardi mar. Ma_mercredi mer. Me_jeudi jeu. Je_vendredi ven. Ve_samedi sam. Sa"
+                    .split("_");
 
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

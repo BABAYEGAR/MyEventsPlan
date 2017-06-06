@@ -7,24 +7,24 @@ test("calendar",
     function(assert) {
         moment.defineLocale("cal", null);
         moment.defineLocale("cal",
-        {
-            calendar: {
-                sameDay: "[Today at] HH:mm",
-                nextDay: "[Tomorrow at] HH:mm",
-                nextWeek: "[Next week at] HH:mm",
-                lastDay: "[Yesterday at] HH:mm",
-                lastWeek: "[Last week at] HH:mm",
-                sameElse: "[whatever]"
-            }
-        });
+            {
+                calendar: {
+                    sameDay: "[Today at] HH:mm",
+                    nextDay: "[Tomorrow at] HH:mm",
+                    nextWeek: "[Next week at] HH:mm",
+                    lastDay: "[Yesterday at] HH:mm",
+                    lastWeek: "[Last week at] HH:mm",
+                    sameElse: "[whatever]"
+                }
+            });
         moment.updateLocale("cal",
-        {
-            calendar: {
-                sameDay: "[Today] HH:mm",
-                nextDay: "[Tomorrow] HH:mm",
-                nextWeek: "[Next week] HH:mm"
-            }
-        });
+            {
+                calendar: {
+                    sameDay: "[Today] HH:mm",
+                    nextDay: "[Tomorrow] HH:mm",
+                    nextWeek: "[Next week] HH:mm"
+                }
+            });
 
         moment.locale("cal");
         var anchor = moment.utc("2015-05-05T12:00:00", moment.ISO_8601);
@@ -46,20 +46,19 @@ test("missing",
     function(assert) {
         moment.defineLocale("cal-2", null);
         moment.defineLocale("cal-2",
-        {
-            calendar: {
-                sameDay: "[Today at] HH:mm",
-                nextDay: "[Tomorrow at] HH:mm",
-                nextWeek: "[Next week at] HH:mm",
-                lastDay: "[Yesterday at] HH:mm",
-                lastWeek: "[Last week at] HH:mm",
-                sameElse: "[whatever]"
-            }
-        });
+            {
+                calendar: {
+                    sameDay: "[Today at] HH:mm",
+                    nextDay: "[Tomorrow at] HH:mm",
+                    nextWeek: "[Next week at] HH:mm",
+                    lastDay: "[Yesterday at] HH:mm",
+                    lastWeek: "[Last week at] HH:mm",
+                    sameElse: "[whatever]"
+                }
+            });
         moment.updateLocale("cal-2",
-        {
-        
-        });
+            {
+            });
         moment.locale("cal-2");
         var anchor = moment.utc("2015-05-05T12:00:00", moment.ISO_8601);
         assert.equal(anchor.clone().add(3, "hours").calendar(anchor), "Today at 15:00", "today uses parent version");
@@ -88,23 +87,23 @@ test("long date format",
     function(assert) {
         moment.defineLocale("ldf", null);
         moment.defineLocale("ldf",
-        {
-            longDateFormat: {
-                LTS: "h:mm:ss A",
-                LT: "h:mm A",
-                L: "MM/DD/YYYY",
-                LL: "MMMM D, YYYY",
-                LLL: "MMMM D, YYYY h:mm A",
-                LLLL: "dddd, MMMM D, YYYY h:mm A"
-            }
-        });
+            {
+                longDateFormat: {
+                    LTS: "h:mm:ss A",
+                    LT: "h:mm A",
+                    L: "MM/DD/YYYY",
+                    LL: "MMMM D, YYYY",
+                    LLL: "MMMM D, YYYY h:mm A",
+                    LLLL: "dddd, MMMM D, YYYY h:mm A"
+                }
+            });
         moment.updateLocale("ldf",
-        {
-            longDateFormat: {
-                LLL: "[child] MMMM D, YYYY h:mm A",
-                LLLL: "[child] dddd, MMMM D, YYYY h:mm A"
-            }
-        });
+            {
+                longDateFormat: {
+                    LLL: "[child] MMMM D, YYYY h:mm A",
+                    LLLL: "[child] dddd, MMMM D, YYYY h:mm A"
+                }
+            });
 
         moment.locale("ldf");
         var anchor = moment.utc("2015-09-06T12:34:56", moment.ISO_8601);
@@ -124,41 +123,41 @@ test("ordinal",
     function(assert) {
         moment.defineLocale("ordinal-1", null);
         moment.defineLocale("ordinal-1",
-        {
-            ordinal: "%dx"
-        });
+            {
+                ordinal: "%dx"
+            });
         moment.updateLocale("ordinal-1",
-        {
-            ordinal: "%dy"
-        });
+            {
+                ordinal: "%dy"
+            });
 
         assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"), "3y", "ordinal uses child string");
 
         moment.defineLocale("ordinal-2", null);
         moment.defineLocale("ordinal-2",
-        {
-            ordinal: "%dx"
-        });
+            {
+                ordinal: "%dx"
+            });
         moment.updateLocale("ordinal-2",
-        {
-            ordinal: function(num) {
-                return num + "y";
-            }
-        });
+            {
+                ordinal: function(num) {
+                    return num + "y";
+                }
+            });
 
         assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"), "3y", "ordinal uses child function");
 
         moment.defineLocale("ordinal-3", null);
         moment.defineLocale("ordinal-3",
-        {
-            ordinal: function(num) {
-                return num + "x";
-            }
-        });
+            {
+                ordinal: function(num) {
+                    return num + "x";
+                }
+            });
         moment.updateLocale("ordinal-3",
-        {
-            ordinal: "%dy"
-        });
+            {
+                ordinal: "%dy"
+            });
 
         assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"),
             "3y",
@@ -169,25 +168,25 @@ test("ordinal parse",
     function(assert) {
         moment.defineLocale("ordinal-parse-1", null);
         moment.defineLocale("ordinal-parse-1",
-        {
-            ordinalParse: /\d{1,2}x/
-        });
+            {
+                ordinalParse: /\d{1,2}x/
+            });
         moment.updateLocale("ordinal-parse-1",
-        {
-            ordinalParse: /\d{1,2}y/
-        });
+            {
+                ordinalParse: /\d{1,2}y/
+            });
 
         assert.ok(moment.utc("2015-01-1y", "YYYY-MM-Do", true).isValid(), "ordinal parse uses child");
 
         moment.defineLocale("ordinal-parse-2", null);
         moment.defineLocale("ordinal-parse-2",
-        {
-            ordinalParse: /\d{1,2}x/
-        });
+            {
+                ordinalParse: /\d{1,2}x/
+            });
         moment.updateLocale("ordinal-parse-2",
-        {
-            ordinalParse: /\d{1,2}/
-        });
+            {
+                ordinalParse: /\d{1,2}/
+            });
 
         assert.ok(moment.utc("2015-01-1", "YYYY-MM-Do", true).isValid(), "ordinal parse uses child (default)");
     });
@@ -196,13 +195,13 @@ test("months",
     function(assert) {
         moment.defineLocale("months", null);
         moment.defineLocale("months",
-        {
-            months: "One_Two_Three_Four_Five_Six_Seven_Eight_Nine_Ten_Eleven_Twelve".split("_")
-        });
+            {
+                months: "One_Two_Three_Four_Five_Six_Seven_Eight_Nine_Ten_Eleven_Twelve".split("_")
+            });
         moment.updateLocale("months",
-        {
-            parentLocale: "base-months",
-            months: "First_Second_Third_Fourth_Fifth_Sixth_Seventh_Eighth_Ninth_Tenth_Eleventh_Twelveth ".split("_")
-        });
+            {
+                parentLocale: "base-months",
+                months: "First_Second_Third_Fourth_Fifth_Sixth_Seventh_Eighth_Ninth_Tenth_Eleventh_Twelveth ".split("_")
+            });
         assert.ok(moment.utc("2015-01-01", "YYYY-MM-DD").format("MMMM"), "First", "months uses child");
     });

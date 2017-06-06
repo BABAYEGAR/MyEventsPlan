@@ -1,7 +1,7 @@
 ﻿@model Event.Data.Objects.Entities.PersonalCheckListItem
 @{
     long? checkListId = ViewBag.checkListId;
-       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Create", "PersonalCheckListItems", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {

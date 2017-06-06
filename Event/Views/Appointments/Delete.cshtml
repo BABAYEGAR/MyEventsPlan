@@ -45,7 +45,7 @@
     <dd>
         @(Model.Name + " " + Model.Name)
     </dd>
-    @if ((role != null) && (role.Name == "Platform Administrator"))
+    @if (role != null && role.Name == "Platform Administrator")
     {
         <dt>
             @Html.DisplayNameFor(model => model.CreatedBy)

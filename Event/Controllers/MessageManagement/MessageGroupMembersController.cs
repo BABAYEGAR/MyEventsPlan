@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.MessageManagement
@@ -15,6 +16,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         private readonly EventDataContext dbc = new EventDataContext();
 
         // GET: MessageGroupMembers
+        [SessionExpire]
         public ActionResult Index()
         {
             var messageGroupMembers = db.MessageGroupMembers.Include(m => m.AppUser).Include(m => m.MessageGroup);
@@ -22,6 +24,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: GroupMembers
+        [SessionExpire]
         public ActionResult GroupMember(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -35,9 +38,11 @@ namespace MyEventPlan.Controllers.MessageManagement
 
             return View((IQueryable<AppUser>) null);
         }
+
         // GET: AttendeeList
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult GroupMember(int[] table_records, FormCollection collectedValues)
         {
             var allMappings = dbc.MessageGroupMembers.ToList();
@@ -52,7 +57,7 @@ namespace MyEventPlan.Controllers.MessageManagement
                     if (
                         allMappings.Any(
                             n =>
-                                (n.MessageGroupId == groupId) && (n.AppUserId == id)))
+                                n.MessageGroupId == groupId && n.AppUserId == id))
                     {
                     }
                     else
@@ -67,7 +72,6 @@ namespace MyEventPlan.Controllers.MessageManagement
                                 DateLastModified = DateTime.Now,
                                 LastModifiedBy = loggedinuser.AppUserId,
                                 CreatedBy = loggedinuser.AppUserId
-
                             };
 
                             dbc.MessageGroupMembers.Add(groupMembers);
@@ -89,12 +93,13 @@ namespace MyEventPlan.Controllers.MessageManagement
             {
                 TempData["display"] = "no user has been selected!";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
-                return RedirectToAction("GroupMember", new { id = groupId });
+                return RedirectToAction("GroupMember", new {id = groupId});
             }
-            return RedirectToAction("GroupMember", new { id = groupId });
+            return RedirectToAction("GroupMember", new {id = groupId});
         }
 
         // GET: MessageGroupMembers/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -106,6 +111,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: MessageGroupMembers/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname");
@@ -118,11 +124,12 @@ namespace MyEventPlan.Controllers.MessageManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(
-                 Include =
-                     "MessageGroupMemberId,MessageGroupId,AppUserId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
-             )] MessageGroupMember messageGroupMember)
+                Include =
+                    "MessageGroupMemberId,MessageGroupId,AppUserId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+            )] MessageGroupMember messageGroupMember)
         {
             if (ModelState.IsValid)
             {
@@ -138,6 +145,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: MessageGroupMembers/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -156,11 +164,12 @@ namespace MyEventPlan.Controllers.MessageManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "MessageGroupMemberId,MessageGroupId,AppUserId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
-             )] MessageGroupMember messageGroupMember)
+                Include =
+                    "MessageGroupMemberId,MessageGroupId,AppUserId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+            )] MessageGroupMember messageGroupMember)
         {
             if (ModelState.IsValid)
             {
@@ -175,6 +184,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         }
 
         // GET: MessageGroupMembers/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -189,6 +199,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var messageGroupMember = db.MessageGroupMembers.Find(id);

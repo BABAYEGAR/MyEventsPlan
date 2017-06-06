@@ -1,7 +1,9 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
+        : "object" == typeof exports
+        ? module.exports = e(require("jquery"), require("moment"))
+        : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         var e = {
@@ -27,50 +29,51 @@
                 100: "-ші"
             },
             a = t.defineLocale("kk",
-            {
-                months: "қаңтар_ақпан_наурыз_сәуір_мамыр_маусым_шілде_тамыз_қыркүйек_қазан_қараша_желтоқсан".split("_"),
-                monthsShort: "қаң_ақп_нау_сәу_мам_мау_шіл_там_қыр_қаз_қар_жел".split("_"),
-                weekdays: "жексенбі_дүйсенбі_сейсенбі_сәрсенбі_бейсенбі_жұма_сенбі".split("_"),
-                weekdaysShort: "жек_дүй_сей_сәр_бей_жұм_сен".split("_"),
-                weekdaysMin: "жк_дй_сй_ср_бй_жм_сн".split("_"),
-                longDateFormat: {
-                    LT: "HH:mm",
-                    LTS: "HH:mm:ss",
-                    L: "DD.MM.YYYY",
-                    LL: "D MMMM YYYY",
-                    LLL: "D MMMM YYYY HH:mm",
-                    LLLL: "dddd, D MMMM YYYY HH:mm"
-                },
-                calendar: {
-                    sameDay: "[Бүгін сағат] LT",
-                    nextDay: "[Ертең сағат] LT",
-                    nextWeek: "dddd [сағат] LT",
-                    lastDay: "[Кеше сағат] LT",
-                    lastWeek: "[Өткен аптаның] dddd [сағат] LT",
-                    sameElse: "L"
-                },
-                relativeTime: {
-                    future: "%s ішінде",
-                    past: "%s бұрын",
-                    s: "бірнеше секунд",
-                    m: "бір минут",
-                    mm: "%d минут",
-                    h: "бір сағат",
-                    hh: "%d сағат",
-                    d: "бір күн",
-                    dd: "%d күн",
-                    M: "бір ай",
-                    MM: "%d ай",
-                    y: "бір жыл",
-                    yy: "%d жыл"
-                },
-                ordinalParse: /\d{1,2}-(ші|шы)/,
-                ordinal: function(t) {
-                    var a = t % 10, d = t >= 100 ? 100 : null;
-                    return t + (e[t] || e[a] || e[d]);
-                },
-                week: { dow: 1, doy: 7 }
-            });
+                {
+                    months: "қаңтар_ақпан_наурыз_сәуір_мамыр_маусым_шілде_тамыз_қыркүйек_қазан_қараша_желтоқсан"
+                        .split("_"),
+                    monthsShort: "қаң_ақп_нау_сәу_мам_мау_шіл_там_қыр_қаз_қар_жел".split("_"),
+                    weekdays: "жексенбі_дүйсенбі_сейсенбі_сәрсенбі_бейсенбі_жұма_сенбі".split("_"),
+                    weekdaysShort: "жек_дүй_сей_сәр_бей_жұм_сен".split("_"),
+                    weekdaysMin: "жк_дй_сй_ср_бй_жм_сн".split("_"),
+                    longDateFormat: {
+                        LT: "HH:mm",
+                        LTS: "HH:mm:ss",
+                        L: "DD.MM.YYYY",
+                        LL: "D MMMM YYYY",
+                        LLL: "D MMMM YYYY HH:mm",
+                        LLLL: "dddd, D MMMM YYYY HH:mm"
+                    },
+                    calendar: {
+                        sameDay: "[Бүгін сағат] LT",
+                        nextDay: "[Ертең сағат] LT",
+                        nextWeek: "dddd [сағат] LT",
+                        lastDay: "[Кеше сағат] LT",
+                        lastWeek: "[Өткен аптаның] dddd [сағат] LT",
+                        sameElse: "L"
+                    },
+                    relativeTime: {
+                        future: "%s ішінде",
+                        past: "%s бұрын",
+                        s: "бірнеше секунд",
+                        m: "бір минут",
+                        mm: "%d минут",
+                        h: "бір сағат",
+                        hh: "%d сағат",
+                        d: "бір күн",
+                        dd: "%d күн",
+                        M: "бір ай",
+                        MM: "%d ай",
+                        y: "бір жыл",
+                        yy: "%d жыл"
+                    },
+                    ordinalParse: /\d{1,2}-(ші|шы)/,
+                    ordinal: function(t) {
+                        var a = t % 10, d = t >= 100 ? 100 : null;
+                        return t + (e[t] || e[a] || e[d]);
+                    },
+                    week: { dow: 1, doy: 7 }
+                });
         return a;
     }(), e.fullCalendar.datepickerLocale("kk",
         "kk",
@@ -94,10 +97,10 @@
             showMonthAfterYear: !1,
             yearSuffix: ""
         }), e.fullCalendar.locale("kk",
-    {
-        buttonText: { month: "Ай", week: "Апта", day: "Күн", list: "Күн тәртібі" },
-        allDayText: "Күні бойы",
-        eventLimitText: function(e) { return"+ тағы " + e },
-        noEventsMessage: "Көрсету үшін оқиғалар жоқ"
-    });
+        {
+            buttonText: { month: "Ай", week: "Апта", day: "Күн", list: "Күн тәртібі" },
+            allDayText: "Күні бойы",
+            eventLimitText: function(e) { return"+ тағы " + e },
+            noEventsMessage: "Көрсету үшін оқиғалар жоқ"
+        });
 });

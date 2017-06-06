@@ -1,45 +1,42 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.FinancialManagement
 {
     public class InvoicePaymentsController : Controller
     {
-        private InvoicePaymentDataContext db = new InvoicePaymentDataContext();
+        private readonly InvoicePaymentDataContext db = new InvoicePaymentDataContext();
 
         // GET: InvoicePayments
+        [SessionExpire]
         public ActionResult Index(long? id)
         {
-            var invoicePayments = db.InvoicePayments.Where(n=>n.InvoiceId == id).Include(i => i.Invoice);
+            var invoicePayments = db.InvoicePayments.Where(n => n.InvoiceId == id).Include(i => i.Invoice);
             ViewBag.invoiceId = id;
             return View(invoicePayments.ToList());
         }
 
         // GET: InvoicePayments/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            InvoicePayment invoicePayment = db.InvoicePayments.Find(id);
+            var invoicePayment = db.InvoicePayments.Find(id);
             if (invoicePayment == null)
-            {
                 return HttpNotFound();
-            }
             return View(invoicePayment);
         }
 
         // GET: InvoicePayments/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -50,7 +47,9 @@ namespace MyEventPlan.Controllers.FinancialManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "InvoicePaymentId,Amount,Reference,PaymentDate,InvoiceId")] InvoicePayment invoicePayment)
+        [SessionExpire]
+        public ActionResult Create(
+            [Bind(Include = "InvoicePaymentId,Amount,Reference,PaymentDate,InvoiceId")] InvoicePayment invoicePayment)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -72,23 +71,20 @@ namespace MyEventPlan.Controllers.FinancialManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully added a payment to the invoice!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {id = invoicePayment.InvoiceId});
+                return RedirectToAction("Index", new {id = invoicePayment.InvoiceId});
             }
             return View(invoicePayment);
         }
 
         // GET: InvoicePayments/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            InvoicePayment invoicePayment = db.InvoicePayments.Find(id);
+            var invoicePayment = db.InvoicePayments.Find(id);
             if (invoicePayment == null)
-            {
                 return HttpNotFound();
-            }
             return View(invoicePayment);
         }
 
@@ -97,7 +93,10 @@ namespace MyEventPlan.Controllers.FinancialManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "InvoicePaymentId,Amount,Reference,PaymentDate,InvoiceId,CreatedBy,DateCreated")] InvoicePayment invoicePayment)
+        [SessionExpire]
+        public ActionResult Edit(
+            [Bind(Include = "InvoicePaymentId,Amount,Reference,PaymentDate,InvoiceId,CreatedBy,DateCreated")]
+            InvoicePayment invoicePayment)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -117,46 +116,43 @@ namespace MyEventPlan.Controllers.FinancialManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully modified the payment for the invoice!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new {id = invoicePayment.InvoiceId});
+                return RedirectToAction("Index", new {id = invoicePayment.InvoiceId});
             }
             return View(invoicePayment);
         }
 
         // GET: InvoicePayments/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            InvoicePayment invoicePayment = db.InvoicePayments.Find(id);
+            var invoicePayment = db.InvoicePayments.Find(id);
             if (invoicePayment == null)
-            {
                 return HttpNotFound();
-            }
             return View(invoicePayment);
         }
 
         // POST: InvoicePayments/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            InvoicePayment invoicePayment = db.InvoicePayments.Find(id);
-            long? invoiceId = invoicePayment.InvoiceId;
+            var invoicePayment = db.InvoicePayments.Find(id);
+            var invoiceId = invoicePayment.InvoiceId;
             db.InvoicePayments.Remove(invoicePayment);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the payment for the invoice!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index",new {id = invoiceId});
+            return RedirectToAction("Index", new {id = invoiceId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

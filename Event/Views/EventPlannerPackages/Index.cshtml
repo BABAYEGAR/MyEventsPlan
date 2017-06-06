@@ -43,37 +43,37 @@
 <div class="card-content table-responsive">
     <table class="table table-hover">
         <thead class="text-primary">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PackageName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaximumEvents)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.PackageName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Amount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MaximumEvents)
-                </th>
-                <th></th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PackageName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaximumEvents)
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "Details", new {id = item.EventPlannerPackageId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
+
+                </td>
             </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PackageName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Amount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MaximumEvents)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Open", "Details", new { id = item.EventPlannerPackageId }, new { @class = "btn btn-default btn-lg fa fa-folder-open" })
-
-                    </td>
-                </tr>
-            }
+        }
 
     </table>
 </div>

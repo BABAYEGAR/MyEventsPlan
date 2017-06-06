@@ -6,7 +6,8 @@ test("parse",
     function(assert) {
         var i,
             tests =
-                "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_");
+                "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                    .split("_");
 
         function equalTest(input, mmm, i) {
             assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -102,7 +103,8 @@ test("format month",
     function(assert) {
         var i,
             expected =
-                "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_");
+                "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                    .split("_");
 
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -113,7 +115,8 @@ test("format week",
     function(assert) {
         var i,
             expected =
-                "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa".split("_");
+                "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa"
+                    .split("_");
 
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

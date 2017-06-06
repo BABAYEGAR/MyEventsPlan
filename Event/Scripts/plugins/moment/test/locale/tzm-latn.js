@@ -5,7 +5,8 @@ localeModule("tzm-latn");
 test("parse",
     function(assert) {
         var tests =
-                "innayr innayr_brˤayrˤ brˤayrˤ_marˤsˤ marˤsˤ_ibrir ibrir_mayyw mayyw_ywnyw ywnyw_ywlywz ywlywz_ɣwšt ɣwšt_šwtanbir šwtanbir_ktˤwbrˤ ktˤwbrˤ_nwwanbir nwwanbir_dwjnbir dwjnbir".split("_"),
+                "innayr innayr_brˤayrˤ brˤayrˤ_marˤsˤ marˤsˤ_ibrir ibrir_mayyw mayyw_ywnyw ywnyw_ywlywz ywlywz_ɣwšt ɣwšt_šwtanbir šwtanbir_ktˤwbrˤ ktˤwbrˤ_nwwanbir nwwanbir_dwjnbir dwjnbir"
+                    .split("_"),
             i;
 
         function equalTest(input, mmm, i) {
@@ -100,7 +101,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "innayr innayr_brˤayrˤ brˤayrˤ_marˤsˤ marˤsˤ_ibrir ibrir_mayyw mayyw_ywnyw ywnyw_ywlywz ywlywz_ɣwšt ɣwšt_šwtanbir šwtanbir_ktˤwbrˤ ktˤwbrˤ_nwwanbir nwwanbir_dwjnbir dwjnbir".split("_"),
+                "innayr innayr_brˤayrˤ brˤayrˤ_marˤsˤ marˤsˤ_ibrir ibrir_mayyw mayyw_ywnyw ywnyw_ywlywz ywlywz_ɣwšt ɣwšt_šwtanbir šwtanbir_ktˤwbrˤ ktˤwbrˤ_nwwanbir nwwanbir_dwjnbir dwjnbir"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -110,7 +112,8 @@ test("format month",
 test("format week",
     function(assert) {
         var expected =
-                "asamas asamas asamas_aynas aynas aynas_asinas asinas asinas_akras akras akras_akwas akwas akwas_asimwas asimwas asimwas_asiḍyas asiḍyas asiḍyas".split("_"),
+                "asamas asamas asamas_aynas aynas aynas_asinas asinas asinas_akras akras akras_akwas akwas akwas_asimwas asimwas asimwas_asiḍyas asiḍyas asiḍyas"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

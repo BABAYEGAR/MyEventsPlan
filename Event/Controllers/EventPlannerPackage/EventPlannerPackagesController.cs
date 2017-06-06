@@ -5,22 +5,25 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventPlannerPackage
 {
     public class EventPlannerPackagesController : Controller
     {
-        private readonly EventPlannerPackageDataContext db = new EventPlannerPackageDataContext();
         private readonly EventDataContext _dbd = new EventDataContext();
         private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
         private readonly EventPlannerPackageSettingDataContext _dbf = new EventPlannerPackageSettingDataContext();
+        private readonly EventPlannerPackageDataContext db = new EventPlannerPackageDataContext();
 
         // GET: EventPlannerPackages
+        [SessionExpire]
         public ActionResult Index()
         {
             return View(db.EventPlannerPackages.ToList());
         }
+
         [HttpGet]
         [AllowAnonymous]
         // GET: EventPlanners/Pricing
@@ -32,12 +35,13 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
             var packageSubscribed =
                 packages.SingleOrDefault(
                     n =>
-                        (n.EventPlannerId == loggedinuser.EventPlannerId) &&
-                        (n.Status == PackageStatusEnum.Active.ToString()));
+                        n.EventPlannerId == loggedinuser.EventPlannerId &&
+                        n.Status == PackageStatusEnum.Active.ToString());
             if (packageSubscribed != null)
                 Session["subscribe"] = packageSubscribed;
             return View(db.EventPlannerPackages.ToList());
         }
+
         [HttpGet]
         [AllowAnonymous]
         // GET: EventPlanners/Invoice
@@ -55,7 +59,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
             {
                 subscriptionInvoice.AppUserId = loggedinuser.AppUserId;
                 if (loggedinuser.EventPlannerId != null)
-                    subscriptionInvoice.EventPlannerId = (long)loggedinuser.EventPlannerId;
+                    subscriptionInvoice.EventPlannerId = (long) loggedinuser.EventPlannerId;
                 subscriptionInvoice.DateCreated = DateTime.Now;
                 subscriptionInvoice.DateLastModified = DateTime.Now;
                 subscriptionInvoice.CreatedBy = loggedinuser.AppUserId;
@@ -86,8 +90,8 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
             var packageSubscribed =
                 packages.SingleOrDefault(
                     n =>
-                        (n.EventPlannerId == loggedinuser.EventPlannerId) &&
-                        (n.Status == PackageStatusEnum.Active.ToString()));
+                        n.EventPlannerId == loggedinuser.EventPlannerId &&
+                        n.Status == PackageStatusEnum.Active.ToString());
 
 
             if (packageSubscribed != null)
@@ -99,8 +103,8 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                 _dbf.SaveChanges();
 
                 //populate new package
-                if ((loggedinuser != null) && (loggedinuser.EventPlannerId != null))
-                    packageToSubscribed.EventPlannerId = (long)loggedinuser.EventPlannerId;
+                if (loggedinuser != null && loggedinuser.EventPlannerId != null)
+                    packageToSubscribed.EventPlannerId = (long) loggedinuser.EventPlannerId;
                 if (loggedinuser != null)
                 {
                     packageToSubscribed.CreatedBy = loggedinuser.AppUserId;
@@ -137,7 +141,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
             if (loggedinuser != null)
             {
                 if (loggedinuser.EventPlannerId != null)
-                    packageToSubscribed.EventPlannerId = (long)loggedinuser.EventPlannerId;
+                    packageToSubscribed.EventPlannerId = (long) loggedinuser.EventPlannerId;
                 packageToSubscribed.CreatedBy = loggedinuser.AppUserId;
                 packageToSubscribed.LastModifiedBy = loggedinuser.AppUserId;
                 packageToSubscribed.AppUserId = loggedinuser.AppUserId;
@@ -168,7 +172,9 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Dashboard", "Home");
         }
+
         // GET: EventPlannerPackages/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -180,6 +186,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         }
 
         // GET: EventPlannerPackages/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -190,6 +197,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(Include = "EventPlannerPackageId,PackageName,Amount,MaximumEvents,Description,PackageGrade")]
             Event.Data.Objects.Entities.EventPlannerPackage eventPlannerPackage, FormCollection collectedValues)
@@ -229,6 +237,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         }
 
         // GET: EventPlannerPackages/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -244,6 +253,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include =
                 "EventPlannerPackageId,PackageGrade,PackageName,Description,Amount,MaximumEvents,CreatedBy,DateCreated")]
@@ -273,6 +283,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         }
 
         // GET: EventPlannerPackages/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -287,6 +298,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var eventPlannerPackage = db.EventPlannerPackages.Find(id);

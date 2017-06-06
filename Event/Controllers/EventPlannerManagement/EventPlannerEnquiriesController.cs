@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 
 namespace MyEventPlan.Controllers.EventPlannerManagement
 {
@@ -13,6 +14,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         private readonly EventPlannerEnquiryDataContext db = new EventPlannerEnquiryDataContext();
 
         // GET: EventPlannerEnquiries
+     
         public ActionResult Index()
         {
             var eventPlannerEnquiries = db.EventPlannerEnquiries.Include(e => e.EventPlanner);
@@ -20,6 +22,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         }
 
         // GET: EventPlannerEnquiries/Details/5
+     
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -31,6 +34,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         }
 
         // GET: EventPlannerEnquiries/Create
+     
         public ActionResult Create()
         {
             ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name");
@@ -42,6 +46,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+     
         public ActionResult Create(
             [Bind(Include =
                 "EventPlannerEnquiryId,Name,Email,MobileNumber,EventDate,Note,EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
@@ -62,6 +67,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         }
 
         // GET: EventPlannerEnquiries/Edit/5
+     
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -79,6 +85,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+     
         public ActionResult Edit(
             [Bind(Include =
                 "EventPlannerEnquiryId,Name,Email,MobileNumber,EventDate,Note,EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
@@ -96,6 +103,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         }
 
         // GET: EventPlannerEnquiries/Delete/5
+     
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -110,6 +118,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+     
         public ActionResult DeleteConfirmed(long id)
         {
             var eventPlannerEnquiry = db.EventPlannerEnquiries.Find(id);

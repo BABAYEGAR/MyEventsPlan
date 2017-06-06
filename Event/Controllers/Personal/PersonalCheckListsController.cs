@@ -1,45 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.Personal
 {
     public class PersonalCheckListsController : Controller
     {
-        private PersonalCheckListDataContext db = new PersonalCheckListDataContext();
+        private readonly PersonalCheckListDataContext db = new PersonalCheckListDataContext();
 
         // GET: PersonalCheckLists
+        [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var personalCheckLists = db.PersonalCheckLists.Where(n=>n.AppUserId == loggedinuser.AppUserId).Include(p => p.AppUser);
+            var personalCheckLists = db.PersonalCheckLists.Where(n => n.AppUserId == loggedinuser.AppUserId)
+                .Include(p => p.AppUser);
             return View(personalCheckLists.ToList());
         }
 
         // GET: PersonalCheckLists/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PersonalCheckList personalCheckList = db.PersonalCheckLists.Find(id);
+            var personalCheckList = db.PersonalCheckLists.Find(id);
             if (personalCheckList == null)
-            {
                 return HttpNotFound();
-            }
             return View(personalCheckList);
         }
 
         // GET: PersonalCheckLists/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname");
@@ -51,7 +49,9 @@ namespace MyEventPlan.Controllers.Personal
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PersonalCheckListId,Name,Status,AppUserId")] PersonalCheckList personalCheckList)
+        [SessionExpire]
+        public ActionResult Create(
+            [Bind(Include = "PersonalCheckListId,Name,Status,AppUserId")] PersonalCheckList personalCheckList)
         {
             if (ModelState.IsValid)
             {
@@ -83,17 +83,14 @@ namespace MyEventPlan.Controllers.Personal
         }
 
         // GET: PersonalCheckLists/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PersonalCheckList personalCheckList = db.PersonalCheckLists.Find(id);
+            var personalCheckList = db.PersonalCheckLists.Find(id);
             if (personalCheckList == null)
-            {
                 return HttpNotFound();
-            }
             ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", personalCheckList.AppUserId);
             return View(personalCheckList);
         }
@@ -103,7 +100,10 @@ namespace MyEventPlan.Controllers.Personal
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PersonalCheckListId,Name,Status,AppUserId,CreatedBy,DateCreated")] PersonalCheckList personalCheckList)
+        [SessionExpire]
+        public ActionResult Edit(
+            [Bind(Include = "PersonalCheckListId,Name,Status,AppUserId,CreatedBy,DateCreated")]
+            PersonalCheckList personalCheckList)
         {
             if (ModelState.IsValid)
             {
@@ -129,26 +129,25 @@ namespace MyEventPlan.Controllers.Personal
         }
 
         // GET: PersonalCheckLists/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            PersonalCheckList personalCheckList = db.PersonalCheckLists.Find(id);
+            var personalCheckList = db.PersonalCheckLists.Find(id);
             if (personalCheckList == null)
-            {
                 return HttpNotFound();
-            }
             return View(personalCheckList);
         }
 
         // POST: PersonalCheckLists/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            PersonalCheckList personalCheckList = db.PersonalCheckLists.Find(id);
+            var personalCheckList = db.PersonalCheckLists.Find(id);
             db.PersonalCheckLists.Remove(personalCheckList);
             db.SaveChanges();
             TempData["display"] = "Your have successfully deleted the list!";
@@ -159,9 +158,7 @@ namespace MyEventPlan.Controllers.Personal
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

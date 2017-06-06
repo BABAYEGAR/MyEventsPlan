@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -14,12 +15,14 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly EventResourceMappingDataContext db = new EventResourceMappingDataContext();
 
         // GET: EventResourceMappings
+        [SessionExpire]
         public ActionResult Index()
         {
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var eventResourceMapping =
-                db.EventResourceMapping.Where(n => n.EventId == events.EventId).Include(e => e.Event).Include(e => e.Resource);
+                db.EventResourceMapping.Where(n => n.EventId == events.EventId).Include(e => e.Event)
+                    .Include(e => e.Resource);
             ViewBag.ResourceId = new SelectList(
                 db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name");
             return View(eventResourceMapping.ToList());
@@ -27,6 +30,7 @@ namespace MyEventPlan.Controllers.EventManagement
 
 
         // GET: EventResourceMappings/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -38,6 +42,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventResourceMappings/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -48,8 +53,10 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
-            [Bind(Include = "EventResourceMappingId,EventId,ResourceId,Quantity")] EventResourceMapping eventResourceMapping)
+            [Bind(Include = "EventResourceMappingId,EventId,ResourceId,Quantity")]
+            EventResourceMapping eventResourceMapping)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -79,9 +86,9 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     TempData["display"] = "Your inventory does not have the quantity of resources required!";
                     TempData["notificationtype"] = NotificationType.Error.ToString();
-                    return RedirectToAction("Index", new { eventId = eventResourceMapping.EventId });
+                    return RedirectToAction("Index", new {eventId = eventResourceMapping.EventId});
                 }
-                db.Entry(resource).State  = EntityState.Modified;
+                db.Entry(resource).State = EntityState.Modified;
                 db.EventResourceMapping.Add(eventResourceMapping);
                 db.SaveChanges();
                 TempData["display"] = "You have successfully allocated the resource(s) to the event!";
@@ -92,6 +99,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventResourceMappings/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -112,10 +120,12 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "EventResourceMappingId,EventId,ResourceId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] EventResourceMapping eventResourceMapping)
+                Include =
+                    "EventResourceMappingId,EventId,ResourceId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
+            EventResourceMapping eventResourceMapping)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -136,7 +146,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     {
                         TempData["display"] = "Your inventory does not have the quantity of resources required!";
                         TempData["notificationtype"] = NotificationType.Error.ToString();
-                        return RedirectToAction("Index", new { eventId = eventResourceMapping.EventId });
+                        return RedirectToAction("Index", new {eventId = eventResourceMapping.EventId});
                     }
                 }
                 else
@@ -158,6 +168,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventResourceMappings/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -172,6 +183,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var eventResourceMapping = db.EventResourceMapping.Find(id);
@@ -179,7 +191,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var resourceId = eventResourceMapping.ResourceId;
             var resource = db.Resources.Find(resourceId);
             resource.Quantity = resource.Quantity + eventResourceMapping.Quantity;
-            resource.DateLastModified = DateTime.Now; 
+            resource.DateLastModified = DateTime.Now;
 
             db.Entry(resource).State = EntityState.Modified;
             db.EventResourceMapping.Remove(eventResourceMapping);

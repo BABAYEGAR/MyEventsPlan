@@ -97,7 +97,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "tera’ jar wa’ jar wa’_tera’ jar cha’ jar cha’_tera’ jar wej jar wej_tera’ jar loS jar loS_tera’ jar vagh jar vagh_tera’ jar jav jar jav_tera’ jar Soch jar Soch_tera’ jar chorgh jar chorgh_tera’ jar Hut jar Hut_tera’ jar wa’maH jar wa’maH_tera’ jar wa’maH wa’ jar wa’maH wa’_tera’ jar wa’maH cha’ jar wa’maH cha’".split("_"),
+                "tera’ jar wa’ jar wa’_tera’ jar cha’ jar cha’_tera’ jar wej jar wej_tera’ jar loS jar loS_tera’ jar vagh jar vagh_tera’ jar jav jar jav_tera’ jar Soch jar Soch_tera’ jar chorgh jar chorgh_tera’ jar Hut jar Hut_tera’ jar wa’maH jar wa’maH_tera’ jar wa’maH wa’ jar wa’maH wa’_tera’ jar wa’maH cha’ jar wa’maH cha’"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -107,7 +108,8 @@ test("format month",
 test("format week",
     function(assert) {
         var expected =
-                "lojmItjaj lojmItjaj lojmItjaj_DaSjaj DaSjaj DaSjaj_povjaj povjaj povjaj_ghItlhjaj ghItlhjaj ghItlhjaj_loghjaj loghjaj loghjaj_buqjaj buqjaj buqjaj_ghInjaj ghInjaj ghInjaj".split("_"),
+                "lojmItjaj lojmItjaj lojmItjaj_DaSjaj DaSjaj DaSjaj_povjaj povjaj povjaj_ghItlhjaj ghItlhjaj ghItlhjaj_loghjaj loghjaj loghjaj_buqjaj buqjaj buqjaj_ghInjaj ghInjaj ghInjaj"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

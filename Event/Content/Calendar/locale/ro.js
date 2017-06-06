@@ -1,7 +1,9 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
+        : "object" == typeof exports
+        ? module.exports = e(require("jquery"), require("moment"))
+        : e(jQuery, moment);
 }(function(e, i) {
     !function() {
         function e(e, i, t) {
@@ -10,47 +12,48 @@
         }
 
         var t = i.defineLocale("ro",
-        {
-            months: "ianuarie_februarie_martie_aprilie_mai_iunie_iulie_august_septembrie_octombrie_noiembrie_decembrie"
-                .split("_"),
-            monthsShort: "ian._febr._mart._apr._mai_iun._iul._aug._sept._oct._nov._dec.".split("_"),
-            monthsParseExact: !0,
-            weekdays: "duminică_luni_marți_miercuri_joi_vineri_sâmbătă".split("_"),
-            weekdaysShort: "Dum_Lun_Mar_Mie_Joi_Vin_Sâm".split("_"),
-            weekdaysMin: "Du_Lu_Ma_Mi_Jo_Vi_Sâ".split("_"),
-            longDateFormat: {
-                LT: "H:mm",
-                LTS: "H:mm:ss",
-                L: "DD.MM.YYYY",
-                LL: "D MMMM YYYY",
-                LLL: "D MMMM YYYY H:mm",
-                LLLL: "dddd, D MMMM YYYY H:mm"
-            },
-            calendar: {
-                sameDay: "[azi la] LT",
-                nextDay: "[mâine la] LT",
-                nextWeek: "dddd [la] LT",
-                lastDay: "[ieri la] LT",
-                lastWeek: "[fosta] dddd [la] LT",
-                sameElse: "L"
-            },
-            relativeTime: {
-                future: "peste %s",
-                past: "%s în urmă",
-                s: "câteva secunde",
-                m: "un minut",
-                mm: e,
-                h: "o oră",
-                hh: e,
-                d: "o zi",
-                dd: e,
-                M: "o lună",
-                MM: e,
-                y: "un an",
-                yy: e
-            },
-            week: { dow: 1, doy: 7 }
-        });
+            {
+                months:
+                    "ianuarie_februarie_martie_aprilie_mai_iunie_iulie_august_septembrie_octombrie_noiembrie_decembrie"
+                        .split("_"),
+                monthsShort: "ian._febr._mart._apr._mai_iun._iul._aug._sept._oct._nov._dec.".split("_"),
+                monthsParseExact: !0,
+                weekdays: "duminică_luni_marți_miercuri_joi_vineri_sâmbătă".split("_"),
+                weekdaysShort: "Dum_Lun_Mar_Mie_Joi_Vin_Sâm".split("_"),
+                weekdaysMin: "Du_Lu_Ma_Mi_Jo_Vi_Sâ".split("_"),
+                longDateFormat: {
+                    LT: "H:mm",
+                    LTS: "H:mm:ss",
+                    L: "DD.MM.YYYY",
+                    LL: "D MMMM YYYY",
+                    LLL: "D MMMM YYYY H:mm",
+                    LLLL: "dddd, D MMMM YYYY H:mm"
+                },
+                calendar: {
+                    sameDay: "[azi la] LT",
+                    nextDay: "[mâine la] LT",
+                    nextWeek: "dddd [la] LT",
+                    lastDay: "[ieri la] LT",
+                    lastWeek: "[fosta] dddd [la] LT",
+                    sameElse: "L"
+                },
+                relativeTime: {
+                    future: "peste %s",
+                    past: "%s în urmă",
+                    s: "câteva secunde",
+                    m: "un minut",
+                    mm: e,
+                    h: "o oră",
+                    hh: e,
+                    d: "o zi",
+                    dd: e,
+                    M: "o lună",
+                    MM: e,
+                    y: "un an",
+                    yy: e
+                },
+                week: { dow: 1, doy: 7 }
+            });
         return t;
     }(), e.fullCalendar.datepickerLocale("ro",
         "ro",
@@ -74,17 +77,17 @@
             showMonthAfterYear: !1,
             yearSuffix: ""
         }), e.fullCalendar.locale("ro",
-    {
-        buttonText: {
-            prev: "precedentă",
-            next: "următoare",
-            month: "Lună",
-            week: "Săptămână",
-            day: "Zi",
-            list: "Agendă"
-        },
-        allDayText: "Toată ziua",
-        eventLimitText: function(e) { return"+alte " + e },
-        noEventsMessage: "Nu există evenimente de afișat"
-    });
+        {
+            buttonText: {
+                prev: "precedentă",
+                next: "următoare",
+                month: "Lună",
+                week: "Săptămână",
+                day: "Zi",
+                list: "Agendă"
+            },
+            allDayText: "Toată ziua",
+            eventLimitText: function(e) { return"+alte " + e },
+            noEventsMessage: "Nu există evenimente de afișat"
+        });
 });

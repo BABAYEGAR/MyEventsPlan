@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.ResourceManagement
@@ -14,6 +15,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         private readonly ResourceDataContext db = new ResourceDataContext();
 
         // GET: Resources
+        [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -22,6 +24,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         }
 
         // GET: Resources/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -33,6 +36,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         }
 
         // GET: Resources/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -43,6 +47,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "ResourceId,Name,Quantity")] Resource resource)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -73,6 +78,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         }
 
         // GET: Resources/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -89,6 +95,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "ResourceId,Name,Quantity,EventPlannerId,CreatedBy,DateCreated")] Resource resource)
         {
@@ -116,6 +123,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         }
 
         // GET: Resources/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -130,6 +138,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var resource = db.Resources.Find(id);

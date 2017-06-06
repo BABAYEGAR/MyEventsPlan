@@ -2,7 +2,7 @@
 @model Event.Data.Objects.Entities.Staff
 @{
     ViewBag.Title = "View";
-  Layout = "../Shared/Layout/_LayoutView.cshtml";
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
     ViewBag.TableHeader = Model.DisplayName + " Staff Card";
     ViewBag.TableSubHeader = "Details of Staff";
 }
@@ -75,11 +75,11 @@
 </div>
 @if (Model.Status == StaffStatus.Activated.ToString())
 {
-    @Html.ActionLink("Deactivate", "DeActivateStaff", new { id = Model.StaffId }, new { @class = "btn  btn-warning" })
+    @Html.ActionLink("Deactivate", "DeActivateStaff", new {id = Model.StaffId}, new {@class = "btn  btn-warning"})
 }
 @if (Model.Status == StaffStatus.Deactivated.ToString())
 {
-    @Html.ActionLink("Activate", "ActivateStaff", new { id = Model.StaffId }, new { @class = "btn  btn-success" })
+    @Html.ActionLink("Activate", "ActivateStaff", new {id = Model.StaffId}, new {@class = "btn  btn-success"})
 }
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger  fa fa-trash" data-toggle="modal" data-target="#myModal1">

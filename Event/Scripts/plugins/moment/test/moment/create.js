@@ -1052,10 +1052,10 @@ test("strict parsing",
 test("parsing into a locale",
     function(assert) {
         moment.defineLocale("parselocale",
-        {
-            months: "one_two_three_four_five_six_seven_eight_nine_ten_eleven_twelve".split("_"),
-            monthsShort: "one_two_three_four_five_six_seven_eight_nine_ten_eleven_twelve".split("_")
-        });
+            {
+                months: "one_two_three_four_five_six_seven_eight_nine_ten_eleven_twelve".split("_"),
+                monthsShort: "one_two_three_four_five_six_seven_eight_nine_ten_eleven_twelve".split("_")
+            });
 
         moment.locale("en");
 
@@ -1148,12 +1148,12 @@ test("parsing localized weekdays",
         var ver = getVerifier(assert);
         try {
             moment.locale("dow:1,doy:4",
-            {
-                weekdays: "dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi".split("_"),
-                weekdaysShort: "dim._lun._mar._mer._jeu._ven._sam.".split("_"),
-                weekdaysMin: "Di_Lu_Ma_Me_Je_Ve_Sa".split("_"),
-                week: { dow: 1, doy: 4 }
-            });
+                {
+                    weekdays: "dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi".split("_"),
+                    weekdaysShort: "dim._lun._mar._mer._jeu._ven._sam.".split("_"),
+                    weekdaysMin: "Di_Lu_Ma_Me_Je_Ve_Sa".split("_"),
+                    week: { dow: 1, doy: 4 }
+                });
             ver("1999 37 4", "GGGG WW E", "1999 09 16", "iso ignores locale");
             ver("1999 37 7", "GGGG WW E", "1999 09 19", "iso ignores locale");
 

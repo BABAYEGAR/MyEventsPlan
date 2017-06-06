@@ -12,31 +12,30 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class BudgetsController : Controller
     {
-        private BudgetDataContext db = new BudgetDataContext();
+        private readonly BudgetDataContext db = new BudgetDataContext();
 
         // GET: Budgets
+        [SessionExpire]
         public ActionResult Index(long id)
         {
-            var budgets = db.Budgets.Where(n=>n.EventId == id).Include(b => b.Event);
+            var budgets = db.Budgets.Where(n => n.EventId == id).Include(b => b.Event);
             return View(budgets.ToList());
         }
 
         // GET: Budgets/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Budget budget = db.Budgets.Find(id);
+            var budget = db.Budgets.Find(id);
             if (budget == null)
-            {
                 return HttpNotFound();
-            }
             return View(budget);
         }
 
         // GET: Budgets/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -47,14 +46,17 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate")] Budget budget)
+        [SessionExpire]
+        public ActionResult Create(
+            [Bind(Include = "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate")]
+            Budget budget)
         {
             if (ModelState.IsValid)
             {
                 var events = Session["event"] as Event.Data.Objects.Entities.Event;
                 if (events != null)
                 {
-                    long targetBudget = Convert.ToInt64(events.TargetBudget);
+                    var targetBudget = Convert.ToInt64(events.TargetBudget);
                     var eventBudget = db.Budgets.Where(n => n.EventId == events.EventId).ToList();
                     long totalAmount = 0;
                     if (eventBudget.Count > 0)
@@ -63,8 +65,8 @@ namespace MyEventPlan.Controllers.EventManagement
                         if (sum != null)
                             totalAmount = (long) sum;
                     }
-           
-                    if (totalAmount + budget.PaidTillDate < targetBudget )
+
+                    if (totalAmount + budget.PaidTillDate < targetBudget)
                     {
                         var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                         budget.DateCreated = DateTime.Now;
@@ -91,23 +93,20 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 TempData["display"] = "Your budget item overides your target budget !";
                 TempData["notificationtype"] = NotificationType.Error.ToString();
-                if (events != null) return RedirectToAction("Index", new { id = events.EventId });
+                if (events != null) return RedirectToAction("Index", new {id = events.EventId});
             }
             return View(budget);
         }
 
         // GET: Budgets/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Budget budget = db.Budgets.Find(id);
+            var budget = db.Budgets.Find(id);
             if (budget == null)
-            {
                 return HttpNotFound();
-            }
             return View(budget);
         }
 
@@ -116,7 +115,11 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate,EventId,CreatedBy,DateCreated")] Budget budget)
+        [SessionExpire]
+        public ActionResult Edit(
+            [Bind(Include =
+                "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate,EventId,CreatedBy,DateCreated")]
+            Budget budget)
         {
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var eventBudget = db.Budgets.Where(n => n.EventId == events.EventId).ToList();
@@ -129,7 +132,7 @@ namespace MyEventPlan.Controllers.EventManagement
             }
             if (events != null)
             {
-                long targetBudget = Convert.ToInt64(events.TargetBudget);
+                var targetBudget = Convert.ToInt64(events.TargetBudget);
                 if (totalAmount + budget.PaidTillDate < targetBudget)
                 {
                     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -157,37 +160,34 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Budgets/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Budget budget = db.Budgets.Find(id);
+            var budget = db.Budgets.Find(id);
             if (budget == null)
-            {
                 return HttpNotFound();
-            }
             return View(budget);
         }
 
         // POST: Budgets/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id,long eventId)
+        [SessionExpire]
+        public ActionResult DeleteConfirmed(long id, long eventId)
         {
-            Budget budget = db.Budgets.Find(id);
+            var budget = db.Budgets.Find(id);
             db.Budgets.Remove(budget);
             db.SaveChanges();
-            return RedirectToAction("Index",new {id = eventId});
+            return RedirectToAction("Index", new {id = eventId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

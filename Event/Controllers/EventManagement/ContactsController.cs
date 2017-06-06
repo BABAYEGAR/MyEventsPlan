@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -14,6 +15,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly ContactDataContext db = new ContactDataContext();
 
         // GET: Contacts
+        [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -23,6 +25,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Contacts/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -34,6 +37,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Contacts/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -44,13 +48,15 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "ContactId,Title,Firstname,Lastname,Email,Mobile")] Contact contact)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 if (loggedinuser != null) contact.EventPlannerId = loggedinuser.EventPlannerId;
-                var contactExist = db.Contact.Where(m => m.Email == contact.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+                var contactExist = db.Contact
+                    .Where(m => m.Email == contact.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
                 if (loggedinuser != null)
                 {
                     if (contactExist.Count > 0)
@@ -74,6 +80,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Contacts/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -89,6 +96,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "ContactId,Title,Firstname,Lastname,Email,Mobile,EventPlannerId,CreatedBy,DateCreated")]
             Contact contact)
@@ -113,6 +121,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Contacts/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -127,6 +136,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var contact = db.Contact.Find(id);

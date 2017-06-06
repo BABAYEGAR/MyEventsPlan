@@ -1,8 +1,7 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@using MyEventPlan.Data.Service.Enum
+﻿@using MyEventPlan.Data.Service.Enum
 @model Event.Data.Objects.Entities.EventPlannerPackage
 @{
-       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Create", "EventPlannerPackages", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
@@ -23,7 +22,7 @@
         @Html.EditorFor(model => model.MaximumEvents, new {htmlAttributes = new {placeholder = "Enter Number Maximum Events"}})
         @Html.LabelFor(model => model.MaximumEvents)
         @Html.ValidationMessageFor(model => model.MaximumEvents, "", new {@class = "text-danger"})
-    </div> 
+    </div>
     <div class="mui-select">
         @Html.DropDownListFor(m => m.PackageGrade, EnumHelper.GetSelectList(typeof(EventPlannerPackageEnum)), "select the package")
         @Html.LabelFor(model => model.PackageGrade)

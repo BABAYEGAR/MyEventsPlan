@@ -61,22 +61,22 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">Delete Staff</h4>
-            </div>@using (Html.BeginForm("Delete", "Vendors", new { id = Model.VendorId }))
-            {
-                <div class="modal-body">
+            </div>@using (Html.BeginForm("Delete", "Vendors", new {id = Model.VendorId}))
+                  {
+                      <div class="modal-body">
 
-                    @Html.AntiForgeryToken()
-                    <p>
-                        Are you sure you want to delete the Vendor?<br/>
-                        Deleting the vendor would also delete information such as the vendor reviews, vendor attachements to events and all other data associated with this vendor! 
-                    </p>
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to delete the Vendor?<br/>
+                              Deleting the vendor would also delete information such as the vendor reviews, vendor attachements to events and all other data associated with this vendor!
+                          </p>
 
-                </div>
-                    <div class="modal-footer">
-                        <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash" />
-                        <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
-                    </div>
-            }
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                      </div>
+                  }
         </div>
     </div>
 

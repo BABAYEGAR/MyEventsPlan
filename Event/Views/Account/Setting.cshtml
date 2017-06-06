@@ -47,14 +47,14 @@
                 </button>
                 <h4 class="modal-title" id="myModalLabel9">Manage Social Media Accounts</h4>
             </div>
-        @if (planner != null)
-        {
-            <div class="modal-body">
-                @{
-                    Html.RenderPartial("Account/SocialMediaModal", planner);
-                }
-            </div>
-        }
+            @if (planner != null)
+            {
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("Account/SocialMediaModal", planner);
+                    }
+                </div>
+            }
         </div>
     </div>
 
@@ -84,152 +84,152 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="purple">
-                    <i class="material-icons">account_box</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Manage Profile</p>
-                    <h3 class="title">
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">account_box</i> <a href="@Url.Action("UserProfile", "Account")">View Profile</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="teal">
-                    <i class="material-icons">lock</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Manage Password</p>
-                    <h3 class="title">
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">lock</i> <a href="@Url.Action("ChangePassword", "Account")">View Password</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-6">
-            <div class="card card-stats">
-                <div class="card-header" data-background-color="amber">
-                    <i class="material-icons">format_paint</i>
-                </div>
-                <div class="card-content">
-                    <p class="category">Background Color</p>
-                    <h3 class="title">
-                    </h3>
-                </div>
-                <div class="card-footer">
-                    <div class="stats">
-                        <i class="material-icons">format_paint</i><a data-toggle="modal" data-target="#myModal">change Background Color</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        @if (planner != null)
-        {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header" data-background-color="deep_orange">
-                        <i class="material-icons">camera</i>
+                    <div class="card-header" data-background-color="purple">
+                        <i class="material-icons">account_box</i>
                     </div>
                     <div class="card-content">
-                        <p class="category">Logo/Profile Picture</p>
+                        <p class="category">Manage Profile</p>
                         <h3 class="title">
                         </h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">camera</i> <a href="@Url.Action("ImageUpload", "AppUsers")">View Logo</a>
+                            <i class="material-icons">account_box</i> <a href="@Url.Action("UserProfile", "Account")">View Profile</a>
                         </div>
                     </div>
                 </div>
             </div>
-        }
-        @if (planner != null)
-        {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header" data-background-color="green">
-                        <i class="material-icons">credit_card</i>
+                    <div class="card-header" data-background-color="teal">
+                        <i class="material-icons">lock</i>
                     </div>
                     <div class="card-content">
-                        <p class="category">Account Subscription</p>
+                        <p class="category">Manage Password</p>
                         <h3 class="title">
                         </h3>
                     </div>
                     <div class="card-footer">
-                        @if (Model.EventPlannerId != null)
-                        {
-                            <div class="stats">
-                                <i class="material-icons">credit_card</i> <a href="@Url.Action("Pricing", "EventPlannerPackages")">View Account Subscription</a>
-                            </div>
-                        }
-
+                        <div class="stats">
+                            <i class="material-icons">lock</i> <a href="@Url.Action("ChangePassword", "Account")">View Password</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        }
-        @if (planner != null)
-        {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header" data-background-color="green">
-                        <i class="material-icons">credit_card</i>
+                    <div class="card-header" data-background-color="amber">
+                        <i class="material-icons">format_paint</i>
                     </div>
                     <div class="card-content">
-                        <p class="category">Social Media Accounts</p>
+                        <p class="category">Background Color</p>
                         <h3 class="title">
                         </h3>
                     </div>
                     <div class="card-footer">
-                        @if (Model.EventPlannerId != null)
-                        {
-                            <div class="stats">
-                                <i class="material-icons">credit_card</i> <a data-toggle="modal" data-target="#myModal9">View Social Media Accounts</a>
-                            </div>
-                        }
-
+                        <div class="stats">
+                            <i class="material-icons">format_paint</i><a data-toggle="modal" data-target="#myModal">change Background Color</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        }
-        @if (planner != null)
-        {
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header" data-background-color="green">
-                        <i class="material-icons">credit_card</i>
-                    </div>
-                    <div class="card-content">
-                        <p class="category">Pricing</p>
-                        <h3 class="title">
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        @if (Model.EventPlannerId != null)
-                        {
-                            <div class="stats">
-                                <i class="material-icons">credit_card</i> <a data-toggle="modal" data-target="#myModal8">View Pricing Information</a>
-                            </div>
-                        }
 
+            @if (planner != null)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="deep_orange">
+                            <i class="material-icons">camera</i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Logo/Profile Picture</p>
+                            <h3 class="title">
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            <div class="stats">
+                                <i class="material-icons">camera</i> <a href="@Url.Action("ImageUpload", "AppUsers")">View Logo</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+            @if (planner != null)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="green">
+                            <i class="material-icons">credit_card</i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Account Subscription</p>
+                            <h3 class="title">
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            @if (Model.EventPlannerId != null)
+                            {
+                                <div class="stats">
+                                    <i class="material-icons">credit_card</i> <a href="@Url.Action("Pricing", "EventPlannerPackages")">View Account Subscription</a>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (planner != null)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="green">
+                            <i class="material-icons">credit_card</i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Social Media Accounts</p>
+                            <h3 class="title">
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            @if (Model.EventPlannerId != null)
+                            {
+                                <div class="stats">
+                                    <i class="material-icons">credit_card</i> <a data-toggle="modal" data-target="#myModal9">View Social Media Accounts</a>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (planner != null)
+            {
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="card card-stats">
+                        <div class="card-header" data-background-color="green">
+                            <i class="material-icons">credit_card</i>
+                        </div>
+                        <div class="card-content">
+                            <p class="category">Pricing</p>
+                            <h3 class="title">
+                            </h3>
+                        </div>
+                        <div class="card-footer">
+                            @if (Model.EventPlannerId != null)
+                            {
+                                <div class="stats">
+                                    <i class="material-icons">credit_card</i> <a data-toggle="modal" data-target="#myModal8">View Pricing Information</a>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+
     </div>
-
-
-</div>
 </div>

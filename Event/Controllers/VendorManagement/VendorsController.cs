@@ -14,20 +14,21 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorsController : Controller
     {
-        private readonly AppUserDataContext _dbd = new AppUserDataContext();
-        private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
-        private readonly VendorDataContext db = new VendorDataContext();
-        private readonly EventDataContext dbc = new EventDataContext();
-        private readonly VendorPackageSettingDataContext dbd = new VendorPackageSettingDataContext();
-        private readonly VendorImageDataContext dbf = new VendorImageDataContext();
+        private readonly AppUserDataContext _dbAppUser = new AppUserDataContext();
+        private readonly SubscriptionInvoiceDataContext _dbInvoice = new SubscriptionInvoiceDataContext();
+        private readonly VendorDataContext _dbVendor = new VendorDataContext();
+        private readonly EventDataContext _dbEvent = new EventDataContext();
+        private readonly VendorPackageSettingDataContext _dbPackage = new VendorPackageSettingDataContext();
+        private readonly VendorImageDataContext _dbVendorImage = new VendorImageDataContext();
 
         // GET: Vendors
+        [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var vendors =
-                db.Vendors.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(v => v.VendorService);
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
+                _dbVendor.Vendors.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(v => v.VendorService);
+            ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName");
             return View(vendors.ToList());
         }
 
@@ -36,12 +37,12 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var vendor =
-                db.Vendors.Find(loggedinuser.VendorId);
+                _dbVendor.Vendors.Find(loggedinuser.VendorId);
             if (vendor != null)
             {
-                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+                ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName",
                     vendor.VendorServiceId);
-                ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
+                ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name", vendor.LocationId);
             }
             return View(vendor);
         }
@@ -51,119 +52,134 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendor = db.Vendors.Find(id);
+            var vendor = _dbVendor.Vendors.Find(id);
             if (vendor == null)
                 return HttpNotFound();
             return View(vendor);
         }
 
         // GET: Vendors/ListOfVendors/SearchParameters
-        public ActionResult ListOfVendors(long? categoryId,FormCollection collectedValues)
+        public ActionResult ListOfVendors(long? categoryId, FormCollection collectedValues)
         {
+            //initialize values
             long? serviceId = null;
             long? locationId = null;
             if (collectedValues["VendorServiceId"] != "")
-                serviceId = Convert.ToInt64(collectedValues["VendorServiceId"]);
-            if (collectedValues["LocationId"] != "")
-                locationId = Convert.ToInt64(collectedValues["LocationId"]);
-            long minimumPrice = 0;
-            long maximumPrice = 0;
-            int ratingOne = 0;
-            int ratingTwo = 0;
-            int ratingThree = 0;
-            int ratingFour = 0;
-            int ratingFive = 0;
-            if (collectedValues["Price"] != null)
             {
-                var price = collectedValues["Price"];
-                var index = price.IndexOf("-", StringComparison.Ordinal);
-                var min = (index > 0 ? price.Substring(0, index) : "").Replace("N", "");
-                var max = price.Substring(price.LastIndexOf('-') + 1).Replace("N", "");
+                serviceId = Convert.ToInt64(collectedValues["VendorServiceId"]);
+            }
+            if (collectedValues["VendorServiceId"] == "")
+            {
+                collectedValues["VendorServiceId"] = null;
+            }
+            if (collectedValues["LocationId"] != "")
+            {
+                locationId = Convert.ToInt64(collectedValues["LocationId"]);
+            }
+            if (collectedValues["LocationId"] == "")
+            {
+                collectedValues["LocationId"] = null;
+            }
+            var ratingOne = 0;
+            var ratingTwo = 0;
+            var ratingThree = 0;
+            var ratingFour = 0;
+            var ratingFive = 0;
 
+            //initialize prices
+            long? minimumPrice = null;
+            long? maximumPrice = null;
+
+            //collect price string values
+                var min = collectedValues["MinimumPrice"];
+                var max = collectedValues["MaximumPrice"];
+
+            //check and convert price to long
+            if (collectedValues["MinimumPrice"] != "")
+            {
                 minimumPrice = Convert.ToInt64(min);
+            }
+            if (collectedValues["MinimumPrice"] == "")
+            {
+                
+                collectedValues["MinimumPrice"] = null;
+            }
+            if (collectedValues["MaximumPrice"] != "")
+            {
                 maximumPrice = Convert.ToInt64(max);
             }
+            if (collectedValues["MaximumPrice"] == "")
+            {
+                collectedValues["MaximumPrice"] = null;
+            }
+            ViewBag.MinimumPrice = minimumPrice;
+            ViewBag.maximumPrice = maximumPrice;
+
+            //check and compute star rating
             if (collectedValues["checkbox"] != null)
             {
                 var start = collectedValues["checkbox"];
                 if (start.Contains("1"))
-                {
                     ratingOne = 1;
-                }
                 if (start.Contains("2"))
-                {
                     ratingTwo = 2;
-                }
                 if (start.Contains("3"))
-                {
                     ratingThree = 3;
-                }
                 if (start.Contains("4"))
-                {
                     ratingFour = 4;
-                }
                 if (start.Contains("5"))
-                {
                     ratingFive = 5;
-                }
-
             }
-            if (categoryId != null && collectedValues["VendorServiceId"] == "" && collectedValues["LocationId"] == "" &&
-                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
+            if (collectedValues["checkbox"] == "")
             {
-                ViewBag.vendors = db.Vendors.Where(n => n.VendorServiceId == categoryId &&
+                collectedValues["checkbox"] = null;
+            }
+            if (categoryId != null && collectedValues["VendorServiceId"] == null && collectedValues["LocationId"] == null&& collectedValues["checkbox"] == null)
+                ViewBag.vendors = _dbVendor.Vendors.Where(n => n.VendorServiceId == categoryId &&
                                                         n.EventId == null).ToList();
-            }
-            if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] == "" &&
-                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
-            {
-                ViewBag.vendors = db.Vendors.Where(n => n.VendorServiceId == serviceId &&
+            if (collectedValues["VendorServiceId"] != null && collectedValues["LocationId"] == null &&
+              collectedValues["checkbox"] == null)
+                ViewBag.vendors = _dbVendor.Vendors.Where(n => n.VendorServiceId == serviceId &&
                                                         n.EventId == null).ToList();
-            }
-            if (collectedValues["VendorServiceId"] == "" && collectedValues["LocationId"] != "" &&
-                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
-            {
-                ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId &&
+            if (collectedValues["VendorServiceId"] == null && collectedValues["LocationId"] != null &&
+                collectedValues["checkbox"] == null)
+                ViewBag.vendors = _dbVendor.Vendors.Where(n => n.LocationId == locationId &&
                                                         n.EventId == null).ToList();
-            }
-            if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] != "" &&
-                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
-            {
-                ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
+            if (collectedValues["VendorServiceId"] != null && collectedValues["LocationId"] != null &&
+                 collectedValues["checkbox"] == null && collectedValues["MinimumPrice"] == null && collectedValues["MaximumPrice"] == null)
+                ViewBag.vendors = _dbVendor.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
                                                         n.EventId == null).ToList();
-            }
-            if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] != "" &&
-                collectedValues["Price"] != null && collectedValues["checkbox"] == null)
-            {
-                ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
+            if (collectedValues["VendorServiceId"] != null && collectedValues["LocationId"] != null &&
+                collectedValues["checkbox"] == null && collectedValues["MinimumPrice"] != null && collectedValues["MaximumPrice"] == null)
+                ViewBag.vendors = _dbVendor.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
+                                                        n.EventId == null && n.MinimumPrice >= minimumPrice).ToList();
+            if (collectedValues["VendorServiceId"] != null && collectedValues["LocationId"] != null &&
+                collectedValues["checkbox"] == null && collectedValues["MinimumPrice"] == null && collectedValues["MaximumPrice"] != null)
+                ViewBag.vendors = _dbVendor.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
+                                                        n.EventId == null && n.MaximumPrice <= maximumPrice).ToList();
+            if (collectedValues["VendorServiceId"] != null && collectedValues["LocationId"] != null &&
+                collectedValues["checkbox"] != null && collectedValues["MinimumPrice"] != null && collectedValues["MaximumPrice"] != null)
+                ViewBag.vendors = _dbVendor.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
                                                         n.EventId == null && n.MinimumPrice >= minimumPrice &&
-                                                        n.MaximumPrice >= maximumPrice).ToList();
-            }
-            if (collectedValues["VendorServiceId"] != "" && collectedValues["LocationId"] != "" &&
-                collectedValues["Price"] != null && collectedValues["checkbox"] != null)
+                                                        n.MaximumPrice >= maximumPrice &&
+                                                        (n.AverageRating == ratingOne || n.AverageRating == ratingTwo ||
+                                                         n.AverageRating == ratingThree
+                                                         || n.AverageRating == ratingFour ||
+                                                         n.AverageRating == ratingFive) && n.MinimumPrice >= minimumPrice && n.MaximumPrice <= maximumPrice).ToList();
+            if (collectedValues["VendorServiceId"] == null && collectedValues["LocationId"] == null &&
+                collectedValues["checkbox"] == null && collectedValues["MinimumPrice"] == null && collectedValues["MaximumPrice"] == null)
             {
+                ViewBag.vendors = _dbVendor.Vendors.Where(n => n.EventId == null).ToList();
+                ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName");
+                ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name");
+            }
 
-                ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId &&
-                                                        n.EventId == null && n.MinimumPrice >= minimumPrice &&
-                                                        n.MaximumPrice >= maximumPrice && (n.AverageRating == ratingOne || n.AverageRating == ratingTwo || n.AverageRating == ratingThree
-                                                        || n.AverageRating == ratingFour || n.AverageRating == ratingFive)).ToList();
-            }
-            if (collectedValues["VendorServiceId"] == "" && collectedValues["LocationId"] == "" &&
-                collectedValues["Price"] == null && collectedValues["checkbox"] == null)
-            {
-                ViewBag.vendors = db.Vendors.Where(n=> n.EventId == null).ToList();
-                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-                ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
-            }
             if (serviceId != null)
-            {
-                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
-            }
+                ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName", serviceId);
             if (categoryId != null)
-            {
-                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", categoryId);
-            }
-            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", locationId);
+                ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName",
+                    categoryId);
+            ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name", locationId);
             ViewBag.rate1 = ratingOne;
             ViewBag.rate2 = ratingTwo;
             ViewBag.rate3 = ratingThree;
@@ -173,6 +189,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: Vendors/ListOfVendors/SearchParameters
+        [SessionExpire]
         public ActionResult EventVendors(FormCollection collectedValues)
         {
             long? serviceId = null;
@@ -181,14 +198,14 @@ namespace MyEventPlan.Controllers.VendorManagement
                 serviceId = Convert.ToInt64(collectedValues["VendorServiceId"]);
             if (collectedValues["VendorServiceId"] != "")
                 locationId = Convert.ToInt64(collectedValues["LocationId"]);
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName", serviceId);
-            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", locationId);
+            ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName", serviceId);
+            ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name", locationId);
             if (locationId == 0 && serviceId == 0)
             {
-                ViewBag.vendors = db.Vendors.ToList();
+                ViewBag.vendors = _dbVendor.Vendors.ToList();
                 return View();
             }
-            ViewBag.vendors = db.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId)
+            ViewBag.vendors = _dbVendor.Vendors.Where(n => n.LocationId == locationId && n.VendorServiceId == serviceId)
                 .ToList();
             return View();
         }
@@ -196,8 +213,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         // GET: Vendors/Create
         public ActionResult Create()
         {
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
+            ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName");
+            ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name");
             return View();
         }
 
@@ -213,7 +230,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                     ",YoutubePage,GooglePlusPage,MaximumPrice,MinimumPrice,LocationId,ConfirmPassword,Password,Mobile,VendorServiceId,EventPlannerId"
             )] Vendor vendor, FormCollection collectedValues)
         {
-            var allUsers = dbc.AppUsers;
+            var allUsers = _dbEvent.AppUsers;
 
 
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -245,8 +262,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                 return RedirectToAction("Login", "Account");
             }
 
-            db.Vendors.Add(vendor);
-            db.SaveChanges();
+            _dbVendor.Vendors.Add(vendor);
+            _dbVendor.SaveChanges();
 
             var mapping = new EventVendorMapping();
             if (events != null) mapping.EventId = events.EventId;
@@ -257,13 +274,14 @@ namespace MyEventPlan.Controllers.VendorManagement
             mapping.LastModifiedBy = loggedinuser.AppUserId;
             mapping.CreatedBy = loggedinuser.AppUserId;
 
-            dbc.EventVendorMappings.Add(mapping);
-            dbc.SaveChanges();
+            _dbEvent.EventVendorMappings.Add(mapping);
+            _dbEvent.SaveChanges();
             TempData["display"] = "You have successfully added a personal vendor to your event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("ListOfVendors");
         }
 
+        [SessionExpire]
         public ActionResult ChangePassword(
             [Bind(
                 Include =
@@ -276,18 +294,18 @@ namespace MyEventPlan.Controllers.VendorManagement
             AppUser user = null;
             if (loggedinuser != null)
             {
-                user = dbc.AppUsers.Find(loggedinuser.AppUserId);
+                user = _dbEvent.AppUsers.Find(loggedinuser.AppUserId);
                 if (user != null)
                 {
                     user.Password = new Hashing().HashPassword(vendor.ConfirmPassword);
                     vendor.Password = null;
                     vendor.ConfirmPassword = null;
 
-                    dbc.Entry(user).State = EntityState.Modified;
-                    dbc.Entry(vendor).State = EntityState.Modified;
+                    _dbEvent.Entry(user).State = EntityState.Modified;
+                    _dbEvent.Entry(vendor).State = EntityState.Modified;
                 }
             }
-            dbc.SaveChanges();
+            _dbEvent.SaveChanges();
             loggedinuser = user;
             return View("Profile");
         }
@@ -295,8 +313,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         // GET: Vendors/Create
         public ActionResult Register(long? id)
         {
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
+            ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName");
+            ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name");
             ViewBag.packageId = id;
             return View();
         }
@@ -315,20 +333,19 @@ namespace MyEventPlan.Controllers.VendorManagement
             )] Vendor vendor, FormCollection collectedValues)
         {
             var logo = Request.Files["logo"];
-            var role = dbc.Roles.FirstOrDefault(m => m.Name == "Vendor");
+            var role = _dbEvent.Roles.FirstOrDefault(m => m.Name == "Vendor");
             var packageId = Convert.ToInt64(collectedValues["packageId"]);
-            var pacakge = dbd.VendorPackages.Find(packageId);
+            var pacakge = _dbPackage.VendorPackages.Find(packageId);
             if (ModelState.IsValid)
             {
                 vendor.DateCreated = DateTime.Now;
                 vendor.DateLastModified = DateTime.Now;
-                if (dbc.AppUsers.Any(n => n.Email == vendor.Email))
+                if (_dbEvent.AppUsers.Any(n => n.Email == vendor.Email))
                 {
-                    
                     TempData["display"] = "The email entered already exist! Try another one!";
                     TempData["notificationtype"] = NotificationType.Error.ToString();
-                    ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName");
-                    ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
+                    ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName");
+                    ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name");
                     ViewBag.packageId = packageId;
                     return View(vendor);
                 }
@@ -395,15 +412,15 @@ namespace MyEventPlan.Controllers.VendorManagement
                     LastModifiedBy = 1
                 };
                 Session["vendorimage"] = vendorImage;
-               
-                ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+
+                ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName",
                     vendor.VendorServiceId);
-                ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
+                ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name", vendor.LocationId);
                 return RedirectToAction("Invoice", "VendorPackages", new {id = packageSetting.VendorPackageId});
             }
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+            ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName",
                 vendor.VendorServiceId);
-            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
+            ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name", vendor.LocationId);
             return View(vendor);
         }
 
@@ -413,7 +430,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Pricing()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var packages = db.VendorPackageSetting.Include(n => n.VendorPackage);
+            var packages = _dbVendor.VendorPackageSetting.Include(n => n.VendorPackage);
 
             var packageSubscribed =
                 packages.SingleOrDefault(
@@ -422,7 +439,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                         n.Status == PackageStatusEnum.Active.ToString());
             if (packageSubscribed != null)
                 Session["subscribe"] = packageSubscribed;
-            return View(dbc.VendorPackages.ToList());
+            return View(_dbEvent.VendorPackages.ToList());
         }
 
         [HttpGet]
@@ -431,7 +448,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult Invoice(long id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var selectedPackage = dbd.VendorPackages.Find(id);
+            var selectedPackage = _dbPackage.VendorPackages.Find(id);
             var subscriptionInvoice = new SubscriptionInvoice();
 
             //random number
@@ -458,6 +475,7 @@ namespace MyEventPlan.Controllers.VendorManagement
             Session["invoice"] = subscriptionInvoice;
             return View();
         }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult ConfirmPostAccountPayment()
@@ -466,7 +484,7 @@ namespace MyEventPlan.Controllers.VendorManagement
             var package = Session["package"] as Event.Data.Objects.Entities.VendorPackage;
             var invoice = Session["invoice"] as SubscriptionInvoice;
             var packageToSubscribed = new VendorPackageSetting();
-            var packageSetting = dbd.VendorPackageSetting.Include(n => n.VendorPackage);
+            var packageSetting = _dbPackage.VendorPackageSetting.Include(n => n.VendorPackage);
             //current subscription
             var packageSubscribed =
                 packageSetting.SingleOrDefault(
@@ -479,8 +497,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                 //make the current package inactive
                 packageSubscribed.Status = PackageStatusEnum.Inactive.ToString();
                 packageSubscribed.DateLastModified = DateTime.Now;
-                dbd.Entry(packageSubscribed).State = EntityState.Modified;
-                dbd.SaveChanges();
+                _dbPackage.Entry(packageSubscribed).State = EntityState.Modified;
+                _dbPackage.SaveChanges();
 
                 //populate new package
                 if (loggedinuser != null && loggedinuser.VendorId != null)
@@ -505,12 +523,12 @@ namespace MyEventPlan.Controllers.VendorManagement
                     if (package.Amount != null) packageToSubscribed.Amount = (long) package.Amount;
                 }
                 //commit package to database
-                dbd.VendorPackageSetting.Add(packageToSubscribed);
-                dbd.SaveChanges();
+                _dbPackage.VendorPackageSetting.Add(packageToSubscribed);
+                _dbPackage.SaveChanges();
 
                 //commit invoice to database
-                if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
-                _dbe.SaveChanges();
+                if (invoice != null) _dbInvoice.SubscriptionInvoices.Add(invoice);
+                _dbInvoice.SaveChanges();
                 Session["package"] = null;
                 Session["invoice"] = null;
                 //display notification
@@ -539,10 +557,10 @@ namespace MyEventPlan.Controllers.VendorManagement
                 packageToSubscribed.VendorPackageId = package.VendorPackageId;
                 if (package.Amount != null) packageToSubscribed.Amount = (long) package.Amount;
             }
-            dbd.VendorPackageSetting.Add(packageToSubscribed);
-            dbd.SaveChanges();
-            if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
-            _dbe.SaveChanges();
+            _dbPackage.VendorPackageSetting.Add(packageToSubscribed);
+            _dbPackage.SaveChanges();
+            if (invoice != null) _dbInvoice.SubscriptionInvoices.Add(invoice);
+            _dbInvoice.SaveChanges();
 
             Session["package"] = null;
             Session["invoice"] = null;
@@ -558,32 +576,32 @@ namespace MyEventPlan.Controllers.VendorManagement
         public ActionResult ConfirmPayment()
         {
             var vendor = Session["vendor"] as Vendor;
-            if (vendor != null) db.Vendors.Add(vendor);
-            db.SaveChanges();
+            if (vendor != null) _dbVendor.Vendors.Add(vendor);
+            _dbVendor.SaveChanges();
 
             var appUser = Session["vendoruser"] as AppUser;
             if (vendor != null)
                 if (appUser != null)
                 {
                     appUser.VendorId = vendor.VendorId;
-                    _dbd.AppUsers.Add(appUser);
-                    _dbd.SaveChanges();
+                    _dbAppUser.AppUsers.Add(appUser);
+                    _dbAppUser.SaveChanges();
 
                     var packageSetting = Session["vendorpackage"] as VendorPackageSetting;
                     if (packageSetting != null)
                     {
                         packageSetting.AppUserId = appUser.AppUserId;
                         packageSetting.VendorId = vendor.VendorId;
-                        dbd.VendorPackageSetting.Add(packageSetting);
+                        _dbPackage.VendorPackageSetting.Add(packageSetting);
                     }
                     var vendorImage = Session["vendorimage"] as VendorImage;
                     if (vendorImage != null)
                     {
                         vendorImage.VendorId = vendor.VendorId;
-                        dbf.VendorImages.Add(vendorImage);
-                        dbf.SaveChanges();
+                        _dbVendorImage.VendorImages.Add(vendorImage);
+                        _dbVendorImage.SaveChanges();
                     }
-                    dbd.SaveChanges();
+                    _dbPackage.SaveChanges();
                     new MailerDaemon().NewVendor(vendor, appUser.AppUserId);
                     var invoice = Session["invoice"] as SubscriptionInvoice;
                     if (invoice != null)
@@ -593,10 +611,10 @@ namespace MyEventPlan.Controllers.VendorManagement
                         invoice.VendorId = vendor.VendorId;
                         invoice.CreatedBy = appUser.AppUserId;
                         invoice.LastModifiedBy = appUser.AppUserId;
-                        
-                        _dbe.SubscriptionInvoices.Add(invoice);
+
+                        _dbInvoice.SubscriptionInvoices.Add(invoice);
                     }
-                    _dbe.SaveChanges();
+                    _dbInvoice.SaveChanges();
                     TempData["login"] =
                         "You have successfully registered as a vendor! Enter credentials to login";
                     TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -609,14 +627,15 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: Vendors/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendor = db.Vendors.Find(id);
+            var vendor = _dbVendor.Vendors.Find(id);
             if (vendor == null)
                 return HttpNotFound();
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+            ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName",
                 vendor.VendorServiceId);
             return View(vendor);
         }
@@ -626,6 +645,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
                 Include =
@@ -637,14 +657,13 @@ namespace MyEventPlan.Controllers.VendorManagement
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 var logo = Request.Files["logo"];
-                var vendorUser = _dbd.AppUsers.SingleOrDefault(n => n.VendorId == vendor.VendorId);
+                var vendorUser = _dbAppUser.AppUsers.SingleOrDefault(n => n.VendorId == vendor.VendorId);
                 vendor.DateLastModified = DateTime.Now;
                 if (loggedinuser != null)
                 {
                     vendor.LastModifiedBy = loggedinuser.AppUserId;
                     if (logo != null && logo.FileName != "")
                         vendor.Logo = new FileUploader().UploadFile(logo, UploadType.vendorLogo);
-
                 }
                 else
                 {
@@ -652,8 +671,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(vendor).State = EntityState.Modified;
-                db.SaveChanges();
+                _dbVendor.Entry(vendor).State = EntityState.Modified;
+                _dbVendor.SaveChanges();
                 if (vendorUser != null)
                 {
                     vendorUser.DateLastModified = DateTime.Now;
@@ -662,24 +681,25 @@ namespace MyEventPlan.Controllers.VendorManagement
                     vendorUser.Lastname = vendor.Name;
                     vendorUser.Mobile = vendor.Mobile;
                 }
-                _dbd.Entry(vendorUser).State = EntityState.Modified;
-                _dbd.SaveChanges();
+                _dbAppUser.Entry(vendorUser).State = EntityState.Modified;
+                _dbAppUser.SaveChanges();
                 TempData["vendor"] = "You have successfully modified a vendor!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Profile");
             }
-            ViewBag.VendorServiceId = new SelectList(db.VendorService, "VendorServiceId", "ServiceName",
+            ViewBag.VendorServiceId = new SelectList(_dbVendor.VendorService, "VendorServiceId", "ServiceName",
                 vendor.VendorServiceId);
-            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name", vendor.LocationId);
+            ViewBag.LocationId = new SelectList(_dbEvent.Locations, "LocationId", "Name", vendor.LocationId);
             return View(vendor);
         }
 
         // GET: Vendors/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendor = db.Vendors.Find(id);
+            var vendor = _dbVendor.Vendors.Find(id);
             if (vendor == null)
                 return HttpNotFound();
             return View(vendor);
@@ -689,51 +709,40 @@ namespace MyEventPlan.Controllers.VendorManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var vendor = db.Vendors.Find(id);
-            var user = dbc.AppUsers.SingleOrDefault(n => n.VendorId == vendor.VendorId);
-            var eventMapping = dbc.EventVendorMappings.Where(n => n.VendorId == vendor.VendorId);
-            var reviews = dbc.VendorReviews.Where(n => n.VendorId == vendor.VendorId);
-            var subscription = dbc.SubscriptionInvoices.Where(n => n.VendorId == vendor.VendorId);
-            var images = dbc.VendorImages.Where(n => n.VendorId == vendor.VendorId);
-            var enquiries = dbc.VendorEnquiries.Where(n => n.VendorId == vendor.VendorId);
-            var settings = dbc.VendorPackageSettings.Where(n => n.VendorId == vendor.VendorId);
-            if (user != null) dbc.AppUsers.Remove(user);
+            var vendor = _dbVendor.Vendors.Find(id);
+            var user = _dbEvent.AppUsers.SingleOrDefault(n => n.VendorId == vendor.VendorId);
+            var eventMapping = _dbEvent.EventVendorMappings.Where(n => n.VendorId == vendor.VendorId);
+            var reviews = _dbEvent.VendorReviews.Where(n => n.VendorId == vendor.VendorId);
+            var subscription = _dbEvent.SubscriptionInvoices.Where(n => n.VendorId == vendor.VendorId);
+            var images = _dbEvent.VendorImages.Where(n => n.VendorId == vendor.VendorId);
+            var enquiries = _dbEvent.VendorEnquiries.Where(n => n.VendorId == vendor.VendorId);
+            var settings = _dbEvent.VendorPackageSettings.Where(n => n.VendorId == vendor.VendorId);
+            if (user != null) _dbEvent.AppUsers.Remove(user);
             foreach (var item in eventMapping)
-            {
-                dbc.EventVendorMappings.Remove(item);
-            }
+                _dbEvent.EventVendorMappings.Remove(item);
             foreach (var item in reviews)
-            {
-                dbc.VendorReviews.Remove(item);
-            }
+                _dbEvent.VendorReviews.Remove(item);
             foreach (var item in subscription)
-            {
-                dbc.SubscriptionInvoices.Remove(item);
-            }
+                _dbEvent.SubscriptionInvoices.Remove(item);
             foreach (var item in images)
-            {
-                dbc.VendorImages.Remove(item);
-            }
+                _dbEvent.VendorImages.Remove(item);
             foreach (var item in enquiries)
-            {
-                dbc.VendorEnquiries.Remove(item);
-            }
+                _dbEvent.VendorEnquiries.Remove(item);
             foreach (var item in settings)
-            {
-                dbc.VendorPackageSettings.Remove(item);
-            }
-            dbc.SaveChanges();
-            db.Vendors.Remove(vendor);
-            db.SaveChanges();
+                _dbEvent.VendorPackageSettings.Remove(item);
+            _dbEvent.SaveChanges();
+            _dbVendor.Vendors.Remove(vendor);
+            _dbVendor.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _dbVendor.Dispose();
             base.Dispose(disposing);
         }
     }

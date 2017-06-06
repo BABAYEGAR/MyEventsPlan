@@ -17,8 +17,8 @@
 
     .page-header {
         font-size: 22px;
-        margin: 10px 0 20px 0;
         height: 0px;
+        margin: 10px 0 20px 0;
     }
 </style>
 
@@ -139,7 +139,7 @@
             callback: function(response) {
                 ConfirmPayment();
                 alert('success. transaction ref is ' + response.reference);
-              
+
             },
             onClose: function() {
                 alert('window closed');
@@ -148,7 +148,7 @@
         handler.openIframe();
     }
 
-    function  ConfirmPayment() {
+    function ConfirmPayment() {
         $.ajax({
             url: '@Url.Action("ConfirmPostAccountPayment", "Vendors")',
             type: 'GET',
@@ -157,7 +157,7 @@
             // IE is particularly aggressive in that respect
             cache: false
         });
-        location.href = "@Url.Action("Profile","Vendors")";
+        location.href = "@Url.Action("Profile", "Vendors")";
     }
 
 </script>

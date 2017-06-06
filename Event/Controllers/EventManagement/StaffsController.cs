@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Encryption;
 using MyEventPlan.Data.Service.Enum;
 
@@ -16,6 +17,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly StaffDataContext db = new StaffDataContext();
 
         // GET: Staffs
+        [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -23,11 +25,12 @@ namespace MyEventPlan.Controllers.EventManagement
             return View(staff.ToList());
         }
 
+        [SessionExpire]
         public ActionResult ActivateStaff(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var staff =
-                db.Staff.SingleOrDefault(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StaffId == id));
+                db.Staff.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.StaffId == id);
             if (staff != null)
                 staff.Status = StaffStatus.Activated.ToString();
             TempData["display"] = "You have successfully activated the staff!";
@@ -38,11 +41,12 @@ namespace MyEventPlan.Controllers.EventManagement
             return RedirectToAction("Index");
         }
 
+        [SessionExpire]
         public ActionResult DeActivateStaff(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var staff =
-                db.Staff.SingleOrDefault(n => (n.EventPlannerId == loggedinuser.EventPlannerId) && (n.StaffId == id));
+                db.Staff.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.StaffId == id);
             if (staff != null)
                 staff.Status = StaffStatus.Deactivated.ToString();
             TempData["display"] = "You have successfully activated the staff!";
@@ -54,6 +58,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Staffs/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -65,6 +70,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Staffs/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             //ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name");
@@ -76,14 +82,16 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "StaffId,Firstname,Lastname,Email,Mobile")] Staff staff)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = db.Roles.SingleOrDefault(n => n.Name == "Staff");
-            var listExist = db.Staff.Where(m => m.EventPlannerId == staff.EventPlannerId && m.Email == staff.Email).ToList();
+            var listExist = db.Staff.Where(m => m.EventPlannerId == staff.EventPlannerId && m.Email == staff.Email)
+                .ToList();
             if (ModelState.IsValid)
             {
-                if ((loggedinuser != null))
+                if (loggedinuser != null)
                 {
                     if (listExist.Count > 0)
                     {
@@ -118,6 +126,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Staffs/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -134,11 +143,12 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "StaffId,Firstname,Lastname,Status,Email,Mobile,Password,RoleId,CreatedBy,EventPlannerId,DateCreated"
-             )] Staff staff)
+                Include =
+                    "StaffId,Firstname,Lastname,Status,Email,Mobile,Password,RoleId,CreatedBy,EventPlannerId,DateCreated"
+            )] Staff staff)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -165,6 +175,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Staffs/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -179,6 +190,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var staff = db.Staff.Find(id);

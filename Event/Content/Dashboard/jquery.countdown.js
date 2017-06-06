@@ -16,7 +16,7 @@ jQuery.fn.countdown = function(userOptions) {
         digitImages: 6,
         digitWidth: 53,
         digitHeight: 77,
-        timerEnd: function() { },
+        timerEnd: function() {},
         image: "digits.png"
     };
     var digits = [], interval;
@@ -30,45 +30,47 @@ jQuery.fn.countdown = function(userOptions) {
             if (parseInt(options.startTime[i]) >= 0) {
                 elem = $('<div id="cnt_' + i + '" class="cntDigit" />').css({
                     height: options.digitHeight * options.digitImages * 10,
-                    float: 'left', background: 'url(\'' + options.image + '\')',
+                    float: "left",
+                    background: "url('" + options.image + "')",
                     width: options.digitWidth
                 });
                 digits.push(elem);
-                margin(c, -((parseInt(options.startTime[i]) * options.digitHeight *
-                              options.digitImages)));
+                margin(c,
+                    -((parseInt(options.startTime[i]) *
+                        options.digitHeight *
+                        options.digitImages)));
                 digits[c].__max = 9;
                 // Add max digits, for example, first digit of minutes (mm) has 
                 // a max of 5. Conditional max is used when the left digit has reach
                 // the max. For example second "hours" digit has a conditional max of 4 
                 switch (options.format[i]) {
-                    case 'h':
-                        digits[c].__max = (c % 2 == 0) ? 2 : 9;
-                        if (c % 2 == 0)
-                            digits[c].__condmax = 4;
-                        break;
-                    case 'd':
-                        digits[c].__max = 9;
-                        break;
-                    case 'm':
-                    case 's':
-                        digits[c].__max = (c % 2 == 0) ? 5 : 9;
+                case "h":
+                    digits[c].__max = (c % 2 == 0) ? 2 : 9;
+                    if (c % 2 == 0)
+                        digits[c].__condmax = 4;
+                    break;
+                case "d":
+                    digits[c].__max = 9;
+                    break;
+                case "m":
+                case "s":
+                    digits[c].__max = (c % 2 == 0) ? 5 : 9;
                 }
                 ++c;
-            }
-            else
-                elem = $('<div class="cntSeparator"/>').css({ float: 'left' })
-                .text(options.startTime[i]);
+            } else
+                elem = $('<div class="cntSeparator"/>').css({ float: "left" })
+                    .text(options.startTime[i]);
 
-            where.append(elem)
+            where.append(elem);
         }
     };
 
     // Set or get element margin
     var margin = function(elem, val) {
         if (val !== undefined)
-            return digits[elem].css({ 'marginTop': val + 'px' });
+            return digits[elem].css({ 'marginTop': val + "px" });
 
-        return parseInt(digits[elem].css('marginTop').replace('px', ''));
+        return parseInt(digits[elem].css("marginTop").replace("px", ""));
     };
 
     // Makes the movement. This is done by "digitImages" steps.
@@ -85,8 +87,9 @@ jQuery.fn.countdown = function(userOptions) {
                     options.timerEnd();
                     return;
                 }
-                if ((elem > 0) && (digits[elem].__condmax !== undefined) &&
-            (digits[elem - 1]._digitInitial == margin(elem - 1)))
+                if ((elem > 0) &&
+                    (digits[elem].__condmax !== undefined) &&
+                    (digits[elem - 1]._digitInitial == margin(elem - 1)))
                     margin(elem, -(digits[elem].__condmax * options.digitHeight * options.digitImages));
                 return;
             }
@@ -96,11 +99,11 @@ jQuery.fn.countdown = function(userOptions) {
                 setTimeout(_move, options.stepTime);
 
             if (mtop == 0) digits[elem].__ismax = true;
-        }
+        };
     };
 
     $.extend(options, userOptions);
-    this.css({ height: options.digitHeight, overflow: 'hidden' });
+    this.css({ height: options.digitHeight, overflow: "hidden" });
     createDigits(this);
     interval = setInterval(moveStep(digits.length - 1), 1000);
 };

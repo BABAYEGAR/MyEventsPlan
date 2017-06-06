@@ -73,7 +73,7 @@
         @Html.DisplayFor(model => model.ProfileImage)
     </dd>
 
-    @if ((role != null) && (role.Name == "Platform Administrator"))
+    @if (role != null && role.Name == "Platform Administrator")
     {
         <dt>
             @Html.DisplayNameFor(model => model.CreatedBy)

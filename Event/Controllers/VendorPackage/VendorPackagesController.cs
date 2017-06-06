@@ -1,26 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.VendorPackage
 {
     public class VendorPackagesController : Controller
     {
-        private VendorPackageDataContext db = new VendorPackageDataContext();
+        private readonly VendorPackageDataContext db = new VendorPackageDataContext();
 
         // GET: VendorPackages
+        [SessionExpire]
         public ActionResult Index()
         {
             return View(db.VendorPackages.ToList());
         }
+
         // GET: VendorPackages
         public ActionResult Pricing()
         {
@@ -28,19 +28,17 @@ namespace MyEventPlan.Controllers.VendorPackage
         }
 
         // GET: VendorPackages/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event.Data.Objects.Entities.VendorPackage vendorPackage = db.VendorPackages.Find(id);
+            var vendorPackage = db.VendorPackages.Find(id);
             if (vendorPackage == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorPackage);
         }
+
         [HttpGet]
         [AllowAnonymous]
         // GET: EventPlanners/Invoice
@@ -54,8 +52,8 @@ namespace MyEventPlan.Controllers.VendorPackage
             var generator = new Random();
             var randomNumber = generator.Next(0, 1000000).ToString("D6");
             subscriptionInvoice.AppUserId = null;
-                subscriptionInvoice.DateCreated = DateTime.Now;
-                subscriptionInvoice.DateLastModified = DateTime.Now;
+            subscriptionInvoice.DateCreated = DateTime.Now;
+            subscriptionInvoice.DateLastModified = DateTime.Now;
             subscriptionInvoice.CreatedBy = null;
             subscriptionInvoice.LastModifiedBy = null;
             subscriptionInvoice.InvoiceNumber = "#" + randomNumber;
@@ -70,6 +68,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         }
 
         // GET: VendorPackages/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -80,8 +79,10 @@ namespace MyEventPlan.Controllers.VendorPackage
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorPackageId,Description,PackageName,Amount,PackageGrade")]
-        Event.Data.Objects.Entities.VendorPackage vendorPackage,FormCollection collectedValues)
+        [SessionExpire]
+        public ActionResult Create(
+            [Bind(Include = "VendorPackageId,Description,PackageName,Amount,PackageGrade")]
+            Event.Data.Objects.Entities.VendorPackage vendorPackage, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +95,6 @@ namespace MyEventPlan.Controllers.VendorPackage
                     vendorPackage.CreatedBy = loggedinuser.AppUserId;
                     vendorPackage.PackageGrade =
                         typeof(VendorPackageEnum).GetEnumName(int.Parse(collectedValues["PackageGrade"]));
-
                 }
                 else
                 {
@@ -119,17 +119,14 @@ namespace MyEventPlan.Controllers.VendorPackage
         }
 
         // GET: VendorPackages/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event.Data.Objects.Entities.VendorPackage vendorPackage = db.VendorPackages.Find(id);
+            var vendorPackage = db.VendorPackages.Find(id);
             if (vendorPackage == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorPackage);
         }
 
@@ -138,7 +135,10 @@ namespace MyEventPlan.Controllers.VendorPackage
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VendorPackageId,PackageName,Description,PackageGrade,Amount,CreatedBy,DateCreated")] Event.Data.Objects.Entities.VendorPackage vendorPackage)
+        [SessionExpire]
+        public ActionResult Edit(
+            [Bind(Include = "VendorPackageId,PackageName,Description,PackageGrade,Amount,CreatedBy,DateCreated")]
+            Event.Data.Objects.Entities.VendorPackage vendorPackage)
         {
             if (ModelState.IsValid)
             {
@@ -147,7 +147,6 @@ namespace MyEventPlan.Controllers.VendorPackage
                 if (loggedinuser != null)
                 {
                     vendorPackage.LastModifiedBy = loggedinuser.AppUserId;
-
                 }
                 else
                 {
@@ -159,32 +158,31 @@ namespace MyEventPlan.Controllers.VendorPackage
                 db.SaveChanges();
                 TempData["display"] = "You have successfully modified the vendor pacakge!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index", new { id = vendorPackage.VendorPackageId });
+                return RedirectToAction("Index", new {id = vendorPackage.VendorPackageId});
             }
             return View(vendorPackage);
         }
 
         // GET: VendorPackages/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Event.Data.Objects.Entities.VendorPackage vendorPackage = db.VendorPackages.Find(id);
+            var vendorPackage = db.VendorPackages.Find(id);
             if (vendorPackage == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorPackage);
         }
 
         // POST: VendorPackages/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            Event.Data.Objects.Entities.VendorPackage vendorPackage = db.VendorPackages.Find(id);
+            var vendorPackage = db.VendorPackages.Find(id);
             db.VendorPackages.Remove(vendorPackage);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the vendor pacakge!";
@@ -195,9 +193,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

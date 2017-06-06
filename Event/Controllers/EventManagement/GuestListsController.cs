@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -14,6 +15,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly GuestListDataContext db = new GuestListDataContext();
 
         // GET: GuestLists
+        [SessionExpire]
         public ActionResult Index(long? eventId)
         {
             var guestLists = db.GuestLists.Where(n => n.EventId == eventId).Include(g => g.Event);
@@ -22,6 +24,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: GuestLists/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -33,6 +36,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: GuestLists/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -43,6 +47,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "GuestListId,Name,EventId")] GuestList guestList)
         {
             if (ModelState.IsValid)
@@ -50,14 +55,15 @@ namespace MyEventPlan.Controllers.EventManagement
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 guestList.DateCreated = DateTime.Now;
                 guestList.DateLastModified = DateTime.Now;
-                var listExist = db.GuestLists.Where(m => m.EventId == guestList.EventId && m.Name == guestList.Name).ToList();
+                var listExist = db.GuestLists.Where(m => m.EventId == guestList.EventId && m.Name == guestList.Name)
+                    .ToList();
                 if (loggedinuser != null)
                 {
                     if (listExist.Count > 0)
                     {
                         TempData["display"] = "A guest-list with the same name exist, try another name!";
                         TempData["notificationtype"] = NotificationType.Error.ToString();
-                        return RedirectToAction("Index", new { eventId = guestList.EventId });
+                        return RedirectToAction("Index", new {eventId = guestList.EventId});
                     }
                     guestList.LastModifiedBy = loggedinuser.AppUserId;
                     guestList.CreatedBy = loggedinuser.AppUserId;
@@ -78,6 +84,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: GuestLists/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -93,6 +100,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit([Bind(Include = "GuestListId,Name,EventId,CreatedBy,DateCreated")] GuestList guestList)
         {
             if (ModelState.IsValid)
@@ -119,6 +127,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: GuestLists/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -133,6 +142,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var guestList = db.GuestLists.Find(id);

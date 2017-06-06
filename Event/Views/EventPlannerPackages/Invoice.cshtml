@@ -18,8 +18,8 @@
 
     .page-header {
         font-size: 22px;
-        margin: 10px 0 20px 0;
         height: 0px;
+        margin: 10px 0 20px 0;
     }
 </style>
 
@@ -139,7 +139,7 @@
             callback: function(response) {
                 ConfirmPayment();
                 alert('success. transaction ref is ' + response.reference);
-                location.href = "@Url.Action("Dashboard","Home")";
+                location.href = "@Url.Action("Dashboard", "Home")";
             },
             onClose: function() {
                 alert('window closed');

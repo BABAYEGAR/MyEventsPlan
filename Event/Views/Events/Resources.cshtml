@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Allocate Resources";
-      Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var db = new EventResourceMappingDataContext();
     var resourceEvent = new EventResourceMapping();
     var events = Session["event"] as Event;

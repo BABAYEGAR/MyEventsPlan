@@ -52,6 +52,7 @@ namespace MyEventPlan.Controllers
         [HttpGet]
         [AllowAnonymous]
         // GET: EventPlanners/Pricing
+     
         public ActionResult Pricing()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -68,6 +69,7 @@ namespace MyEventPlan.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+     
         public ActionResult VerifyEmail()
         {
             return View();
@@ -75,6 +77,7 @@ namespace MyEventPlan.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+     
         public ActionResult Setting()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -83,6 +86,7 @@ namespace MyEventPlan.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+     
         public ActionResult UserProfile()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -91,6 +95,7 @@ namespace MyEventPlan.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+     
         public ActionResult VerifyEmail(FormCollection collectedValues)
         {
             var email = collectedValues["Email"];
@@ -104,6 +109,7 @@ namespace MyEventPlan.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+     
         public ActionResult VerifyAccount(long id)
         {
             var user = _db.AppUsers.Find(id);
@@ -115,6 +121,7 @@ namespace MyEventPlan.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+     
         public ActionResult ChangeClientPassword(long? id)
         {
             var user = _db.AppUsers.Find(id);
@@ -124,6 +131,7 @@ namespace MyEventPlan.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+     
         public ActionResult ChangeClientPassword(FormCollection collectedValues)
         {
             var loggedinuser = Session["user"] as AppUser;
@@ -143,8 +151,10 @@ namespace MyEventPlan.Controllers
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Login", "Account");
         }
+
         [HttpGet]
         [AllowAnonymous]
+     
         public ActionResult ChangePassword()
         {
             return View();
@@ -152,6 +162,7 @@ namespace MyEventPlan.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+     
         public ActionResult ChangePassword(FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -174,6 +185,7 @@ namespace MyEventPlan.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+     
         public ActionResult PasswordReset()
         {
             return View();
@@ -181,6 +193,7 @@ namespace MyEventPlan.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+     
         public ActionResult PasswordReset(FormCollection collectedValues)
         {
             var loggedinuser = Session["user"] as AppUser;
@@ -216,6 +229,7 @@ namespace MyEventPlan.Controllers
         //
         // GET: /Account/Login
         [AllowAnonymous]
+     
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -227,6 +241,7 @@ namespace MyEventPlan.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+     
         public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
@@ -246,9 +261,7 @@ namespace MyEventPlan.Controllers
                                 n.EventPlannerId == user.EventPlannerId &&
                                 n.Status == PackageStatusEnum.Active.ToString());
                     if (packageSubscribed != null)
-                    {
                         Session["subscribe"] = packageSubscribed;
-                    }
                     if (user.EventPlannerId != null)
                     {
                         var eventPlanner = _db.EventPlanners.Find(user.EventPlannerId);
@@ -317,6 +330,7 @@ namespace MyEventPlan.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+     
         public ActionResult Register()
         {
             return View();
@@ -366,6 +380,7 @@ namespace MyEventPlan.Controllers
         //
         // GET: /Account/ForgotPassword
         [AllowAnonymous]
+     
         public ActionResult ForgotPassword()
         {
             return View();
@@ -399,6 +414,7 @@ namespace MyEventPlan.Controllers
         //
         // GET: /Account/ForgotPasswordConfirmation
         [AllowAnonymous]
+     
         public ActionResult ForgotPasswordConfirmation()
         {
             return View();
@@ -407,6 +423,7 @@ namespace MyEventPlan.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
+     
         public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
@@ -434,6 +451,7 @@ namespace MyEventPlan.Controllers
         //
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
+     
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
@@ -444,6 +462,7 @@ namespace MyEventPlan.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
+     
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
@@ -549,7 +568,7 @@ namespace MyEventPlan.Controllers
         // POST: /Account/LogOff
         [HttpGet]
         public ActionResult LogOff()
-       {
+        {
             Session["myeventplanloggedinuser"] = null;
             Session["role"] = null;
             Session["event"] = null;
@@ -564,6 +583,7 @@ namespace MyEventPlan.Controllers
         //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
+     
         public ActionResult ExternalLoginFailure()
         {
             return View();

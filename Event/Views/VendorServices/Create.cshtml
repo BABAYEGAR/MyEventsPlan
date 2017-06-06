@@ -15,14 +15,6 @@
             @Html.ValidationMessageFor(model => model.ServiceName, "", new {@class = "text-danger"})
         </div>
     </div>
-    <div class="control-group">
-        @Html.LabelFor(model => model.Scale, new {@class = "control-label"})
-        <div class="controls">
-            @Html.EditorFor(model => model.Scale, new {htmlAttributes = new {@class = "span8"}})
-            @Html.ValidationMessageFor(model => model.Scale, "", new {@class = "text-danger"})
-        </div>
-    </div>
-
 
     <div class="control-group">
         <div class="controls">

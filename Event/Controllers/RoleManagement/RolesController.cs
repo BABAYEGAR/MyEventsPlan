@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.RoleManagement
@@ -14,12 +15,14 @@ namespace MyEventPlan.Controllers.RoleManagement
         private readonly RoleDataContext db = new RoleDataContext();
 
         // GET: Roles
+        [SessionExpire]
         public ActionResult Index()
         {
             return View(db.Roles.ToList());
         }
 
         // GET: Roles/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -31,6 +34,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         }
 
         // GET: Roles/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -41,11 +45,12 @@ namespace MyEventPlan.Controllers.RoleManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(
-                 Include =
-                     "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals"
-             )] Role role)
+                Include =
+                    "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals"
+            )] Role role)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -72,6 +77,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         }
 
         // GET: Roles/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -87,11 +93,12 @@ namespace MyEventPlan.Controllers.RoleManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals,CreatedBy,DateCreated"
-             )] Role role)
+                Include =
+                    "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals,CreatedBy,DateCreated"
+            )] Role role)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -115,6 +122,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         }
 
         // GET: Roles/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -129,6 +137,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var role = db.Roles.Find(id);

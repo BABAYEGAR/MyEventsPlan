@@ -2,10 +2,10 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 using MyEventPlan.Data.Service.FileUploader;
 
@@ -17,6 +17,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly EventPlannerDataContext dbc = new EventPlannerDataContext();
 
         // GET: AppUsers
+        [SessionExpire]
         public ActionResult Index()
         {
             var appUsers = db.AppUsers.Include(a => a.EventPlanner).Include(a => a.Role);
@@ -24,6 +25,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EnableUser
+        [SessionExpire]
         public ActionResult EnableUser(long? id)
         {
             var appUser = db.AppUsers.Find(id);
@@ -34,6 +36,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: DisableUser
+        [SessionExpire]
         public ActionResult DisableUser(long? id)
         {
             var appUser = db.AppUsers.Find(id);
@@ -42,21 +45,25 @@ namespace MyEventPlan.Controllers.EventManagement
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         // GET: AppUsers/BackgroundColor
+        [SessionExpire]
         public ActionResult BackgroundColor()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             return View(loggedinuser);
         }
+
         // POST: AppUsers/BackgroundColor
         [HttpPost]
+        [SessionExpire]
         public ActionResult BackgroundColor(FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             AppUser user = null;
             if (loggedinuser != null)
             {
-                 user = db.AppUsers.Find(loggedinuser.AppUserId);
+                user = db.AppUsers.Find(loggedinuser.AppUserId);
                 var bgColor = typeof(BackgroundColor).GetEnumName(int.Parse(collectedValues["BackgroundColor"]));
                 user.BackgroundColor = bgColor;
                 db.Entry(user).State = EntityState.Modified;
@@ -65,28 +72,32 @@ namespace MyEventPlan.Controllers.EventManagement
             Session["myeventplanloggedinuser"] = user;
             TempData["display"] = "You have successfully changed your background color!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Setting","Account");
+            return RedirectToAction("Setting", "Account");
         }
+
         // GET: AppUsers/ImageUpload
+        [SessionExpire]
         public ActionResult ImageUpload()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             return View(loggedinuser);
         }
+
         // POST: AppUsers/BackgroundColor
         [HttpPost]
+        [SessionExpire]
         public ActionResult ImageUpload(FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var plannerUser = dbc.EventPlanners.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             EventPlanner user = null;
-            HttpPostedFileBase image = Request.Files["image_file"];
+            var image = Request.Files["image_file"];
             if (loggedinuser != null)
             {
                 user = dbc.EventPlanners.Find(loggedinuser.EventPlannerId);
                 if (user != null)
                 {
-                    user.Logo = new FileUploader().UploadFile(image,UploadType.EventPlannerLogo);
+                    user.Logo = new FileUploader().UploadFile(image, UploadType.EventPlannerLogo);
                     dbc.Entry(user).State = EntityState.Modified;
                 }
             }
@@ -95,10 +106,10 @@ namespace MyEventPlan.Controllers.EventManagement
             TempData["display"] = "You have successfully changed your logo/image!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Setting", "Account");
-            
         }
 
         // GET: AppUsers/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -110,6 +121,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: AppUsers/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname");
@@ -122,12 +134,13 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(
-                 Include =
-                     "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,BackgroundColor" +
-                     ",EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
-             )] AppUser appUser)
+                Include =
+                    "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,BackgroundColor" +
+                    ",EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+            )] AppUser appUser)
         {
             if (ModelState.IsValid)
             {
@@ -143,6 +156,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: AppUsers/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -161,11 +175,12 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,EventPlannerId,ProfileImage,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
-             )] AppUser appUser)
+                Include =
+                    "AppUserId,Firstname,Lastname,Email,Mobile,Password,RoleId,EventPlannerId,ProfileImage,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+            )] AppUser appUser)
         {
             if (ModelState.IsValid)
             {
@@ -178,23 +193,25 @@ namespace MyEventPlan.Controllers.EventManagement
             ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", appUser.RoleId);
             return View(appUser);
         }
+
         // POST: AppUsers/UpdateProfile/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult UpdateProfile(
             [Bind(
-                 Include =
-                     "AppUserId,Firstname,Lastname,Email,Mobile,Status,Password,BackgroundColor" +
-                     ",RoleId,VendorId,ClientId,EventPlannerId,CreatedBy,DateCreated"
-             )] AppUser appUser)
+                Include =
+                    "AppUserId,Firstname,Lastname,Email,Mobile,Status,Password,BackgroundColor" +
+                    ",RoleId,VendorId,ClientId,EventPlannerId,CreatedBy,DateCreated"
+            )] AppUser appUser)
         {
             if (ModelState.IsValid)
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 appUser.DateLastModified = DateTime.Now;
-                if (loggedinuser != null )
+                if (loggedinuser != null)
                 {
                     if (loggedinuser.EventPlannerId != null)
                     {
@@ -221,11 +238,13 @@ namespace MyEventPlan.Controllers.EventManagement
                 Session["myeventplanloggedinuser"] = appUser;
                 TempData["display"] = "You have successfully updated your profile!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("UserProfile","Account");
+                return RedirectToAction("UserProfile", "Account");
             }
-            return RedirectToAction("Dashboard","Home");
+            return RedirectToAction("Dashboard", "Home");
         }
+
         // GET: AppUsers/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -240,16 +259,14 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var appUser = db.AppUsers.Find(id);
 
             var subscriptionSetting = db.EventPlannerPackageSettings.Where(n => n.AppUserId == id);
             foreach (var item in subscriptionSetting)
-            {
                 db.EventPlannerPackageSettings.Remove(item);
-
-            }
             db.AppUsers.Remove(appUser);
             db.SaveChanges();
             return RedirectToAction("Index");

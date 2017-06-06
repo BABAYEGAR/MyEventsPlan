@@ -44,44 +44,45 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.AppUser.Firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EventPlanner.Firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EventPlannerPackage.PackageName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SubscribedEvent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AllowedEvent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedBy)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateLastModified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastModifiedBy)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EventPlannerPackageSettingId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EventPlannerPackageSettingId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EventPlannerPackageSettingId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppUser.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventPlanner.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventPlannerPackage.PackageName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubscribedEvent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AllowedEvent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateLastModified)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastModifiedBy)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.EventPlannerPackageSettingId}) |
+                @Html.ActionLink("Details", "Details", new {id = item.EventPlannerPackageSettingId}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.EventPlannerPackageSettingId})
+            </td>
+        </tr>
+    }
 
 </table>

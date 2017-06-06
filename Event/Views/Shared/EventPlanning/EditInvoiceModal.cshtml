@@ -6,7 +6,7 @@
     var db = new InvoiceDataContext();
     ViewBag.ClientId = new SelectList(db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
         "ClientId", "Name", Model.ClientId);
-       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Edit", "Invoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {

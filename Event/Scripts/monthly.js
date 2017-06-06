@@ -92,7 +92,8 @@ Monthly 2.2.0 by Kevin Thornbloom is licensed under a Creative Commons Attributi
 
             // Add Header & event list markup
             $(parent)
-                .prepend('<div class="monthly-header"><div class="monthly-header-title"><a href="#" class="monthly-header-title-date" onclick="return false"></a></div><a href="#" class="monthly-prev"></a><a href="#" class="monthly-next"></a></div>')
+                .prepend(
+                    '<div class="monthly-header"><div class="monthly-header-title"><a href="#" class="monthly-header-title-date" onclick="return false"></a></div><a href="#" class="monthly-prev"></a><a href="#" class="monthly-next"></a></div>')
                 .append('<div class="monthly-event-list"></div>');
 
             // Set the calendar the first time
@@ -101,7 +102,9 @@ Monthly 2.2.0 by Kevin Thornbloom is licensed under a Creative Commons Attributi
             // How many days are in this month?
             function daysInMonth(month, year) {
                 return month === 2
-                    ? (year & 3) || (!(year % 25) && year & 15) ? 28 : 29
+                    ? (year & 3) || (!(year % 25) && year & 15)
+                    ? 28
+                    : 29
                     : 30 + (month + (month >> 3) & 1);
             }
 

@@ -126,14 +126,14 @@
 <script src="https://cdn.datatables.net/1.10.15/js/dataTables.material.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#grid').DataTable( {
+        $('#grid').DataTable({
             columnDefs: [
                 {
-                    targets: [ 0, 1, 2 ],
+                    targets: [0, 1, 2],
                     className: 'mdl-data-table__cell--non-numeric'
                 }
             ]
-        } );
-    } );
+        });
+    });
 </script>
 @RenderSection("scripts", false)

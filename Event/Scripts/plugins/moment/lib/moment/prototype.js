@@ -146,7 +146,9 @@ proto.months = deprecate("months accessor is deprecated. Use month instead", get
 proto.years = deprecate("years accessor is deprecated. Use year instead", getSetYear);
 proto
     .zone =
-    deprecate("moment().zone is deprecated, use moment().utcOffset instead. http://momentjs.com/guides/#/warnings/zone/", getSetZone);
+    deprecate(
+        "moment().zone is deprecated, use moment().utcOffset instead. http://momentjs.com/guides/#/warnings/zone/",
+        getSetZone);
 proto
     .isDSTShifted =
     deprecate("isDSTShifted is deprecated. See http://momentjs.com/guides/#/warnings/dst-shifted/ for more information",

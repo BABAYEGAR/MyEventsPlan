@@ -1,8 +1,7 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.EventPlannerPackageItem
+﻿@model Event.Data.Objects.Entities.EventPlannerPackageItem
 @{
     long packageId = ViewBag.packageId;
-       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Create", "EventPlannerPackageItems", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {

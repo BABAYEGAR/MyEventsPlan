@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.FinancialManagement
@@ -15,22 +16,23 @@ namespace MyEventPlan.Controllers.FinancialManagement
         private readonly InvoiceDataContext _db = new InvoiceDataContext();
 
         // GET: Invoices
+        [SessionExpire]
         public ActionResult Index(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.id = id;
             //view bag property for clients
             ViewBag.ClientId = new SelectList(_db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
-    "ClientId", "Name");
+                "ClientId", "Name");
             IQueryable<Invoice> invoices = null;
             if (loggedinuser?.ClientId != null)
             {
                 if (id != null)
                 {
                     invoices =
-                  _db.Invoices.Where(n => n.ClientId == loggedinuser.ClientId && n.EventId == id)
-                      .Include(i => i.Client)
-                      .Include(i => i.EventPlanner);
+                        _db.Invoices.Where(n => n.ClientId == loggedinuser.ClientId && n.EventId == id)
+                            .Include(i => i.Client)
+                            .Include(i => i.EventPlanner);
                     return View(invoices.ToList());
                 }
                 invoices =
@@ -44,9 +46,9 @@ namespace MyEventPlan.Controllers.FinancialManagement
                 if (id != null)
                 {
                     invoices =
-                  _db.Invoices.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.EventId == id)
-                      .Include(i => i.Client)
-                      .Include(i => i.EventPlanner);
+                        _db.Invoices.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.EventId == id)
+                            .Include(i => i.Client)
+                            .Include(i => i.EventPlanner);
                     return View(invoices.ToList());
                 }
                 invoices =
@@ -55,13 +57,14 @@ namespace MyEventPlan.Controllers.FinancialManagement
                         .Include(i => i.EventPlanner);
                 return View(invoices.ToList());
             }
-            List<Invoice> list = new List<Invoice>();
+            var list = new List<Invoice>();
             foreach (var invoice in invoices)
                 list.Add(invoice);
             return View(list);
         }
 
         // GET: Invoices/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -69,17 +72,19 @@ namespace MyEventPlan.Controllers.FinancialManagement
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var invoice = _db.Invoices.Find(id);
             ViewBag.EventId = new SelectList(_db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
-    "EventId", "Name");
+                "EventId", "Name");
             if (invoice == null)
                 return HttpNotFound();
             return View(invoice);
         }
+
         // POST: Invoices/UnlinkInvoiceFromEvent/5
         [HttpPost]
+        [SessionExpire]
         public ActionResult LinkInvoiceToEvent(FormCollection collectedValues)
         {
-            long eventId = Convert.ToInt64(collectedValues["EventId"]);
-            long invoiceId = Convert.ToInt64(collectedValues["InvoiceId"]);
+            var eventId = Convert.ToInt64(collectedValues["EventId"]);
+            var invoiceId = Convert.ToInt64(collectedValues["InvoiceId"]);
             var invoice = _db.Invoices.Find(invoiceId);
             var events = _db.Event.Find(eventId);
             if (invoice != null)
@@ -89,12 +94,14 @@ namespace MyEventPlan.Controllers.FinancialManagement
             }
             _db.SaveChanges();
             if (events != null)
-                TempData["display"] = "You have successfully linked the Invoice to "+ events.Name +"!";
+                TempData["display"] = "You have successfully linked the Invoice to " + events.Name + "!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
         }
+
         // GET: Invoices/UnlinkInvoiceFromEvent/5
-        public ActionResult UnlinkInvoiceFromEvent(long? id,long eventId)
+        [SessionExpire]
+        public ActionResult UnlinkInvoiceFromEvent(long? id, long eventId)
         {
             var invoice = _db.Invoices.Find(id);
             var events = _db.Event.Find(eventId);
@@ -107,11 +114,12 @@ namespace MyEventPlan.Controllers.FinancialManagement
             if (events != null)
                 TempData["display"] = "You have successfully Unlinked the Invoice to " + events.Name + "!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { id = eventId });
+            return RedirectToAction("Index", new {id = eventId});
         }
 
 
         // GET: Invoices/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -125,6 +133,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(Include = "InvoiceId,InvoiceName,InvoiceNumber,DueDate,ClientId,EventId")] Invoice invoice)
         {
@@ -151,9 +160,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
                 TempData["display"] = "You have successfully created a new Invoice!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 if (invoice.EventId != null)
-                {
-                    return RedirectToAction("Index",new {id = invoice.EventId});
-                }
+                    return RedirectToAction("Index", new {id = invoice.EventId});
                 return RedirectToAction("Index");
             }
             ViewBag.ClientId = new SelectList(_db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
@@ -162,6 +169,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         }
 
         // GET: Invoices/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -180,6 +188,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "InvoiceId,InvoiceName,InvoiceNumber,DueDate,ClientId,EventPlannerId,CreatedBy,DateCreated")
             ] Invoice invoice)
@@ -203,9 +212,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
                 TempData["display"] = "You have successfully modified the Invoice!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 if (invoice.EventId != null)
-                {
-                    return RedirectToAction("Index", new { id = invoice.EventId });
-                }
+                    return RedirectToAction("Index", new {id = invoice.EventId});
             }
             ViewBag.ClientId = new SelectList(_db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
                 "ClientId", "Name");
@@ -213,6 +220,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         }
 
         // GET: Invoices/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -227,6 +235,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var invoice = _db.Invoices.Find(id);
@@ -236,9 +245,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
             TempData["display"] = "You have successfully deleted the Invoice!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             if (eventId != null)
-            {
-                return RedirectToAction("Index", new { id = eventId });
-            }
+                return RedirectToAction("Index", new {id = eventId});
             return RedirectToAction("Index");
         }
 

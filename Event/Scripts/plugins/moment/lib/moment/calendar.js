@@ -9,7 +9,15 @@ export function getCalendarFormat(myMoment, now) {
         ? "sameElse"
         : diff < -1
         ? "lastWeek"
-        : diff < 0 ? "lastDay" : diff < 1 ? "sameDay" : diff < 2 ? "nextDay" : diff < 7 ? "nextWeek" : "sameElse";
+        : diff < 0
+        ? "lastDay"
+        : diff < 1
+        ? "sameDay"
+        : diff < 2
+        ? "nextDay"
+        : diff < 7
+        ? "nextWeek"
+        : "sameElse";
 }
 
 export function calendar(time, formats) {

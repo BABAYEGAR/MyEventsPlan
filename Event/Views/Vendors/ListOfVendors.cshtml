@@ -145,12 +145,22 @@
                     </div>
                 }
             </div>
-            <div class="col-md-12 form-group">
+            @*<div class="col-md-12 form-group">
                 <div class="price-range default-range">
                     <label for="amount" class="control-label">Price range:</label>
                     <input type="text" id="amount" name="Price" readonly style="border: 0; color: #f6931f; font-weight: bold;">
                     <div id="slider-range"></div>
                 </div>
+            </div>*@
+            <div class="col-md-12 form-group">
+                <label class="control-label" for="MinimumPrice">Min Price</label>
+                @Html.EditorFor(m => m.MinimumPrice, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.MinimumPrice, "", new {@class = "text-danger"})
+            </div>
+            <div class="col-md-12 form-group">
+                <label class="control-label" for="MaximumPrice">Max Price</label>
+                @Html.EditorFor(m => m.MaximumPrice, null, new {@class = "form-control"})
+                @Html.ValidationMessageFor(model => model.MaximumPrice, "", new {@class = "text-danger"})
             </div>
             <div class="form-group col-md-4">
                 <input type="submit" value="Find Vendors" class="btn btn-primary btn-lg"/>
@@ -165,15 +175,12 @@
             foreach (var item in vendors)
             {
                 var reviews = db.VendorReviews.Where(n => n.VendorId == item.VendorId).ToList();
-                long? totalRatings = 0;
-                long? totalPossibleRatings = 0;
-                double? ratingValue = 0;
                 long rating = 0;
                 if (reviews.Count > 0)
                 {
-                    totalRatings = reviews.Sum(n => n.Rating);
-                    totalPossibleRatings = reviews.Count * 5;
-                    ratingValue = totalRatings * 5 / totalPossibleRatings;
+                    var totalRatings = reviews.Sum(n => n.Rating);
+                    long? totalPossibleRatings = reviews.Count * 5;
+                    double? ratingValue = totalRatings * 5 / totalPossibleRatings;
                     if (ratingValue != null)
                     {
                         rating = (long) Math.Round((double) ratingValue);
@@ -188,11 +195,6 @@
                         <a href="@Url.Action("Details", new {id = item.VendorId})">
                             <img src="~/UploadedFiles/VendorLogo/@item.Logo" alt="wedding venue" class="img-responsive" width="715px" height="400px">
                         </a>
-                        @*<div class="favourite-bg">
-                                     <a href="#" class="">
-                                         <i class="fa fa-heart"></i>
-                                     </a>
-                                 </div>*@
                     </div>
                     <!-- /.venue pic -->
                     <div class="vendor-detail">
@@ -308,8 +310,10 @@
         $('#page-selection').bootpag({
             total: 2
         }).on("page",
-            function(event, /* page number here */ num) {
+            function(event,num) {
                 $(".paginateContent").html(); // some ajax content loading...
             });
     </script>
+
+  
 }

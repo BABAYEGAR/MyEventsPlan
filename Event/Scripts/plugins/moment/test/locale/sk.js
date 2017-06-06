@@ -5,7 +5,8 @@ localeModule("sk");
 test("parse",
     function(assert) {
         var tests =
-                "január jan._február feb._marec mar._apríl apr._máj máj_jún jún._júl júl._august aug._september sep._október okt._november nov._december dec.".split("_"),
+                "január jan._február feb._marec mar._apríl apr._máj máj_jún jún._júl júl._august aug._september sep._október okt._november nov._december dec."
+                    .split("_"),
             i;
 
         function equalTest(input, mmm, monthIndex) {
@@ -100,7 +101,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "január jan_február feb_marec mar_apríl apr_máj máj_jún jún_júl júl_august aug_september sep_október okt_november nov_december dec".split("_"),
+                "január jan_február feb_marec mar_apríl apr_máj máj_jún jún_júl júl_august aug_september sep_október okt_november nov_december dec"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);

@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.VendorManagement
@@ -14,12 +15,14 @@ namespace MyEventPlan.Controllers.VendorManagement
         private readonly LocationDataContext db = new LocationDataContext();
 
         // GET: Locations
+        [SessionExpire]
         public ActionResult Index()
         {
             return View(db.Locations.ToList());
         }
 
         // GET: Locations/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -31,6 +34,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: Locations/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -41,6 +45,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "LocationId,Name")] Location location)
         {
             if (ModelState.IsValid)
@@ -70,6 +75,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: Locations/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -85,6 +91,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit([Bind(Include = "LocationId,Name,CreatedBy,DateCreated")] Location location)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -111,6 +118,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: Locations/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -125,6 +133,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var location = db.Locations.Find(id);

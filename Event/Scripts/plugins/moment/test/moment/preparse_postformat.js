@@ -27,29 +27,29 @@ var symbolMap = {
     };
 
 module("preparse and postformat",
-{
-    setup: function() {
-        moment.locale("symbol",
-        {
-            preparse: function(string) {
-                return string.replace(/[!@#$%\^&*()]/g,
-                    function(match) {
-                        return numberMap[match];
-                    });
-            },
+    {
+        setup: function() {
+            moment.locale("symbol",
+                {
+                    preparse: function(string) {
+                        return string.replace(/[!@#$%\^&*()]/g,
+                            function(match) {
+                                return numberMap[match];
+                            });
+                    },
 
-            postformat: function(string) {
-                return string.replace(/\d/g,
-                    function(match) {
-                        return symbolMap[match];
-                    });
-            }
-        });
-    },
-    teardown: function() {
-        moment.defineLocale("symbol", null);
-    }
-});
+                    postformat: function(string) {
+                        return string.replace(/\d/g,
+                            function(match) {
+                                return symbolMap[match];
+                            });
+                    }
+                });
+        },
+        teardown: function() {
+            moment.defineLocale("symbol", null);
+        }
+    });
 
 test("transform",
     function(assert) {

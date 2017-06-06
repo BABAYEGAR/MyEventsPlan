@@ -6,7 +6,8 @@ test("parse",
     function(assert) {
         var i,
             tests =
-                "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis".split("_");
+                "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis"
+                    .split("_");
 
         function equalTest(input, mmm, i) {
             assert.equal(moment(input, mmm).month(), i, input + " sepatutnya bulan " + (i + 1));
@@ -102,7 +103,8 @@ test("format month",
     function(assert) {
         var i,
             expected =
-                "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis".split("_");
+                "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis"
+                    .split("_");
 
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);

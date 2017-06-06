@@ -341,11 +341,11 @@ test("toString is just human readable format",
 test("toJSON skips postformat",
     function(assert) {
         moment.defineLocale("postformat",
-        {
-            postformat: function(s) {
-                s.replace(/./g, "X");
-            }
-        });
+            {
+                postformat: function(s) {
+                    s.replace(/./g, "X");
+                }
+            });
         assert.equal(moment.utc([2000, 0, 1]).toJSON(), "2000-01-01T00:00:00.000Z", "toJSON doesn't postformat");
         moment.defineLocale("postformat", null);
     });

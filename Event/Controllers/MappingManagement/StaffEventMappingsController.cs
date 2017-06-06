@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.MappingManagement
@@ -14,12 +15,13 @@ namespace MyEventPlan.Controllers.MappingManagement
         private readonly StaffEventMappingDataContext db = new StaffEventMappingDataContext();
 
         // GET: StaffEventMappings
+        [SessionExpire]
         public ActionResult Index(long? id)
         {
             ViewBag.Event = id;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var mappings =
-                db.StaffEventMapping.Where(n => (n.EventId == id) && (n.EventPlannerId == loggedinuser.EventPlannerId));
+                db.StaffEventMapping.Where(n => n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId);
             var vedors =
                 from a in db.Staff
                 join b in mappings on a.StaffId equals b.StaffId
@@ -35,6 +37,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         }
 
         // GET: StaffEventMappings/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -46,6 +49,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         }
 
         // GET: StaffEventMappings/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
@@ -59,6 +63,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(Include = "StaffEventMappingId,EventId,StaffId")] StaffEventMapping staffEventMapping,
             FormCollection collectedValues)
@@ -89,7 +94,7 @@ namespace MyEventPlan.Controllers.MappingManagement
             }
             var mappings =
                 db.StaffEventMapping.Where(
-                    n => (n.EventId == eventId) && (n.EventPlannerId == loggedinuser.EventPlannerId));
+                    n => n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId);
             var vedors =
                 from a in db.Staff
                 join b in mappings on a.StaffId equals b.StaffId
@@ -101,6 +106,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         }
 
         // GET: StaffEventMappings/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -120,11 +126,12 @@ namespace MyEventPlan.Controllers.MappingManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "StaffEventMappingId,EventId,StaffId,EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
-             )] StaffEventMapping staffEventMapping)
+                Include =
+                    "StaffEventMappingId,EventId,StaffId,EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy"
+            )] StaffEventMapping staffEventMapping)
         {
             if (ModelState.IsValid)
             {
@@ -140,6 +147,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         }
 
         // GET: StaffEventMappings/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -154,6 +162,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var staffEventMapping = db.StaffEventMapping.Find(id);
@@ -166,6 +175,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         // POST: StaffEventMappings/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult UnassignStaff(long id)
         {
             var staffEventMapping = db.StaffEventMapping.Find(id);

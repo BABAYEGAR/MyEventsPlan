@@ -95,15 +95,15 @@ test("invalid operations",
             assert.ok(!invalid.clone().subtract(5, "days").isValid());
             assert.deepEqual(invalid.toArray(), [NaN, NaN, NaN, NaN, NaN, NaN, NaN]);
             assert.deepEqual(invalid.toObject(),
-            {
-                years: NaN,
-                months: NaN,
-                date: NaN,
-                hours: NaN,
-                minutes: NaN,
-                seconds: NaN,
-                milliseconds: NaN
-            });
+                {
+                    years: NaN,
+                    months: NaN,
+                    date: NaN,
+                    hours: NaN,
+                    minutes: NaN,
+                    seconds: NaN,
+                    milliseconds: NaN
+                });
             assert.ok(moment.isDate(invalid.toDate()));
             assert.ok(isNaN(invalid.toDate().valueOf()));
             assert.equal(invalid.toJSON(), null);

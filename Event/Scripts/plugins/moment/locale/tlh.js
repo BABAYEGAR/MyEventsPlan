@@ -12,7 +12,9 @@ function translateFuture(output) {
         ? time.slice(0, -3) + "leS"
         : (output.indexOf("jar") !== -1)
         ? time.slice(0, -3) + "waQ"
-        : (output.indexOf("DIS") !== -1) ? time.slice(0, -3) + "nem" : time + " pIq";
+        : (output.indexOf("DIS") !== -1)
+        ? time.slice(0, -3) + "nem"
+        : time + " pIq";
     return time;
 }
 
@@ -22,7 +24,9 @@ function translatePast(output) {
         ? time.slice(0, -3) + "Hu’"
         : (output.indexOf("jar") !== -1)
         ? time.slice(0, -3) + "wen"
-        : (output.indexOf("DIS") !== -1) ? time.slice(0, -3) + "ben" : time + " ret";
+        : (output.indexOf("DIS") !== -1)
+        ? time.slice(0, -3) + "ben"
+        : time + " ret";
     return time;
 }
 
@@ -60,50 +64,52 @@ function numberAsNoun(number) {
 }
 
 export default moment.defineLocale("tlh",
-{
-    months:
-        "tera’ jar wa’_tera’ jar cha’_tera’ jar wej_tera’ jar loS_tera’ jar vagh_tera’ jar jav_tera’ jar Soch_tera’ jar chorgh_tera’ jar Hut_tera’ jar wa’maH_tera’ jar wa’maH wa’_tera’ jar wa’maH cha’".split("_"),
-    monthsShort:
-        "jar wa’_jar cha’_jar wej_jar loS_jar vagh_jar jav_jar Soch_jar chorgh_jar Hut_jar wa’maH_jar wa’maH wa’_jar wa’maH cha’".split("_"),
-    monthsParseExact: true,
-    weekdays: "lojmItjaj_DaSjaj_povjaj_ghItlhjaj_loghjaj_buqjaj_ghInjaj".split("_"),
-    weekdaysShort: "lojmItjaj_DaSjaj_povjaj_ghItlhjaj_loghjaj_buqjaj_ghInjaj".split("_"),
-    weekdaysMin: "lojmItjaj_DaSjaj_povjaj_ghItlhjaj_loghjaj_buqjaj_ghInjaj".split("_"),
-    longDateFormat: {
-        LT: "HH:mm",
-        LTS: "HH:mm:ss",
-        L: "DD.MM.YYYY",
-        LL: "D MMMM YYYY",
-        LLL: "D MMMM YYYY HH:mm",
-        LLLL: "dddd, D MMMM YYYY HH:mm"
-    },
-    calendar: {
-        sameDay: "[DaHjaj] LT",
-        nextDay: "[wa’leS] LT",
-        nextWeek: "LLL",
-        lastDay: "[wa’Hu’] LT",
-        lastWeek: "LLL",
-        sameElse: "L"
-    },
-    relativeTime: {
-        future: translateFuture,
-        past: translatePast,
-        s: "puS lup",
-        m: "wa’ tup",
-        mm: translate,
-        h: "wa’ rep",
-        hh: translate,
-        d: "wa’ jaj",
-        dd: translate,
-        M: "wa’ jar",
-        MM: translate,
-        y: "wa’ DIS",
-        yy: translate
-    },
-    ordinalParse: /\d{1,2}\./,
-    ordinal: "%d.",
-    week: {
-        dow: 1, // Monday is the first day of the week.
-        doy: 4 // The week that contains Jan 4th is the first week of the year.
-    }
-});
+    {
+        months:
+            "tera’ jar wa’_tera’ jar cha’_tera’ jar wej_tera’ jar loS_tera’ jar vagh_tera’ jar jav_tera’ jar Soch_tera’ jar chorgh_tera’ jar Hut_tera’ jar wa’maH_tera’ jar wa’maH wa’_tera’ jar wa’maH cha’"
+                .split("_"),
+        monthsShort:
+            "jar wa’_jar cha’_jar wej_jar loS_jar vagh_jar jav_jar Soch_jar chorgh_jar Hut_jar wa’maH_jar wa’maH wa’_jar wa’maH cha’"
+                .split("_"),
+        monthsParseExact: true,
+        weekdays: "lojmItjaj_DaSjaj_povjaj_ghItlhjaj_loghjaj_buqjaj_ghInjaj".split("_"),
+        weekdaysShort: "lojmItjaj_DaSjaj_povjaj_ghItlhjaj_loghjaj_buqjaj_ghInjaj".split("_"),
+        weekdaysMin: "lojmItjaj_DaSjaj_povjaj_ghItlhjaj_loghjaj_buqjaj_ghInjaj".split("_"),
+        longDateFormat: {
+            LT: "HH:mm",
+            LTS: "HH:mm:ss",
+            L: "DD.MM.YYYY",
+            LL: "D MMMM YYYY",
+            LLL: "D MMMM YYYY HH:mm",
+            LLLL: "dddd, D MMMM YYYY HH:mm"
+        },
+        calendar: {
+            sameDay: "[DaHjaj] LT",
+            nextDay: "[wa’leS] LT",
+            nextWeek: "LLL",
+            lastDay: "[wa’Hu’] LT",
+            lastWeek: "LLL",
+            sameElse: "L"
+        },
+        relativeTime: {
+            future: translateFuture,
+            past: translatePast,
+            s: "puS lup",
+            m: "wa’ tup",
+            mm: translate,
+            h: "wa’ rep",
+            hh: translate,
+            d: "wa’ jaj",
+            dd: translate,
+            M: "wa’ jar",
+            MM: translate,
+            y: "wa’ DIS",
+            yy: translate
+        },
+        ordinalParse: /\d{1,2}\./,
+        ordinal: "%d.",
+        week: {
+            dow: 1, // Monday is the first day of the week.
+            doy: 4 // The week that contains Jan 4th is the first week of the year.
+        }
+    });

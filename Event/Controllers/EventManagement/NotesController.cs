@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -14,6 +15,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly NoteDataContext db = new NoteDataContext();
 
         // GET: Notes
+        [SessionExpire]
         public ActionResult Index(long? eventId)
         {
             var notes = db.Notes.Where(n => n.EventId == eventId).Include(n => n.Event);
@@ -22,6 +24,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Notes/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -33,6 +36,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Notes/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -43,6 +47,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "NoteId,Title,Content,ShowToClient,EventId")] Note note)
         {
             if (ModelState.IsValid)
@@ -71,6 +76,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Notes/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -86,6 +92,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "NoteId,Title,Content,ShowToClient,EventId,CreatedBy,DateCreated")] Note note)
         {
@@ -113,6 +120,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Notes/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -127,6 +135,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var note = db.Notes.Find(id);

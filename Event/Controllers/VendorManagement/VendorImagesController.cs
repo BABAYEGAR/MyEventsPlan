@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 using MyEventPlan.Data.Service.FileUploader;
 
@@ -15,6 +16,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         private readonly VendorImageDataContext db = new VendorImageDataContext();
 
         // GET: VendorImages
+        [SessionExpire]
         public ActionResult Index()
         {
             var vendorImages = db.VendorImages.Include(v => v.Vendor);
@@ -22,6 +24,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorImages/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -33,6 +36,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorImages/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name");
@@ -44,6 +48,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(Include =
                 "VendorImageId,ImageOne,ImageTwo,ImageThree,ImageFour,ImageFive,ImageSix,ImageSeven,ImageEight,ImageNine,ImageTen,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
@@ -110,6 +115,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorImages/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -126,6 +132,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include =
                 "VendorImageId,ImageOne,ImageTwo,ImageThree,ImageFour,ImageFive,ImageSix,ImageSeven,ImageEight,ImageNine,ImageTen,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
@@ -178,13 +185,14 @@ namespace MyEventPlan.Controllers.VendorManagement
                 }
                 db.Entry(vendorImage).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Profile","Vendors");
+                return RedirectToAction("Profile", "Vendors");
             }
             ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorImage.VendorId);
             return View(vendorImage);
         }
 
         // GET: VendorImages/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -199,6 +207,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var vendorImage = db.VendorImages.Find(id);

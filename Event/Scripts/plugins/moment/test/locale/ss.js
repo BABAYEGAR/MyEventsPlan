@@ -5,7 +5,8 @@ localeModule("ss");
 test("parse",
     function(assert) {
         var tests =
-                "Bhimbidvwane Bhi_Indlovana Ina_Indlov'lenkhulu Inu_Mabasa Mab_Inkhwekhweti Ink_Inhlaba Inh_Kholwane Kho_Ingci Igc_Inyoni Iny_Imphala Imp_Lweti lwe_Ingongoni Igo".split("_"),
+                "Bhimbidvwane Bhi_Indlovana Ina_Indlov'lenkhulu Inu_Mabasa Mab_Inkhwekhweti Ink_Inhlaba Inh_Kholwane Kho_Ingci Igc_Inyoni Iny_Imphala Imp_Lweti lwe_Ingongoni Igo"
+                    .split("_"),
             i;
 
         function equalTest(input, mmm, i) {
@@ -137,7 +138,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "Bhimbidvwane Bhi_Indlovana Ina_Indlov'lenkhulu Inu_Mabasa Mab_Inkhwekhweti Ink_Inhlaba Inh_Kholwane Kho_Ingci Igc_Inyoni Iny_Imphala Imp_Lweti Lwe_Ingongoni Igo".split("_"),
+                "Bhimbidvwane Bhi_Indlovana Ina_Indlov'lenkhulu Inu_Mabasa Mab_Inkhwekhweti Ink_Inhlaba Inh_Kholwane Kho_Ingci Igc_Inyoni Iny_Imphala Imp_Lweti Lwe_Ingongoni Igo"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -147,7 +149,8 @@ test("format month",
 test("format week",
     function(assert) {
         var expected =
-                "Lisontfo Lis Li_Umsombuluko Umb Us_Lesibili Lsb Lb_Lesitsatfu Les Lt_Lesine Lsi Ls_Lesihlanu Lsh Lh_Umgcibelo Umg Ug".split("_"),
+                "Lisontfo Lis Li_Umsombuluko Umb Us_Lesibili Lsb Lb_Lesitsatfu Les Lt_Lesine Lsi Ls_Lesihlanu Lsh Lh_Umgcibelo Umg Ug"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 
 namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorReviewsController : Controller
     {
-        private VendorReviewDataContext db = new VendorReviewDataContext();
-        private VendorDataContext dbc = new VendorDataContext();
+        private readonly VendorReviewDataContext db = new VendorReviewDataContext();
+        private readonly VendorDataContext dbc = new VendorDataContext();
 
         // GET: VendorReviews
+       
         public ActionResult Index()
         {
             var vendorReviews = db.VendorReviews.Include(v => v.Vendor);
@@ -24,21 +23,19 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorReviews/Details/5
+       
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorReview vendorReview = db.VendorReviews.Find(id);
+            var vendorReview = db.VendorReviews.Find(id);
             if (vendorReview == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorReview);
         }
 
         // GET: VendorReviews/Create
+       
         public ActionResult Create()
         {
             ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name");
@@ -50,8 +47,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorReviewId,ReviewerName,ReviewerEmail,ReviewTitle,ReviewBody,Rating,VendorId,CreatedBy" +
-                                                   ",DateCreated,DateLastModified,LastModifiedBy")] VendorReview vendorReview,FormCollection collectedValues)
+       
+        public ActionResult Create([Bind(Include =
+            "VendorReviewId,ReviewerName,ReviewerEmail,ReviewTitle,ReviewBody,Rating,VendorId,CreatedBy" +
+            ",DateCreated,DateLastModified,LastModifiedBy")] VendorReview vendorReview, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
@@ -76,29 +75,26 @@ namespace MyEventPlan.Controllers.VendorManagement
                     ratingValue = totalRatings * 5 / totalPossibleRatings;
                     if (ratingValue != null)
                     {
-                        ratings = (long)Math.Round((double)ratingValue);
+                        ratings = (long) Math.Round((double) ratingValue);
                         vendor.AverageRating = ratings;
                     }
                 }
                 dbc.Entry(vendor).State = EntityState.Modified;
                 dbc.SaveChanges();
-                return RedirectToAction("Details", "Vendors", new { id = vendorReview.VendorId });
+                return RedirectToAction("Details", "Vendors", new {id = vendorReview.VendorId});
             }
             return View(vendorReview);
         }
 
         // GET: VendorReviews/Edit/5
+       
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorReview vendorReview = db.VendorReviews.Find(id);
+            var vendorReview = db.VendorReviews.Find(id);
             if (vendorReview == null)
-            {
                 return HttpNotFound();
-            }
             ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorReview.VendorId);
             return View(vendorReview);
         }
@@ -108,7 +104,11 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "VendorReviewId,ReviewerName,ReviewerEmail,ReviewTitle,ReviewBody,Rating,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] VendorReview vendorReview)
+       
+        public ActionResult Edit(
+            [Bind(Include =
+                "VendorReviewId,ReviewerName,ReviewerEmail,ReviewTitle,ReviewBody,Rating,VendorId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
+            VendorReview vendorReview)
         {
             if (ModelState.IsValid)
             {
@@ -121,26 +121,25 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorReviews/Delete/5
+       
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            VendorReview vendorReview = db.VendorReviews.Find(id);
+            var vendorReview = db.VendorReviews.Find(id);
             if (vendorReview == null)
-            {
                 return HttpNotFound();
-            }
             return View(vendorReview);
         }
 
         // POST: VendorReviews/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+       
         public ActionResult DeleteConfirmed(long id)
         {
-            VendorReview vendorReview = db.VendorReviews.Find(id);
+            var vendorReview = db.VendorReviews.Find(id);
             db.VendorReviews.Remove(vendorReview);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -149,9 +148,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

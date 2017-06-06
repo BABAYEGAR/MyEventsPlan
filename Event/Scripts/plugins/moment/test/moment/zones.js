@@ -2,11 +2,11 @@ import { module, test } from "../qunit";
 import moment from "../../moment";
 
 module("zones",
-{
-    'setup': function() {
-        test.expectedDeprecations("moment().zone");
-    }
-});
+    {
+        'setup': function() {
+            test.expectedDeprecations("moment().zone");
+        }
+    });
 
 test("set zone",
     function(assert) {

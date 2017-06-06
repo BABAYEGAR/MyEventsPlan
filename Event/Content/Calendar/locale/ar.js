@@ -1,7 +1,9 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
+        : "object" == typeof exports
+        ? module.exports = e(require("jquery"), require("moment"))
+        : e(jQuery, moment);
 }(function(e, t) {
     !function() {
         var e = { 1: "١", 2: "٢", 3: "٣", 4: "٤", 5: "٥", 6: "٦", 7: "٧", 8: "٨", 9: "٩", 0: "٠" },
@@ -9,7 +11,15 @@
             d = function(e) {
                 return 0 === e
                     ? 0
-                    : 1 === e ? 1 : 2 === e ? 2 : e % 100 >= 3 && e % 100 <= 10 ? 3 : e % 100 >= 11 ? 4 : 5;
+                    : 1 === e
+                    ? 1
+                    : 2 === e
+                    ? 2
+                    : e % 100 >= 3 && e % 100 <= 10
+                    ? 3
+                    : e % 100 >= 11
+                    ? 4
+                    : 5;
             },
             n = {
                 s: ["أقل من ثانية", "ثانية واحدة", ["ثانيتان", "ثانيتين"], "%d ثوان", "%d ثانية", "%d ثانية"],
@@ -31,55 +41,55 @@
                 "كانون الأول ديسمبر"
             ],
             m = t.defineLocale("ar",
-            {
-                months: o,
-                monthsShort: o,
-                weekdays: "الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت".split("_"),
-                weekdaysShort: "أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت".split("_"),
-                weekdaysMin: "ح_ن_ث_ر_خ_ج_س".split("_"),
-                weekdaysParseExact: !0,
-                longDateFormat: {
-                    LT: "HH:mm",
-                    LTS: "HH:mm:ss",
-                    L: "D/‏M/‏YYYY",
-                    LL: "D MMMM YYYY",
-                    LLL: "D MMMM YYYY HH:mm",
-                    LLLL: "dddd D MMMM YYYY HH:mm"
-                },
-                meridiemParse: /ص|م/,
-                isPM: function(e) { return"م" === e },
-                meridiem: function(e, t, r) { return e < 12 ? "ص" : "م" },
-                calendar: {
-                    sameDay: "[اليوم عند الساعة] LT",
-                    nextDay: "[غدًا عند الساعة] LT",
-                    nextWeek: "dddd [عند الساعة] LT",
-                    lastDay: "[أمس عند الساعة] LT",
-                    lastWeek: "dddd [عند الساعة] LT",
-                    sameElse: "L"
-                },
-                relativeTime: {
-                    future: "بعد %s",
-                    past: "منذ %s",
-                    s: a("s"),
-                    m: a("m"),
-                    mm: a("m"),
-                    h: a("h"),
-                    hh: a("h"),
-                    d: a("d"),
-                    dd: a("d"),
-                    M: a("M"),
-                    MM: a("M"),
-                    y: a("y"),
-                    yy: a("y")
-                },
-                preparse: function(e) {
-                    return e.replace(/\u200f/g, "")
-                        .replace(/[١٢٣٤٥٦٧٨٩٠]/g, function(e) { return r[e] })
-                        .replace(/،/g, ",")
-                },
-                postformat: function(t) { return t.replace(/\d/g, function(t) { return e[t] }).replace(/,/g, "،") },
-                week: { dow: 6, doy: 12 }
-            });
+                {
+                    months: o,
+                    monthsShort: o,
+                    weekdays: "الأحد_الإثنين_الثلاثاء_الأربعاء_الخميس_الجمعة_السبت".split("_"),
+                    weekdaysShort: "أحد_إثنين_ثلاثاء_أربعاء_خميس_جمعة_سبت".split("_"),
+                    weekdaysMin: "ح_ن_ث_ر_خ_ج_س".split("_"),
+                    weekdaysParseExact: !0,
+                    longDateFormat: {
+                        LT: "HH:mm",
+                        LTS: "HH:mm:ss",
+                        L: "D/‏M/‏YYYY",
+                        LL: "D MMMM YYYY",
+                        LLL: "D MMMM YYYY HH:mm",
+                        LLLL: "dddd D MMMM YYYY HH:mm"
+                    },
+                    meridiemParse: /ص|م/,
+                    isPM: function(e) { return"م" === e },
+                    meridiem: function(e, t, r) { return e < 12 ? "ص" : "م" },
+                    calendar: {
+                        sameDay: "[اليوم عند الساعة] LT",
+                        nextDay: "[غدًا عند الساعة] LT",
+                        nextWeek: "dddd [عند الساعة] LT",
+                        lastDay: "[أمس عند الساعة] LT",
+                        lastWeek: "dddd [عند الساعة] LT",
+                        sameElse: "L"
+                    },
+                    relativeTime: {
+                        future: "بعد %s",
+                        past: "منذ %s",
+                        s: a("s"),
+                        m: a("m"),
+                        mm: a("m"),
+                        h: a("h"),
+                        hh: a("h"),
+                        d: a("d"),
+                        dd: a("d"),
+                        M: a("M"),
+                        MM: a("M"),
+                        y: a("y"),
+                        yy: a("y")
+                    },
+                    preparse: function(e) {
+                        return e.replace(/\u200f/g, "")
+                            .replace(/[١٢٣٤٥٦٧٨٩٠]/g, function(e) { return r[e] })
+                            .replace(/،/g, ",");
+                    },
+                    postformat: function(t) { return t.replace(/\d/g, function(t) { return e[t] }).replace(/,/g, "،") },
+                    week: { dow: 6, doy: 12 }
+                });
         return m;
     }(), e.fullCalendar.datepickerLocale("ar",
         "ar",
@@ -103,10 +113,10 @@
             showMonthAfterYear: !1,
             yearSuffix: ""
         }), e.fullCalendar.locale("ar",
-    {
-        buttonText: { month: "شهر", week: "أسبوع", day: "يوم", list: "أجندة" },
-        allDayText: "اليوم كله",
-        eventLimitText: "أخرى",
-        noEventsMessage: "أي أحداث لعرض"
-    });
+        {
+            buttonText: { month: "شهر", week: "أسبوع", day: "يوم", list: "أجندة" },
+            allDayText: "اليوم كله",
+            eventLimitText: "أخرى",
+            noEventsMessage: "أي أحداث لعرض"
+        });
 });

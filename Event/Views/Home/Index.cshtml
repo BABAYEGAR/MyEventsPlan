@@ -9,6 +9,8 @@
 
     var allPlanners = db.EventPlanners.Include(m => m.Location).ToList();
     var countedPlanners = allPlanners.Take(3);
+
+
 }
 <div class="slider-bg">
     <!-- slider start-->
@@ -40,13 +42,13 @@
                         {
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    @Html.DropDownListFor(m => m.VendorServiceId, (SelectList) ViewBag.categoryId, "Select a category ", new {@class = "form-control", id = "category"})
+                                    @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Vendor Service", new {@class = "form-control"})
                                     @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
                                 </div>
                                 <div class="form-group col-md-4">
-                                    @Html.DropDownListFor(m => m.LocationId, (SelectList) ViewBag.locationId, "Select a location ", new {@class = "form-control", id = "service"})
-                                    @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
-                                </div>
+                                            @Html.DropDownListFor(m => m.LocationId, null, "Select Vendor Location", new {@class = "form-control"})
+                                            @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
+                                    </div>
                                 <div class="form-group col-md-4">
                                     <input type="submit" value="Find Vendors" id="findvendors" class="btn btn-primary btn-lg btn-block"/>
                                 </div>
@@ -187,7 +189,7 @@
                     <div class="real-wedding-block mb30">
                         <!-- real wedding block -->
                         <div class="real-wedding-img">
-                            <a href="@Url.Action("EventPlannerDetails","EventPlanners",new{id = item.EventPlannerId})">
+                            <a href="@Url.Action("EventPlannerDetails", "EventPlanners", new {id = item.EventPlannerId})">
                                 <img src="~/UploadedFiles/EventPlannerLogo/@item.Logo" alt="" class="img-responsive">
                             </a>
                         </div>
@@ -275,12 +277,18 @@
     <script>
         $(window)
             .load(function() {
-                $('#myModal').modal('show');
-
                 $(function() {
                     $("#category")
                         .change(function() {
-                            if ($(this).val() == "0") {
+                            if ($("#category").val() === "0") {
+                                $("#findvendors").prop("disabled", true);
+                                console.log($("#service").val());
+                            } else
+                                $("#findvendors").prop("disabled", false);
+                        });
+                    $("#service")
+                        .change(function() {
+                            if ($("#service").val() === "0") {
                                 $("#findvendors").prop("disabled", true);
                             } else
                                 $("#findvendors").prop("disabled", false);

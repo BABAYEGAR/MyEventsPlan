@@ -5,41 +5,43 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventPlannerPackage
 {
     public class EventPlannerPackageItemsController : Controller
     {
-        private EventPlannerPackageItemDataContext db = new EventPlannerPackageItemDataContext();
+        private readonly EventPlannerPackageItemDataContext db = new EventPlannerPackageItemDataContext();
 
         // GET: EventPlannerPackageItems
+        [SessionExpire]
         public ActionResult Index(long id)
         {
-            var eventPlannerPackageItems = db.EventPlannerPackageItems.Include(e => e.EventPlannerPackage).Where(n=>n.EventPlannerPackageId == id);
+            var eventPlannerPackageItems = db.EventPlannerPackageItems.Include(e => e.EventPlannerPackage)
+                .Where(n => n.EventPlannerPackageId == id);
             ViewBag.packageId = id;
             return View(eventPlannerPackageItems.ToList());
         }
 
         // GET: EventPlannerPackageItems/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlannerPackageItem eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
+            var eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
             if (eventPlannerPackageItem == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventPlannerPackageItem);
         }
 
         // GET: EventPlannerPackageItems/Create
+        [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId", "PackageName");
+            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId",
+                "PackageName");
             return View();
         }
 
@@ -48,7 +50,10 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EventPlannerPackageItemId,ItemName,Amount,EventPlannerPackageId")] EventPlannerPackageItem eventPlannerPackageItem)
+        [SessionExpire]
+        public ActionResult Create(
+            [Bind(Include = "EventPlannerPackageItemId,ItemName,Amount,EventPlannerPackageId")]
+            EventPlannerPackageItem eventPlannerPackageItem)
         {
             if (ModelState.IsValid)
             {
@@ -59,7 +64,6 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                 {
                     eventPlannerPackageItem.LastModifiedBy = loggedinuser.AppUserId;
                     eventPlannerPackageItem.CreatedBy = loggedinuser.AppUserId;
-
                 }
                 else
                 {
@@ -78,26 +82,25 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
 
                 TempData["display"] = "You have successfully added an item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index",new{id = eventPlannerPackageItem.EventPlannerPackageId});
+                return RedirectToAction("Index", new {id = eventPlannerPackageItem.EventPlannerPackageId});
             }
 
-            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId", "PackageName", eventPlannerPackageItem.EventPlannerPackageId);
+            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId",
+                "PackageName", eventPlannerPackageItem.EventPlannerPackageId);
             return View(eventPlannerPackageItem);
         }
 
         // GET: EventPlannerPackageItems/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlannerPackageItem eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
+            var eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
             if (eventPlannerPackageItem == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId", "PackageName", eventPlannerPackageItem.EventPlannerPackageId);
+            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId",
+                "PackageName", eventPlannerPackageItem.EventPlannerPackageId);
             return View(eventPlannerPackageItem);
         }
 
@@ -106,7 +109,10 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventPlannerPackageItemId,ItemName,Amount,EventPlannerPackageId,CreatedBy,DateCreated")] EventPlannerPackageItem eventPlannerPackageItem)
+        [SessionExpire]
+        public ActionResult Edit(
+            [Bind(Include = "EventPlannerPackageItemId,ItemName,Amount,EventPlannerPackageId,CreatedBy,DateCreated")]
+            EventPlannerPackageItem eventPlannerPackageItem)
         {
             if (ModelState.IsValid)
             {
@@ -115,7 +121,6 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                 if (loggedinuser != null)
                 {
                     eventPlannerPackageItem.LastModifiedBy = loggedinuser.AppUserId;
-
                 }
                 else
                 {
@@ -134,46 +139,43 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
 
                 TempData["display"] = "You have successfully modified the item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index", new { id = eventPlannerPackageItem.EventPlannerPackageId });
+                return RedirectToAction("Index", new {id = eventPlannerPackageItem.EventPlannerPackageId});
             }
             return View(eventPlannerPackageItem);
         }
 
         // GET: EventPlannerPackageItems/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlannerPackageItem eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
+            var eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
             if (eventPlannerPackageItem == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventPlannerPackageItem);
         }
 
         // POST: EventPlannerPackageItems/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            EventPlannerPackageItem eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
+            var eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
             db.EventPlannerPackageItems.Remove(eventPlannerPackageItem);
             db.SaveChanges();
 
             TempData["display"] = "You have successfully deleted the item!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { id = eventPlannerPackageItem.EventPlannerPackageId });
+            return RedirectToAction("Index", new {id = eventPlannerPackageItem.EventPlannerPackageId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

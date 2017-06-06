@@ -1,7 +1,9 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
+        : "object" == typeof exports
+        ? module.exports = e(require("jquery"), require("moment"))
+        : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         function e(e, a, r, t) {
@@ -13,111 +15,164 @@
                 return a ? "ena minuta" : "eno minuto";
             case"mm":
                 return n += 1 === e
-                    ? a ? "minuta" : "minuto"
+                    ? a
+                    ? "minuta"
+                    : "minuto"
                     : 2 === e
-                    ? a || t ? "minuti" : "minutama"
-                    : e < 5 ? a || t ? "minute" : "minutami" : a || t ? "minut" : "minutami";
+                    ? a || t
+                    ? "minuti"
+                    : "minutama"
+                    : e < 5
+                    ? a || t
+                    ? "minute"
+                    : "minutami"
+                    : a || t
+                    ? "minut"
+                    : "minutami";
             case"h":
                 return a ? "ena ura" : "eno uro";
             case"hh":
                 return n += 1 === e
-                    ? a ? "ura" : "uro"
-                    : 2 === e ? a || t ? "uri" : "urama" : e < 5 ? a || t ? "ure" : "urami" : a || t ? "ur" : "urami";
+                    ? a
+                    ? "ura"
+                    : "uro"
+                    : 2 === e
+                    ? a || t
+                    ? "uri"
+                    : "urama"
+                    : e < 5
+                    ? a || t
+                    ? "ure"
+                    : "urami"
+                    : a || t
+                    ? "ur"
+                    : "urami";
             case"d":
                 return a || t ? "en dan" : "enim dnem";
             case"dd":
                 return n += 1 === e
-                    ? a || t ? "dan" : "dnem"
-                    : 2 === e ? a || t ? "dni" : "dnevoma" : a || t ? "dni" : "dnevi";
+                    ? a || t
+                    ? "dan"
+                    : "dnem"
+                    : 2 === e
+                    ? a || t
+                    ? "dni"
+                    : "dnevoma"
+                    : a || t
+                    ? "dni"
+                    : "dnevi";
             case"M":
                 return a || t ? "en mesec" : "enim mesecem";
             case"MM":
                 return n += 1 === e
-                    ? a || t ? "mesec" : "mesecem"
+                    ? a || t
+                    ? "mesec"
+                    : "mesecem"
                     : 2 === e
-                    ? a || t ? "meseca" : "mesecema"
-                    : e < 5 ? a || t ? "mesece" : "meseci" : a || t ? "mesecev" : "meseci";
+                    ? a || t
+                    ? "meseca"
+                    : "mesecema"
+                    : e < 5
+                    ? a || t
+                    ? "mesece"
+                    : "meseci"
+                    : a || t
+                    ? "mesecev"
+                    : "meseci";
             case"y":
                 return a || t ? "eno leto" : "enim letom";
             case"yy":
                 return n += 1 === e
-                    ? a || t ? "leto" : "letom"
-                    : 2 === e ? a || t ? "leti" : "letoma" : e < 5 ? a || t ? "leta" : "leti" : a || t ? "let" : "leti";
+                    ? a || t
+                    ? "leto"
+                    : "letom"
+                    : 2 === e
+                    ? a || t
+                    ? "leti"
+                    : "letoma"
+                    : e < 5
+                    ? a || t
+                    ? "leta"
+                    : "leti"
+                    : a || t
+                    ? "let"
+                    : "leti";
             }
         }
 
         var r = a.defineLocale("sl",
-        {
-            months: "januar_februar_marec_april_maj_junij_julij_avgust_september_oktober_november_december".split("_"),
-            monthsShort: "jan._feb._mar._apr._maj._jun._jul._avg._sep._okt._nov._dec.".split("_"),
-            monthsParseExact: !0,
-            weekdays: "nedelja_ponedeljek_torek_sreda_četrtek_petek_sobota".split("_"),
-            weekdaysShort: "ned._pon._tor._sre._čet._pet._sob.".split("_"),
-            weekdaysMin: "ne_po_to_sr_če_pe_so".split("_"),
-            weekdaysParseExact: !0,
-            longDateFormat: {
-                LT: "H:mm",
-                LTS: "H:mm:ss",
-                L: "DD.MM.YYYY",
-                LL: "D. MMMM YYYY",
-                LLL: "D. MMMM YYYY H:mm",
-                LLLL: "dddd, D. MMMM YYYY H:mm"
-            },
-            calendar: {
-                sameDay: "[danes ob] LT",
-                nextDay: "[jutri ob] LT",
-                nextWeek: function() {
-                    switch (this.day()) {
-                    case 0:
-                        return"[v] [nedeljo] [ob] LT";
-                    case 3:
-                        return"[v] [sredo] [ob] LT";
-                    case 6:
-                        return"[v] [soboto] [ob] LT";
-                    case 1:
-                    case 2:
-                    case 4:
-                    case 5:
-                        return"[v] dddd [ob] LT";
-                    }
+            {
+                months: "januar_februar_marec_april_maj_junij_julij_avgust_september_oktober_november_december"
+                    .split("_"),
+                monthsShort: "jan._feb._mar._apr._maj._jun._jul._avg._sep._okt._nov._dec.".split("_"),
+                monthsParseExact: !0,
+                weekdays: "nedelja_ponedeljek_torek_sreda_četrtek_petek_sobota".split("_"),
+                weekdaysShort: "ned._pon._tor._sre._čet._pet._sob.".split("_"),
+                weekdaysMin: "ne_po_to_sr_če_pe_so".split("_"),
+                weekdaysParseExact: !0,
+                longDateFormat: {
+                    LT: "H:mm",
+                    LTS: "H:mm:ss",
+                    L: "DD.MM.YYYY",
+                    LL: "D. MMMM YYYY",
+                    LLL: "D. MMMM YYYY H:mm",
+                    LLLL: "dddd, D. MMMM YYYY H:mm"
                 },
-                lastDay: "[včeraj ob] LT",
-                lastWeek: function() {
-                    switch (this.day()) {
-                    case 0:
-                        return"[prejšnjo] [nedeljo] [ob] LT";
-                    case 3:
-                        return"[prejšnjo] [sredo] [ob] LT";
-                    case 6:
-                        return"[prejšnjo] [soboto] [ob] LT";
-                    case 1:
-                    case 2:
-                    case 4:
-                    case 5:
-                        return"[prejšnji] dddd [ob] LT";
-                    }
+                calendar: {
+                    sameDay: "[danes ob] LT",
+                    nextDay: "[jutri ob] LT",
+                    nextWeek: function() {
+                        switch (this.day()) {
+                        case 0:
+                            return"[v] [nedeljo] [ob] LT";
+                        case 3:
+                            return"[v] [sredo] [ob] LT";
+                        case 6:
+                            return"[v] [soboto] [ob] LT";
+                        case 1:
+                        case 2:
+                        case 4:
+                        case 5:
+                            return"[v] dddd [ob] LT";
+                        }
+                    },
+                    lastDay: "[včeraj ob] LT",
+                    lastWeek: function() {
+                        switch (this.day()) {
+                        case 0:
+                            return"[prejšnjo] [nedeljo] [ob] LT";
+                        case 3:
+                            return"[prejšnjo] [sredo] [ob] LT";
+                        case 6:
+                            return"[prejšnjo] [soboto] [ob] LT";
+                        case 1:
+                        case 2:
+                        case 4:
+                        case 5:
+                            return"[prejšnji] dddd [ob] LT";
+                        }
+                    },
+                    sameElse: "L"
                 },
-                sameElse: "L"
-            },
-            relativeTime: {
-                future: "čez %s",
-                past: "pred %s",
-                s: e,
-                m: e,
-                mm: e,
-                h: e,
-                hh: e,
-                d: e,
-                dd: e,
-                M: e,
-                MM: e,
-                y: e,
-                yy: e
-            },
-            ordinalParse: /\d{1,2}\./,
-            ordinal: "%d.",
-            week: { dow: 1, doy: 7 }
-        });
+                relativeTime: {
+                    future: "čez %s",
+                    past: "pred %s",
+                    s: e,
+                    m: e,
+                    mm: e,
+                    h: e,
+                    hh: e,
+                    d: e,
+                    dd: e,
+                    M: e,
+                    MM: e,
+                    y: e,
+                    yy: e
+                },
+                ordinalParse: /\d{1,2}\./,
+                ordinal: "%d.",
+                week: { dow: 1, doy: 7 }
+            });
         return r;
     }(), e.fullCalendar.datepickerLocale("sl",
         "sl",
@@ -141,10 +196,10 @@
             showMonthAfterYear: !1,
             yearSuffix: ""
         }), e.fullCalendar.locale("sl",
-    {
-        buttonText: { month: "Mesec", week: "Teden", day: "Dan", list: "Dnevni red" },
-        allDayText: "Ves dan",
-        eventLimitText: "več",
-        noEventsMessage: "Ni dogodkov za prikaz"
-    });
+        {
+            buttonText: { month: "Mesec", week: "Teden", day: "Dan", list: "Dnevni red" },
+            allDayText: "Ves dan",
+            eventLimitText: "več",
+            noEventsMessage: "Ni dogodkov za prikaz"
+        });
 });

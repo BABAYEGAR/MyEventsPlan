@@ -11,8 +11,7 @@ namespace Event.Data.Objects.Entities
         [Required]
         [DisplayName("Service")]
         public string ServiceName { get; set; }
-        [Required]
-        public string Scale { get; set; }
+
         public IEnumerable<Vendor> Vendors { get; set; }
     }
 }

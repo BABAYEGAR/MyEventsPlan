@@ -1,7 +1,9 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
+        : "object" == typeof exports
+        ? module.exports = e(require("jquery"), require("moment"))
+        : e(jQuery, moment);
 }(function(e, a) {
     !function() {
         function e(e, a, t) {
@@ -25,83 +27,83 @@
         }
 
         var t = a.defineLocale("hr",
-        {
-            months: {
-                format:
-                    "siječnja_veljače_ožujka_travnja_svibnja_lipnja_srpnja_kolovoza_rujna_listopada_studenoga_prosinca"
-                        .split("_"),
-                standalone:
-                    "siječanj_veljača_ožujak_travanj_svibanj_lipanj_srpanj_kolovoz_rujan_listopad_studeni_prosinac"
-                        .split("_")
-            },
-            monthsShort: "sij._velj._ožu._tra._svi._lip._srp._kol._ruj._lis._stu._pro.".split("_"),
-            monthsParseExact: !0,
-            weekdays: "nedjelja_ponedjeljak_utorak_srijeda_četvrtak_petak_subota".split("_"),
-            weekdaysShort: "ned._pon._uto._sri._čet._pet._sub.".split("_"),
-            weekdaysMin: "ne_po_ut_sr_če_pe_su".split("_"),
-            weekdaysParseExact: !0,
-            longDateFormat: {
-                LT: "H:mm",
-                LTS: "H:mm:ss",
-                L: "DD.MM.YYYY",
-                LL: "D. MMMM YYYY",
-                LLL: "D. MMMM YYYY H:mm",
-                LLLL: "dddd, D. MMMM YYYY H:mm"
-            },
-            calendar: {
-                sameDay: "[danas u] LT",
-                nextDay: "[sutra u] LT",
-                nextWeek: function() {
-                    switch (this.day()) {
-                    case 0:
-                        return"[u] [nedjelju] [u] LT";
-                    case 3:
-                        return"[u] [srijedu] [u] LT";
-                    case 6:
-                        return"[u] [subotu] [u] LT";
-                    case 1:
-                    case 2:
-                    case 4:
-                    case 5:
-                        return"[u] dddd [u] LT";
-                    }
+            {
+                months: {
+                    format:
+                        "siječnja_veljače_ožujka_travnja_svibnja_lipnja_srpnja_kolovoza_rujna_listopada_studenoga_prosinca"
+                            .split("_"),
+                    standalone:
+                        "siječanj_veljača_ožujak_travanj_svibanj_lipanj_srpanj_kolovoz_rujan_listopad_studeni_prosinac"
+                            .split("_")
                 },
-                lastDay: "[jučer u] LT",
-                lastWeek: function() {
-                    switch (this.day()) {
-                    case 0:
-                    case 3:
-                        return"[prošlu] dddd [u] LT";
-                    case 6:
-                        return"[prošle] [subote] [u] LT";
-                    case 1:
-                    case 2:
-                    case 4:
-                    case 5:
-                        return"[prošli] dddd [u] LT";
-                    }
+                monthsShort: "sij._velj._ožu._tra._svi._lip._srp._kol._ruj._lis._stu._pro.".split("_"),
+                monthsParseExact: !0,
+                weekdays: "nedjelja_ponedjeljak_utorak_srijeda_četvrtak_petak_subota".split("_"),
+                weekdaysShort: "ned._pon._uto._sri._čet._pet._sub.".split("_"),
+                weekdaysMin: "ne_po_ut_sr_če_pe_su".split("_"),
+                weekdaysParseExact: !0,
+                longDateFormat: {
+                    LT: "H:mm",
+                    LTS: "H:mm:ss",
+                    L: "DD.MM.YYYY",
+                    LL: "D. MMMM YYYY",
+                    LLL: "D. MMMM YYYY H:mm",
+                    LLLL: "dddd, D. MMMM YYYY H:mm"
                 },
-                sameElse: "L"
-            },
-            relativeTime: {
-                future: "za %s",
-                past: "prije %s",
-                s: "par sekundi",
-                m: e,
-                mm: e,
-                h: e,
-                hh: e,
-                d: "dan",
-                dd: e,
-                M: "mjesec",
-                MM: e,
-                y: "godinu",
-                yy: e
-            },
-            ordinalParse: /\d{1,2}\./,
-            ordinal: "%d.",
-            week: { dow: 1, doy: 7 }
-        });
+                calendar: {
+                    sameDay: "[danas u] LT",
+                    nextDay: "[sutra u] LT",
+                    nextWeek: function() {
+                        switch (this.day()) {
+                        case 0:
+                            return"[u] [nedjelju] [u] LT";
+                        case 3:
+                            return"[u] [srijedu] [u] LT";
+                        case 6:
+                            return"[u] [subotu] [u] LT";
+                        case 1:
+                        case 2:
+                        case 4:
+                        case 5:
+                            return"[u] dddd [u] LT";
+                        }
+                    },
+                    lastDay: "[jučer u] LT",
+                    lastWeek: function() {
+                        switch (this.day()) {
+                        case 0:
+                        case 3:
+                            return"[prošlu] dddd [u] LT";
+                        case 6:
+                            return"[prošle] [subote] [u] LT";
+                        case 1:
+                        case 2:
+                        case 4:
+                        case 5:
+                            return"[prošli] dddd [u] LT";
+                        }
+                    },
+                    sameElse: "L"
+                },
+                relativeTime: {
+                    future: "za %s",
+                    past: "prije %s",
+                    s: "par sekundi",
+                    m: e,
+                    mm: e,
+                    h: e,
+                    hh: e,
+                    d: "dan",
+                    dd: e,
+                    M: "mjesec",
+                    MM: e,
+                    y: "godinu",
+                    yy: e
+                },
+                ordinalParse: /\d{1,2}\./,
+                ordinal: "%d.",
+                week: { dow: 1, doy: 7 }
+            });
         return t;
     }(), e.fullCalendar.datepickerLocale("hr",
         "hr",
@@ -125,10 +127,10 @@
             showMonthAfterYear: !1,
             yearSuffix: ""
         }), e.fullCalendar.locale("hr",
-    {
-        buttonText: { month: "Mjesec", week: "Tjedan", day: "Dan", list: "Raspored" },
-        allDayText: "Cijeli dan",
-        eventLimitText: function(e) { return"+ još " + e },
-        noEventsMessage: "Nema događaja za prikaz"
-    });
+        {
+            buttonText: { month: "Mjesec", week: "Tjedan", day: "Dan", list: "Raspored" },
+            allDayText: "Cijeli dan",
+            eventLimitText: function(e) { return"+ još " + e },
+            noEventsMessage: "Nema događaja za prikaz"
+        });
 });

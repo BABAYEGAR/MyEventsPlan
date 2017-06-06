@@ -96,7 +96,6 @@
                 format: 'm-d-Y H:i',
                 onShow: function() {
                     this.setOptions({
-                    
                     });
                 }
             });
@@ -105,7 +104,6 @@
                 format: 'm-d-Y H:i',
                 onShow: function() {
                     this.setOptions({
-                    
                     });
                 }
             });
@@ -280,9 +278,10 @@
             });
 
         }
+
         //amount indicator
         $('input.number')
-            .keyup(function (event) {
+            .keyup(function(event) {
 
                 if (event.which >= 37 && event.which <= 40) {
                     event.preventDefault();

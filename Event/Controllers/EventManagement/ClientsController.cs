@@ -17,6 +17,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly EventDataContext dbc = new EventDataContext();
 
         // GET: Clients
+        [SessionExpire]
         public ActionResult Index()
         {
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
@@ -26,14 +27,18 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Clients
+        [SessionExpire]
         public ActionResult AllMyClients()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var clients =
-                db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(c => c.Event).Include(c => c.EventPlanner);
+                db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(c => c.Event)
+                    .Include(c => c.EventPlanner);
             return View(clients.ToList());
         }
+
         // GET: Clients/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -45,6 +50,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Clients/Details/5
+        [SessionExpire]
         public ActionResult CreateLoginAccessForClient(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -69,13 +75,14 @@ namespace MyEventPlan.Controllers.EventManagement
             }
             dbc.AppUsers.Add(appUser);
             dbc.SaveChanges();
-            if (events != null) new MailerDaemon().NewClientLogin(client, appUser.AppUserId,events.Name);
+            if (events != null) new MailerDaemon().NewClientLogin(client, appUser.AppUserId, events.Name);
             TempData["display"] = "The login acces link has been successfully sent to the clients email!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new {id = client.EventId});
         }
 
         // GET: Clients/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -86,6 +93,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "ClientId,Name,Password,Email,Mobile")] Client client)
         {
             if (ModelState.IsValid)
@@ -95,14 +103,15 @@ namespace MyEventPlan.Controllers.EventManagement
                 client.DateCreated = DateTime.Now;
                 client.DateLastModified = DateTime.Now;
                 if (events != null) client.EventId = events.EventId;
-                var clientExist = db.Clients.Where(m => m.Email == client.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+                var clientExist = db.Clients
+                    .Where(m => m.Email == client.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
                 if (loggedinuser != null)
                 {
                     if (clientExist.Count > 0)
                     {
                         TempData["display"] = "A client with the same email exist, try another email!";
                         TempData["notificationtype"] = NotificationType.Error.ToString();
-                        return RedirectToAction("Index", new { id = client.EventId });
+                        return RedirectToAction("Index", new {id = client.EventId});
                     }
                     client.LastModifiedBy = loggedinuser.AppUserId;
                     client.CreatedBy = loggedinuser.AppUserId;
@@ -124,6 +133,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Clients/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -139,6 +149,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "ClientId,Name,Password,Email,Mobile,EventPlannerId,EventId,CreatedBy,DateCreated")] Client
                 client)
@@ -168,6 +179,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Clients/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -182,6 +194,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var client = db.Clients.Find(id);

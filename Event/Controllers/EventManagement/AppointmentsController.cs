@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Calender;
 using MyEventPlan.Data.Service.Enum;
 
@@ -15,22 +16,25 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly AppointmentDataContext _db = new AppointmentDataContext();
 
         // GET: Appointments
+        [SessionExpire]
         public ActionResult Index(long? eventId)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.eventId = eventId;
             var appointments =
-                _db.Appointments.Where(n => (n.EventId == eventId) && (n.EventPlannerId == loggedinuser.EventPlannerId))
+                _db.Appointments.Where(n => n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId)
                     .OrderByDescending(n => n.StartDate)
                     .Include(a => a.Event);
             return View(appointments.ToList());
         }
 
         // GET: Appointments
+        [SessionExpire]
         public ActionResult Calendar()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            ViewBag.EventId = new SelectList(_db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "EventId", "Name");
+            ViewBag.EventId = new SelectList(_db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+                "EventId", "Name");
             return View();
         }
 
@@ -60,11 +64,13 @@ namespace MyEventPlan.Controllers.EventManagement
             }
             return Json(appointments.ToArray(), JsonRequestBehavior.AllowGet);
         }
+
         // POST: Appointment/UpdateCalendarAppointment/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult UpdateCalendarAppointment(FormCollection collectedValues)
         {
             var appointmentId = Convert.ToInt64(collectedValues["appointmentId"]);
@@ -87,12 +93,14 @@ namespace MyEventPlan.Controllers.EventManagement
             return RedirectToAction("Calendar");
         }
 
+        [SessionExpire]
         public void UpdateEventAppoitments(int id, string newEventStart, string newEventEnd)
         {
             new CalenderAppointment().UpdateCalendarEventAppoitment(id, newEventStart, newEventEnd);
         }
 
         // GET: Appointments/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -102,14 +110,17 @@ namespace MyEventPlan.Controllers.EventManagement
                 return HttpNotFound();
             return View(appointment);
         }
+
+        [SessionExpire]
         public bool CreateNewAppointment(string title, string newEventStartDate, string newEventEndDate,
-    long appUserId, string location, string note,
-    long plannerId,long eventId)
+            long appUserId, string location, string note,
+            long plannerId, long eventId)
         {
             try
             {
-                new CalenderAppointment().CreateNewAppointment(title, newEventStartDate, newEventEndDate, appUserId, location, note,
-                    plannerId,eventId);
+                new CalenderAppointment().CreateNewAppointment(title, newEventStartDate, newEventEndDate, appUserId,
+                    location, note,
+                    plannerId, eventId);
             }
             catch (Exception)
             {
@@ -119,6 +130,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Appointments/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -129,15 +141,17 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
-            [Bind(Include = "AppointmentId,Name,EventId,StartDate,EndDate,Location,Notes")] Appointment appointment,FormCollection collectedValues)
+            [Bind(Include = "AppointmentId,Name,EventId,StartDate,EndDate,Location,Notes")] Appointment appointment,
+            FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             if (ModelState.IsValid)
             {
-                if ((role != null) && (loggedinuser != null) && (role.Name == "Event Planner"))
+                if (role != null && loggedinuser != null && role.Name == "Event Planner")
                 {
                     appointment.CreatedBy = loggedinuser.AppUserId;
                     appointment.DateCreated = DateTime.Now;
@@ -168,15 +182,17 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult CreateAppointmentFromEvent(
-            [Bind(Include = "AppointmentId,Name,StartDate,EndDate,Location,Notes")] Appointment appointment, FormCollection collectedValues)
+            [Bind(Include = "AppointmentId,Name,StartDate,EndDate,Location,Notes")] Appointment appointment,
+            FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             if (ModelState.IsValid)
             {
-                if ((role != null) && (loggedinuser != null) && (role.Name == "Event Planner"))
+                if (role != null && loggedinuser != null && role.Name == "Event Planner")
                 {
                     appointment.CreatedBy = loggedinuser.AppUserId;
                     appointment.DateCreated = DateTime.Now;
@@ -197,11 +213,13 @@ namespace MyEventPlan.Controllers.EventManagement
                 _db.SaveChanges();
                 TempData["display"] = "You have successfully added an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Details","Events", new { id = appointment.EventId });
+                return RedirectToAction("Details", "Events", new {id = appointment.EventId});
             }
             return View(appointment);
         }
+
         // GET: Appointments/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -217,10 +235,12 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "AppointmentId,Name,EventId,StartDate,EndDate,Location,Notes,EventPlannerId,DateCreated,CreatedBy,EventId")] Appointment appointment, FormCollection collectedValues)
+                Include =
+                    "AppointmentId,Name,EventId,StartDate,EndDate,Location,Notes,EventPlannerId,DateCreated,CreatedBy,EventId")]
+            Appointment appointment, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -248,6 +268,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Appointments/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -262,13 +283,14 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var appointment = _db.Appointments.Find(id);
             var eventId = appointment.EventId;
             _db.Appointments.Remove(appointment);
             _db.SaveChanges();
-            return RedirectToAction("Index",new { eventId  = eventId});
+            return RedirectToAction("Index", new {eventId});
         }
 
         protected override void Dispose(bool disposing)

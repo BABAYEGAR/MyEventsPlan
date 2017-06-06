@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -14,6 +15,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly CheckListDataContext db = new CheckListDataContext();
 
         // GET: CheckLists
+        [SessionExpire]
         public ActionResult Index(long? eventId)
         {
             var checkLists = db.CheckLists.Where(n => n.EventId == eventId).Include(c => c.Event);
@@ -22,6 +24,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckLists/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -33,6 +36,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckLists/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -43,6 +47,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "CheckListId,Name,EventId")] CheckList checkList)
         {
             if (ModelState.IsValid)
@@ -50,14 +55,15 @@ namespace MyEventPlan.Controllers.EventManagement
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 checkList.DateCreated = DateTime.Now;
                 checkList.DateLastModified = DateTime.Now;
-                var listExist = db.CheckLists.Where(m => m.EventId == checkList.EventId && m.Name == checkList.Name).ToList();
+                var listExist = db.CheckLists.Where(m => m.EventId == checkList.EventId && m.Name == checkList.Name)
+                    .ToList();
                 if (loggedinuser != null)
                 {
                     if (listExist.Count > 0)
                     {
                         TempData["display"] = "A check-list with the same name exist, try another name!";
                         TempData["notificationtype"] = NotificationType.Error.ToString();
-                        return RedirectToAction("Index", new { eventId = checkList.EventId });
+                        return RedirectToAction("Index", new {eventId = checkList.EventId});
                     }
                     checkList.LastModifiedBy = loggedinuser.AppUserId;
                     checkList.CreatedBy = loggedinuser.AppUserId;
@@ -79,6 +85,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckLists/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -94,6 +101,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "CheckListId,Status,Name,EventId,CreatedBy,DateCreated")] CheckList checkList)
         {
@@ -121,6 +129,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: CheckLists/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -135,6 +144,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var checkList = db.CheckLists.Find(id);

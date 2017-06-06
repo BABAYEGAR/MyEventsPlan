@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.VendorManagement
@@ -14,12 +15,14 @@ namespace MyEventPlan.Controllers.VendorManagement
         private readonly VendorServiceDataContext db = new VendorServiceDataContext();
 
         // GET: VendorServices
+        [SessionExpire]
         public ActionResult Index()
         {
             return View(db.VendorService.ToList());
         }
 
         // GET: VendorServices/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -31,6 +34,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorServices/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -41,7 +45,8 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VendorServiceId,ServiceName,Scale")] VendorService vendorService,
+        [SessionExpire]
+        public ActionResult Create([Bind(Include = "VendorServiceId,ServiceName")] VendorService vendorService,
             FormCollection collectedValues)
         {
             if (ModelState.IsValid)
@@ -49,7 +54,6 @@ namespace MyEventPlan.Controllers.VendorManagement
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 vendorService.DateCreated = DateTime.Now;
                 vendorService.DateLastModified = DateTime.Now;
-                vendorService.Scale = typeof(VendorScale).GetEnumName(int.Parse(collectedValues["Scale"]));
                 if (loggedinuser != null)
                 {
                     vendorService.LastModifiedBy = loggedinuser.AppUserId;
@@ -72,6 +76,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorServices/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -87,6 +92,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "VendorServiceId,ServiceName,CreatedBy,DateCreated")] VendorService vendorService,
             FormCollection collectedValues)
@@ -95,7 +101,6 @@ namespace MyEventPlan.Controllers.VendorManagement
             if (ModelState.IsValid)
             {
                 vendorService.DateLastModified = DateTime.Now;
-                vendorService.Scale = typeof(VendorScale).GetEnumName(int.Parse(collectedValues["Scale"]));
                 if (loggedinuser != null)
                 {
                     vendorService.LastModifiedBy = loggedinuser.AppUserId;
@@ -116,6 +121,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         }
 
         // GET: VendorServices/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -130,6 +136,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var vendorService = db.VendorService.Find(id);

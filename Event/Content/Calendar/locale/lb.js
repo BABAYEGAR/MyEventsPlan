@@ -1,7 +1,9 @@
 ﻿!function(e) {
     "function" == typeof define && define.amd
         ? define(["jquery", "moment"], e)
-        : "object" == typeof exports ? module.exports = e(require("jquery"), require("moment")) : e(jQuery, moment);
+        : "object" == typeof exports
+        ? module.exports = e(require("jquery"), require("moment"))
+        : e(jQuery, moment);
 }(function(e, n) {
     !function() {
         function e(e, n, r, t) {
@@ -41,57 +43,58 @@
         }
 
         var u = n.defineLocale("lb",
-        {
-            months: "Januar_Februar_Mäerz_Abrëll_Mee_Juni_Juli_August_September_Oktober_November_Dezember".split("_"),
-            monthsShort: "Jan._Febr._Mrz._Abr._Mee_Jun._Jul._Aug._Sept._Okt._Nov._Dez.".split("_"),
-            monthsParseExact: !0,
-            weekdays: "Sonndeg_Méindeg_Dënschdeg_Mëttwoch_Donneschdeg_Freideg_Samschdeg".split("_"),
-            weekdaysShort: "So._Mé._Dë._Më._Do._Fr._Sa.".split("_"),
-            weekdaysMin: "So_Mé_Dë_Më_Do_Fr_Sa".split("_"),
-            weekdaysParseExact: !0,
-            longDateFormat: {
-                LT: "H:mm [Auer]",
-                LTS: "H:mm:ss [Auer]",
-                L: "DD.MM.YYYY",
-                LL: "D. MMMM YYYY",
-                LLL: "D. MMMM YYYY H:mm [Auer]",
-                LLLL: "dddd, D. MMMM YYYY H:mm [Auer]"
-            },
-            calendar: {
-                sameDay: "[Haut um] LT",
-                sameElse: "L",
-                nextDay: "[Muer um] LT",
-                nextWeek: "dddd [um] LT",
-                lastDay: "[Gëschter um] LT",
-                lastWeek: function() {
-                    switch (this.day()) {
-                    case 2:
-                    case 4:
-                        return"[Leschten] dddd [um] LT";
-                    default:
-                        return"[Leschte] dddd [um] LT";
+            {
+                months: "Januar_Februar_Mäerz_Abrëll_Mee_Juni_Juli_August_September_Oktober_November_Dezember"
+                    .split("_"),
+                monthsShort: "Jan._Febr._Mrz._Abr._Mee_Jun._Jul._Aug._Sept._Okt._Nov._Dez.".split("_"),
+                monthsParseExact: !0,
+                weekdays: "Sonndeg_Méindeg_Dënschdeg_Mëttwoch_Donneschdeg_Freideg_Samschdeg".split("_"),
+                weekdaysShort: "So._Mé._Dë._Më._Do._Fr._Sa.".split("_"),
+                weekdaysMin: "So_Mé_Dë_Më_Do_Fr_Sa".split("_"),
+                weekdaysParseExact: !0,
+                longDateFormat: {
+                    LT: "H:mm [Auer]",
+                    LTS: "H:mm:ss [Auer]",
+                    L: "DD.MM.YYYY",
+                    LL: "D. MMMM YYYY",
+                    LLL: "D. MMMM YYYY H:mm [Auer]",
+                    LLLL: "dddd, D. MMMM YYYY H:mm [Auer]"
+                },
+                calendar: {
+                    sameDay: "[Haut um] LT",
+                    sameElse: "L",
+                    nextDay: "[Muer um] LT",
+                    nextWeek: "dddd [um] LT",
+                    lastDay: "[Gëschter um] LT",
+                    lastWeek: function() {
+                        switch (this.day()) {
+                        case 2:
+                        case 4:
+                            return"[Leschten] dddd [um] LT";
+                        default:
+                            return"[Leschte] dddd [um] LT";
+                        }
                     }
-                }
-            },
-            relativeTime: {
-                future: r,
-                past: t,
-                s: "e puer Sekonnen",
-                m: e,
-                mm: "%d Minutten",
-                h: e,
-                hh: "%d Stonnen",
-                d: e,
-                dd: "%d Deeg",
-                M: e,
-                MM: "%d Méint",
-                y: e,
-                yy: "%d Joer"
-            },
-            ordinalParse: /\d{1,2}\./,
-            ordinal: "%d.",
-            week: { dow: 1, doy: 4 }
-        });
+                },
+                relativeTime: {
+                    future: r,
+                    past: t,
+                    s: "e puer Sekonnen",
+                    m: e,
+                    mm: "%d Minutten",
+                    h: e,
+                    hh: "%d Stonnen",
+                    d: e,
+                    dd: "%d Deeg",
+                    M: e,
+                    MM: "%d Méint",
+                    y: e,
+                    yy: "%d Joer"
+                },
+                ordinalParse: /\d{1,2}\./,
+                ordinal: "%d.",
+                week: { dow: 1, doy: 4 }
+            });
         return u;
     }(), e.fullCalendar.datepickerLocale("lb",
         "lb",
@@ -115,10 +118,10 @@
             showMonthAfterYear: !1,
             yearSuffix: ""
         }), e.fullCalendar.locale("lb",
-    {
-        buttonText: { month: "Mount", week: "Woch", day: "Dag", list: "Terminiwwersiicht" },
-        allDayText: "Ganzen Dag",
-        eventLimitText: "méi",
-        noEventsMessage: "Nee Evenementer ze affichéieren"
-    });
+        {
+            buttonText: { month: "Mount", week: "Woch", day: "Dag", list: "Terminiwwersiicht" },
+            allDayText: "Ganzen Dag",
+            eventLimitText: "méi",
+            noEventsMessage: "Nee Evenementer ze affichéieren"
+        });
 });

@@ -1,7 +1,7 @@
 ﻿@model Event.Data.Objects.Entities.Role
 @{
     ViewBag.Title = "View";
-  Layout = "../Shared/Layout/_LayoutView.cshtml";
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
     ViewBag.TableHeader = Model.Name + " Management Card";
     ViewBag.TableSubHeader = "Details of Role";
 }
@@ -56,15 +56,6 @@
     <dd>
         @Html.DisplayFor(model => model.ManageEventType)
     </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.ManageEventPlanners)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.ManageEventPlanners)
-    </dd>
-
     <dt>
         @Html.DisplayNameFor(model => model.ManageVendors)
     </dt>
@@ -96,23 +87,6 @@
     <dd>
         @Html.DisplayFor(model => model.ManageInvoices)
     </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.ManageContracts)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.ManageContracts)
-    </dd>
-
-    <dt>
-        @Html.DisplayNameFor(model => model.ManageProposals)
-    </dt>
-
-    <dd>
-        @Html.DisplayFor(model => model.ManageProposals)
-    </dd>
-
 </dl>
 @Html.ActionLink("Edit", "Edit", new {id = Model.RoleId}, new {@class = "btn btn-primary icon-pencil"})
 @Html.ActionLink("Delete", "Delete", new {id = Model.RoleId}, new {@class = "btn btn-danger icon-trash"})

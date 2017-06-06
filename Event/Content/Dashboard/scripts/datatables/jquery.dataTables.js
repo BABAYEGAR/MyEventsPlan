@@ -26,20 +26,21 @@
 (/** @lends <global> */function(window, document, undefined) {
 
     (function(factory) {
-            "use strict";
+        "use strict";
 
-            // Define as an D module if possible
-            if (typeof define === "function" && define.amd) {
-                define(["jquery"], factory);
-            }
-            /* Define using browser globals otherwise
-             * Prevent multiple instantiations if the script is loaded twice
-             */
-            else if (jQuery && !jQuery.fn.dataTable) {
-                factory(jQuery);
-            }
+        // Define as an D module if possible
+        if (typeof define === "function" && define.amd) {
+            define(["jquery"], factory);
         }
-        (/** @lends <global> */function($) {
+        /* Define using browser globals otherwise
+         * Prevent multiple instantiations if the script is loaded twice
+         */
+        else if (jQuery && !jQuery.fn.dataTable) {
+            factory(jQuery);
+        }
+    }
+    (/** @lends <global> */
+        function($) {
             "use strict";
 
             /**
@@ -1717,9 +1718,9 @@
                 } else if (oSettings.sAjaxSource || typeof oSettings.ajax === "string") {
                     // DataTables 1.9- compatibility
                     oSettings.jqXHR = $.ajax($.extend(baseAjax,
-                    {
-                        url: oSettings.ajax || oSettings.sAjaxSource
-                    }));
+                        {
+                            url: oSettings.ajax || oSettings.sAjaxSource
+                        }));
                 } else if ($.isFunction(oSettings.ajax)) {
                     // Is a function - let the caller define what needs to be done
                     oSettings.jqXHR = oSettings.ajax.call(oSettings.oInstance,
@@ -1900,7 +1901,9 @@
                 var sSearchStr = oSettings.oLanguage.sSearch;
                 sSearchStr = (sSearchStr.indexOf("_INPUT_") !== -1)
                     ? sSearchStr.replace("_INPUT_", '<input type="text" />')
-                    : sSearchStr === "" ? '<input type="text" />' : sSearchStr + ' <input type="text" />';
+                    : sSearchStr === ""
+                    ? '<input type="text" />'
+                    : sSearchStr + ' <input type="text" />';
 
                 var nFilter = document.createElement("div");
                 nFilter.className = oSettings.oClasses.sFilter;
@@ -1931,12 +1934,12 @@
                         /* Now do the filter */
                         if (val != oPreviousSearch.sSearch) {
                             _fnFilterComplete(oSettings,
-                            {
-                                "sSearch": val,
-                                "bRegex": oPreviousSearch.bRegex,
-                                "bSmart": oPreviousSearch.bSmart,
-                                "bCaseInsensitive": oPreviousSearch.bCaseInsensitive
-                            });
+                                {
+                                    "sSearch": val,
+                                    "bRegex": oPreviousSearch.bRegex,
+                                    "bSmart": oPreviousSearch.bSmart,
+                                    "bCaseInsensitive": oPreviousSearch.bCaseInsensitive
+                                });
                         }
                     });
 
@@ -4977,12 +4980,12 @@
                     } else {
                         /* Single column filter */
                         $.extend(oSettings.aoPreSearchCols[iColumn],
-                        {
-                            "sSearch": sInput + "",
-                            "bRegex": bRegex,
-                            "bSmart": bSmart,
-                            "bCaseInsensitive": bCaseInsensitive
-                        });
+                            {
+                                "sSearch": sInput + "",
+                                "bRegex": bRegex,
+                                "bSmart": bSmart,
+                                "bCaseInsensitive": bCaseInsensitive
+                            });
                         _fnFilterComplete(oSettings, oSettings.oPreviousSearch, 1);
                     }
                 };
@@ -10914,70 +10917,70 @@
             DataTable.ext = $.extend(true, {}, DataTable.models.ext);
 
             $.extend(DataTable.ext.oStdClasses,
-            {
-                "sTable": "dataTable",
+                {
+                    "sTable": "dataTable",
 
-                /* Two buttons buttons */
-                "sPagePrevEnabled": "paginate_enabled_previous",
-                "sPagePrevDisabled": "paginate_disabled_previous",
-                "sPageNextEnabled": "paginate_enabled_next",
-                "sPageNextDisabled": "paginate_disabled_next",
-                "sPageJUINext": "",
-                "sPageJUIPrev": "",
+                    /* Two buttons buttons */
+                    "sPagePrevEnabled": "paginate_enabled_previous",
+                    "sPagePrevDisabled": "paginate_disabled_previous",
+                    "sPageNextEnabled": "paginate_enabled_next",
+                    "sPageNextDisabled": "paginate_disabled_next",
+                    "sPageJUINext": "",
+                    "sPageJUIPrev": "",
 
-                /* Full numbers paging buttons */
-                "sPageButton": "paginate_button",
-                "sPageButtonActive": "paginate_active",
-                "sPageButtonStaticDisabled": "paginate_button paginate_button_disabled",
-                "sPageFirst": "first",
-                "sPagePrevious": "previous",
-                "sPageNext": "next",
-                "sPageLast": "last",
+                    /* Full numbers paging buttons */
+                    "sPageButton": "paginate_button",
+                    "sPageButtonActive": "paginate_active",
+                    "sPageButtonStaticDisabled": "paginate_button paginate_button_disabled",
+                    "sPageFirst": "first",
+                    "sPagePrevious": "previous",
+                    "sPageNext": "next",
+                    "sPageLast": "last",
 
-                /* Striping classes */
-                "sStripeOdd": "odd",
-                "sStripeEven": "even",
+                    /* Striping classes */
+                    "sStripeOdd": "odd",
+                    "sStripeEven": "even",
 
-                /* Empty row */
-                "sRowEmpty": "dataTables_empty",
+                    /* Empty row */
+                    "sRowEmpty": "dataTables_empty",
 
-                /* Features */
-                "sWrapper": "dataTables_wrapper",
-                "sFilter": "dataTables_filter",
-                "sInfo": "dataTables_info",
-                "sPaging": "dataTables_paginate paging_", /* Note that the type is postfixed */
-                "sLength": "dataTables_length",
-                "sProcessing": "dataTables_processing",
+                    /* Features */
+                    "sWrapper": "dataTables_wrapper",
+                    "sFilter": "dataTables_filter",
+                    "sInfo": "dataTables_info",
+                    "sPaging": "dataTables_paginate paging_", /* Note that the type is postfixed */
+                    "sLength": "dataTables_length",
+                    "sProcessing": "dataTables_processing",
 
-                /* Sorting */
-                "sSortAsc": "sorting_asc",
-                "sSortDesc": "sorting_desc",
-                "sSortable": "sorting", /* Sortable in both directions */
-                "sSortableAsc": "sorting_asc_disabled",
-                "sSortableDesc": "sorting_desc_disabled",
-                "sSortableNone": "sorting_disabled",
-                "sSortColumn": "sorting_", /* Note that an int is postfixed for the sorting order */
-                "sSortJUIAsc": "",
-                "sSortJUIDesc": "",
-                "sSortJUI": "",
-                "sSortJUIAscAllowed": "",
-                "sSortJUIDescAllowed": "",
-                "sSortJUIWrapper": "",
-                "sSortIcon": "",
+                    /* Sorting */
+                    "sSortAsc": "sorting_asc",
+                    "sSortDesc": "sorting_desc",
+                    "sSortable": "sorting", /* Sortable in both directions */
+                    "sSortableAsc": "sorting_asc_disabled",
+                    "sSortableDesc": "sorting_desc_disabled",
+                    "sSortableNone": "sorting_disabled",
+                    "sSortColumn": "sorting_", /* Note that an int is postfixed for the sorting order */
+                    "sSortJUIAsc": "",
+                    "sSortJUIDesc": "",
+                    "sSortJUI": "",
+                    "sSortJUIAscAllowed": "",
+                    "sSortJUIDescAllowed": "",
+                    "sSortJUIWrapper": "",
+                    "sSortIcon": "",
 
-                /* Scrolling */
-                "sScrollWrapper": "dataTables_scroll",
-                "sScrollHead": "dataTables_scrollHead",
-                "sScrollHeadInner": "dataTables_scrollHeadInner",
-                "sScrollBody": "dataTables_scrollBody",
-                "sScrollFoot": "dataTables_scrollFoot",
-                "sScrollFootInner": "dataTables_scrollFootInner",
+                    /* Scrolling */
+                    "sScrollWrapper": "dataTables_scroll",
+                    "sScrollHead": "dataTables_scrollHead",
+                    "sScrollHeadInner": "dataTables_scrollHeadInner",
+                    "sScrollBody": "dataTables_scrollBody",
+                    "sScrollFoot": "dataTables_scrollFoot",
+                    "sScrollFootInner": "dataTables_scrollFootInner",
 
-                /* Misc */
-                "sFooterTH": "",
-                "sJUIHeader": "",
-                "sJUIFooter": ""
-            });
+                    /* Misc */
+                    "sFooterTH": "",
+                    "sJUIHeader": "",
+                    "sJUIFooter": ""
+                });
 
 
             $.extend(DataTable.ext.oJUIClasses,
@@ -11033,398 +11036,398 @@
              * Scope:    jQuery.fn.dataTableExt
              */
             $.extend(DataTable.ext.oPagination,
-            {
-                /*
-                 * Variable: two_button
-                 * Purpose:  Standard two button (forward/back) pagination
-                 * Scope:    jQuery.fn.dataTableExt.oPagination
-                 */
-                "two_button": {
+                {
                     /*
-                     * Function: oPagination.two_button.fnInit
-                     * Purpose:  Initialise dom elements required for pagination with forward/back buttons only
-                     * Returns:  -
-                     * Inputs:   object:oSettings - dataTables settings object
-                     *           node:nPaging - the DIV which contains this pagination control
-                     *           function:fnCallbackDraw - draw function which must be called on update
+                     * Variable: two_button
+                     * Purpose:  Standard two button (forward/back) pagination
+                     * Scope:    jQuery.fn.dataTableExt.oPagination
                      */
-                    "fnInit": function(oSettings, nPaging, fnCallbackDraw) {
-                        var oLang = oSettings.oLanguage.oPaginate;
-                        var oClasses = oSettings.oClasses;
-                        var fnClickHandler = function(e) {
-                            if (oSettings.oApi._fnPageChange(oSettings, e.data.action)) {
-                                fnCallbackDraw(oSettings);
-                            }
-                        };
+                    "two_button": {
+                        /*
+                         * Function: oPagination.two_button.fnInit
+                         * Purpose:  Initialise dom elements required for pagination with forward/back buttons only
+                         * Returns:  -
+                         * Inputs:   object:oSettings - dataTables settings object
+                         *           node:nPaging - the DIV which contains this pagination control
+                         *           function:fnCallbackDraw - draw function which must be called on update
+                         */
+                        "fnInit": function(oSettings, nPaging, fnCallbackDraw) {
+                            var oLang = oSettings.oLanguage.oPaginate;
+                            var oClasses = oSettings.oClasses;
+                            var fnClickHandler = function(e) {
+                                if (oSettings.oApi._fnPageChange(oSettings, e.data.action)) {
+                                    fnCallbackDraw(oSettings);
+                                }
+                            };
 
-                        var sAppend = (!oSettings.bJUI)
-                            ? '<a class="' +
-                            oSettings.oClasses.sPagePrevDisabled +
-                            '" tabindex="' +
-                            oSettings.iTabIndex +
-                            '" role="button">' +
-                            oLang.sPrevious +
-                            "</a>" +
-                            '<a class="' +
-                            oSettings.oClasses.sPageNextDisabled +
-                            '" tabindex="' +
-                            oSettings.iTabIndex +
-                            '" role="button">' +
-                            oLang.sNext +
-                            "</a>"
-                            : '<a class="' +
-                            oSettings.oClasses.sPagePrevDisabled +
-                            '" tabindex="' +
-                            oSettings.iTabIndex +
-                            '" role="button"><span class="' +
-                            oSettings.oClasses.sPageJUIPrev +
-                            '"></span></a>' +
-                            '<a class="' +
-                            oSettings.oClasses.sPageNextDisabled +
-                            '" tabindex="' +
-                            oSettings.iTabIndex +
-                            '" role="button"><span class="' +
-                            oSettings.oClasses.sPageJUINext +
-                            '"></span></a>';
-                        $(nPaging).append(sAppend);
-
-                        var els = $("a", nPaging);
-                        var nPrevious = els[0],
-                            nNext = els[1];
-
-                        oSettings.oApi._fnBindAction(nPrevious, { action: "previous" }, fnClickHandler);
-                        oSettings.oApi._fnBindAction(nNext, { action: "next" }, fnClickHandler);
-
-                        /* ID the first elements only */
-                        if (!oSettings.aanFeatures.p) {
-                            nPaging.id = oSettings.sTableId + "_paginate";
-                            nPrevious.id = oSettings.sTableId + "_previous";
-                            nNext.id = oSettings.sTableId + "_next";
-
-                            nPrevious.setAttribute("aria-controls", oSettings.sTableId);
-                            nNext.setAttribute("aria-controls", oSettings.sTableId);
-                        }
-                    },
-
-                    /*
-                     * Function: oPagination.two_button.fnUpdate
-                     * Purpose:  Update the two button pagination at the end of the draw
-                     * Returns:  -
-                     * Inputs:   object:oSettings - dataTables settings object
-                     *           function:fnCallbackDraw - draw function to call on page change
-                     */
-                    "fnUpdate": function(oSettings, fnCallbackDraw) {
-                        if (!oSettings.aanFeatures.p) {
-                            return;
-                        }
-
-                        var oClasses = oSettings.oClasses;
-                        var an = oSettings.aanFeatures.p;
-                        var nNode;
-
-                        /* Loop over each instance of the pager */
-                        for (var i = 0, iLen = an.length; i < iLen; i++) {
-                            nNode = an[i].firstChild;
-                            if (nNode) {
-                                /* Previous page */
-                                nNode.className = (oSettings._iDisplayStart === 0)
-                                    ? oClasses.sPagePrevDisabled
-                                    : oClasses.sPagePrevEnabled;
-
-                                /* Next page */
-                                nNode = nNode.nextSibling;
-                                nNode.className = (oSettings.fnDisplayEnd() == oSettings.fnRecordsDisplay())
-                                    ? oClasses.sPageNextDisabled
-                                    : oClasses.sPageNextEnabled;
-                            }
-                        }
-                    }
-                },
-
-
-                /*
-                 * Variable: iFullNumbersShowPages
-                 * Purpose:  Change the number of pages which can be seen
-                 * Scope:    jQuery.fn.dataTableExt.oPagination
-                 */
-                "iFullNumbersShowPages": 5,
-
-                /*
-                 * Variable: full_numbers
-                 * Purpose:  Full numbers pagination
-                 * Scope:    jQuery.fn.dataTableExt.oPagination
-                 */
-                "full_numbers": {
-                    /*
-                     * Function: oPagination.full_numbers.fnInit
-                     * Purpose:  Initialise dom elements required for pagination with a list of the pages
-                     * Returns:  -
-                     * Inputs:   object:oSettings - dataTables settings object
-                     *           node:nPaging - the DIV which contains this pagination control
-                     *           function:fnCallbackDraw - draw function which must be called on update
-                     */
-                    "fnInit": function(oSettings, nPaging, fnCallbackDraw) {
-                        var oLang = oSettings.oLanguage.oPaginate;
-                        var oClasses = oSettings.oClasses;
-                        var fnClickHandler = function(e) {
-                            if (oSettings.oApi._fnPageChange(oSettings, e.data.action)) {
-                                fnCallbackDraw(oSettings);
-                            }
-                        };
-
-                        $(nPaging)
-                            .append(
-                                '<a  tabindex="' +
+                            var sAppend = (!oSettings.bJUI)
+                                ? '<a class="' +
+                                oSettings.oClasses.sPagePrevDisabled +
+                                '" tabindex="' +
                                 oSettings.iTabIndex +
-                                '" class="' +
-                                oClasses.sPageButton +
-                                " " +
-                                oClasses.sPageFirst +
-                                '">' +
-                                oLang.sFirst +
-                                "</a>" +
-                                '<a  tabindex="' +
-                                oSettings.iTabIndex +
-                                '" class="' +
-                                oClasses.sPageButton +
-                                " " +
-                                oClasses.sPagePrevious +
-                                '">' +
+                                '" role="button">' +
                                 oLang.sPrevious +
                                 "</a>" +
-                                "<span></span>" +
-                                '<a tabindex="' +
+                                '<a class="' +
+                                oSettings.oClasses.sPageNextDisabled +
+                                '" tabindex="' +
                                 oSettings.iTabIndex +
-                                '" class="' +
-                                oClasses.sPageButton +
-                                " " +
-                                oClasses.sPageNext +
-                                '">' +
+                                '" role="button">' +
                                 oLang.sNext +
-                                "</a>" +
-                                '<a tabindex="' +
-                                oSettings.iTabIndex +
-                                '" class="' +
-                                oClasses.sPageButton +
-                                " " +
-                                oClasses.sPageLast +
-                                '">' +
-                                oLang.sLast +
                                 "</a>"
-                            );
-                        var els = $("a", nPaging);
-                        var nFirst = els[0],
-                            nPrev = els[1],
-                            nNext = els[2],
-                            nLast = els[3];
+                                : '<a class="' +
+                                oSettings.oClasses.sPagePrevDisabled +
+                                '" tabindex="' +
+                                oSettings.iTabIndex +
+                                '" role="button"><span class="' +
+                                oSettings.oClasses.sPageJUIPrev +
+                                '"></span></a>' +
+                                '<a class="' +
+                                oSettings.oClasses.sPageNextDisabled +
+                                '" tabindex="' +
+                                oSettings.iTabIndex +
+                                '" role="button"><span class="' +
+                                oSettings.oClasses.sPageJUINext +
+                                '"></span></a>';
+                            $(nPaging).append(sAppend);
 
-                        oSettings.oApi._fnBindAction(nFirst, { action: "first" }, fnClickHandler);
-                        oSettings.oApi._fnBindAction(nPrev, { action: "previous" }, fnClickHandler);
-                        oSettings.oApi._fnBindAction(nNext, { action: "next" }, fnClickHandler);
-                        oSettings.oApi._fnBindAction(nLast, { action: "last" }, fnClickHandler);
+                            var els = $("a", nPaging);
+                            var nPrevious = els[0],
+                                nNext = els[1];
 
-                        /* ID the first elements only */
-                        if (!oSettings.aanFeatures.p) {
-                            nPaging.id = oSettings.sTableId + "_paginate";
-                            nFirst.id = oSettings.sTableId + "_first";
-                            nPrev.id = oSettings.sTableId + "_previous";
-                            nNext.id = oSettings.sTableId + "_next";
-                            nLast.id = oSettings.sTableId + "_last";
+                            oSettings.oApi._fnBindAction(nPrevious, { action: "previous" }, fnClickHandler);
+                            oSettings.oApi._fnBindAction(nNext, { action: "next" }, fnClickHandler);
+
+                            /* ID the first elements only */
+                            if (!oSettings.aanFeatures.p) {
+                                nPaging.id = oSettings.sTableId + "_paginate";
+                                nPrevious.id = oSettings.sTableId + "_previous";
+                                nNext.id = oSettings.sTableId + "_next";
+
+                                nPrevious.setAttribute("aria-controls", oSettings.sTableId);
+                                nNext.setAttribute("aria-controls", oSettings.sTableId);
+                            }
+                        },
+
+                        /*
+                         * Function: oPagination.two_button.fnUpdate
+                         * Purpose:  Update the two button pagination at the end of the draw
+                         * Returns:  -
+                         * Inputs:   object:oSettings - dataTables settings object
+                         *           function:fnCallbackDraw - draw function to call on page change
+                         */
+                        "fnUpdate": function(oSettings, fnCallbackDraw) {
+                            if (!oSettings.aanFeatures.p) {
+                                return;
+                            }
+
+                            var oClasses = oSettings.oClasses;
+                            var an = oSettings.aanFeatures.p;
+                            var nNode;
+
+                            /* Loop over each instance of the pager */
+                            for (var i = 0, iLen = an.length; i < iLen; i++) {
+                                nNode = an[i].firstChild;
+                                if (nNode) {
+                                    /* Previous page */
+                                    nNode.className = (oSettings._iDisplayStart === 0)
+                                        ? oClasses.sPagePrevDisabled
+                                        : oClasses.sPagePrevEnabled;
+
+                                    /* Next page */
+                                    nNode = nNode.nextSibling;
+                                    nNode.className = (oSettings.fnDisplayEnd() == oSettings.fnRecordsDisplay())
+                                        ? oClasses.sPageNextDisabled
+                                        : oClasses.sPageNextEnabled;
+                                }
+                            }
                         }
                     },
 
+
                     /*
-                     * Function: oPagination.full_numbers.fnUpdate
-                     * Purpose:  Update the list of page buttons shows
-                     * Returns:  -
-                     * Inputs:   object:oSettings - dataTables settings object
-                     *           function:fnCallbackDraw - draw function to call on page change
+                     * Variable: iFullNumbersShowPages
+                     * Purpose:  Change the number of pages which can be seen
+                     * Scope:    jQuery.fn.dataTableExt.oPagination
                      */
-                    "fnUpdate": function(oSettings, fnCallbackDraw) {
-                        if (!oSettings.aanFeatures.p) {
-                            return;
-                        }
+                    "iFullNumbersShowPages": 5,
 
-                        var iPageCount = DataTable.ext.oPagination.iFullNumbersShowPages;
-                        var iPageCountHalf = Math.floor(iPageCount / 2);
-                        var iPages = Math.ceil((oSettings.fnRecordsDisplay()) / oSettings._iDisplayLength);
-                        var iCurrentPage = Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength) + 1;
-                        var sList = "";
-                        var iStartButton, iEndButton, i, iLen;
-                        var oClasses = oSettings.oClasses;
-                        var anButtons, anStatic, nPaginateList, nNode;
-                        var an = oSettings.aanFeatures.p;
-                        var fnBind = function(j) {
-                            oSettings.oApi._fnBindAction(this,
-                                { "page": j + iStartButton - 1 },
-                                function(e) {
-                                    /* Use the information in the element to jump to the required page */
-                                    oSettings.oApi._fnPageChange(oSettings, e.data.page);
+                    /*
+                     * Variable: full_numbers
+                     * Purpose:  Full numbers pagination
+                     * Scope:    jQuery.fn.dataTableExt.oPagination
+                     */
+                    "full_numbers": {
+                        /*
+                         * Function: oPagination.full_numbers.fnInit
+                         * Purpose:  Initialise dom elements required for pagination with a list of the pages
+                         * Returns:  -
+                         * Inputs:   object:oSettings - dataTables settings object
+                         *           node:nPaging - the DIV which contains this pagination control
+                         *           function:fnCallbackDraw - draw function which must be called on update
+                         */
+                        "fnInit": function(oSettings, nPaging, fnCallbackDraw) {
+                            var oLang = oSettings.oLanguage.oPaginate;
+                            var oClasses = oSettings.oClasses;
+                            var fnClickHandler = function(e) {
+                                if (oSettings.oApi._fnPageChange(oSettings, e.data.action)) {
                                     fnCallbackDraw(oSettings);
-                                    e.preventDefault();
-                                });
-                        };
+                                }
+                            };
 
-                        /* Pages calculation */
-                        if (oSettings._iDisplayLength === -1) {
-                            iStartButton = 1;
-                            iEndButton = 1;
-                            iCurrentPage = 1;
-                        } else if (iPages < iPageCount) {
-                            iStartButton = 1;
-                            iEndButton = iPages;
-                        } else if (iCurrentPage <= iPageCountHalf) {
-                            iStartButton = 1;
-                            iEndButton = iPageCount;
-                        } else if (iCurrentPage >= (iPages - iPageCountHalf)) {
-                            iStartButton = iPages - iPageCount + 1;
-                            iEndButton = iPages;
-                        } else {
-                            iStartButton = iCurrentPage - Math.ceil(iPageCount / 2) + 1;
-                            iEndButton = iStartButton + iPageCount - 1;
-                        }
+                            $(nPaging)
+                                .append(
+                                    '<a  tabindex="' +
+                                    oSettings.iTabIndex +
+                                    '" class="' +
+                                    oClasses.sPageButton +
+                                    " " +
+                                    oClasses.sPageFirst +
+                                    '">' +
+                                    oLang.sFirst +
+                                    "</a>" +
+                                    '<a  tabindex="' +
+                                    oSettings.iTabIndex +
+                                    '" class="' +
+                                    oClasses.sPageButton +
+                                    " " +
+                                    oClasses.sPagePrevious +
+                                    '">' +
+                                    oLang.sPrevious +
+                                    "</a>" +
+                                    "<span></span>" +
+                                    '<a tabindex="' +
+                                    oSettings.iTabIndex +
+                                    '" class="' +
+                                    oClasses.sPageButton +
+                                    " " +
+                                    oClasses.sPageNext +
+                                    '">' +
+                                    oLang.sNext +
+                                    "</a>" +
+                                    '<a tabindex="' +
+                                    oSettings.iTabIndex +
+                                    '" class="' +
+                                    oClasses.sPageButton +
+                                    " " +
+                                    oClasses.sPageLast +
+                                    '">' +
+                                    oLang.sLast +
+                                    "</a>"
+                                );
+                            var els = $("a", nPaging);
+                            var nFirst = els[0],
+                                nPrev = els[1],
+                                nNext = els[2],
+                                nLast = els[3];
 
+                            oSettings.oApi._fnBindAction(nFirst, { action: "first" }, fnClickHandler);
+                            oSettings.oApi._fnBindAction(nPrev, { action: "previous" }, fnClickHandler);
+                            oSettings.oApi._fnBindAction(nNext, { action: "next" }, fnClickHandler);
+                            oSettings.oApi._fnBindAction(nLast, { action: "last" }, fnClickHandler);
 
-                        /* Build the dynamic list */
-                        for (i = iStartButton; i <= iEndButton; i++) {
-                            sList += (iCurrentPage !== i)
-                                ? '<a tabindex="' +
-                                oSettings.iTabIndex +
-                                '" class="' +
-                                oClasses.sPageButton +
-                                '">' +
-                                oSettings.fnFormatNumber(i) +
-                                "</a>"
-                                : '<a tabindex="' +
-                                oSettings.iTabIndex +
-                                '" class="' +
-                                oClasses.sPageButtonActive +
-                                '">' +
-                                oSettings.fnFormatNumber(i) +
-                                "</a>";
-                        }
+                            /* ID the first elements only */
+                            if (!oSettings.aanFeatures.p) {
+                                nPaging.id = oSettings.sTableId + "_paginate";
+                                nFirst.id = oSettings.sTableId + "_first";
+                                nPrev.id = oSettings.sTableId + "_previous";
+                                nNext.id = oSettings.sTableId + "_next";
+                                nLast.id = oSettings.sTableId + "_last";
+                            }
+                        },
 
-                        /* Loop over each instance of the pager */
-                        for (i = 0, iLen = an.length; i < iLen; i++) {
-                            nNode = an[i];
-                            if (!nNode.hasChildNodes()) {
-                                continue;
+                        /*
+                         * Function: oPagination.full_numbers.fnUpdate
+                         * Purpose:  Update the list of page buttons shows
+                         * Returns:  -
+                         * Inputs:   object:oSettings - dataTables settings object
+                         *           function:fnCallbackDraw - draw function to call on page change
+                         */
+                        "fnUpdate": function(oSettings, fnCallbackDraw) {
+                            if (!oSettings.aanFeatures.p) {
+                                return;
                             }
 
-                            /* Build up the dynamic list first - html and listeners */
-                            $("span:eq(0)", nNode)
-                                .html(sList)
-                                .children("a")
-                                .each(fnBind);
+                            var iPageCount = DataTable.ext.oPagination.iFullNumbersShowPages;
+                            var iPageCountHalf = Math.floor(iPageCount / 2);
+                            var iPages = Math.ceil((oSettings.fnRecordsDisplay()) / oSettings._iDisplayLength);
+                            var iCurrentPage = Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength) + 1;
+                            var sList = "";
+                            var iStartButton, iEndButton, i, iLen;
+                            var oClasses = oSettings.oClasses;
+                            var anButtons, anStatic, nPaginateList, nNode;
+                            var an = oSettings.aanFeatures.p;
+                            var fnBind = function(j) {
+                                oSettings.oApi._fnBindAction(this,
+                                    { "page": j + iStartButton - 1 },
+                                    function(e) {
+                                        /* Use the information in the element to jump to the required page */
+                                        oSettings.oApi._fnPageChange(oSettings, e.data.page);
+                                        fnCallbackDraw(oSettings);
+                                        e.preventDefault();
+                                    });
+                            };
 
-                            /* Update the permanent button's classes */
-                            anButtons = nNode.getElementsByTagName("a");
-                            anStatic = [
-                                anButtons[0], anButtons[1],
-                                anButtons[anButtons.length - 2], anButtons[anButtons.length - 1]
-                            ];
+                            /* Pages calculation */
+                            if (oSettings._iDisplayLength === -1) {
+                                iStartButton = 1;
+                                iEndButton = 1;
+                                iCurrentPage = 1;
+                            } else if (iPages < iPageCount) {
+                                iStartButton = 1;
+                                iEndButton = iPages;
+                            } else if (iCurrentPage <= iPageCountHalf) {
+                                iStartButton = 1;
+                                iEndButton = iPageCount;
+                            } else if (iCurrentPage >= (iPages - iPageCountHalf)) {
+                                iStartButton = iPages - iPageCount + 1;
+                                iEndButton = iPages;
+                            } else {
+                                iStartButton = iCurrentPage - Math.ceil(iPageCount / 2) + 1;
+                                iEndButton = iStartButton + iPageCount - 1;
+                            }
 
-                            $(anStatic)
-                                .removeClass(oClasses.sPageButton +
-                                    " " +
+
+                            /* Build the dynamic list */
+                            for (i = iStartButton; i <= iEndButton; i++) {
+                                sList += (iCurrentPage !== i)
+                                    ? '<a tabindex="' +
+                                    oSettings.iTabIndex +
+                                    '" class="' +
+                                    oClasses.sPageButton +
+                                    '">' +
+                                    oSettings.fnFormatNumber(i) +
+                                    "</a>"
+                                    : '<a tabindex="' +
+                                    oSettings.iTabIndex +
+                                    '" class="' +
                                     oClasses.sPageButtonActive +
-                                    " " +
-                                    oClasses.sPageButtonStaticDisabled);
-                            $([anStatic[0], anStatic[1]])
-                                .addClass(
-                                    (iCurrentPage == 1) ? oClasses.sPageButtonStaticDisabled : oClasses.sPageButton
-                                );
-                            $([anStatic[2], anStatic[3]])
-                                .addClass(
-                                    (iPages === 0 || iCurrentPage === iPages || oSettings._iDisplayLength === -1)
-                                    ? oClasses.sPageButtonStaticDisabled
-                                    : oClasses.sPageButton
-                                );
+                                    '">' +
+                                    oSettings.fnFormatNumber(i) +
+                                    "</a>";
+                            }
+
+                            /* Loop over each instance of the pager */
+                            for (i = 0, iLen = an.length; i < iLen; i++) {
+                                nNode = an[i];
+                                if (!nNode.hasChildNodes()) {
+                                    continue;
+                                }
+
+                                /* Build up the dynamic list first - html and listeners */
+                                $("span:eq(0)", nNode)
+                                    .html(sList)
+                                    .children("a")
+                                    .each(fnBind);
+
+                                /* Update the permanent button's classes */
+                                anButtons = nNode.getElementsByTagName("a");
+                                anStatic = [
+                                    anButtons[0], anButtons[1],
+                                    anButtons[anButtons.length - 2], anButtons[anButtons.length - 1]
+                                ];
+
+                                $(anStatic)
+                                    .removeClass(oClasses.sPageButton +
+                                        " " +
+                                        oClasses.sPageButtonActive +
+                                        " " +
+                                        oClasses.sPageButtonStaticDisabled);
+                                $([anStatic[0], anStatic[1]])
+                                    .addClass(
+                                        (iCurrentPage == 1) ? oClasses.sPageButtonStaticDisabled : oClasses.sPageButton
+                                    );
+                                $([anStatic[2], anStatic[3]])
+                                    .addClass(
+                                        (iPages === 0 || iCurrentPage === iPages || oSettings._iDisplayLength === -1)
+                                        ? oClasses.sPageButtonStaticDisabled
+                                        : oClasses.sPageButton
+                                    );
+                            }
                         }
                     }
-                }
-            });
+                });
             $.extend(DataTable.ext.oSort,
-            {
-                /*
-                 * text sorting
-                 */
-                "string-pre": function(a) {
-                    if (typeof a != "string") {
-                        if (a === null || a === undefined || !a.toString) {
-                            return "";
+                {
+                    /*
+                     * text sorting
+                     */
+                    "string-pre": function(a) {
+                        if (typeof a != "string") {
+                            if (a === null || a === undefined || !a.toString) {
+                                return "";
+                            }
+                            a = a.toString();
                         }
-                        a = a.toString();
+                        return a.toLowerCase();
+                    },
+
+                    // string-asc and -desc are retained only for compatibility with 
+                    "string-asc": function(x, y) {
+                        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+                    },
+
+                    "string-desc": function(x, y) {
+                        return ((x < y) ? 1 : ((x > y) ? -1 : 0));
+                    },
+
+
+                    /*
+                     * html sorting (ignore html tags)
+                     */
+                    "html-pre": function(a) {
+                        return a.replace(/<.*?>/g, "").toLowerCase();
+                    },
+
+
+                    /*
+                     * date sorting
+                     */
+                    "date-pre": function(a) {
+                        var x = Date.parse(a);
+
+                        if (isNaN(x) || x === "") {
+                            x = Date.parse("01/01/1970 00:00:00");
+                        }
+                        return x;
+                    },
+
+
+                    /*
+                     * numerical sorting
+                     */
+                    "numeric-pre": function(a) {
+                        return (a == "-" || a === "") ? -Infinity : a * 1;
                     }
-                    return a.toLowerCase();
-                },
-
-                // string-asc and -desc are retained only for compatibility with 
-                "string-asc": function(x, y) {
-                    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
-                },
-
-                "string-desc": function(x, y) {
-                    return ((x < y) ? 1 : ((x > y) ? -1 : 0));
-                },
-
-
-                /*
-                 * html sorting (ignore html tags)
-                 */
-                "html-pre": function(a) {
-                    return a.replace(/<.*?>/g, "").toLowerCase();
-                },
-
-
-                /*
-                 * date sorting
-                 */
-                "date-pre": function(a) {
-                    var x = Date.parse(a);
-
-                    if (isNaN(x) || x === "") {
-                        x = Date.parse("01/01/1970 00:00:00");
-                    }
-                    return x;
-                },
-
-
-                /*
-                 * numerical sorting
-                 */
-                "numeric-pre": function(a) {
-                    return (a == "-" || a === "") ? -Infinity : a * 1;
-                }
-            });
+                });
 
 
             // Built in type detection. See model.ext.aTypes for information about
             // what is required from this methods.
             $.extend(DataTable.ext.aTypes,
-            [
-                // Numeric data type
-                function(data) {
-                    return data === "" || data === "-" || (!isNaN(parseFloat(data)) && isFinite(data))
-                        ? "numeric"
-                        : null;
-                },
+                [
+                    // Numeric data type
+                    function(data) {
+                        return data === "" || data === "-" || (!isNaN(parseFloat(data)) && isFinite(data))
+                            ? "numeric"
+                            : null;
+                    },
 
-                // Dates (only those recognised by the browser's Date.parse)
-                function(data) {
-                    var parsed = Date.parse(data);
-                    return (parsed !== null && !isNaN(parsed)) || (typeof data === "string" && data.length === 0)
-                        ? "date"
-                        : null;
-                },
+                    // Dates (only those recognised by the browser's Date.parse)
+                    function(data) {
+                        var parsed = Date.parse(data);
+                        return (parsed !== null && !isNaN(parsed)) || (typeof data === "string" && data.length === 0)
+                            ? "date"
+                            : null;
+                    },
 
-                // HTML
-                function(data) {
-                    return typeof data === "string" && data.indexOf("<") != -1 && data.indexOf(">") != -1
-                        ? "html"
-                        : null;
-                }
-            ]);
+                    // HTML
+                    function(data) {
+                        return typeof data === "string" && data.indexOf("<") != -1 && data.indexOf(">") != -1
+                            ? "html"
+                            : null;
+                    }
+                ]);
 
 
             // jQuery aliases

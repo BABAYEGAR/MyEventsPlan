@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -14,12 +15,14 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly EventTypeDataContext db = new EventTypeDataContext();
 
         // GET: EventTypes
+        [SessionExpire]
         public ActionResult Index()
         {
             return View(db.EventTypes.ToList());
         }
 
         // GET: EventTypes/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -31,6 +34,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventTypes/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             return View();
@@ -41,6 +45,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create([Bind(Include = "EventTypeId,Name")] EventType eventType)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -70,6 +75,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventTypes/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -85,6 +91,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit([Bind(Include = "EventTypeId,Name,CreatedBy,DateCreated")] EventType eventType)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -111,6 +118,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventTypes/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -125,6 +133,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var eventType = db.EventTypes.Find(id);

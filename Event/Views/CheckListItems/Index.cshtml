@@ -5,7 +5,7 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Check-List Item";
     ViewBag.TableSubHeader = "List of all Check-List Items";
-      Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var checkListItem = new CheckListItem();
     var db = new CheckListItemDataContext();
     long? listId = ViewBag.checkListId;
@@ -79,8 +79,8 @@
             {
                 var allMappings = db.CheckListItems.SingleOrDefault(
                     n =>
-                        (n.CheckListItemId == item.CheckListItemId) &&
-                        (n.CheckListId == item.CheckListId) && n.Checked);
+                        n.CheckListItemId == item.CheckListItemId &&
+                        n.CheckListId == item.CheckListId && n.Checked);
 
 
                 <tr>
@@ -110,10 +110,10 @@
         </table>
     </div>
 }
-<script>     
+<script>
     function toggle(source) {
         checkboxes = document.getElementsByName('table_records');
-        for(var i=0, n=checkboxes.length;i<n;i++){
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
             checkboxes[i].checked = source.checked;
         }
     }

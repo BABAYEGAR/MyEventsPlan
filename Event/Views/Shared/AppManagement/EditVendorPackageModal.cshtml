@@ -1,16 +1,15 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.VendorPackage
+﻿@model Event.Data.Objects.Entities.VendorPackage
 @{
-       Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Edit", "VendorPackages", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(m=>m.VendorPackageId)
-    @Html.HiddenFor(m=>m.Amount)
-    @Html.HiddenFor(m=>m.CreatedBy)
-    @Html.HiddenFor(m=>m.DateCreated)
-    @Html.HiddenFor(m=>m.PackageGrade)
+    @Html.HiddenFor(m => m.VendorPackageId)
+    @Html.HiddenFor(m => m.Amount)
+    @Html.HiddenFor(m => m.CreatedBy)
+    @Html.HiddenFor(m => m.DateCreated)
+    @Html.HiddenFor(m => m.PackageGrade)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
     <div class="mui-textfield mui-textfield--float-label">

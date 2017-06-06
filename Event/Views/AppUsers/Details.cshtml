@@ -1,7 +1,5 @@
-﻿@using Event.Data.Objects.Entities
-@using MyEventPlan.Data.DataContext.DataContext
-@using MyEventPlan.Data.Service.Enum
-@model AppUser
+﻿@using MyEventPlan.Data.Service.Enum
+@model Event.Data.Objects.Entities.AppUser
 @{
     ViewBag.Title = "View";
     ViewBag.Header = "View users";
@@ -69,13 +67,11 @@
 </dl>
 @if (Model.Status == UserAccountStatus.Enabled.ToString())
 {
-    @Html.ActionLink("Disable User", "DisableUser", new{id  = Model.AppUserId}, new {@class = "btn btn-danger fa fa-stop"})
- 
+    @Html.ActionLink("Disable User", "DisableUser", new {id = Model.AppUserId}, new {@class = "btn btn-danger fa fa-stop"})
 }
 @if (Model.Status == UserAccountStatus.Disabled.ToString())
 {
-    @Html.ActionLink("Enable User", "DisableUser", new{id = Model.AppUserId}, new {@class = "btn btn-danger fa fa-stop"})
-   
+    @Html.ActionLink("Enable User", "DisableUser", new {id = Model.AppUserId}, new {@class = "btn btn-danger fa fa-stop"})
 }
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal7">

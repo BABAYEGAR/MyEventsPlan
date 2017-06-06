@@ -6,6 +6,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Calender;
 using MyEventPlan.Data.Service.Enum;
 
@@ -16,12 +17,13 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly EventDataContext _db = new EventDataContext();
 
         // GET: Events
+        [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
             IQueryable<Event.Data.Objects.Entities.Event> events = null;
-            if ((loggedinuser != null) && (loggedinuser.EventPlannerId != null))
+            if (loggedinuser != null && loggedinuser.EventPlannerId != null)
             {
                 events =
                     _db.Event.OrderByDescending(n => n.StartDate)
@@ -29,7 +31,7 @@ namespace MyEventPlan.Controllers.EventManagement
                         .Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
                 return View(events.ToList());
             }
-            if ((loggedinuser != null) && (loggedinuser.ClientId != null))
+            if (loggedinuser != null && loggedinuser.ClientId != null)
             {
                 var client = _db.Clients.Find(loggedinuser.ClientId);
                 events =
@@ -38,7 +40,7 @@ namespace MyEventPlan.Controllers.EventManagement
                         .Where(n => n.EventId == client.EventId);
                 return View(events.ToList());
             }
-            if ((loggedinuser != null) && (loggedinuser.VendorId != null))
+            if (loggedinuser != null && loggedinuser.VendorId != null)
             {
                 events =
                     from a in _db.Event
@@ -53,49 +55,36 @@ namespace MyEventPlan.Controllers.EventManagement
                 list.Add(@event);
             return View(list);
         }
+
         // GET: Events/QuickLunch
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult QuickLunch(FormCollection collectedValues)
         {
-            long eventId = Convert.ToInt64(collectedValues["quickLaunchJob"]);
-            string tool = collectedValues["quickLaunchTool"];
+            var eventId = Convert.ToInt64(collectedValues["quickLaunchJob"]);
+            var tool = collectedValues["quickLaunchTool"];
             if (tool == "dashboard")
-            {
-                return RedirectToAction("Index", "Events", new { id = eventId });
-            }
+                return RedirectToAction("Index", "Events", new {id = eventId});
             if (tool == "appointments")
-            {
-                return RedirectToAction("Index","Appointments", new { eventId = eventId });
-            }
+                return RedirectToAction("Index", "Appointments", new {eventId});
             if (tool == "notes")
-            {
-                return RedirectToAction("Index", "Notes", new { eventId = eventId });
-            }
+                return RedirectToAction("Index", "Notes", new {eventId});
             if (tool == "checklists")
-            {
-                return RedirectToAction("Index", "CheckLists", new { eventId = eventId });
-            }
+                return RedirectToAction("Index", "CheckLists", new {eventId});
             if (tool == "budgets")
-            {
-                return RedirectToAction("Index", "Budgets", new { id = eventId });
-            }
+                return RedirectToAction("Index", "Budgets", new {id = eventId});
             if (tool == "calendar")
-            {
                 return RedirectToAction("Calendar", "Events");
-            }
             if (tool == "invoices")
-            {
-                return RedirectToAction("Index", "Invoices", new { id = eventId });
-            }
+                return RedirectToAction("Index", "Invoices", new {id = eventId});
             if (tool == "attendees")
-            {
-                return RedirectToAction("Index", "GuestLists", new { eventId = eventId });
-            }
+                return RedirectToAction("Index", "GuestLists", new {eventId});
             return RedirectToAction("Dashboard", "Home");
         }
 
         // GET: Events
+        [SessionExpire]
         public ActionResult Calendar()
         {
             ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
@@ -125,6 +114,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Events/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -165,6 +155,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult UpdateCalendarEvent(FormCollection collectedValues)
         {
             var eventId = Convert.ToInt64(collectedValues["EventId"]);
@@ -202,6 +193,7 @@ namespace MyEventPlan.Controllers.EventManagement
             return true;
         }
 
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
@@ -213,16 +205,18 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
-            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,EventDate,StartDate,EndDate")] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
+            [Bind(Include = "EventId,Name,Color,EventTypeId,TargetBudget,EventDate,StartDate,EndDate")]
+            Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = Session["role"] as Role;
-          
+
 
             if (ModelState.IsValid)
             {
-                if ((role != null) && (loggedinuser != null) && (role.Name == "Event Planner"))
+                if (role != null && loggedinuser != null && role.Name == "Event Planner")
                 {
                     @event.CreatedBy = loggedinuser.AppUserId;
                     @event.DateCreated = DateTime.Now;
@@ -233,7 +227,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     @event.EventPlannerId = loggedinuser.EventPlannerId;
                     @event.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     @event.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
-                    var listExist = _db.Event.Where(m => m.EventPlannerId == @event.EventPlannerId && m.Name == @event.Name).ToList();
+                    var listExist = _db.Event
+                        .Where(m => m.EventPlannerId == @event.EventPlannerId && m.Name == @event.Name).ToList();
 
                     if (listExist.Count > 0)
                     {
@@ -254,10 +249,11 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     //package data
                     var packageData =
-                        _db.EventPlannerPackageSettings.FirstOrDefault(n => n.Status == PackageStatusEnum.Active.ToString());
-                    if ((packageData != null) && (packageData.SubscribedEvent < packageData.AllowedEvent))
+                        _db.EventPlannerPackageSettings.FirstOrDefault(
+                            n => n.Status == PackageStatusEnum.Active.ToString());
+                    if (packageData != null && packageData.SubscribedEvent < packageData.AllowedEvent)
                         packageData.SubscribedEvent = packageData.SubscribedEvent + 1;
-                    if ((packageData != null) && (packageData.SubscribedEvent >= packageData.AllowedEvent))
+                    if (packageData != null && packageData.SubscribedEvent >= packageData.AllowedEvent)
                         packageData.Status = PackageStatusEnum.Inactive.ToString();
                     if (packageData != null)
                     {
@@ -278,6 +274,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Events/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -294,11 +291,12 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(
-                 Include =
-                     "EventId,Name,Color,EventTypeId,TargetBudget,EventDate,EventPlannerId,StartDate,Status,EndDate,CreatedBy,DateCreated"
-             )] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
+                Include =
+                    "EventId,Name,Color,EventTypeId,TargetBudget,EventDate,EventPlannerId,StartDate,Status,EndDate,CreatedBy,DateCreated"
+            )] Event.Data.Objects.Entities.Event @event, FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
@@ -328,6 +326,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: Events/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -342,6 +341,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var @event = _db.Event.Find(id);
@@ -372,24 +372,17 @@ namespace MyEventPlan.Controllers.EventManagement
                     var notifications = _db.Notifications.Where(n => n.AppUserId == items.AppUserId);
                     var checklist = _db.PersonalCheckLists.Where(n => n.AppUserId == items.AppUserId);
                     foreach (var itemss in messages)
-                    {
                         _db.Messages.Remove(itemss);
-                    }
                     foreach (var member in groupMembers)
-                    {
                         _db.MessageGroupMembers.Remove(member);
-                    }
                     foreach (var notification in notifications)
-                    {
                         _db.Notifications.Remove(notification);
-                    }
                     foreach (var list in checklist)
                     {
-                        var checklistItems = _db.PersonalCheckListItems.Where(n => n.PersonalCheckListId == list.PersonalCheckListId );
+                        var checklistItems =
+                            _db.PersonalCheckListItems.Where(n => n.PersonalCheckListId == list.PersonalCheckListId);
                         foreach (var listItem in checklistItems)
-                        {
                             _db.PersonalCheckListItems.Remove(listItem);
-                        }
                         _db.PersonalCheckLists.Remove(list);
                     }
                     _db.AppUsers.Remove(items);

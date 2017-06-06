@@ -25,7 +25,7 @@
                         @item.Description
                     </p>
                     @{
-                        var packageSetting = dbEvent.EventPlannerPackageSettings.Where(n=> n.EventPlannerId == loggedinuser.EventPlannerId && n.Status == PackageStatusEnum.Active.ToString()).ToList();
+                        var packageSetting = dbEvent.EventPlannerPackageSettings.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.Status == PackageStatusEnum.Active.ToString()).ToList();
                     }
                     @if (packageSetting.Count > 0)
                     {
@@ -60,7 +60,7 @@
                         @item.Description
                     </p>
                     @{
-                        var packageSetting = dbEvent.EventPlannerPackageSettings.Where(n=> n.EventPlannerId == loggedinuser.EventPlannerId && n.Status == PackageStatusEnum.Active.ToString()).ToList();
+                        var packageSetting = dbEvent.EventPlannerPackageSettings.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.Status == PackageStatusEnum.Active.ToString()).ToList();
                     }
                     @if (packageSetting.Count > 0)
                     {

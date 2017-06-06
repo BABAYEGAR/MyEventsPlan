@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "List of all group members";
-      Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
     //var groupMember = new MessageGroupMember();
     var db = new MessageGroupMemberDataContext();
     long? groupId = ViewBag.groupId;
@@ -42,8 +42,8 @@
                 {
                     var allMappings = db.MessageGroupMembers.SingleOrDefault(
                         n =>
-                            (n.AppUserId == item.AppUserId) &&
-                            (n.MessageGroupId == groupId));
+                            n.AppUserId == item.AppUserId &&
+                            n.MessageGroupId == groupId);
 
 
                     <tr>

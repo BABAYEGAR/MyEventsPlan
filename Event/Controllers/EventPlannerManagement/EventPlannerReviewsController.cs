@@ -1,22 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 
 namespace MyEventPlan.Controllers.EventPlannerManagement
 {
     public class EventPlannerReviewsController : Controller
     {
-        private EventPlannerReviewDataContext db = new EventPlannerReviewDataContext();
-        private EventPlannerDataContext dbc = new EventPlannerDataContext();
+        private readonly EventPlannerReviewDataContext db = new EventPlannerReviewDataContext();
+        private readonly EventPlannerDataContext dbc = new EventPlannerDataContext();
 
         // GET: EventPlannerReviews
+     
         public ActionResult Index()
         {
             var eventPlannerReviews = db.EventPlannerReviews.Include(e => e.EventPlanner);
@@ -24,21 +23,19 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         }
 
         // GET: EventPlannerReviews/Details/5
+     
         public ActionResult Details(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlannerReview eventPlannerReview = db.EventPlannerReviews.Find(id);
+            var eventPlannerReview = db.EventPlannerReviews.Find(id);
             if (eventPlannerReview == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventPlannerReview);
         }
 
         // GET: EventPlannerReviews/Create
+     
         public ActionResult Create()
         {
             ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name");
@@ -50,9 +47,11 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+     
         public ActionResult Create([Bind(Include = "EventPlannerReviewId,ReviewerName,ReviewerEmail,ReviewTitle," +
                                                    "ReviewBody,Rating,EventPlannerId,CreatedBy,DateCreated" +
-                                                   ",DateLastModified,LastModifiedBy")] EventPlannerReview eventPlannerReview,FormCollection collectedValues)
+                                                   ",DateLastModified,LastModifiedBy")]
+            EventPlannerReview eventPlannerReview, FormCollection collectedValues)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +64,8 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
                 db.SaveChanges();
 
                 var planner = dbc.EventPlanners.Find(eventPlannerReview.EventPlannerId);
-                var reviews = db.EventPlannerReviews.Where(n => n.EventPlannerId == eventPlannerReview.EventPlannerId).ToList();
+                var reviews = db.EventPlannerReviews.Where(n => n.EventPlannerId == eventPlannerReview.EventPlannerId)
+                    .ToList();
                 long? totalRatings = 0;
                 long? totalPossibleRatings = 0;
                 double? ratingValue = 0;
@@ -77,30 +77,30 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
                     ratingValue = totalRatings * 5 / totalPossibleRatings;
                     if (ratingValue != null)
                     {
-                        ratings = (long)Math.Round((double)ratingValue);
+                        ratings = (long) Math.Round((double) ratingValue);
                         planner.AverageRating = ratings;
                     }
                 }
                 dbc.Entry(planner).State = EntityState.Modified;
                 dbc.SaveChanges();
-                return RedirectToAction("EventPlannerDetails", "EventPlanners", new { id = eventPlannerReview.EventPlannerId });
+                return RedirectToAction("EventPlannerDetails", "EventPlanners",
+                    new {id = eventPlannerReview.EventPlannerId});
             }
-            return RedirectToAction("EventPlannerDetails", "EventPlanners", new { id = eventPlannerReview.EventPlannerId });
+            return RedirectToAction("EventPlannerDetails", "EventPlanners",
+                new {id = eventPlannerReview.EventPlannerId});
         }
 
         // GET: EventPlannerReviews/Edit/5
+     
         public ActionResult Edit(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlannerReview eventPlannerReview = db.EventPlannerReviews.Find(id);
+            var eventPlannerReview = db.EventPlannerReviews.Find(id);
             if (eventPlannerReview == null)
-            {
                 return HttpNotFound();
-            }
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name", eventPlannerReview.EventPlannerId);
+            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name",
+                eventPlannerReview.EventPlannerId);
             return View(eventPlannerReview);
         }
 
@@ -109,7 +109,11 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventPlannerReviewId,ReviewerName,ReviewerEmail,ReviewTitle,ReviewBody,Rating,EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] EventPlannerReview eventPlannerReview)
+     
+        public ActionResult Edit(
+            [Bind(Include =
+                "EventPlannerReviewId,ReviewerName,ReviewerEmail,ReviewTitle,ReviewBody,Rating,EventPlannerId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")]
+            EventPlannerReview eventPlannerReview)
         {
             if (ModelState.IsValid)
             {
@@ -117,31 +121,31 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name", eventPlannerReview.EventPlannerId);
+            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name",
+                eventPlannerReview.EventPlannerId);
             return View(eventPlannerReview);
         }
 
         // GET: EventPlannerReviews/Delete/5
+     
         public ActionResult Delete(long? id)
         {
             if (id == null)
-            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            EventPlannerReview eventPlannerReview = db.EventPlannerReviews.Find(id);
+            var eventPlannerReview = db.EventPlannerReviews.Find(id);
             if (eventPlannerReview == null)
-            {
                 return HttpNotFound();
-            }
             return View(eventPlannerReview);
         }
 
         // POST: EventPlannerReviews/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+     
         public ActionResult DeleteConfirmed(long id)
         {
-            EventPlannerReview eventPlannerReview = db.EventPlannerReviews.Find(id);
+            var eventPlannerReview = db.EventPlannerReviews.Find(id);
             db.EventPlannerReviews.Remove(eventPlannerReview);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -150,9 +154,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-            {
                 db.Dispose();
-            }
             base.Dispose(disposing);
         }
     }

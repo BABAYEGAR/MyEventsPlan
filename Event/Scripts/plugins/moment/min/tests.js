@@ -3,7 +3,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -256,47 +258,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -305,7 +307,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Januarie Jan_Februarie Feb_Maart Mar_April Apr_Mei Mei_Junie Jun_Julie Jul_Augustus Aug_September Sep_Oktober Okt_November Nov_Desember Des".split("_"),
+                        "Januarie Jan_Februarie Feb_Maart Mar_April Apr_Mei Mei_Junie Jun_Julie Jul_Augustus Aug_September Sep_Oktober Okt_November Nov_Desember Des"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -401,7 +404,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Januarie Jan_Februarie Feb_Maart Mar_April Apr_Mei Mei_Junie Jun_Julie Jul_Augustus Aug_September Sep_Oktober Okt_November Nov_Desember Des".split("_"),
+                        "Januarie Jan_Februarie Feb_Maart Mar_April Apr_Mei Mei_Junie Jun_Julie Jul_Augustus Aug_September Sep_Oktober Okt_November Nov_Desember Des"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -411,7 +415,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Sondag Son So_Maandag Maa Ma_Dinsdag Din Di_Woensdag Woe Wo_Donderdag Don Do_Vrydag Vry Vr_Saterdag Sat Sa".split("_"),
+                        "Sondag Son So_Maandag Maa Ma_Dinsdag Din Di_Woensdag Woe Wo_Donderdag Don Do_Vrydag Vry Vr_Saterdag Sat Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -548,7 +553,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -801,47 +808,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -850,7 +857,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "يناير:يناير_فبراير:فبراير_مارس:مارس_أبريل:أبريل_ماي:ماي_يونيو:يونيو_يوليوز:يوليوز_غشت:غشت_شتنبر:شتنبر_أكتوبر:أكتوبر_نونبر:نونبر_دجنبر:دجنبر".split("_"),
+                        "يناير:يناير_فبراير:فبراير_مارس:مارس_أبريل:أبريل_ماي:ماي_يونيو:يونيو_يوليوز:يوليوز_غشت:غشت_شتنبر:شتنبر_أكتوبر:أكتوبر_نونبر:نونبر_دجنبر:دجنبر"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -946,7 +954,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "يناير يناير_فبراير فبراير_مارس مارس_أبريل أبريل_ماي ماي_يونيو يونيو_يوليوز يوليوز_غشت غشت_شتنبر شتنبر_أكتوبر أكتوبر_نونبر نونبر_دجنبر دجنبر".split("_"),
+                        "يناير يناير_فبراير فبراير_مارس مارس_أبريل أبريل_ماي ماي_يونيو يونيو_يوليوز يوليوز_غشت غشت_شتنبر شتنبر_أكتوبر أكتوبر_نونبر نونبر_دجنبر دجنبر"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -956,7 +965,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "الأحد احد ح_الإتنين اتنين ن_الثلاثاء ثلاثاء ث_الأربعاء اربعاء ر_الخميس خميس خ_الجمعة جمعة ج_السبت سبت س".split("_"),
+                        "الأحد احد ح_الإتنين اتنين ن_الثلاثاء ثلاثاء ث_الأربعاء اربعاء ر_الخميس خميس خ_الجمعة جمعة ج_السبت سبت س"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -1091,7 +1101,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -1344,47 +1356,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -1393,7 +1405,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "يناير:يناير_فبراير:فبراير_مارس:مارس_أبريل:أبريل_مايو:مايو_يونيو:يونيو_يوليو:يوليو_أغسطس:أغسطس_سبتمبر:سبتمبر_أكتوبر:أكتوبر_نوفمبر:نوفمبر_ديسمبر:ديسمبر".split("_"),
+                        "يناير:يناير_فبراير:فبراير_مارس:مارس_أبريل:أبريل_مايو:مايو_يونيو:يونيو_يوليو:يوليو_أغسطس:أغسطس_سبتمبر:سبتمبر_أكتوبر:أكتوبر_نوفمبر:نوفمبر_ديسمبر:ديسمبر"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -1491,7 +1504,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "يناير يناير_فبراير فبراير_مارس مارس_أبريل أبريل_مايو مايو_يونيو يونيو_يوليو يوليو_أغسطس أغسطس_سبتمبر سبتمبر_أكتوبر أكتوبر_نوفمبر نوفمبر_ديسمبر ديسمبر".split("_"),
+                        "يناير يناير_فبراير فبراير_مارس مارس_أبريل أبريل_مايو مايو_يونيو يونيو_يوليو يوليو_أغسطس أغسطس_سبتمبر سبتمبر_أكتوبر أكتوبر_نوفمبر نوفمبر_ديسمبر ديسمبر"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -1501,7 +1515,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "الأحد أحد ح_الإثنين إثنين ن_الثلاثاء ثلاثاء ث_الأربعاء أربعاء ر_الخميس خميس خ_الجمعة جمعة ج_السبت سبت س".split("_"),
+                        "الأحد أحد ح_الإثنين إثنين ن_الثلاثاء ثلاثاء ث_الأربعاء أربعاء ر_الخميس خميس خ_الجمعة جمعة ج_السبت سبت س"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -1652,7 +1667,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -1905,47 +1922,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -1954,7 +1971,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "جانفي:جانفي_فيفري:فيفري_مارس:مارس_أفريل:أفريل_ماي:ماي_جوان:جوان_جويلية:جويلية_أوت:أوت_سبتمبر:سبتمبر_أكتوبر:أكتوبر_نوفمبر:نوفمبر_ديسمبر:ديسمبر".split("_"),
+                        "جانفي:جانفي_فيفري:فيفري_مارس:مارس_أفريل:أفريل_ماي:ماي_جوان:جوان_جويلية:جويلية_أوت:أوت_سبتمبر:سبتمبر_أكتوبر:أكتوبر_نوفمبر:نوفمبر_ديسمبر:ديسمبر"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -2050,7 +2068,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "جانفي جانفي_فيفري فيفري_مارس مارس_أفريل أفريل_ماي ماي_جوان جوان_جويلية جويلية_أوت أوت_سبتمبر سبتمبر_أكتوبر أكتوبر_نوفمبر نوفمبر_ديسمبر ديسمبر".split("_"),
+                        "جانفي جانفي_فيفري فيفري_مارس مارس_أفريل أفريل_ماي ماي_جوان جوان_جويلية جويلية_أوت أوت_سبتمبر سبتمبر_أكتوبر أكتوبر_نوفمبر نوفمبر_ديسمبر ديسمبر"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -2060,7 +2079,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "الأحد أحد ح_الإثنين إثنين ن_الثلاثاء ثلاثاء ث_الأربعاء أربعاء ر_الخميس خميس خ_الجمعة جمعة ج_السبت سبت س".split("_"),
+                        "الأحد أحد ح_الإثنين إثنين ن_الثلاثاء ثلاثاء ث_الأربعاء أربعاء ر_الخميس خميس خ_الجمعة جمعة ج_السبت سبت س"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -2387,7 +2407,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -2640,47 +2662,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -2808,7 +2830,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "الأحد أحد ح_الإثنين إثنين ن_الثلاثاء ثلاثاء ث_الأربعاء أربعاء ر_الخميس خميس خ_الجمعة جمعة ج_السبت سبت س".split("_"),
+                        "الأحد أحد ح_الإثنين إثنين ن_الثلاثاء ثلاثاء ث_الأربعاء أربعاء ر_الخميس خميس خ_الجمعة جمعة ج_السبت سبت س"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -2979,7 +3002,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -3232,47 +3257,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -3281,7 +3306,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "yanvar yan_fevral fev_mart mar_Aprel apr_may may_iyun iyn_iyul iyl_Avqust avq_sentyabr sen_oktyabr okt_noyabr noy_dekabr dek".split("_"),
+                        "yanvar yan_fevral fev_mart mar_Aprel apr_may may_iyun iyn_iyul iyl_Avqust avq_sentyabr sen_oktyabr okt_noyabr noy_dekabr dek"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -3390,7 +3416,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "yanvar yan_fevral fev_mart mar_aprel apr_may may_iyun iyn_iyul iyl_avqust avq_sentyabr sen_oktyabr okt_noyabr noy_dekabr dek".split("_"),
+                        "yanvar yan_fevral fev_mart mar_aprel apr_may may_iyun iyn_iyul iyl_avqust avq_sentyabr sen_oktyabr okt_noyabr noy_dekabr dek"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -3400,7 +3427,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Bazar Baz Bz_Bazar ertəsi BzE BE_Çərşənbə axşamı ÇAx ÇA_Çərşənbə Çər Çə_Cümə axşamı CAx CA_Cümə Cüm Cü_Şənbə Şən Şə".split("_"),
+                        "Bazar Baz Bz_Bazar ertəsi BzE BE_Çərşənbə axşamı ÇAx ÇA_Çərşənbə Çər Çə_Cümə axşamı CAx CA_Cümə Cüm Cü_Şənbə Şən Şə"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -3550,7 +3578,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -3803,47 +3833,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -3852,7 +3882,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "студзень студ_люты лют_сакавік сак_красавік крас_травень трав_чэрвень чэрв_ліпень ліп_жнівень жнів_верасень вер_кастрычнік каст_лістапад ліст_снежань снеж".split("_"),
+                        "студзень студ_люты лют_сакавік сак_красавік крас_травень трав_чэрвень чэрв_ліпень ліп_жнівень жнів_верасень вер_кастрычнік каст_лістапад ліст_снежань снеж"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -3960,7 +3991,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "студзень студ_люты лют_сакавік сак_красавік крас_травень трав_чэрвень чэрв_ліпень ліп_жнівень жнів_верасень вер_кастрычнік каст_лістапад ліст_снежань снеж".split("_"),
+                        "студзень студ_люты лют_сакавік сак_красавік крас_травень трав_чэрвень чэрв_ліпень ліп_жнівень жнів_верасень вер_кастрычнік каст_лістапад ліст_снежань снеж"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -3971,9 +4003,11 @@
             function(assert) {
                 var months = {
                         'nominative':
-                            "студзень_люты_сакавік_красавік_травень_чэрвень_ліпень_жнівень_верасень_кастрычнік_лістапад_снежань".split("_"),
+                            "студзень_люты_сакавік_красавік_травень_чэрвень_ліпень_жнівень_верасень_кастрычнік_лістапад_снежань"
+                                .split("_"),
                         'accusative':
-                            "студзеня_лютага_сакавіка_красавіка_траўня_чэрвеня_ліпеня_жніўня_верасня_кастрычніка_лістапада_снежня".split("_")
+                            "студзеня_лютага_сакавіка_красавіка_траўня_чэрвеня_ліпеня_жніўня_верасня_кастрычніка_лістапада_снежня"
+                                .split("_")
                     },
                     i;
                 for (i = 0; i < 12; i++) {
@@ -3989,9 +4023,11 @@
             function(assert) {
                 var months = {
                         'nominative':
-                            "студзень_люты_сакавік_красавік_травень_чэрвень_ліпень_жнівень_верасень_кастрычнік_лістапад_снежань".split("_"),
+                            "студзень_люты_сакавік_красавік_травень_чэрвень_ліпень_жнівень_верасень_кастрычнік_лістапад_снежань"
+                                .split("_"),
                         'accusative':
-                            "студзеня_лютага_сакавіка_красавіка_траўня_чэрвеня_ліпеня_жніўня_верасня_кастрычніка_лістапада_снежня".split("_")
+                            "студзеня_лютага_сакавіка_красавіка_траўня_чэрвеня_ліпеня_жніўня_верасня_кастрычніка_лістапада_снежня"
+                                .split("_")
                     },
                     i;
                 for (i = 0; i < 12; i++) {
@@ -4013,7 +4049,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "нядзеля нд нд_панядзелак пн пн_аўторак ат ат_серада ср ср_чацвер чц чц_пятніца пт пт_субота сб сб".split("_"),
+                        "нядзеля нд нд_панядзелак пн пн_аўторак ат ат_серада ср ср_чацвер чц чц_пятніца пт пт_субота сб сб"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -4176,7 +4213,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -4429,47 +4468,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -4478,7 +4517,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "януари янр_февруари фев_март мар_април апр_май май_юни юни_юли юли_август авг_септември сеп_октомври окт_ноември ное_декември дек".split("_"),
+                        "януари янр_февруари фев_март мар_април апр_май май_юни юни_юли юли_август авг_септември сеп_октомври окт_ноември ное_декември дек"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -4574,7 +4614,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "януари янр_февруари фев_март мар_април апр_май май_юни юни_юли юли_август авг_септември сеп_октомври окт_ноември ное_декември дек".split("_"),
+                        "януари янр_февруари фев_март мар_април апр_май май_юни юни_юли юли_август авг_септември сеп_октомври окт_ноември ное_декември дек"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -4584,7 +4625,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "неделя нед нд_понеделник пон пн_вторник вто вт_сряда сря ср_четвъртък чет чт_петък пет пт_събота съб сб".split("_"),
+                        "неделя нед нд_понеделник пон пн_вторник вто вт_сряда сря ср_четвъртък чет чт_петък пет пт_събота съб сб"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -4728,7 +4770,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -4981,47 +5025,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -5030,7 +5074,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "জানুয়ারী জানু_ফেবুয়ারী ফেব_মার্চ মার্চ_এপ্রিল এপর_মে মে_জুন জুন_জুলাই জুল_অগাস্ট অগ_সেপ্টেম্বর সেপ্ট_অক্টোবর অক্টো_নভেম্বর নভ_ডিসেম্বর ডিসেম্".split("_"),
+                        "জানুয়ারী জানু_ফেবুয়ারী ফেব_মার্চ মার্চ_এপ্রিল এপর_মে মে_জুন জুন_জুলাই জুল_অগাস্ট অগ_সেপ্টেম্বর সেপ্ট_অক্টোবর অক্টো_নভেম্বর নভ_ডিসেম্বর ডিসেম্"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -5125,7 +5170,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "জানুয়ারী জানু_ফেবুয়ারী ফেব_মার্চ মার্চ_এপ্রিল এপর_মে মে_জুন জুন_জুলাই জুল_অগাস্ট অগ_সেপ্টেম্বর সেপ্ট_অক্টোবর অক্টো_নভেম্বর নভ_ডিসেম্বর ডিসেম্".split("_"),
+                        "জানুয়ারী জানু_ফেবুয়ারী ফেব_মার্চ মার্চ_এপ্রিল এপর_মে মে_জুন জুন_জুলাই জুল_অগাস্ট অগ_সেপ্টেম্বর সেপ্ট_অক্টোবর অক্টো_নভেম্বর নভ_ডিসেম্বর ডিসেম্"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -5135,7 +5181,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "রবিবার রবি রব_সোমবার সোম সম_মঙ্গলবার মঙ্গল মঙ্গ_বুধবার বুধ বু_বৃহস্পত্তিবার বৃহস্পত্তি ব্রিহ_শুক্রবার শুক্র শু_শনিবার শনি শনি".split("_"),
+                        "রবিবার রবি রব_সোমবার সোম সম_মঙ্গলবার মঙ্গল মঙ্গ_বুধবার বুধ বু_বৃহস্পত্তিবার বৃহস্পত্তি ব্রিহ_শুক্রবার শুক্র শু_শনিবার শনি শনি"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -5295,7 +5342,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -5548,47 +5597,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -5597,7 +5646,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ཟླ་བ་དང་པོ ཟླ་བ་དང་པོ._ཟླ་བ་གཉིས་པ ཟླ་བ་གཉིས་པ_ཟླ་བ་གསུམ་པ ཟླ་བ་གསུམ་པ_ཟླ་བ་བཞི་པ ཟླ་བ་བཞི་པ_ཟླ་བ་ལྔ་པ ཟླ་བ་ལྔ་པ_ཟླ་བ་དྲུག་པ ཟླ་བ་དྲུག་པ_ཟླ་བ་བདུན་པ ཟླ་བ་བདུན་པ_ཟླ་བ་བརྒྱད་པ ཟླ་བ་བརྒྱད་པ_ཟླ་བ་དགུ་པ ཟླ་བ་དགུ་པ_ཟླ་བ་བཅུ་པ ཟླ་བ་བཅུ་པ_ཟླ་བ་བཅུ་གཅིག་པ ཟླ་བ་བཅུ་གཅིག་པ_ཟླ་བ་བཅུ་གཉིས་པ ཟླ་བ་བཅུ་གཉིས་པ".split("_"),
+                        "ཟླ་བ་དང་པོ ཟླ་བ་དང་པོ._ཟླ་བ་གཉིས་པ ཟླ་བ་གཉིས་པ_ཟླ་བ་གསུམ་པ ཟླ་བ་གསུམ་པ_ཟླ་བ་བཞི་པ ཟླ་བ་བཞི་པ_ཟླ་བ་ལྔ་པ ཟླ་བ་ལྔ་པ_ཟླ་བ་དྲུག་པ ཟླ་བ་དྲུག་པ_ཟླ་བ་བདུན་པ ཟླ་བ་བདུན་པ_ཟླ་བ་བརྒྱད་པ ཟླ་བ་བརྒྱད་པ_ཟླ་བ་དགུ་པ ཟླ་བ་དགུ་པ_ཟླ་བ་བཅུ་པ ཟླ་བ་བཅུ་པ_ཟླ་བ་བཅུ་གཅིག་པ ཟླ་བ་བཅུ་གཅིག་པ_ཟླ་བ་བཅུ་གཉིས་པ ཟླ་བ་བཅུ་གཉིས་པ"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -5692,7 +5742,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ཟླ་བ་དང་པོ ཟླ་བ་དང་པོ_ཟླ་བ་གཉིས་པ ཟླ་བ་གཉིས་པ_ཟླ་བ་གསུམ་པ ཟླ་བ་གསུམ་པ_ཟླ་བ་བཞི་པ ཟླ་བ་བཞི་པ_ཟླ་བ་ལྔ་པ ཟླ་བ་ལྔ་པ_ཟླ་བ་དྲུག་པ ཟླ་བ་དྲུག་པ_ཟླ་བ་བདུན་པ ཟླ་བ་བདུན་པ_ཟླ་བ་བརྒྱད་པ ཟླ་བ་བརྒྱད་པ_ཟླ་བ་དགུ་པ ཟླ་བ་དགུ་པ_ཟླ་བ་བཅུ་པ ཟླ་བ་བཅུ་པ_ཟླ་བ་བཅུ་གཅིག་པ ཟླ་བ་བཅུ་གཅིག་པ_ཟླ་བ་བཅུ་གཉིས་པ ཟླ་བ་བཅུ་གཉིས་པ".split("_"),
+                        "ཟླ་བ་དང་པོ ཟླ་བ་དང་པོ_ཟླ་བ་གཉིས་པ ཟླ་བ་གཉིས་པ_ཟླ་བ་གསུམ་པ ཟླ་བ་གསུམ་པ_ཟླ་བ་བཞི་པ ཟླ་བ་བཞི་པ_ཟླ་བ་ལྔ་པ ཟླ་བ་ལྔ་པ_ཟླ་བ་དྲུག་པ ཟླ་བ་དྲུག་པ_ཟླ་བ་བདུན་པ ཟླ་བ་བདུན་པ_ཟླ་བ་བརྒྱད་པ ཟླ་བ་བརྒྱད་པ_ཟླ་བ་དགུ་པ ཟླ་བ་དགུ་པ_ཟླ་བ་བཅུ་པ ཟླ་བ་བཅུ་པ_ཟླ་བ་བཅུ་གཅིག་པ ཟླ་བ་བཅུ་གཅིག་པ_ཟླ་བ་བཅུ་གཉིས་པ ཟླ་བ་བཅུ་གཉིས་པ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -5702,7 +5753,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "གཟའ་ཉི་མ་ ཉི་མ་ ཉི་མ་_གཟའ་ཟླ་བ་ ཟླ་བ་ ཟླ་བ་_གཟའ་མིག་དམར་ མིག་དམར་ མིག་དམར་_གཟའ་ལྷག་པ་ ལྷག་པ་ ལྷག་པ་_གཟའ་ཕུར་བུ ཕུར་བུ ཕུར་བུ_གཟའ་པ་སངས་ པ་སངས་ པ་སངས་_གཟའ་སྤེན་པ་ སྤེན་པ་ སྤེན་པ་".split("_"),
+                        "གཟའ་ཉི་མ་ ཉི་མ་ ཉི་མ་_གཟའ་ཟླ་བ་ ཟླ་བ་ ཟླ་བ་_གཟའ་མིག་དམར་ མིག་དམར་ མིག་དམར་_གཟའ་ལྷག་པ་ ལྷག་པ་ ལྷག་པ་_གཟའ་ཕུར་བུ ཕུར་བུ ཕུར་བུ_གཟའ་པ་སངས་ པ་སངས་ པ་སངས་_གཟའ་སྤེན་པ་ སྤེན་པ་ སྤེན་པ་"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -5878,7 +5930,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -6131,47 +6185,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -6180,7 +6234,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Genver Gen_C'hwevrer C'hwe_Meurzh Meu_Ebrel Ebr_Mae Mae_Mezheven Eve_Gouere Gou_Eost Eos_Gwengolo Gwe_Here Her_Du Du_Kerzu Ker".split("_"),
+                        "Genver Gen_C'hwevrer C'hwe_Meurzh Meu_Ebrel Ebr_Mae Mae_Mezheven Eve_Gouere Gou_Eost Eos_Gwengolo Gwe_Here Her_Du Du_Kerzu Ker"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -6272,7 +6327,8 @@
             function(assert) {
                 moment.locale("br");
                 var expected =
-                        "Genver Gen_C'hwevrer C'hwe_Meurzh Meu_Ebrel Ebr_Mae Mae_Mezheven Eve_Gouere Gou_Eost Eos_Gwengolo Gwe_Here Her_Du Du_Kerzu Ker".split("_"),
+                        "Genver Gen_C'hwevrer C'hwe_Meurzh Meu_Ebrel Ebr_Mae Mae_Mezheven Eve_Gouere Gou_Eost Eos_Gwengolo Gwe_Here Her_Du Du_Kerzu Ker"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -6451,7 +6507,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -6704,47 +6762,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -6753,7 +6811,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januar jan._februar feb._mart mar._april apr._maj maj._juni jun._juli jul._august aug._septembar sep._oktobar okt._novembar nov._decembar dec.".split("_"),
+                        "januar jan._februar feb._mart mar._april apr._maj maj._juni jun._juli jul._august aug._septembar sep._oktobar okt._novembar nov._decembar dec."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -6848,7 +6907,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januar jan._februar feb._mart mar._april apr._maj maj._juni jun._juli jul._august aug._septembar sep._oktobar okt._novembar nov._decembar dec.".split("_"),
+                        "januar jan._februar feb._mart mar._april apr._maj maj._juni jun._juli jul._august aug._septembar sep._oktobar okt._novembar nov._decembar dec."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -6858,7 +6918,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "nedjelja ned. ne_ponedjeljak pon. po_utorak uto. ut_srijeda sri. sr_četvrtak čet. če_petak pet. pe_subota sub. su".split("_"),
+                        "nedjelja ned. ne_ponedjeljak pon. po_utorak uto. ut_srijeda sri. sr_četvrtak čet. če_petak pet. pe_subota sub. su"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -7028,7 +7089,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -7281,47 +7344,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -7330,7 +7393,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "gener gen._febrer febr._març mar._abril abr._maig mai._juny jun._juliol jul._agost ag._setembre set._octubre oct._novembre nov._desembre des.".split("_"),
+                        "gener gen._febrer febr._març mar._abril abr._maig mai._juny jun._juliol jul._agost ag._setembre set._octubre oct._novembre nov._desembre des."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -7425,7 +7489,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "gener gen._febrer febr._març mar._abril abr._maig mai._juny jun._juliol jul._agost ag._setembre set._octubre oct._novembre nov._desembre des.".split("_"),
+                        "gener gen._febrer febr._març mar._abril abr._maig mai._juny jun._juliol jul._agost ag._setembre set._octubre oct._novembre nov._desembre des."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -7435,7 +7500,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "diumenge dg. Dg_dilluns dl. Dl_dimarts dt. Dt_dimecres dc. Dc_dijous dj. Dj_divendres dv. Dv_dissabte ds. Ds".split("_"),
+                        "diumenge dg. Dg_dilluns dl. Dl_dimarts dt. Dt_dimecres dc. Dc_dijous dj. Dj_divendres dv. Dv_dissabte ds. Ds"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -7587,7 +7653,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -7840,47 +7908,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -7889,7 +7957,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "leden led_únor úno_březen bře_duben dub_květen kvě_červen čvn_červenec čvc_srpen srp_září zář_říjen říj_listopad lis_prosinec pro".split("_"),
+                        "leden led_únor úno_březen bře_duben dub_květen kvě_červen čvn_červenec čvc_srpen srp_září zář_říjen říj_listopad lis_prosinec pro"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, monthIndex) {
@@ -7999,7 +8068,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "leden led_únor úno_březen bře_duben dub_květen kvě_červen čvn_červenec čvc_srpen srp_září zář_říjen říj_listopad lis_prosinec pro".split("_"),
+                        "leden led_únor úno_březen bře_duben dub_květen kvě_červen čvn_červenec čvc_srpen srp_září zář_říjen říj_listopad lis_prosinec pro"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -8244,7 +8314,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -8497,47 +8569,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -8546,7 +8618,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "кӑрлач кӑр_нарӑс нар_пуш пуш_ака ака_май май_ҫӗртме ҫӗр_утӑ утӑ_ҫурла ҫур_авӑн авн_юпа юпа_чӳк чӳк_раштав раш".split("_"),
+                        "кӑрлач кӑр_нарӑс нар_пуш пуш_ака ака_май май_ҫӗртме ҫӗр_утӑ утӑ_ҫурла ҫур_авӑн авн_юпа юпа_чӳк чӳк_раштав раш"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -8641,7 +8714,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "кӑрлач кӑр_нарӑс нар_пуш пуш_ака ака_май май_ҫӗртме ҫӗр_утӑ утӑ_ҫурла ҫур_авӑн авн_юпа юпа_чӳк чӳк_раштав раш".split("_"),
+                        "кӑрлач кӑр_нарӑс нар_пуш пуш_ака ака_май май_ҫӗртме ҫӗр_утӑ утӑ_ҫурла ҫур_авӑн авн_юпа юпа_чӳк чӳк_раштав раш"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -8651,7 +8725,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "вырсарникун выр вр_тунтикун тун тн_ытларикун ытл ыт_юнкун юн юн_кӗҫнерникун кӗҫ кҫ_эрнекун эрн эр_шӑматкун шӑм шм".split("_"),
+                        "вырсарникун выр вр_тунтикун тун тн_ытларикун ытл ыт_юнкун юн юн_кӗҫнерникун кӗҫ кҫ_эрнекун эрн эр_шӑматкун шӑм шм"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -8808,7 +8883,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -9061,47 +9138,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -9110,7 +9187,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Ionawr Ion_Chwefror Chwe_Mawrth Maw_Ebrill Ebr_Mai Mai_Mehefin Meh_Gorffennaf Gor_Awst Aws_Medi Med_Hydref Hyd_Tachwedd Tach_Rhagfyr Rhag".split("_"),
+                        "Ionawr Ion_Chwefror Chwe_Mawrth Maw_Ebrill Ebr_Mai Mai_Mehefin Meh_Gorffennaf Gor_Awst Aws_Medi Med_Hydref Hyd_Tachwedd Tach_Rhagfyr Rhag"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -9205,7 +9283,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Ionawr Ion_Chwefror Chwe_Mawrth Maw_Ebrill Ebr_Mai Mai_Mehefin Meh_Gorffennaf Gor_Awst Aws_Medi Med_Hydref Hyd_Tachwedd Tach_Rhagfyr Rhag".split("_"),
+                        "Ionawr Ion_Chwefror Chwe_Mawrth Maw_Ebrill Ebr_Mai Mai_Mehefin Meh_Gorffennaf Gor_Awst Aws_Medi Med_Hydref Hyd_Tachwedd Tach_Rhagfyr Rhag"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -9215,7 +9294,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Dydd Sul Sul Su_Dydd Llun Llun Ll_Dydd Mawrth Maw Ma_Dydd Mercher Mer Me_Dydd Iau Iau Ia_Dydd Gwener Gwe Gw_Dydd Sadwrn Sad Sa".split("_"),
+                        "Dydd Sul Sul Su_Dydd Llun Llun Ll_Dydd Mawrth Maw Ma_Dydd Mercher Mer Me_Dydd Iau Iau Ia_Dydd Gwener Gwe Gw_Dydd Sadwrn Sad Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -9349,7 +9429,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -9602,47 +9684,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -9651,7 +9733,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januar jan_februar feb_marts mar_april apr_maj maj_juni jun_juli jul_august aug_september sep_oktober okt_november nov_december dec".split("_"),
+                        "januar jan_februar feb_marts mar_april apr_maj maj_juni jun_juli jul_august aug_september sep_oktober okt_november nov_december dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -9746,7 +9829,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januar jan_februar feb_marts mar_april apr_maj maj_juni jun_juli jul_august aug_september sep_oktober okt_november nov_december dec".split("_"),
+                        "januar jan_februar feb_marts mar_april apr_maj maj_juni jun_juli jul_august aug_september sep_oktober okt_november nov_december dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -9756,7 +9840,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "søndag søn sø_mandag man ma_tirsdag tir ti_onsdag ons on_torsdag tor to_fredag fre fr_lørdag lør lø".split("_"),
+                        "søndag søn sø_mandag man ma_tirsdag tir ti_onsdag ons on_torsdag tor to_fredag fre fr_lørdag lør lø"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -9897,7 +9982,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -10150,47 +10237,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -10199,7 +10286,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Jänner Jän._Februar Febr._März Mrz._April Apr._Mai Mai_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez.".split("_"),
+                        "Jänner Jän._Februar Febr._März Mrz._April Apr._Mai Mai_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -10294,7 +10382,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Jänner Jän._Februar Febr._März Mrz._April Apr._Mai Mai_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez.".split("_"),
+                        "Jänner Jän._Februar Febr._März Mrz._April Apr._Mai Mai_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -10304,7 +10393,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Sonntag So. So_Montag Mo. Mo_Dienstag Di. Di_Mittwoch Mi. Mi_Donnerstag Do. Do_Freitag Fr. Fr_Samstag Sa. Sa".split("_"),
+                        "Sonntag So. So_Montag Mo. Mo_Dienstag Di. Di_Mittwoch Mi. Mi_Donnerstag Do. Do_Freitag Fr. Fr_Samstag Sa. Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -10449,7 +10539,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -10702,47 +10794,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -10751,7 +10843,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Januar Jan._Februar Febr._März Mrz._April Apr._Mai Mai_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez.".split("_"),
+                        "Januar Jan._Februar Febr._März Mrz._April Apr._Mai Mai_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -10846,7 +10939,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Januar Jan._Februar Febr._März Mrz._April Apr._Mai Mai_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez.".split("_"),
+                        "Januar Jan._Februar Febr._März Mrz._April Apr._Mai Mai_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -10856,7 +10950,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Sonntag So. So_Montag Mo. Mo_Dienstag Di. Di_Mittwoch Mi. Mi_Donnerstag Do. Do_Freitag Fr. Fr_Samstag Sa. Sa".split("_"),
+                        "Sonntag So. So_Montag Mo. Mo_Dienstag Di. Di_Mittwoch Mi. Mi_Donnerstag Do. Do_Freitag Fr. Fr_Samstag Sa. Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -11002,7 +11097,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -11255,47 +11352,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -11538,7 +11635,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -11791,47 +11890,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -11841,7 +11940,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "Ιανουάριος Ιαν_Φεβρουάριος Φεβ_Μάρτιος Μαρ_Απρίλιος Απρ_Μάιος Μαϊ_Ιούνιος Ιουν_Ιούλιος Ιουλ_Αύγουστος Αυγ_Σεπτέμβριος Σεπ_Οκτώβριος Οκτ_Νοέμβριος Νοε_Δεκέμβριος Δεκ".split("_");
+                        "Ιανουάριος Ιαν_Φεβρουάριος Φεβ_Μάρτιος Μαρ_Απρίλιος Απρ_Μάιος Μαϊ_Ιούνιος Ιουν_Ιούλιος Ιουλ_Αύγουστος Αυγ_Σεπτέμβριος Σεπ_Οκτώβριος Οκτ_Νοέμβριος Νοε_Δεκέμβριος Δεκ"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -11981,7 +12081,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "Ιανουάριος Ιαν_Φεβρουάριος Φεβ_Μάρτιος Μαρ_Απρίλιος Απρ_Μάιος Μαϊ_Ιούνιος Ιουν_Ιούλιος Ιουλ_Αύγουστος Αυγ_Σεπτέμβριος Σεπ_Οκτώβριος Οκτ_Νοέμβριος Νοε_Δεκέμβριος Δεκ".split("_");
+                        "Ιανουάριος Ιαν_Φεβρουάριος Φεβ_Μάρτιος Μαρ_Απρίλιος Απρ_Μάιος Μαϊ_Ιούνιος Ιουν_Ιούλιος Ιουλ_Αύγουστος Αυγ_Σεπτέμβριος Σεπ_Οκτώβριος Οκτ_Νοέμβριος Νοε_Δεκέμβριος Δεκ"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -11992,7 +12093,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "Κυριακή Κυρ Κυ_Δευτέρα Δευ Δε_Τρίτη Τρι Τρ_Τετάρτη Τετ Τε_Πέμπτη Πεμ Πε_Παρασκευή Παρ Πα_Σάββατο Σαβ Σα".split("_");
+                        "Κυριακή Κυρ Κυ_Δευτέρα Δευ Δε_Τρίτη Τρι Τρ_Τετάρτη Τετ Τε_Πέμπτη Πεμ Πε_Παρασκευή Παρ Πα_Σάββατο Σαβ Σα"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -12140,7 +12242,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -12393,47 +12497,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -12442,7 +12546,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_"),
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -12537,7 +12642,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_"),
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -12547,7 +12653,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa".split("_"),
+                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -12685,7 +12792,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -12938,47 +13047,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -12988,7 +13097,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_");
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -13084,7 +13194,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_");
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -13095,7 +13206,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa".split("_");
+                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -13234,7 +13346,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -13487,47 +13601,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -13536,7 +13650,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_"),
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -13631,7 +13746,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_"),
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -13641,7 +13757,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa".split("_"),
+                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -13779,7 +13896,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -14032,47 +14151,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -14081,7 +14200,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_"),
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -14176,7 +14296,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_"),
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -14186,7 +14307,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa".split("_"),
+                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -14324,7 +14446,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -14577,47 +14701,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -14626,7 +14750,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_"),
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -14721,7 +14846,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_"),
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -14731,7 +14857,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa".split("_"),
+                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -14869,7 +14996,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -15122,47 +15251,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -15172,7 +15301,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_");
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -15268,7 +15398,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec".split("_");
+                        "January Jan_February Feb_March Mar_April Apr_May May_June Jun_July Jul_August Aug_September Sep_October Oct_November Nov_December Dec"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -15279,7 +15410,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa".split("_");
+                        "Sunday Sun Su_Monday Mon Mo_Tuesday Tue Tu_Wednesday Wed We_Thursday Thu Th_Friday Fri Fr_Saturday Sat Sa"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -15445,7 +15577,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -15698,47 +15832,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -15747,7 +15881,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januaro jan_februaro feb_marto mar_aprilo apr_majo maj_junio jun_julio jul_aŭgusto aŭg_septembro sep_oktobro okt_novembro nov_decembro dec".split("_"),
+                        "januaro jan_februaro feb_marto mar_aprilo apr_majo maj_junio jun_julio jul_aŭgusto aŭg_septembro sep_oktobro okt_novembro nov_decembro dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -15842,7 +15977,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januaro jan_februaro feb_marto mar_aprilo apr_majo maj_junio jun_julio jul_aŭgusto aŭg_septembro sep_oktobro okt_novembro nov_decembro dec".split("_"),
+                        "januaro jan_februaro feb_marto mar_aprilo apr_majo maj_junio jun_julio jul_aŭgusto aŭg_septembro sep_oktobro okt_novembro nov_decembro dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -15852,7 +15988,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Dimanĉo Dim Di_Lundo Lun Lu_Mardo Mard Ma_Merkredo Merk Me_Ĵaŭdo Ĵaŭ Ĵa_Vendredo Ven Ve_Sabato Sab Sa".split("_"),
+                        "Dimanĉo Dim Di_Lundo Lun Lu_Mardo Mard Ma_Merkredo Merk Me_Ĵaŭdo Ĵaŭ Ĵa_Vendredo Ven Ve_Sabato Sab Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -15987,7 +16124,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -16240,47 +16379,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -16289,7 +16428,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "enero ene._febrero feb._marzo mar._abril abr._mayo may._junio jun._julio jul._agosto ago._septiembre sep._octubre oct._noviembre nov._diciembre dic.".split("_"),
+                        "enero ene._febrero feb._marzo mar._abril abr._mayo may._junio jun._julio jul._agosto ago._septiembre sep._octubre oct._noviembre nov._diciembre dic."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -16385,7 +16525,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "enero ene._febrero feb._marzo mar._abril abr._mayo may._junio jun._julio jul._agosto ago._septiembre sep._octubre oct._noviembre nov._diciembre dic.".split("_"),
+                        "enero ene._febrero feb._marzo mar._abril abr._mayo may._junio jun._julio jul._agosto ago._septiembre sep._octubre oct._noviembre nov._diciembre dic."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -16395,7 +16536,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "domingo dom. do_lunes lun. lu_martes mar. ma_miércoles mié. mi_jueves jue. ju_viernes vie. vi_sábado sáb. sá".split("_"),
+                        "domingo dom. do_lunes lun. lu_martes mar. ma_miércoles mié. mi_jueves jue. ju_viernes vie. vi_sábado sáb. sá"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -16549,7 +16691,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -16802,47 +16946,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -16851,7 +16995,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "jaanuar jaan_veebruar veebr_märts märts_aprill apr_mai mai_juuni juuni_juuli juuli_august aug_september sept_oktoober okt_november nov_detsember dets".split("_"),
+                        "jaanuar jaan_veebruar veebr_märts märts_aprill apr_mai mai_juuni juuni_juuli juuli_august aug_september sept_oktoober okt_november nov_detsember dets"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -16946,7 +17091,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "jaanuar jaan_veebruar veebr_märts märts_aprill apr_mai mai_juuni juuni_juuli juuli_august aug_september sept_oktoober okt_november nov_detsember dets".split("_"),
+                        "jaanuar jaan_veebruar veebr_märts märts_aprill apr_mai mai_juuni juuni_juuli juuli_august aug_september sept_oktoober okt_november nov_detsember dets"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -17128,7 +17274,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -17381,47 +17529,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -17430,7 +17578,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "urtarrila urt._otsaila ots._martxoa mar._apirila api._maiatza mai._ekaina eka._uztaila uzt._abuztua abu._iraila ira._urria urr._azaroa aza._abendua abe.".split("_"),
+                        "urtarrila urt._otsaila ots._martxoa mar._apirila api._maiatza mai._ekaina eka._uztaila uzt._abuztua abu._iraila ira._urria urr._azaroa aza._abendua abe."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -17525,7 +17674,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "urtarrila urt._otsaila ots._martxoa mar._apirila api._maiatza mai._ekaina eka._uztaila uzt._abuztua abu._iraila ira._urria urr._azaroa aza._abendua abe.".split("_"),
+                        "urtarrila urt._otsaila ots._martxoa mar._apirila api._maiatza mai._ekaina eka._uztaila uzt._abuztua abu._iraila ira._urria urr._azaroa aza._abendua abe."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -17535,7 +17685,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "igandea ig. ig_astelehena al. al_asteartea ar. ar_asteazkena az. az_osteguna og. og_ostirala ol. ol_larunbata lr. lr".split("_"),
+                        "igandea ig. ig_astelehena al. al_asteartea ar. ar_asteazkena az. az_osteguna og. og_ostirala ol. ol_larunbata lr. lr"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -17702,7 +17853,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -17955,47 +18108,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -18092,7 +18245,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ژانویه ژانویه_فوریه فوریه_مارس مارس_آوریل آوریل_مه مه_ژوئن ژوئن_ژوئیه ژوئیه_اوت اوت_سپتامبر سپتامبر_اکتبر اکتبر_نوامبر نوامبر_دسامبر دسامبر".split("_"),
+                        "ژانویه ژانویه_فوریه فوریه_مارس مارس_آوریل آوریل_مه مه_ژوئن ژوئن_ژوئیه ژوئیه_اوت اوت_سپتامبر سپتامبر_اکتبر اکتبر_نوامبر نوامبر_دسامبر دسامبر"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -18102,7 +18256,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "یک\u200cشنبه یک\u200cشنبه ی_دوشنبه دوشنبه د_سه\u200cشنبه سه\u200cشنبه س_چهارشنبه چهارشنبه چ_پنج\u200cشنبه پنج\u200cشنبه پ_جمعه جمعه ج_شنبه شنبه ش".split("_"),
+                        "یک\u200cشنبه یک\u200cشنبه ی_دوشنبه دوشنبه د_سه\u200cشنبه سه\u200cشنبه س_چهارشنبه چهارشنبه چ_پنج\u200cشنبه پنج\u200cشنبه پ_جمعه جمعه ج_شنبه شنبه ش"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -18237,7 +18392,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -18490,47 +18647,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -18539,7 +18696,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "tammikuu tammi_helmikuu helmi_maaliskuu maalis_huhtikuu huhti_toukokuu touko_kesäkuu kesä_heinäkuu heinä_elokuu elo_syyskuu syys_lokakuu loka_marraskuu marras_joulukuu joulu".split("_"),
+                        "tammikuu tammi_helmikuu helmi_maaliskuu maalis_huhtikuu huhti_toukokuu touko_kesäkuu kesä_heinäkuu heinä_elokuu elo_syyskuu syys_lokakuu loka_marraskuu marras_joulukuu joulu"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -18634,7 +18792,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "tammikuu tammi_helmikuu helmi_maaliskuu maalis_huhtikuu huhti_toukokuu touko_kesäkuu kesä_heinäkuu heinä_elokuu elo_syyskuu syys_lokakuu loka_marraskuu marras_joulukuu joulu".split("_"),
+                        "tammikuu tammi_helmikuu helmi_maaliskuu maalis_huhtikuu huhti_toukokuu touko_kesäkuu kesä_heinäkuu heinä_elokuu elo_syyskuu syys_lokakuu loka_marraskuu marras_joulukuu joulu"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -18644,7 +18803,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "sunnuntai su su_maanantai ma ma_tiistai ti ti_keskiviikko ke ke_torstai to to_perjantai pe pe_lauantai la la".split("_"),
+                        "sunnuntai su su_maanantai ma ma_tiistai ti ti_keskiviikko ke ke_torstai to to_perjantai pe pe_lauantai la la"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -18808,7 +18968,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -19061,47 +19223,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -19110,7 +19272,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januar jan_februar feb_mars mar_apríl apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des".split("_"),
+                        "januar jan_februar feb_mars mar_apríl apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -19205,7 +19368,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januar jan_februar feb_mars mar_apríl apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des".split("_"),
+                        "januar jan_februar feb_mars mar_apríl apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -19215,7 +19379,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "sunnudagur sun su_mánadagur mán má_týsdagur týs tý_mikudagur mik mi_hósdagur hós hó_fríggjadagur frí fr_leygardagur ley le".split("_"),
+                        "sunnudagur sun su_mánadagur mán má_týsdagur týs tý_mikudagur mik mi_hósdagur hós hó_fríggjadagur frí fr_leygardagur ley le"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -19361,7 +19526,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -19614,47 +19781,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -19664,7 +19831,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc.".split("_");
+                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc."
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -19760,7 +19928,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc.".split("_");
+                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc."
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -19771,7 +19940,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "dimanche dim. Di_lundi lun. Lu_mardi mar. Ma_mercredi mer. Me_jeudi jeu. Je_vendredi ven. Ve_samedi sam. Sa".split("_");
+                        "dimanche dim. Di_lundi lun. Lu_mardi mar. Ma_mercredi mer. Me_jeudi jeu. Je_vendredi ven. Ve_samedi sam. Sa"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -19914,7 +20084,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -20167,47 +20339,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -20217,7 +20389,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc.".split("_");
+                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc."
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -20313,7 +20486,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc.".split("_");
+                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc."
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -20324,7 +20498,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "dimanche dim. Di_lundi lun. Lu_mardi mar. Ma_mercredi mer. Me_jeudi jeu. Je_vendredi ven. Ve_samedi sam. Sa".split("_");
+                        "dimanche dim. Di_lundi lun. Lu_mardi mar. Ma_mercredi mer. Me_jeudi jeu. Je_vendredi ven. Ve_samedi sam. Sa"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -20467,7 +20642,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -20720,47 +20897,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -20769,7 +20946,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc.".split("_"),
+                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -20864,7 +21042,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc.".split("_"),
+                        "janvier janv._février févr._mars mars_avril avr._mai mai_juin juin_juillet juil._août août_septembre sept._octobre oct._novembre nov._décembre déc."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -20874,7 +21053,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "dimanche dim. Di_lundi lun. Lu_mardi mar. Ma_mercredi mer. Me_jeudi jeu. Je_vendredi ven. Ve_samedi sam. Sa".split("_"),
+                        "dimanche dim. Di_lundi lun. Lu_mardi mar. Ma_mercredi mer. Me_jeudi jeu. Je_vendredi ven. Ve_samedi sam. Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -21016,7 +21196,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -21269,47 +21451,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -21318,7 +21500,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "jannewaris jan._febrewaris feb._maart mrt._april apr._maaie mai._juny jun._july jul._augustus aug._septimber sep._oktober okt._novimber nov._desimber des.".split("_"),
+                        "jannewaris jan._febrewaris feb._maart mrt._april apr._maaie mai._juny jun._july jul._augustus aug._septimber sep._oktober okt._novimber nov._desimber des."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -21413,7 +21596,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "jannewaris jan._febrewaris feb._maart mrt._april apr._maaie mai_juny jun._july jul._augustus aug._septimber sep._oktober okt._novimber nov._desimber des.".split("_"),
+                        "jannewaris jan._febrewaris feb._maart mrt._april apr._maaie mai_juny jun._july jul._augustus aug._septimber sep._oktober okt._novimber nov._desimber des."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -21423,7 +21607,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "snein si. Si_moandei mo. Mo_tiisdei ti. Ti_woansdei wo. Wo_tongersdei to. To_freed fr. Fr_sneon so. So".split("_"),
+                        "snein si. Si_moandei mo. Mo_tiisdei ti. Ti_woansdei wo. Wo_tongersdei to. To_freed fr. Fr_sneon so. So"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -21580,7 +21765,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -21833,47 +22020,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -22146,7 +22333,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -22399,47 +22588,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -22448,7 +22637,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Xaneiro Xan._Febreiro Feb._Marzo Mar._Abril Abr._Maio Mai._Xuño Xuñ._Xullo Xul._Agosto Ago._Setembro Set._Outubro Out._Novembro Nov._Decembro Dec.".split("_"),
+                        "Xaneiro Xan._Febreiro Feb._Marzo Mar._Abril Abr._Maio Mai._Xuño Xuñ._Xullo Xul._Agosto Ago._Setembro Set._Outubro Out._Novembro Nov._Decembro Dec."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -22543,7 +22733,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Xaneiro Xan._Febreiro Feb._Marzo Mar._Abril Abr._Maio Mai._Xuño Xuñ._Xullo Xul._Agosto Ago._Setembro Set._Outubro Out._Novembro Nov._Decembro Dec.".split("_"),
+                        "Xaneiro Xan._Febreiro Feb._Marzo Mar._Abril Abr._Maio Mai._Xuño Xuñ._Xullo Xul._Agosto Ago._Setembro Set._Outubro Out._Novembro Nov._Decembro Dec."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -22553,7 +22744,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Domingo Dom. Do_Luns Lun. Lu_Martes Mar. Ma_Mércores Mér. Mé_Xoves Xov. Xo_Venres Ven. Ve_Sábado Sáb. Sá".split("_"),
+                        "Domingo Dom. Do_Luns Lun. Lu_Martes Mar. Ma_Mércores Mér. Mé_Xoves Xov. Xo_Venres Ven. Ve_Sábado Sáb. Sá"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -22711,7 +22903,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -22964,47 +23158,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -23013,7 +23207,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ינואר ינו׳_פברואר פבר׳_מרץ מרץ_אפריל אפר׳_מאי מאי_יוני יוני_יולי יולי_אוגוסט אוג׳_ספטמבר ספט׳_אוקטובר אוק׳_נובמבר נוב׳_דצמבר דצמ׳".split("_"),
+                        "ינואר ינו׳_פברואר פבר׳_מרץ מרץ_אפריל אפר׳_מאי מאי_יוני יוני_יולי יולי_אוגוסט אוג׳_ספטמבר ספט׳_אוקטובר אוק׳_נובמבר נוב׳_דצמבר דצמ׳"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -23070,7 +23265,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ינואר ינו׳_פברואר פבר׳_מרץ מרץ_אפריל אפר׳_מאי מאי_יוני יוני_יולי יולי_אוגוסט אוג׳_ספטמבר ספט׳_אוקטובר אוק׳_נובמבר נוב׳_דצמבר דצמ׳".split("_"),
+                        "ינואר ינו׳_פברואר פבר׳_מרץ מרץ_אפריל אפר׳_מאי מאי_יוני יוני_יולי יולי_אוגוסט אוג׳_ספטמבר ספט׳_אוקטובר אוק׳_נובמבר נוב׳_דצמבר דצמ׳"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -23219,7 +23415,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -23472,47 +23670,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -23521,7 +23719,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "जनवरी जन._फ़रवरी फ़र._मार्च मार्च_अप्रैल अप्रै._मई मई_जून जून_जुलाई जुल._अगस्त अग._सितम्बर सित._अक्टूबर अक्टू._नवम्बर नव._दिसम्बर दिस.".split("_"),
+                        "जनवरी जन._फ़रवरी फ़र._मार्च मार्च_अप्रैल अप्रै._मई मई_जून जून_जुलाई जुल._अगस्त अग._सितम्बर सित._अक्टूबर अक्टू._नवम्बर नव._दिसम्बर दिस."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -23615,7 +23814,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "जनवरी जन._फ़रवरी फ़र._मार्च मार्च_अप्रैल अप्रै._मई मई_जून जून_जुलाई जुल._अगस्त अग._सितम्बर सित._अक्टूबर अक्टू._नवम्बर नव._दिसम्बर दिस.".split("_"),
+                        "जनवरी जन._फ़रवरी फ़र._मार्च मार्च_अप्रैल अप्रै._मई मई_जून जून_जुलाई जुल._अगस्त अग._सितम्बर सित._अक्टूबर अक्टू._नवम्बर नव._दिसम्बर दिस."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -23625,7 +23825,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "रविवार रवि र_सोमवार सोम सो_मंगलवार मंगल मं_बुधवार बुध बु_गुरूवार गुरू गु_शुक्रवार शुक्र शु_शनिवार शनि श".split("_"),
+                        "रविवार रवि र_सोमवार सोम सो_मंगलवार मंगल मं_बुधवार बुध बु_गुरूवार गुरू गु_शुक्रवार शुक्र शु_शनिवार शनि श"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -23783,7 +23984,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -24036,47 +24239,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -24085,7 +24288,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "siječanj sij._veljača velj._ožujak ožu._travanj tra._svibanj svi._lipanj lip._srpanj srp._kolovoz kol._rujan ruj._listopad lis._studeni stu._prosinac pro.".split("_"),
+                        "siječanj sij._veljača velj._ožujak ožu._travanj tra._svibanj svi._lipanj lip._srpanj srp._kolovoz kol._rujan ruj._listopad lis._studeni stu._prosinac pro."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -24180,7 +24384,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "siječanj sij._veljača velj._ožujak ožu._travanj tra._svibanj svi._lipanj lip._srpanj srp._kolovoz kol._rujan ruj._listopad lis._studeni stu._prosinac pro.".split("_"),
+                        "siječanj sij._veljača velj._ožujak ožu._travanj tra._svibanj svi._lipanj lip._srpanj srp._kolovoz kol._rujan ruj._listopad lis._studeni stu._prosinac pro."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -24190,7 +24395,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "nedjelja ned. ne_ponedjeljak pon. po_utorak uto. ut_srijeda sri. sr_četvrtak čet. če_petak pet. pe_subota sub. su".split("_"),
+                        "nedjelja ned. ne_ponedjeljak pon. po_utorak uto. ut_srijeda sri. sr_četvrtak čet. če_petak pet. pe_subota sub. su"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -24360,7 +24566,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -24613,47 +24821,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -24662,7 +24870,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "január jan_február feb_március márc_április ápr_május máj_június jún_július júl_augusztus aug_szeptember szept_október okt_november nov_december dec".split("_"),
+                        "január jan_február feb_március márc_április ápr_május máj_június jún_július júl_augusztus aug_szeptember szept_október okt_november nov_december dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -24768,7 +24977,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "január jan_február feb_március márc_április ápr_május máj_június jún_július júl_augusztus aug_szeptember szept_október okt_november nov_december dec".split("_"),
+                        "január jan_február feb_március márc_április ápr_május máj_június jún_július júl_augusztus aug_szeptember szept_október okt_november nov_december dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -24920,7 +25130,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -25173,47 +25385,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -25222,7 +25434,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "հունվար հնվ_փետրվար փտր_մարտ մրտ_ապրիլ ապր_մայիս մյս_հունիս հնս_հուլիս հլս_օգոստոս օգս_սեպտեմբեր սպտ_հոկտեմբեր հկտ_նոյեմբեր նմբ_դեկտեմբեր դկտ".split("_"),
+                        "հունվար հնվ_փետրվար փտր_մարտ մրտ_ապրիլ ապր_մայիս մյս_հունիս հնս_հուլիս հլս_օգոստոս օգս_սեպտեմբեր սպտ_հոկտեմբեր հկտ_նոյեմբեր նմբ_դեկտեմբեր դկտ"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -25334,7 +25547,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "հունվար հնվ_փետրվար փտր_մարտ մրտ_ապրիլ ապր_մայիս մյս_հունիս հնս_հուլիս հլս_օգոստոս օգս_սեպտեմբեր սպտ_հոկտեմբեր հկտ_նոյեմբեր նմբ_դեկտեմբեր դկտ".split("_"),
+                        "հունվար հնվ_փետրվար փտր_մարտ մրտ_ապրիլ ապր_մայիս մյս_հունիս հնս_հուլիս հլս_օգոստոս օգս_սեպտեմբեր սպտ_հոկտեմբեր հկտ_նոյեմբեր նմբ_դեկտեմբեր դկտ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -25345,9 +25559,11 @@
             function(assert) {
                 var months = {
                         'nominative':
-                            "հունվար_փետրվար_մարտ_ապրիլ_մայիս_հունիս_հուլիս_օգոստոս_սեպտեմբեր_հոկտեմբեր_նոյեմբեր_դեկտեմբեր".split("_"),
+                            "հունվար_փետրվար_մարտ_ապրիլ_մայիս_հունիս_հուլիս_օգոստոս_սեպտեմբեր_հոկտեմբեր_նոյեմբեր_դեկտեմբեր"
+                                .split("_"),
                         'accusative':
-                            "հունվարի_փետրվարի_մարտի_ապրիլի_մայիսի_հունիսի_հուլիսի_օգոստոսի_սեպտեմբերի_հոկտեմբերի_նոյեմբերի_դեկտեմբերի".split("_")
+                            "հունվարի_փետրվարի_մարտի_ապրիլի_մայիսի_հունիսի_հուլիսի_օգոստոսի_սեպտեմբերի_հոկտեմբերի_նոյեմբերի_դեկտեմբերի"
+                                .split("_")
                     },
                     i;
                 for (i = 0; i < 12; i++) {
@@ -25380,9 +25596,11 @@
             function(assert) {
                 var months = {
                         'nominative':
-                            "հունվար_փետրվար_մարտ_ապրիլ_մայիս_հունիս_հուլիս_օգոստոս_սեպտեմբեր_հոկտեմբեր_նոյեմբեր_դեկտեմբեր".split("_"),
+                            "հունվար_փետրվար_մարտ_ապրիլ_մայիս_հունիս_հուլիս_օգոստոս_սեպտեմբեր_հոկտեմբեր_նոյեմբեր_դեկտեմբեր"
+                                .split("_"),
                         'accusative':
-                            "հունվարի_փետրվարի_մարտի_ապրիլի_մայիսի_հունիսի_հուլիսի_օգոստոսի_սեպտեմբերի_հոկտեմբերի_նոյեմբերի_դեկտեմբերի".split("_")
+                            "հունվարի_փետրվարի_մարտի_ապրիլի_մայիսի_հունիսի_հուլիսի_օգոստոսի_սեպտեմբերի_հոկտեմբերի_նոյեմբերի_դեկտեմբերի"
+                                .split("_")
                     },
                     i;
                 for (i = 0; i < 12; i++) {
@@ -25427,7 +25645,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "կիրակի կրկ կրկ_երկուշաբթի երկ երկ_երեքշաբթի երք երք_չորեքշաբթի չրք չրք_հինգշաբթի հնգ հնգ_ուրբաթ ուրբ ուրբ_շաբաթ շբթ շբթ".split("_"),
+                        "կիրակի կրկ կրկ_երկուշաբթի երկ երկ_երեքշաբթի երք երք_չորեքշաբթի չրք չրք_հինգշաբթի հնգ հնգ_ուրբաթ ուրբ ուրբ_շաբաթ շբթ շբթ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -25564,7 +25783,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -25817,47 +26038,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -25866,7 +26087,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Januari Jan_Februari Feb_Maret Mar_April Apr_Mei Mei_Juni Jun_Juli Jul_Agustus Ags_September Sep_Oktober Okt_November Nov_Desember Des".split("_"),
+                        "Januari Jan_Februari Feb_Maret Mar_April Apr_Mei Mei_Juni Jun_Juli Jul_Agustus Ags_September Sep_Oktober Okt_November Nov_Desember Des"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -25923,7 +26145,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Januari Jan_Februari Feb_Maret Mar_April Apr_Mei Mei_Juni Jun_Juli Jul_Agustus Ags_September Sep_Oktober Okt_November Nov_Desember Des".split("_"),
+                        "Januari Jan_Februari Feb_Maret Mar_April Apr_Mei Mei_Juni Jun_Juli Jul_Agustus Ags_September Sep_Oktober Okt_November Nov_Desember Des"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -26075,7 +26298,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -26328,47 +26553,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -26377,7 +26602,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "janúar jan_febrúar feb_mars mar_apríl apr_maí maí_júní jún_júlí júl_ágúst ágú_september sep_október okt_nóvember nóv_desember des".split("_"),
+                        "janúar jan_febrúar feb_mars mar_apríl apr_maí maí_júní jún_júlí júl_ágúst ágú_september sep_október okt_nóvember nóv_desember des"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -26472,7 +26698,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "janúar jan_febrúar feb_mars mar_apríl apr_maí maí_júní jún_júlí júl_ágúst ágú_september sep_október okt_nóvember nóv_desember des".split("_"),
+                        "janúar jan_febrúar feb_mars mar_apríl apr_maí maí_júní jún_júlí júl_ágúst ágú_september sep_október okt_nóvember nóv_desember des"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -26482,7 +26709,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "sunnudagur sun Su_mánudagur mán Má_þriðjudagur þri Þr_miðvikudagur mið Mi_fimmtudagur fim Fi_föstudagur fös Fö_laugardagur lau La".split("_"),
+                        "sunnudagur sun Su_mánudagur mán Má_þriðjudagur þri Þr_miðvikudagur mið Mi_fimmtudagur fim Fi_föstudagur fös Fö_laugardagur lau La"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -26639,7 +26867,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -26892,47 +27122,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -26941,7 +27171,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "gennaio gen_febbraio feb_marzo mar_aprile apr_maggio mag_giugno giu_luglio lug_agosto ago_settembre set_ottobre ott_novembre nov_dicembre dic".split("_"),
+                        "gennaio gen_febbraio feb_marzo mar_aprile apr_maggio mag_giugno giu_luglio lug_agosto ago_settembre set_ottobre ott_novembre nov_dicembre dic"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -27036,7 +27267,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "gennaio gen_febbraio feb_marzo mar_aprile apr_maggio mag_giugno giu_luglio lug_agosto ago_settembre set_ottobre ott_novembre nov_dicembre dic".split("_"),
+                        "gennaio gen_febbraio feb_marzo mar_aprile apr_maggio mag_giugno giu_luglio lug_agosto ago_settembre set_ottobre ott_novembre nov_dicembre dic"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -27046,7 +27278,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Domenica Dom Do_Lunedì Lun Lu_Martedì Mar Ma_Mercoledì Mer Me_Giovedì Gio Gi_Venerdì Ven Ve_Sabato Sab Sa".split("_"),
+                        "Domenica Dom Do_Lunedì Lun Lu_Martedì Mar Ma_Mercoledì Mer Me_Giovedì Gio Gi_Venerdì Ven Ve_Sabato Sab Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -27177,7 +27410,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -27430,47 +27665,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -27669,7 +27904,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -27922,47 +28159,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -27971,7 +28208,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Januari Jan_Februari Feb_Maret Mar_April Apr_Mei Mei_Juni Jun_Juli Jul_Agustus Ags_September Sep_Oktober Okt_Nopember Nop_Desember Des".split("_"),
+                        "Januari Jan_Februari Feb_Maret Mar_April Apr_Mei Mei_Juni Jun_Juli Jul_Agustus Ags_September Sep_Oktober Okt_Nopember Nop_Desember Des"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -28028,7 +28266,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Januari Jan_Februari Feb_Maret Mar_April Apr_Mei Mei_Juni Jun_Juli Jul_Agustus Ags_September Sep_Oktober Okt_Nopember Nop_Desember Des".split("_"),
+                        "Januari Jan_Februari Feb_Maret Mar_April Apr_Mei Mei_Juni Jun_Juli Jul_Agustus Ags_September Sep_Oktober Okt_Nopember Nop_Desember Des"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -28189,7 +28428,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -28442,47 +28683,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -28492,7 +28733,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "იანვარი იან_თებერვალი თებ_მარტი მარ_აპრილი აპრ_მაისი მაი_ივნისი ივნ_ივლისი ივლ_აგვისტო აგვ_სექტემბერი სექ_ოქტომბერი ოქტ_ნოემბერი ნოე_დეკემბერი დეკ".split("_");
+                        "იანვარი იან_თებერვალი თებ_მარტი მარ_აპრილი აპრ_მაისი მაი_ივნისი ივნ_ივლისი ივლ_აგვისტო აგვ_სექტემბერი სექ_ოქტომბერი ოქტ_ნოემბერი ნოე_დეკემბერი დეკ"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " უნდა იყოს თვე " + (i + 1));
@@ -28592,7 +28834,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "იანვარი იან_თებერვალი თებ_მარტი მარ_აპრილი აპრ_მაისი მაი_ივნისი ივნ_ივლისი ივლ_აგვისტო აგვ_სექტემბერი სექ_ოქტომბერი ოქტ_ნოემბერი ნოე_დეკემბერი დეკ".split("_");
+                        "იანვარი იან_თებერვალი თებ_მარტი მარ_აპრილი აპრ_მაისი მაი_ივნისი ივნ_ივლისი ივლ_აგვისტო აგვ_სექტემბერი სექ_ოქტომბერი ოქტ_ნოემბერი ნოე_დეკემბერი დეკ"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -28603,7 +28846,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "კვირა კვი კვ_ორშაბათი ორშ ორ_სამშაბათი სამ სა_ოთხშაბათი ოთხ ოთ_ხუთშაბათი ხუთ ხუ_პარასკევი პარ პა_შაბათი შაბ შა".split("_");
+                        "კვირა კვი კვ_ორშაბათი ორშ ორ_სამშაბათი სამ სა_ოთხშაბათი ოთხ ოთ_ხუთშაბათი ხუთ ხუ_პარასკევი პარ პა_შაბათი შაბ შა"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -28738,7 +28982,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -28991,47 +29237,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -29040,7 +29286,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "қаңтар қаң_ақпан ақп_наурыз нау_сәуір сәу_мамыр мам_маусым мау_шілде шіл_тамыз там_қыркүйек қыр_қазан қаз_қараша қар_желтоқсан жел".split("_"),
+                        "қаңтар қаң_ақпан ақп_наурыз нау_сәуір сәу_мамыр мам_маусым мау_шілде шіл_тамыз там_қыркүйек қыр_қазан қаз_қараша қар_желтоқсан жел"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -29135,7 +29382,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "қаңтар қаң_ақпан ақп_наурыз нау_сәуір сәу_мамыр мам_маусым мау_шілде шіл_тамыз там_қыркүйек қыр_қазан қаз_қараша қар_желтоқсан жел".split("_"),
+                        "қаңтар қаң_ақпан ақп_наурыз нау_сәуір сәу_мамыр мам_маусым мау_шілде шіл_тамыз там_қыркүйек қыр_қазан қаз_қараша қар_желтоқсан жел"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -29145,7 +29393,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "жексенбі жек жк_дүйсенбі дүй дй_сейсенбі сей сй_сәрсенбі сәр ср_бейсенбі бей бй_жұма жұм жм_сенбі сен сн".split("_"),
+                        "жексенбі жек жк_дүйсенбі дүй дй_сейсенбі сей сй_сәрсенбі сәр ср_бейсенбі бей бй_жұма жұм жм_сенбі сен сн"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -29289,7 +29538,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -29542,47 +29793,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -29591,7 +29842,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "មករា មករា_កុម្ភៈ កុម្ភៈ_មីនា មីនា_មេសា មេសា_ឧសភា ឧសភា_មិថុនា មិថុនា_កក្កដា កក្កដា_សីហា សីហា_កញ្ញា កញ្ញា_តុលា តុលា_វិច្ឆិកា វិច្ឆិកា_ធ្នូ ធ្នូ".split("_"),
+                        "មករា មករា_កុម្ភៈ កុម្ភៈ_មីនា មីនា_មេសា មេសា_ឧសភា ឧសភា_មិថុនា មិថុនា_កក្កដា កក្កដា_សីហា សីហា_កញ្ញា កញ្ញា_តុលា តុលា_វិច្ឆិកា វិច្ឆិកា_ធ្នូ ធ្នូ"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -29686,7 +29938,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "មករា មករា_កុម្ភៈ កុម្ភៈ_មីនា មីនា_មេសា មេសា_ឧសភា ឧសភា_មិថុនា មិថុនា_កក្កដា កក្កដា_សីហា សីហា_កញ្ញា កញ្ញា_តុលា តុលា_វិច្ឆិកា វិច្ឆិកា_ធ្នូ ធ្នូ".split("_"),
+                        "មករា មករា_កុម្ភៈ កុម្ភៈ_មីនា មីនា_មេសា មេសា_ឧសភា ឧសភា_មិថុនា មិថុនា_កក្កដា កក្កដា_សីហា សីហា_កញ្ញា កញ្ញា_តុលា តុលា_វិច្ឆិកា វិច្ឆិកា_ធ្នូ ធ្នូ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -29696,7 +29949,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "អាទិត្យ អាទិត្យ អាទិត្យ_ច័ន្ទ ច័ន្ទ ច័ន្ទ_អង្គារ អង្គារ អង្គារ_ពុធ ពុធ ពុធ_ព្រហស្បតិ៍ ព្រហស្បតិ៍ ព្រហស្បតិ៍_សុក្រ សុក្រ សុក្រ_សៅរ៍ សៅរ៍ សៅរ៍".split("_"),
+                        "អាទិត្យ អាទិត្យ អាទិត្យ_ច័ន្ទ ច័ន្ទ ច័ន្ទ_អង្គារ អង្គារ អង្គារ_ពុធ ពុធ ពុធ_ព្រហស្បតិ៍ ព្រហស្បតិ៍ ព្រហស្បតិ៍_សុក្រ សុក្រ សុក្រ_សៅរ៍ សៅរ៍ សៅរ៍"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -29863,7 +30117,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -30116,47 +30372,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -30440,7 +30696,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -30693,47 +30951,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -30742,7 +31000,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "январь янв_февраль фев_март март_апрель апр_май май_июнь июнь_июль июль_август авг_сентябрь сен_октябрь окт_ноябрь ноя_декабрь дек".split("_"),
+                        "январь янв_февраль фев_март март_апрель апр_май май_июнь июнь_июль июль_август авг_сентябрь сен_октябрь окт_ноябрь ноя_декабрь дек"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -30837,7 +31096,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "январь янв_февраль фев_март март_апрель апр_май май_июнь июнь_июль июль_август авг_сентябрь сен_октябрь окт_ноябрь ноя_декабрь дек".split("_"),
+                        "январь янв_февраль фев_март март_апрель апр_май май_июнь июнь_июль июль_август авг_сентябрь сен_октябрь окт_ноябрь ноя_декабрь дек"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -30847,7 +31107,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Жекшемби Жек Жк_Дүйшөмбү Дүй Дй_Шейшемби Шей Шй_Шаршемби Шар Шр_Бейшемби Бей Бй_Жума Жум Жм_Ишемби Ише Иш".split("_"),
+                        "Жекшемби Жек Жк_Дүйшөмбү Дүй Дй_Шейшемби Шей Шй_Шаршемби Шар Шр_Бейшемби Бей Бй_Жума Жум Жм_Ишемби Ише Иш"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -30993,7 +31254,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -31246,47 +31509,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -31295,7 +31558,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Januar Jan._Februar Febr._Mäerz Mrz._Abrëll Abr._Mee Mee_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez.".split("_"),
+                        "Januar Jan._Februar Febr._Mäerz Mrz._Abrëll Abr._Mee Mee_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -31352,7 +31616,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Januar Jan._Februar Febr._Mäerz Mrz._Abrëll Abr._Mee Mee_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez.".split("_"),
+                        "Januar Jan._Februar Febr._Mäerz Mrz._Abrëll Abr._Mee Mee_Juni Jun._Juli Jul._August Aug._September Sept._Oktober Okt._November Nov._Dezember Dez."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -31362,7 +31627,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Sonndeg So. So_Méindeg Mé. Mé_Dënschdeg Dë. Dë_Mëttwoch Më. Më_Donneschdeg Do. Do_Freideg Fr. Fr_Samschdeg Sa. Sa".split("_"),
+                        "Sonndeg So. So_Méindeg Mé. Mé_Dënschdeg Dë. Dë_Mëttwoch Më. Më_Donneschdeg Do. Do_Freideg Fr. Fr_Samschdeg Sa. Sa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -31518,7 +31784,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -31771,47 +32039,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -31820,7 +32088,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ມັງກອນ ມັງກອນ_ກຸມພາ ກຸມພາ_ມີນາ ມີນາ_ເມສາ ເມສາ_ພຶດສະພາ ພຶດສະພາ_ມິຖຸນາ ມິຖຸນາ_ກໍລະກົດ ກໍລະກົດ_ສິງຫາ ສິງຫາ_ກັນຍາ ກັນຍາ_ຕຸລາ ຕຸລາ_ພະຈິກ ພະຈິກ_ທັນວາ ທັນວາ".split("_"),
+                        "ມັງກອນ ມັງກອນ_ກຸມພາ ກຸມພາ_ມີນາ ມີນາ_ເມສາ ເມສາ_ພຶດສະພາ ພຶດສະພາ_ມິຖຸນາ ມິຖຸນາ_ກໍລະກົດ ກໍລະກົດ_ສິງຫາ ສິງຫາ_ກັນຍາ ກັນຍາ_ຕຸລາ ຕຸລາ_ພະຈິກ ພະຈິກ_ທັນວາ ທັນວາ"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -31915,7 +32184,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ມັງກອນ ມັງກອນ_ກຸມພາ ກຸມພາ_ມີນາ ມີນາ_ເມສາ ເມສາ_ພຶດສະພາ ພຶດສະພາ_ມິຖຸນາ ມິຖຸນາ_ກໍລະກົດ ກໍລະກົດ_ສິງຫາ ສິງຫາ_ກັນຍາ ກັນຍາ_ຕຸລາ ຕຸລາ_ພະຈິກ ພະຈິກ_ທັນວາ ທັນວາ".split("_"),
+                        "ມັງກອນ ມັງກອນ_ກຸມພາ ກຸມພາ_ມີນາ ມີນາ_ເມສາ ເມສາ_ພຶດສະພາ ພຶດສະພາ_ມິຖຸນາ ມິຖຸນາ_ກໍລະກົດ ກໍລະກົດ_ສິງຫາ ສິງຫາ_ກັນຍາ ກັນຍາ_ຕຸລາ ຕຸລາ_ພະຈິກ ພະຈິກ_ທັນວາ ທັນວາ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -32078,7 +32348,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -32331,47 +32603,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -32380,7 +32652,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "sausis sau_vasaris vas_kovas kov_balandis bal_gegužė geg_birželis bir_liepa lie_rugpjūtis rgp_rugsėjis rgs_spalis spa_lapkritis lap_gruodis grd".split("_"),
+                        "sausis sau_vasaris vas_kovas kov_balandis bal_gegužė geg_birželis bir_liepa lie_rugpjūtis rgp_rugsėjis rgs_spalis spa_lapkritis lap_gruodis grd"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -32475,7 +32748,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "sausis sau_vasaris vas_kovas kov_balandis bal_gegužė geg_birželis bir_liepa lie_rugpjūtis rgp_rugsėjis rgs_spalis spa_lapkritis lap_gruodis grd".split("_"),
+                        "sausis sau_vasaris vas_kovas kov_balandis bal_gegužė geg_birželis bir_liepa lie_rugpjūtis rgp_rugsėjis rgs_spalis spa_lapkritis lap_gruodis grd"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -32485,7 +32759,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "sekmadienis Sek S_pirmadienis Pir P_antradienis Ant A_trečiadienis Tre T_ketvirtadienis Ket K_penktadienis Pen Pn_šeštadienis Šeš Š".split("_"),
+                        "sekmadienis Sek S_pirmadienis Pir P_antradienis Ant A_trečiadienis Tre T_ketvirtadienis Ket K_penktadienis Pen Pn_šeštadienis Šeš Š"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -32497,7 +32772,8 @@
                 // Tests, whether the weekday names are correct, even if the week does not start on Monday
                 moment.updateLocale("lt", { week: { dow: 0, doy: 6 } });
                 var expected =
-                        "sekmadienis Sek S_pirmadienis Pir P_antradienis Ant A_trečiadienis Tre T_ketvirtadienis Ket K_penktadienis Pen Pn_šeštadienis Šeš Š".split("_"),
+                        "sekmadienis Sek S_pirmadienis Pir P_antradienis Ant A_trečiadienis Tre T_ketvirtadienis Ket K_penktadienis Pen Pn_šeštadienis Šeš Š"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -32664,7 +32940,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -32917,47 +33195,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -32966,7 +33244,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "janvāris jan_februāris feb_marts mar_aprīlis apr_maijs mai_jūnijs jūn_jūlijs jūl_augusts aug_septembris sep_oktobris okt_novembris nov_decembris dec".split("_"),
+                        "janvāris jan_februāris feb_marts mar_aprīlis apr_maijs mai_jūnijs jūn_jūlijs jūl_augusts aug_septembris sep_oktobris okt_novembris nov_decembris dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -33061,7 +33340,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "janvāris jan_februāris feb_marts mar_aprīlis apr_maijs mai_jūnijs jūn_jūlijs jūl_augusts aug_septembris sep_oktobris okt_novembris nov_decembris dec".split("_"),
+                        "janvāris jan_februāris feb_marts mar_aprīlis apr_maijs mai_jūnijs jūn_jūlijs jūl_augusts aug_septembris sep_oktobris okt_novembris nov_decembris dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -33071,7 +33351,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "svētdiena Sv Sv_pirmdiena P P_otrdiena O O_trešdiena T T_ceturtdiena C C_piektdiena Pk Pk_sestdiena S S".split("_"),
+                        "svētdiena Sv Sv_pirmdiena P P_otrdiena O O_trešdiena T T_ceturtdiena C C_piektdiena Pk Pk_sestdiena S S"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -33276,7 +33557,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -33529,47 +33812,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -33578,7 +33861,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec.".split("_"),
+                        "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -33673,7 +33957,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec.".split("_"),
+                        "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -33683,7 +33968,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "nedjelja ned. ne_ponedjeljak pon. po_utorak uto. ut_srijeda sri. sr_četvrtak čet. če_petak pet. pe_subota sub. su".split("_"),
+                        "nedjelja ned. ne_ponedjeljak pon. po_utorak uto. ut_srijeda sri. sr_četvrtak čet. če_petak pet. pe_subota sub. su"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -33856,7 +34142,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -34109,47 +34397,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -34158,7 +34446,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "јануари јан_февруари фев_март мар_април апр_мај мај_јуни јун_јули јул_август авг_септември сеп_октомври окт_ноември ное_декември дек".split("_"),
+                        "јануари јан_февруари фев_март мар_април апр_мај мај_јуни јун_јули јул_август авг_септември сеп_октомври окт_ноември ное_декември дек"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -34253,7 +34542,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "јануари јан_февруари фев_март мар_април апр_мај мај_јуни јун_јули јул_август авг_септември сеп_октомври окт_ноември ное_декември дек".split("_"),
+                        "јануари јан_февруари фев_март мар_април апр_мај мај_јуни јун_јули јул_август авг_септември сеп_октомври окт_ноември ное_декември дек"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -34263,7 +34553,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "недела нед нe_понеделник пон пo_вторник вто вт_среда сре ср_четврток чет че_петок пет пе_сабота саб сa".split("_"),
+                        "недела нед нe_понеделник пон пo_вторник вто вт_среда сре ср_четврток чет че_петок пет пе_сабота саб сa"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -34410,7 +34701,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -34663,47 +34956,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -34712,7 +35005,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ജനുവരി ജനു._ഫെബ്രുവരി ഫെബ്രു._മാർച്ച് മാർ._ഏപ്രിൽ ഏപ്രി._മേയ് മേയ്_ജൂൺ ജൂൺ_ജൂലൈ ജൂലൈ._ഓഗസ്റ്റ് ഓഗ._സെപ്റ്റംബർ സെപ്റ്റ._ഒക്ടോബർ ഒക്ടോ._നവംബർ നവം._ഡിസംബർ ഡിസം.".split("_"),
+                        "ജനുവരി ജനു._ഫെബ്രുവരി ഫെബ്രു._മാർച്ച് മാർ._ഏപ്രിൽ ഏപ്രി._മേയ് മേയ്_ജൂൺ ജൂൺ_ജൂലൈ ജൂലൈ._ഓഗസ്റ്റ് ഓഗ._സെപ്റ്റംബർ സെപ്റ്റ._ഒക്ടോബർ ഒക്ടോ._നവംബർ നവം._ഡിസംബർ ഡിസം."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -34806,7 +35100,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ജനുവരി ജനു._ഫെബ്രുവരി ഫെബ്രു._മാർച്ച് മാർ._ഏപ്രിൽ ഏപ്രി._മേയ് മേയ്_ജൂൺ ജൂൺ_ജൂലൈ ജൂലൈ._ഓഗസ്റ്റ് ഓഗ._സെപ്റ്റംബർ സെപ്റ്റ._ഒക്ടോബർ ഒക്ടോ._നവംബർ നവം._ഡിസംബർ ഡിസം.".split("_"),
+                        "ജനുവരി ജനു._ഫെബ്രുവരി ഫെബ്രു._മാർച്ച് മാർ._ഏപ്രിൽ ഏപ്രി._മേയ് മേയ്_ജൂൺ ജൂൺ_ജൂലൈ ജൂലൈ._ഓഗസ്റ്റ് ഓഗ._സെപ്റ്റംബർ സെപ്റ്റ._ഒക്ടോബർ ഒക്ടോ._നവംബർ നവം._ഡിസംബർ ഡിസം."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -34816,7 +35111,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "ഞായറാഴ്ച ഞായർ ഞാ_തിങ്കളാഴ്ച തിങ്കൾ തി_ചൊവ്വാഴ്ച ചൊവ്വ ചൊ_ബുധനാഴ്ച ബുധൻ ബു_വ്യാഴാഴ്ച വ്യാഴം വ്യാ_വെള്ളിയാഴ്ച വെള്ളി വെ_ശനിയാഴ്ച ശനി ശ".split("_"),
+                        "ഞായറാഴ്ച ഞായർ ഞാ_തിങ്കളാഴ്ച തിങ്കൾ തി_ചൊവ്വാഴ്ച ചൊവ്വ ചൊ_ബുധനാഴ്ച ബുധൻ ബു_വ്യാഴാഴ്ച വ്യാഴം വ്യാ_വെള്ളിയാഴ്ച വെള്ളി വെ_ശനിയാഴ്ച ശനി ശ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -34981,7 +35277,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -35234,47 +35532,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -35283,7 +35581,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "जानेवारी जाने._फेब्रुवारी फेब्रु._मार्च मार्च._एप्रिल एप्रि._मे मे._जून जून._जुलै जुलै._ऑगस्ट ऑग._सप्टेंबर सप्टें._ऑक्टोबर ऑक्टो._नोव्हेंबर नोव्हें._डिसेंबर डिसें.".split("_"),
+                        "जानेवारी जाने._फेब्रुवारी फेब्रु._मार्च मार्च._एप्रिल एप्रि._मे मे._जून जून._जुलै जुलै._ऑगस्ट ऑग._सप्टेंबर सप्टें._ऑक्टोबर ऑक्टो._नोव्हेंबर नोव्हें._डिसेंबर डिसें."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -35377,7 +35676,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "जानेवारी जाने._फेब्रुवारी फेब्रु._मार्च मार्च._एप्रिल एप्रि._मे मे._जून जून._जुलै जुलै._ऑगस्ट ऑग._सप्टेंबर सप्टें._ऑक्टोबर ऑक्टो._नोव्हेंबर नोव्हें._डिसेंबर डिसें.".split("_"),
+                        "जानेवारी जाने._फेब्रुवारी फेब्रु._मार्च मार्च._एप्रिल एप्रि._मे मे._जून जून._जुलै जुलै._ऑगस्ट ऑग._सप्टेंबर सप्टें._ऑक्टोबर ऑक्टो._नोव्हेंबर नोव्हें._डिसेंबर डिसें."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -35387,7 +35687,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "रविवार रवि र_सोमवार सोम सो_मंगळवार मंगळ मं_बुधवार बुध बु_गुरूवार गुरू गु_शुक्रवार शुक्र शु_शनिवार शनि श".split("_"),
+                        "रविवार रवि र_सोमवार सोम सो_मंगळवार मंगळ मं_बुधवार बुध बु_गुरूवार गुरू गु_शुक्रवार शुक्र शु_शनिवार शनि श"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -35544,7 +35845,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -35797,47 +36100,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -35847,7 +36150,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis".split("_");
+                        "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " sepatutnya bulan " + (i + 1));
@@ -35943,7 +36247,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis".split("_");
+                        "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -36091,7 +36396,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -36344,47 +36651,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -36394,7 +36701,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis".split("_");
+                        "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " sepatutnya bulan " + (i + 1));
@@ -36490,7 +36798,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis".split("_");
+                        "Januari Jan_Februari Feb_Mac Mac_April Apr_Mei Mei_Jun Jun_Julai Jul_Ogos Ogs_September Sep_Oktober Okt_November Nov_Disember Dis"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -36638,7 +36947,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -36891,47 +37202,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -36940,7 +37251,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ဇန်နဝါရီ ဇန်_ဖေဖော်ဝါရီ ဖေ_မတ် မတ်_ဧပြီ ပြီ_မေ မေ_ဇွန် ဇွန်_ဇူလိုင် လိုင်_သြဂုတ် သြ_စက်တင်ဘာ စက်_အောက်တိုဘာ အောက်_နိုဝင်ဘာ နို_ဒီဇင်ဘာ ဒီ".split("_"),
+                        "ဇန်နဝါရီ ဇန်_ဖေဖော်ဝါရီ ဖေ_မတ် မတ်_ဧပြီ ပြီ_မေ မေ_ဇွန် ဇွန်_ဇူလိုင် လိုင်_သြဂုတ် သြ_စက်တင်ဘာ စက်_အောက်တိုဘာ အောက်_နိုဝင်ဘာ နို_ဒီဇင်ဘာ ဒီ"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -37035,7 +37347,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ဇန်နဝါရီ ဇန်_ဖေဖော်ဝါရီ ဖေ_မတ် မတ်_ဧပြီ ပြီ_မေ မေ_ဇွန် ဇွန်_ဇူလိုင် လိုင်_သြဂုတ် သြ_စက်တင်ဘာ စက်_အောက်တိုဘာ အောက်_နိုဝင်ဘာ နို_ဒီဇင်ဘာ ဒီ".split("_"),
+                        "ဇန်နဝါရီ ဇန်_ဖေဖော်ဝါရီ ဖေ_မတ် မတ်_ဧပြီ ပြီ_မေ မေ_ဇွန် ဇွန်_ဇူလိုင် လိုင်_သြဂုတ် သြ_စက်တင်ဘာ စက်_အောက်တိုဘာ အောက်_နိုဝင်ဘာ နို_ဒီဇင်ဘာ ဒီ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -37045,7 +37358,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "တနင်္ဂနွေ နွေ နွေ_တနင်္လာ လာ လာ_အင်္ဂါ ဂါ ဂါ_ဗုဒ္ဓဟူး ဟူး ဟူး_ကြာသပတေး ကြာ ကြာ_သောကြာ သော သော_စနေ နေ နေ".split("_"),
+                        "တနင်္ဂနွေ နွေ နွေ_တနင်္လာ လာ လာ_အင်္ဂါ ဂါ ဂါ_ဗုဒ္ဓဟူး ဟူး ဟူး_ကြာသပတေး ကြာ ကြာ_သောကြာ သော သော_စနေ နေ နေ"
+                            .split("_"),
                     i;
 
                 for (i = 0; i < expected.length; i++) {
@@ -37376,7 +37690,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -37629,47 +37945,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -37678,7 +37994,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januar jan._februar feb._mars mars_april april_mai mai_juni juni_juli juli_august aug._september sep._oktober okt._november nov._desember des.".split("_"),
+                        "januar jan._februar feb._mars mars_april april_mai mai_juni juni_juli juli_august aug._september sep._oktober okt._november nov._desember des."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -37773,7 +38090,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januar jan._februar feb._mars mars_april april_mai mai_juni juni_juli juli_august aug._september sep._oktober okt._november nov._desember des.".split("_"),
+                        "januar jan._februar feb._mars mars_april april_mai mai_juni juni_juli juli_august aug._september sep._oktober okt._november nov._desember des."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -37783,7 +38101,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "søndag sø. sø_mandag ma. ma_tirsdag ti. ti_onsdag on. on_torsdag to. to_fredag fr. fr_lørdag lø. lø".split("_"),
+                        "søndag sø. sø_mandag ma. ma_tirsdag ti. ti_onsdag on. on_torsdag to. to_fredag fr. fr_lørdag lø. lø"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -37923,7 +38242,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -38176,47 +38497,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -38225,7 +38546,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "जनवरी जन._फेब्रुवरी फेब्रु._मार्च मार्च_अप्रिल अप्रि._मई मई_जुन जुन_जुलाई जुलाई._अगष्ट अग._सेप्टेम्बर सेप्ट._अक्टोबर अक्टो._नोभेम्बर नोभे._डिसेम्बर डिसे.".split("_"),
+                        "जनवरी जन._फेब्रुवरी फेब्रु._मार्च मार्च_अप्रिल अप्रि._मई मई_जुन जुन_जुलाई जुलाई._अगष्ट अग._सेप्टेम्बर सेप्ट._अक्टोबर अक्टो._नोभेम्बर नोभे._डिसेम्बर डिसे."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -38319,7 +38641,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "जनवरी जन._फेब्रुवरी फेब्रु._मार्च मार्च_अप्रिल अप्रि._मई मई_जुन जुन_जुलाई जुलाई._अगष्ट अग._सेप्टेम्बर सेप्ट._अक्टोबर अक्टो._नोभेम्बर नोभे._डिसेम्बर डिसे.".split("_"),
+                        "जनवरी जन._फेब्रुवरी फेब्रु._मार्च मार्च_अप्रिल अप्रि._मई मई_जुन जुन_जुलाई जुलाई._अगष्ट अग._सेप्टेम्बर सेप्ट._अक्टोबर अक्टो._नोभेम्बर नोभे._डिसेम्बर डिसे."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -38329,7 +38652,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "आइतबार आइत. आ._सोमबार सोम. सो._मङ्गलबार मङ्गल. मं._बुधबार बुध. बु._बिहिबार बिहि. बि._शुक्रबार शुक्र. शु._शनिबार शनि. श.".split("_"),
+                        "आइतबार आइत. आ._सोमबार सोम. सो._मङ्गलबार मङ्गल. मं._बुधबार बुध. बु._बिहिबार बिहि. बि._शुक्रबार शुक्र. शु._शनिबार शनि. श."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -38493,7 +38817,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -38746,47 +39072,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -38795,7 +39121,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januari jan._februari feb._maart mrt._april apr._mei mei._juni jun._juli jul._augustus aug._september sep._oktober okt._november nov._december dec.".split("_"),
+                        "januari jan._februari feb._maart mrt._april apr._mei mei._juni jun._juli jul._augustus aug._september sep._oktober okt._november nov._december dec."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -38890,7 +39217,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januari jan._februari feb._maart mrt._april apr._mei mei_juni jun._juli jul._augustus aug._september sep._oktober okt._november nov._december dec.".split("_"),
+                        "januari jan._februari feb._maart mrt._april apr._mei mei_juni jun._juli jul._augustus aug._september sep._oktober okt._november nov._december dec."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -38900,7 +39228,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "zondag zo. Zo_maandag ma. Ma_dinsdag di. Di_woensdag wo. Wo_donderdag do. Do_vrijdag vr. Vr_zaterdag za. Za".split("_"),
+                        "zondag zo. Zo_maandag ma. Ma_dinsdag di. Di_woensdag wo. Wo_donderdag do. Do_vrijdag vr. Vr_zaterdag za. Za"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -39052,7 +39381,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -39305,47 +39636,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -39354,7 +39685,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januar jan_februar feb_mars mar_april apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des".split("_"),
+                        "januar jan_februar feb_mars mar_april apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -39449,7 +39781,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januar jan_februar feb_mars mar_april apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des".split("_"),
+                        "januar jan_februar feb_mars mar_april apr_mai mai_juni jun_juli jul_august aug_september sep_oktober okt_november nov_desember des"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -39459,7 +39792,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "sundag sun su_måndag mån må_tysdag tys ty_onsdag ons on_torsdag tor to_fredag fre fr_laurdag lau lø".split("_"),
+                        "sundag sun su_måndag mån må_tysdag tys ty_onsdag ons on_torsdag tor to_fredag fre fr_laurdag lau lø"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -39606,7 +39940,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -39859,47 +40195,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -39908,7 +40244,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ਜਨਵਰੀ ਜਨਵਰੀ_ਫ਼ਰਵਰੀ ਫ਼ਰਵਰੀ_ਮਾਰਚ ਮਾਰਚ_ਅਪ੍ਰੈਲ ਅਪ੍ਰੈਲ_ਮਈ ਮਈ_ਜੂਨ ਜੂਨ_ਜੁਲਾਈ ਜੁਲਾਈ_ਅਗਸਤ ਅਗਸਤ_ਸਤੰਬਰ ਸਤੰਬਰ_ਅਕਤੂਬਰ ਅਕਤੂਬਰ_ਨਵੰਬਰ ਨਵੰਬਰ_ਦਸੰਬਰ ਦਸੰਬਰ".split("_"),
+                        "ਜਨਵਰੀ ਜਨਵਰੀ_ਫ਼ਰਵਰੀ ਫ਼ਰਵਰੀ_ਮਾਰਚ ਮਾਰਚ_ਅਪ੍ਰੈਲ ਅਪ੍ਰੈਲ_ਮਈ ਮਈ_ਜੂਨ ਜੂਨ_ਜੁਲਾਈ ਜੁਲਾਈ_ਅਗਸਤ ਅਗਸਤ_ਸਤੰਬਰ ਸਤੰਬਰ_ਅਕਤੂਬਰ ਅਕਤੂਬਰ_ਨਵੰਬਰ ਨਵੰਬਰ_ਦਸੰਬਰ ਦਸੰਬਰ"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -40002,7 +40339,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ਜਨਵਰੀ ਜਨਵਰੀ_ਫ਼ਰਵਰੀ ਫ਼ਰਵਰੀ_ਮਾਰਚ ਮਾਰਚ_ਅਪ੍ਰੈਲ ਅਪ੍ਰੈਲ_ਮਈ ਮਈ_ਜੂਨ ਜੂਨ_ਜੁਲਾਈ ਜੁਲਾਈ_ਅਗਸਤ ਅਗਸਤ_ਸਤੰਬਰ ਸਤੰਬਰ_ਅਕਤੂਬਰ ਅਕਤੂਬਰ_ਨਵੰਬਰ ਨਵੰਬਰ_ਦਸੰਬਰ ਦਸੰਬਰ".split("_"),
+                        "ਜਨਵਰੀ ਜਨਵਰੀ_ਫ਼ਰਵਰੀ ਫ਼ਰਵਰੀ_ਮਾਰਚ ਮਾਰਚ_ਅਪ੍ਰੈਲ ਅਪ੍ਰੈਲ_ਮਈ ਮਈ_ਜੂਨ ਜੂਨ_ਜੁਲਾਈ ਜੁਲਾਈ_ਅਗਸਤ ਅਗਸਤ_ਸਤੰਬਰ ਸਤੰਬਰ_ਅਕਤੂਬਰ ਅਕਤੂਬਰ_ਨਵੰਬਰ ਨਵੰਬਰ_ਦਸੰਬਰ ਦਸੰਬਰ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -40012,7 +40350,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "ਐਤਵਾਰ ਐਤ ਐਤ_ਸੋਮਵਾਰ ਸੋਮ ਸੋਮ_ਮੰਗਲਵਾਰ ਮੰਗਲ ਮੰਗਲ_ਬੁਧਵਾਰ ਬੁਧ ਬੁਧ_ਵੀਰਵਾਰ ਵੀਰ ਵੀਰ_ਸ਼ੁੱਕਰਵਾਰ ਸ਼ੁਕਰ ਸ਼ੁਕਰ_ਸ਼ਨੀਚਰਵਾਰ ਸ਼ਨੀ ਸ਼ਨੀ".split("_"),
+                        "ਐਤਵਾਰ ਐਤ ਐਤ_ਸੋਮਵਾਰ ਸੋਮ ਸੋਮ_ਮੰਗਲਵਾਰ ਮੰਗਲ ਮੰਗਲ_ਬੁਧਵਾਰ ਬੁਧ ਬੁਧ_ਵੀਰਵਾਰ ਵੀਰ ਵੀਰ_ਸ਼ੁੱਕਰਵਾਰ ਸ਼ੁਕਰ ਸ਼ੁਕਰ_ਸ਼ਨੀਚਰਵਾਰ ਸ਼ਨੀ ਸ਼ਨੀ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -40289,7 +40628,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -40542,47 +40883,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -40591,7 +40932,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "styczeń stycznia sty_luty lutego lut_marzec marca mar_kwiecień kwietnia kwi_maj maja maj_czerwiec czerwca cze_lipiec lipca lip_sierpień sierpnia sie_wrzesień września wrz_październik października paź_listopad listopada lis_grudzień grudnia gru".split("_"),
+                        "styczeń stycznia sty_luty lutego lut_marzec marca mar_kwiecień kwietnia kwi_maj maja maj_czerwiec czerwca cze_lipiec lipca lip_sierpień sierpnia sie_wrzesień września wrz_październik października paź_listopad listopada lis_grudzień grudnia gru"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -40618,7 +40960,8 @@
         test("parse strict",
             function(assert) {
                 var tests =
-                        "styczeń stycznia sty_luty lutego lut_marzec marca mar_kwiecień kwietnia kwi_maj maja maj_czerwiec czerwca cze_lipiec lipca lip_sierpień sierpnia sie_wrzesień września wrz_październik października paź_listopad listopada lis_grudzień grudnia gru".split("_"),
+                        "styczeń stycznia sty_luty lutego lut_marzec marca mar_kwiecień kwietnia kwi_maj maja maj_czerwiec czerwca cze_lipiec lipca lip_sierpień sierpnia sie_wrzesień września wrz_październik października paź_listopad listopada lis_grudzień grudnia gru"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -40714,7 +41057,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "styczeń sty_luty lut_marzec mar_kwiecień kwi_maj maj_czerwiec cze_lipiec lip_sierpień sie_wrzesień wrz_październik paź_listopad lis_grudzień gru".split("_"),
+                        "styczeń sty_luty lut_marzec mar_kwiecień kwi_maj maj_czerwiec cze_lipiec lip_sierpień sie_wrzesień wrz_październik paź_listopad lis_grudzień gru"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -40724,7 +41068,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "niedziela nie Nd_poniedziałek pon Pn_wtorek wt Wt_środa śr Śr_czwartek czw Cz_piątek pt Pt_sobota sb So".split("_"),
+                        "niedziela nie Nd_poniedziałek pon Pn_wtorek wt Wt_środa śr Śr_czwartek czw Cz_piątek pt Pt_sobota sb So"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -40899,7 +41244,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -41152,47 +41499,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -41201,7 +41548,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "janeiro jan_fevereiro fev_março mar_abril abr_maio mai_junho jun_julho jul_agosto ago_setembro set_outubro out_novembro nov_dezembro dez".split("_"),
+                        "janeiro jan_fevereiro fev_março mar_abril abr_maio mai_junho jun_julho jul_agosto ago_setembro set_outubro out_novembro nov_dezembro dez"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -41296,7 +41644,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Janeiro Jan_Fevereiro Fev_Março Mar_Abril Abr_Maio Mai_Junho Jun_Julho Jul_Agosto Ago_Setembro Set_Outubro Out_Novembro Nov_Dezembro Dez".split("_"),
+                        "Janeiro Jan_Fevereiro Fev_Março Mar_Abril Abr_Maio Mai_Junho Jun_Julho Jul_Agosto Ago_Setembro Set_Outubro Out_Novembro Nov_Dezembro Dez"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -41306,7 +41655,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Domingo Dom_Segunda-feira Seg_Terça-feira Ter_Quarta-feira Qua_Quinta-feira Qui_Sexta-feira Sex_Sábado Sáb".split("_"),
+                        "Domingo Dom_Segunda-feira Seg_Terça-feira Ter_Quarta-feira Qua_Quinta-feira Qui_Sexta-feira Sex_Sábado Sáb"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd"), expected[i], expected[i]);
@@ -41446,7 +41796,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -41699,47 +42051,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -41748,7 +42100,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Janeiro Jan_Fevereiro Fev_Março Mar_Abril Abr_Maio Mai_Junho Jun_Julho Jul_Agosto Ago_Setembro Set_Outubro Out_Novembro Nov_Dezembro Dez".split("_"),
+                        "Janeiro Jan_Fevereiro Fev_Março Mar_Abril Abr_Maio Mai_Junho Jun_Julho Jul_Agosto Ago_Setembro Set_Outubro Out_Novembro Nov_Dezembro Dez"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -41843,7 +42196,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Janeiro Jan_Fevereiro Fev_Março Mar_Abril Abr_Maio Mai_Junho Jun_Julho Jul_Agosto Ago_Setembro Set_Outubro Out_Novembro Nov_Dezembro Dez".split("_"),
+                        "Janeiro Jan_Fevereiro Fev_Março Mar_Abril Abr_Maio Mai_Junho Jun_Julho Jul_Agosto Ago_Setembro Set_Outubro Out_Novembro Nov_Dezembro Dez"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -41853,7 +42207,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Domingo Dom Dom_Segunda-Feira Seg 2ª_Terça-Feira Ter 3ª_Quarta-Feira Qua 4ª_Quinta-Feira Qui 5ª_Sexta-Feira Sex 6ª_Sábado Sáb Sáb".split("_"),
+                        "Domingo Dom Dom_Segunda-Feira Seg 2ª_Terça-Feira Ter 3ª_Quarta-Feira Qua 4ª_Quinta-Feira Qui 5ª_Sexta-Feira Sex 6ª_Sábado Sáb Sáb"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -41994,7 +42349,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -42247,47 +42604,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -42296,7 +42653,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ianuarie ian._februarie febr._martie mart._aprilie apr._mai mai_iunie iun._iulie iul._august aug._septembrie sept._octombrie oct._noiembrie nov._decembrie dec.".split("_"),
+                        "ianuarie ian._februarie febr._martie mart._aprilie apr._mai mai_iunie iun._iulie iul._august aug._septembrie sept._octombrie oct._noiembrie nov._decembrie dec."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -42391,7 +42749,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ianuarie ian._februarie febr._martie mart._aprilie apr._mai mai_iunie iun._iulie iul._august aug._septembrie sept._octombrie oct._noiembrie nov._decembrie dec.".split("_"),
+                        "ianuarie ian._februarie febr._martie mart._aprilie apr._mai mai_iunie iun._iulie iul._august aug._septembrie sept._octombrie oct._noiembrie nov._decembrie dec."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -42401,7 +42760,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "duminică Dum Du_luni Lun Lu_marți Mar Ma_miercuri Mie Mi_joi Joi Jo_vineri Vin Vi_sâmbătă Sâm Sâ".split("_"),
+                        "duminică Dum Du_luni Lun Lu_marți Mar Ma_miercuri Mie Mi_joi Joi Jo_vineri Vin Vi_sâmbătă Sâm Sâ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -42563,7 +42923,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -42816,47 +43178,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -42865,7 +43227,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "январь янв._февраль февр._март март_апрель апр._май май_июнь июнь_июль июль_август авг._сентябрь сент._октябрь окт._ноябрь нояб._декабрь дек.".split("_"),
+                        "январь янв._февраль февр._март март_апрель апр._май май_июнь июнь_июль июль_август авг._сентябрь сент._октябрь окт._ноябрь нояб._декабрь дек."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -42990,7 +43353,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "январь янв._февраль февр._март март_апрель апр._май май_июнь июнь_июль июль_август авг._сентябрь сент._октябрь окт._ноябрь нояб._декабрь дек.".split("_"),
+                        "январь янв._февраль февр._март март_апрель апр._май май_июнь июнь_июль июль_август авг._сентябрь сент._октябрь окт._ноябрь нояб._декабрь дек."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -43085,7 +43449,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "воскресенье вс вс_понедельник пн пн_вторник вт вт_среда ср ср_четверг чт чт_пятница пт пт_суббота сб сб".split("_"),
+                        "воскресенье вс вс_понедельник пн пн_вторник вт вт_среда ср ср_четверг чт чт_пятница пт пт_суббота сб сб"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -43296,7 +43661,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -43549,47 +43916,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -43599,7 +43966,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "ođđajagemánnu ođđj_guovvamánnu guov_njukčamánnu njuk_cuoŋománnu cuo_miessemánnu mies_geassemánnu geas_suoidnemánnu suoi_borgemánnu borg_čakčamánnu čakč_golggotmánnu golg_skábmamánnu skáb_juovlamánnu juov".split("_");
+                        "ođđajagemánnu ođđj_guovvamánnu guov_njukčamánnu njuk_cuoŋománnu cuo_miessemánnu mies_geassemánnu geas_suoidnemánnu suoi_borgemánnu borg_čakčamánnu čakč_golggotmánnu golg_skábmamánnu skáb_juovlamánnu juov"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -43695,7 +44063,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "ođđajagemánnu ođđj_guovvamánnu guov_njukčamánnu njuk_cuoŋománnu cuo_miessemánnu mies_geassemánnu geas_suoidnemánnu suoi_borgemánnu borg_čakčamánnu čakč_golggotmánnu golg_skábmamánnu skáb_juovlamánnu juov".split("_");
+                        "ođđajagemánnu ođđj_guovvamánnu guov_njukčamánnu njuk_cuoŋománnu cuo_miessemánnu mies_geassemánnu geas_suoidnemánnu suoi_borgemánnu borg_čakčamánnu čakč_golggotmánnu golg_skábmamánnu skáb_juovlamánnu juov"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -43706,7 +44075,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "sotnabeaivi sotn s_vuossárga vuos v_maŋŋebárga maŋ m_gaskavahkku gask g_duorastat duor d_bearjadat bear b_lávvardat láv L".split("_");
+                        "sotnabeaivi sotn s_vuossárga vuos v_maŋŋebárga maŋ m_gaskavahkku gask g_duorastat duor d_bearjadat bear b_lávvardat láv L"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -43862,7 +44232,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -44115,47 +44487,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -44165,7 +44537,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ජනවාරි ජන_පෙබරවාරි පෙබ_මාර්තු මාර්_අප්‍රේල් අප්_මැයි මැයි_ජූනි ජූනි_ජූලි ජූලි_අගෝස්තු අගෝ_සැප්තැම්බර් සැප්_ඔක්තෝබර් ඔක්_නොවැම්බර් නොවැ_දෙසැම්බර් දෙසැ".split("_"),
+                        "ජනවාරි ජන_පෙබරවාරි පෙබ_මාර්තු මාර්_අප්‍රේල් අප්_මැයි මැයි_ජූනි ජූනි_ජූලි ජූලි_අගෝස්තු අගෝ_සැප්තැම්බර් සැප්_ඔක්තෝබර් ඔක්_නොවැම්බර් නොවැ_දෙසැම්බර් දෙසැ"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -44261,7 +44634,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ජනවාරි ජන_පෙබරවාරි පෙබ_මාර්තු මාර්_අප්‍රේල් අප්_මැයි මැයි_ජූනි ජූනි_ජූලි ජූලි_අගෝස්තු අගෝ_සැප්තැම්බර් සැප්_ඔක්තෝබර් ඔක්_නොවැම්බර් නොවැ_දෙසැම්බර් දෙසැ".split("_"),
+                        "ජනවාරි ජන_පෙබරවාරි පෙබ_මාර්තු මාර්_අප්‍රේල් අප්_මැයි මැයි_ජූනි ජූනි_ජූලි ජූලි_අගෝස්තු අගෝ_සැප්තැම්බර් සැප්_ඔක්තෝබර් ඔක්_නොවැම්බර් නොවැ_දෙසැම්බර් දෙසැ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -44271,7 +44645,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "ඉරිදා ඉරි ඉ_සඳුදා සඳු ස_අඟහරුවාදා අඟ අ_බදාදා බදා බ_බ්‍රහස්පතින්දා බ්‍රහ බ්‍ර_සිකුරාදා සිකු සි_සෙනසුරාදා සෙන සෙ".split("_"),
+                        "ඉරිදා ඉරි ඉ_සඳුදා සඳු ස_අඟහරුවාදා අඟ අ_බදාදා බදා බ_බ්‍රහස්පතින්දා බ්‍රහ බ්‍ර_සිකුරාදා සිකු සි_සෙනසුරාදා සෙන සෙ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -44398,7 +44773,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -44651,47 +45028,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -44700,7 +45077,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "január jan._február feb._marec mar._apríl apr._máj máj_jún jún._júl júl._august aug._september sep._október okt._november nov._december dec.".split("_"),
+                        "január jan._február feb._marec mar._apríl apr._máj máj_jún jún._júl júl._august aug._september sep._október okt._november nov._december dec."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, monthIndex) {
@@ -44796,7 +45174,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "január jan_február feb_marec mar_apríl apr_máj máj_jún jún_júl júl_august aug_september sep_október okt_november nov_december dec".split("_"),
+                        "január jan_február feb_marec mar_apríl apr_máj máj_jún jún_júl júl_august aug_september sep_október okt_november nov_december dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -45044,7 +45423,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -45297,47 +45678,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -45346,7 +45727,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januar jan._februar feb._marec mar._april apr._maj maj_junij jun._julij jul._avgust avg._september sep._oktober okt._november nov._december dec.".split("_"),
+                        "januar jan._februar feb._marec mar._april apr._maj maj_junij jun._julij jul._avgust avg._september sep._oktober okt._november nov._december dec."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -45441,7 +45823,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januar jan._februar feb._marec mar._april apr._maj maj._junij jun._julij jul._avgust avg._september sep._oktober okt._november nov._december dec.".split("_"),
+                        "januar jan._februar feb._marec mar._april apr._maj maj._junij jun._julij jul._avgust avg._september sep._oktober okt._november nov._december dec."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -45451,7 +45834,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "nedelja ned. ne_ponedeljek pon. po_torek tor. to_sreda sre. sr_četrtek čet. če_petek pet. pe_sobota sob. so".split("_"),
+                        "nedelja ned. ne_ponedeljek pon. po_torek tor. to_sreda sre. sr_četrtek čet. če_petek pet. pe_sobota sob. so"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -45708,7 +46092,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -45961,47 +46347,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -46011,7 +46397,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "Janar Jan_Shkurt Shk_Mars Mar_Prill Pri_Maj Maj_Qershor Qer_Korrik Kor_Gusht Gus_Shtator Sht_Tetor Tet_Nëntor Nën_Dhjetor Dhj".split("_");
+                        "Janar Jan_Shkurt Shk_Mars Mar_Prill Pri_Maj Maj_Qershor Qer_Korrik Kor_Gusht Gus_Shtator Sht_Tetor Tet_Nëntor Nën_Dhjetor Dhj"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -46113,7 +46500,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "Janar Jan_Shkurt Shk_Mars Mar_Prill Pri_Maj Maj_Qershor Qer_Korrik Kor_Gusht Gus_Shtator Sht_Tetor Tet_Nëntor Nën_Dhjetor Dhj".split("_");
+                        "Janar Jan_Shkurt Shk_Mars Mar_Prill Pri_Maj Maj_Qershor Qer_Korrik Kor_Gusht Gus_Shtator Sht_Tetor Tet_Nëntor Nën_Dhjetor Dhj"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -46124,7 +46512,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "E Diel Die D_E Hënë Hën H_E Martë Mar Ma_E Mërkurë Mër Më_E Enjte Enj E_E Premte Pre P_E Shtunë Sht Sh".split("_");
+                        "E Diel Die D_E Hënë Hën H_E Martë Mar Ma_E Mërkurë Mër Më_E Enjte Enj E_E Premte Pre P_E Shtunë Sht Sh"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -46265,7 +46654,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -46518,47 +46909,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -46567,7 +46958,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "јануар јан._фебруар феб._март мар._април апр._мај мај_јун јун_јул јул_август авг._септембар сеп._октобар окт._новембар нов._децембар дец.".split("_"),
+                        "јануар јан._фебруар феб._март мар._април апр._мај мај_јун јун_јул јул_август авг._септембар сеп._октобар окт._новембар нов._децембар дец."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -46662,7 +47054,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "јануар јан._фебруар феб._март мар._април апр._мај мај_јун јун_јул јул_август авг._септембар сеп._октобар окт._новембар нов._децембар дец.".split("_"),
+                        "јануар јан._фебруар феб._март мар._април апр._мај мај_јун јун_јул јул_август авг._септембар сеп._октобар окт._новембар нов._децембар дец."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -46672,7 +47065,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "недеља нед. не_понедељак пон. по_уторак уто. ут_среда сре. ср_четвртак чет. че_петак пет. пе_субота суб. су".split("_"),
+                        "недеља нед. не_понедељак пон. по_уторак уто. ут_среда сре. ср_четвртак чет. че_петак пет. пе_субота суб. су"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -46841,7 +47235,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -47094,47 +47490,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -47143,7 +47539,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec.".split("_"),
+                        "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -47238,7 +47635,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec.".split("_"),
+                        "januar jan._februar feb._mart mar._april apr._maj maj_jun jun_jul jul_avgust avg._septembar sep._oktobar okt._novembar nov._decembar dec."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -47248,7 +47646,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "nedelja ned. ne_ponedeljak pon. po_utorak uto. ut_sreda sre. sr_četvrtak čet. če_petak pet. pe_subota sub. su".split("_"),
+                        "nedelja ned. ne_ponedeljak pon. po_utorak uto. ut_sreda sre. sr_četvrtak čet. če_petak pet. pe_subota sub. su"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -47417,7 +47816,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -47670,47 +48071,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -47719,7 +48120,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Bhimbidvwane Bhi_Indlovana Ina_Indlov'lenkhulu Inu_Mabasa Mab_Inkhwekhweti Ink_Inhlaba Inh_Kholwane Kho_Ingci Igc_Inyoni Iny_Imphala Imp_Lweti lwe_Ingongoni Igo".split("_"),
+                        "Bhimbidvwane Bhi_Indlovana Ina_Indlov'lenkhulu Inu_Mabasa Mab_Inkhwekhweti Ink_Inhlaba Inh_Kholwane Kho_Ingci Igc_Inyoni Iny_Imphala Imp_Lweti lwe_Ingongoni Igo"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -47851,7 +48253,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Bhimbidvwane Bhi_Indlovana Ina_Indlov'lenkhulu Inu_Mabasa Mab_Inkhwekhweti Ink_Inhlaba Inh_Kholwane Kho_Ingci Igc_Inyoni Iny_Imphala Imp_Lweti Lwe_Ingongoni Igo".split("_"),
+                        "Bhimbidvwane Bhi_Indlovana Ina_Indlov'lenkhulu Inu_Mabasa Mab_Inkhwekhweti Ink_Inhlaba Inh_Kholwane Kho_Ingci Igc_Inyoni Iny_Imphala Imp_Lweti Lwe_Ingongoni Igo"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -47861,7 +48264,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Lisontfo Lis Li_Umsombuluko Umb Us_Lesibili Lsb Lb_Lesitsatfu Les Lt_Lesine Lsi Ls_Lesihlanu Lsh Lh_Umgcibelo Umg Ug".split("_"),
+                        "Lisontfo Lis Li_Umsombuluko Umb Us_Lesibili Lsb Lb_Lesitsatfu Les Lt_Lesine Lsi Ls_Lesihlanu Lsh Lh_Umgcibelo Umg Ug"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -48022,7 +48426,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -48275,47 +48681,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -48324,7 +48730,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "januari jan_februari feb_mars mar_april apr_maj maj_juni jun_juli jul_augusti aug_september sep_oktober okt_november nov_december dec".split("_"),
+                        "januari jan_februari feb_mars mar_april apr_maj maj_juni jun_juli jul_augusti aug_september sep_oktober okt_november nov_december dec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -48419,7 +48826,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "januari jan_februari feb_mars mar_april apr_maj maj_juni jun_juli jul_augusti aug_september sep_oktober okt_november nov_december dec".split("_"),
+                        "januari jan_februari feb_mars mar_april apr_maj maj_juni jun_juli jul_augusti aug_september sep_oktober okt_november nov_december dec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -48429,7 +48837,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "söndag sön sö_måndag mån må_tisdag tis ti_onsdag ons on_torsdag tor to_fredag fre fr_lördag lör lö".split("_"),
+                        "söndag sön sö_måndag mån må_tisdag tis ti_onsdag ons on_torsdag tor to_fredag fre fr_lördag lör lö"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -48576,7 +48985,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -48829,47 +49240,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -48878,7 +49289,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Januari Jan_Februari Feb_Machi Mac_Aprili Apr_Mei Mei_Juni Jun_Julai Jul_Agosti Ago_Septemba Sep_Oktoba Okt_Novemba Nov_Desemba Des".split("_"),
+                        "Januari Jan_Februari Feb_Machi Mac_Aprili Apr_Mei Mei_Juni Jun_Julai Jul_Agosti Ago_Septemba Sep_Oktoba Okt_Novemba Nov_Desemba Des"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -48973,7 +49385,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Januari Jan_Februari Feb_Machi Mac_Aprili Apr_Mei Mei_Juni Jun_Julai Jul_Agosti Ago_Septemba Sep_Oktoba Okt_Novemba Nov_Desemba Des".split("_"),
+                        "Januari Jan_Februari Feb_Machi Mac_Aprili Apr_Mei Mei_Juni Jun_Julai Jul_Agosti Ago_Septemba Sep_Oktoba Okt_Novemba Nov_Desemba Des"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -48983,7 +49396,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Jumapili Jpl J2_Jumatatu Jtat J3_Jumanne Jnne J4_Jumatano Jtan J5_Alhamisi Alh Al_Ijumaa Ijm Ij_Jumamosi Jmos J1".split("_"),
+                        "Jumapili Jpl J2_Jumatatu Jtat J3_Jumanne Jnne J4_Jumatano Jtan J5_Alhamisi Alh Al_Ijumaa Ijm Ij_Jumamosi Jmos J1"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -49143,7 +49557,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -49396,47 +49812,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -49445,7 +49861,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ஜனவரி ஜனவரி_பிப்ரவரி பிப்ரவரி_மார்ச் மார்ச்_ஏப்ரல் ஏப்ரல்_மே மே_ஜூன் ஜூன்_ஜூலை ஜூலை_ஆகஸ்ட் ஆகஸ்ட்_செப்டெம்பர் செப்டெம்பர்_அக்டோபர் அக்டோபர்_நவம்பர் நவம்பர்_டிசம்பர் டிசம்பர்".split("_"),
+                        "ஜனவரி ஜனவரி_பிப்ரவரி பிப்ரவரி_மார்ச் மார்ச்_ஏப்ரல் ஏப்ரல்_மே மே_ஜூன் ஜூன்_ஜூலை ஜூலை_ஆகஸ்ட் ஆகஸ்ட்_செப்டெம்பர் செப்டெம்பர்_அக்டோபர் அக்டோபர்_நவம்பர் நவம்பர்_டிசம்பர் டிசம்பர்"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -49540,7 +49957,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ஜனவரி ஜனவரி_பிப்ரவரி பிப்ரவரி_மார்ச் மார்ச்_ஏப்ரல் ஏப்ரல்_மே மே_ஜூன் ஜூன்_ஜூலை ஜூலை_ஆகஸ்ட் ஆகஸ்ட்_செப்டெம்பர் செப்டெம்பர்_அக்டோபர் அக்டோபர்_நவம்பர் நவம்பர்_டிசம்பர் டிசம்பர்".split("_"),
+                        "ஜனவரி ஜனவரி_பிப்ரவரி பிப்ரவரி_மார்ச் மார்ச்_ஏப்ரல் ஏப்ரல்_மே மே_ஜூன் ஜூன்_ஜூலை ஜூலை_ஆகஸ்ட் ஆகஸ்ட்_செப்டெம்பர் செப்டெம்பர்_அக்டோபர் அக்டோபர்_நவம்பர் நவம்பர்_டிசம்பர் டிசம்பர்"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -49550,7 +49968,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "ஞாயிற்றுக்கிழமை ஞாயிறு ஞா_திங்கட்கிழமை திங்கள் தி_செவ்வாய்கிழமை செவ்வாய் செ_புதன்கிழமை புதன் பு_வியாழக்கிழமை வியாழன் வி_வெள்ளிக்கிழமை வெள்ளி வெ_சனிக்கிழமை சனி ச".split("_"),
+                        "ஞாயிற்றுக்கிழமை ஞாயிறு ஞா_திங்கட்கிழமை திங்கள் தி_செவ்வாய்கிழமை செவ்வாய் செ_புதன்கிழமை புதன் பு_வியாழக்கிழமை வியாழன் வி_வெள்ளிக்கிழமை வெள்ளி வெ_சனிக்கிழமை சனி ச"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -49734,7 +50153,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -49987,47 +50408,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -50036,7 +50457,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "జనవరి జన._ఫిబ్రవరి ఫిబ్ర._మార్చి మార్చి_ఏప్రిల్ ఏప్రి._మే మే_జూన్ జూన్_జూలై జూలై_ఆగస్టు ఆగ._సెప్టెంబర్ సెప్._అక్టోబర్ అక్టో._నవంబర్ నవ._డిసెంబర్ డిసె.".split("_"),
+                        "జనవరి జన._ఫిబ్రవరి ఫిబ్ర._మార్చి మార్చి_ఏప్రిల్ ఏప్రి._మే మే_జూన్ జూన్_జూలై జూలై_ఆగస్టు ఆగ._సెప్టెంబర్ సెప్._అక్టోబర్ అక్టో._నవంబర్ నవ._డిసెంబర్ డిసె."
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -50130,7 +50552,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "జనవరి జన._ఫిబ్రవరి ఫిబ్ర._మార్చి మార్చి_ఏప్రిల్ ఏప్రి._మే మే_జూన్ జూన్_జూలై జూలై_ఆగస్టు ఆగ._సెప్టెంబర్ సెప్._అక్టోబర్ అక్టో._నవంబర్ నవ._డిసెంబర్ డిసె.".split("_"),
+                        "జనవరి జన._ఫిబ్రవరి ఫిబ్ర._మార్చి మార్చి_ఏప్రిల్ ఏప్రి._మే మే_జూన్ జూన్_జూలై జూలై_ఆగస్టు ఆగ._సెప్టెంబర్ సెప్._అక్టోబర్ అక్టో._నవంబర్ నవ._డిసెంబర్ డిసె."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -50140,7 +50563,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "ఆదివారం ఆది ఆ_సోమవారం సోమ సో_మంగళవారం మంగళ మం_బుధవారం బుధ బు_గురువారం గురు గు_శుక్రవారం శుక్ర శు_శనివారం శని శ".split("_"),
+                        "ఆదివారం ఆది ఆ_సోమవారం సోమ సో_మంగళవారం మంగళ మం_బుధవారం బుధ బు_గురువారం గురు గు_శుక్రవారం శుక్ర శు_శనివారం శని శ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -50300,7 +50724,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -50553,47 +50979,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -50602,7 +51028,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "มกราคม มกรา_กุมภาพันธ์ กุมภา_มีนาคม มีนา_เมษายน เมษา_พฤษภาคม พฤษภา_มิถุนายน มิถุนา_กรกฎาคม กรกฎา_สิงหาคม สิงหา_กันยายน กันยา_ตุลาคม ตุลา_พฤศจิกายน พฤศจิกา_ธันวาคม ธันวา".split("_"),
+                        "มกราคม มกรา_กุมภาพันธ์ กุมภา_มีนาคม มีนา_เมษายน เมษา_พฤษภาคม พฤษภา_มิถุนายน มิถุนา_กรกฎาคม กรกฎา_สิงหาคม สิงหา_กันยายน กันยา_ตุลาคม ตุลา_พฤศจิกายน พฤศจิกา_ธันวาคม ธันวา"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -50659,7 +51086,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "มกราคม มกรา_กุมภาพันธ์ กุมภา_มีนาคม มีนา_เมษายน เมษา_พฤษภาคม พฤษภา_มิถุนายน มิถุนา_กรกฎาคม กรกฎา_สิงหาคม สิงหา_กันยายน กันยา_ตุลาคม ตุลา_พฤศจิกายน พฤศจิกา_ธันวาคม ธันวา".split("_"),
+                        "มกราคม มกรา_กุมภาพันธ์ กุมภา_มีนาคม มีนา_เมษายน เมษา_พฤษภาคม พฤษภา_มิถุนายน มิถุนา_กรกฎาคม กรกฎา_สิงหาคม สิงหา_กันยายน กันยา_ตุลาคม ตุลา_พฤศจิกายน พฤศจิกา_ธันวาคม ธันวา"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -50669,7 +51097,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "อาทิตย์ อาทิตย์ อา._จันทร์ จันทร์ จ._อังคาร อังคาร อ._พุธ พุธ พ._พฤหัสบดี พฤหัส พฤ._ศุกร์ ศุกร์ ศ._เสาร์ เสาร์ ส.".split("_"),
+                        "อาทิตย์ อาทิตย์ อา._จันทร์ จันทร์ จ._อังคาร อังคาร อ._พุธ พุธ พ._พฤหัสบดี พฤหัส พฤ._ศุกร์ ศุกร์ ศ._เสาร์ เสาร์ ส."
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -50821,7 +51250,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -51074,47 +51505,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -51123,7 +51554,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Enero Ene_Pebrero Peb_Marso Mar_Abril Abr_Mayo May_Hunyo Hun_Hulyo Hul_Agosto Ago_Setyembre Set_Oktubre Okt_Nobyembre Nob_Disyembre Dis".split("_"),
+                        "Enero Ene_Pebrero Peb_Marso Mar_Abril Abr_Mayo May_Hunyo Hun_Hulyo Hul_Agosto Ago_Setyembre Set_Oktubre Okt_Nobyembre Nob_Disyembre Dis"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -51218,7 +51650,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Enero Ene_Pebrero Peb_Marso Mar_Abril Abr_Mayo May_Hunyo Hun_Hulyo Hul_Agosto Ago_Setyembre Set_Oktubre Okt_Nobyembre Nob_Disyembre Dis".split("_"),
+                        "Enero Ene_Pebrero Peb_Marso Mar_Abril Abr_Mayo May_Hunyo Hun_Hulyo Hul_Agosto Ago_Setyembre Set_Oktubre Okt_Nobyembre Nob_Disyembre Dis"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -51228,7 +51661,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Linggo Lin Li_Lunes Lun Lu_Martes Mar Ma_Miyerkules Miy Mi_Huwebes Huw Hu_Biyernes Biy Bi_Sabado Sab Sab".split("_"),
+                        "Linggo Lin Li_Lunes Lun Lu_Martes Mar Ma_Miyerkules Miy Mi_Huwebes Huw Hu_Biyernes Biy Bi_Sabado Sab Sab"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -51381,7 +51815,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -51634,47 +52070,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -51775,7 +52211,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "tera’ jar wa’ jar wa’_tera’ jar cha’ jar cha’_tera’ jar wej jar wej_tera’ jar loS jar loS_tera’ jar vagh jar vagh_tera’ jar jav jar jav_tera’ jar Soch jar Soch_tera’ jar chorgh jar chorgh_tera’ jar Hut jar Hut_tera’ jar wa’maH jar wa’maH_tera’ jar wa’maH wa’ jar wa’maH wa’_tera’ jar wa’maH cha’ jar wa’maH cha’".split("_"),
+                        "tera’ jar wa’ jar wa’_tera’ jar cha’ jar cha’_tera’ jar wej jar wej_tera’ jar loS jar loS_tera’ jar vagh jar vagh_tera’ jar jav jar jav_tera’ jar Soch jar Soch_tera’ jar chorgh jar chorgh_tera’ jar Hut jar Hut_tera’ jar wa’maH jar wa’maH_tera’ jar wa’maH wa’ jar wa’maH wa’_tera’ jar wa’maH cha’ jar wa’maH cha’"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -51785,7 +52222,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "lojmItjaj lojmItjaj lojmItjaj_DaSjaj DaSjaj DaSjaj_povjaj povjaj povjaj_ghItlhjaj ghItlhjaj ghItlhjaj_loghjaj loghjaj loghjaj_buqjaj buqjaj buqjaj_ghInjaj ghInjaj ghInjaj".split("_"),
+                        "lojmItjaj lojmItjaj lojmItjaj_DaSjaj DaSjaj DaSjaj_povjaj povjaj povjaj_ghItlhjaj ghItlhjaj ghItlhjaj_loghjaj loghjaj loghjaj_buqjaj buqjaj buqjaj_ghInjaj ghInjaj ghInjaj"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -51949,7 +52387,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -52202,47 +52642,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -52251,7 +52691,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Ocak Oca_Şubat Şub_Mart Mar_Nisan Nis_Mayıs May_Haziran Haz_Temmuz Tem_Ağustos Ağu_Eylül Eyl_Ekim Eki_Kasım Kas_Aralık Ara".split("_"),
+                        "Ocak Oca_Şubat Şub_Mart Mar_Nisan Nis_Mayıs May_Haziran Haz_Temmuz Tem_Ağustos Ağu_Eylül Eyl_Ekim Eki_Kasım Kas_Aralık Ara"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -52359,7 +52800,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Ocak Oca_Şubat Şub_Mart Mar_Nisan Nis_Mayıs May_Haziran Haz_Temmuz Tem_Ağustos Ağu_Eylül Eyl_Ekim Eki_Kasım Kas_Aralık Ara".split("_"),
+                        "Ocak Oca_Şubat Şub_Mart Mar_Nisan Nis_Mayıs May_Haziran Haz_Temmuz Tem_Ağustos Ağu_Eylül Eyl_Ekim Eki_Kasım Kas_Aralık Ara"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -52369,7 +52811,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Pazar Paz Pz_Pazartesi Pts Pt_Salı Sal Sa_Çarşamba Çar Ça_Perşembe Per Pe_Cuma Cum Cu_Cumartesi Cts Ct".split("_"),
+                        "Pazar Paz Pz_Pazartesi Pts Pt_Salı Sal Sa_Çarşamba Çar Ça_Perşembe Per Pe_Cuma Cum Cu_Cumartesi Cts Ct"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -52520,7 +52963,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -52773,47 +53218,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -52822,7 +53267,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "Januar Jan_Fevraglh Fev_Març Mar_Avrïu Avr_Mai Mai_Gün Gün_Julia Jul_Guscht Gus_Setemvar Set_Listopäts Lis_Noemvar Noe_Zecemvar Zec".split("_"),
+                        "Januar Jan_Fevraglh Fev_Març Mar_Avrïu Avr_Mai Mai_Gün Gün_Julia Jul_Guscht Gus_Setemvar Set_Listopäts Lis_Noemvar Noe_Zecemvar Zec"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -52917,7 +53363,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "Januar Jan_Fevraglh Fev_Març Mar_Avrïu Avr_Mai Mai_Gün Gün_Julia Jul_Guscht Gus_Setemvar Set_Listopäts Lis_Noemvar Noe_Zecemvar Zec".split("_"),
+                        "Januar Jan_Fevraglh Fev_Març Mar_Avrïu Avr_Mai Mai_Gün Gün_Julia Jul_Guscht Gus_Setemvar Set_Listopäts Lis_Noemvar Noe_Zecemvar Zec"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -52927,7 +53374,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Súladi Súl Sú_Lúneçi Lún Lú_Maitzi Mai Ma_Márcuri Már Má_Xhúadi Xhú Xh_Viénerçi Vié Vi_Sáturi Sát Sá".split("_"),
+                        "Súladi Súl Sú_Lúneçi Lún Lú_Maitzi Mai Ma_Márcuri Már Má_Xhúadi Xhú Xh_Viénerçi Vié Vi_Sáturi Sát Sá"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -53072,7 +53520,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -53325,47 +53775,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -53374,7 +53824,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "innayr innayr_brˤayrˤ brˤayrˤ_marˤsˤ marˤsˤ_ibrir ibrir_mayyw mayyw_ywnyw ywnyw_ywlywz ywlywz_ɣwšt ɣwšt_šwtanbir šwtanbir_ktˤwbrˤ ktˤwbrˤ_nwwanbir nwwanbir_dwjnbir dwjnbir".split("_"),
+                        "innayr innayr_brˤayrˤ brˤayrˤ_marˤsˤ marˤsˤ_ibrir ibrir_mayyw mayyw_ywnyw ywnyw_ywlywz ywlywz_ɣwšt ɣwšt_šwtanbir šwtanbir_ktˤwbrˤ ktˤwbrˤ_nwwanbir nwwanbir_dwjnbir dwjnbir"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -53469,7 +53920,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "innayr innayr_brˤayrˤ brˤayrˤ_marˤsˤ marˤsˤ_ibrir ibrir_mayyw mayyw_ywnyw ywnyw_ywlywz ywlywz_ɣwšt ɣwšt_šwtanbir šwtanbir_ktˤwbrˤ ktˤwbrˤ_nwwanbir nwwanbir_dwjnbir dwjnbir".split("_"),
+                        "innayr innayr_brˤayrˤ brˤayrˤ_marˤsˤ marˤsˤ_ibrir ibrir_mayyw mayyw_ywnyw ywnyw_ywlywz ywlywz_ɣwšt ɣwšt_šwtanbir šwtanbir_ktˤwbrˤ ktˤwbrˤ_nwwanbir nwwanbir_dwjnbir dwjnbir"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -53479,7 +53931,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "asamas asamas asamas_aynas aynas aynas_asinas asinas asinas_akras akras akras_akwas akwas akwas_asimwas asimwas asimwas_asiḍyas asiḍyas asiḍyas".split("_"),
+                        "asamas asamas asamas_aynas aynas aynas_asinas asinas asinas_akras akras akras_akwas akwas akwas_asimwas asimwas asimwas_asiḍyas asiḍyas asiḍyas"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -53612,7 +54065,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -53865,47 +54320,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -53914,7 +54369,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "ⵉⵏⵏⴰⵢⵔ ⵉⵏⵏⴰⵢⵔ_ⴱⵕⴰⵢⵕ ⴱⵕⴰⵢⵕ_ⵎⴰⵕⵚ ⵎⴰⵕⵚ_ⵉⴱⵔⵉⵔ ⵉⴱⵔⵉⵔ_ⵎⴰⵢⵢⵓ ⵎⴰⵢⵢⵓ_ⵢⵓⵏⵢⵓ ⵢⵓⵏⵢⵓ_ⵢⵓⵍⵢⵓⵣ ⵢⵓⵍⵢⵓⵣ_ⵖⵓⵛⵜ ⵖⵓⵛⵜ_ⵛⵓⵜⴰⵏⴱⵉⵔ ⵛⵓⵜⴰⵏⴱⵉⵔ_ⴽⵟⵓⴱⵕ ⴽⵟⵓⴱⵕ_ⵏⵓⵡⴰⵏⴱⵉⵔ ⵏⵓⵡⴰⵏⴱⵉⵔ_ⴷⵓⵊⵏⴱⵉⵔ ⴷⵓⵊⵏⴱⵉⵔ".split("_"),
+                        "ⵉⵏⵏⴰⵢⵔ ⵉⵏⵏⴰⵢⵔ_ⴱⵕⴰⵢⵕ ⴱⵕⴰⵢⵕ_ⵎⴰⵕⵚ ⵎⴰⵕⵚ_ⵉⴱⵔⵉⵔ ⵉⴱⵔⵉⵔ_ⵎⴰⵢⵢⵓ ⵎⴰⵢⵢⵓ_ⵢⵓⵏⵢⵓ ⵢⵓⵏⵢⵓ_ⵢⵓⵍⵢⵓⵣ ⵢⵓⵍⵢⵓⵣ_ⵖⵓⵛⵜ ⵖⵓⵛⵜ_ⵛⵓⵜⴰⵏⴱⵉⵔ ⵛⵓⵜⴰⵏⴱⵉⵔ_ⴽⵟⵓⴱⵕ ⴽⵟⵓⴱⵕ_ⵏⵓⵡⴰⵏⴱⵉⵔ ⵏⵓⵡⴰⵏⴱⵉⵔ_ⴷⵓⵊⵏⴱⵉⵔ ⴷⵓⵊⵏⴱⵉⵔ"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -54009,7 +54465,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "ⵉⵏⵏⴰⵢⵔ ⵉⵏⵏⴰⵢⵔ_ⴱⵕⴰⵢⵕ ⴱⵕⴰⵢⵕ_ⵎⴰⵕⵚ ⵎⴰⵕⵚ_ⵉⴱⵔⵉⵔ ⵉⴱⵔⵉⵔ_ⵎⴰⵢⵢⵓ ⵎⴰⵢⵢⵓ_ⵢⵓⵏⵢⵓ ⵢⵓⵏⵢⵓ_ⵢⵓⵍⵢⵓⵣ ⵢⵓⵍⵢⵓⵣ_ⵖⵓⵛⵜ ⵖⵓⵛⵜ_ⵛⵓⵜⴰⵏⴱⵉⵔ ⵛⵓⵜⴰⵏⴱⵉⵔ_ⴽⵟⵓⴱⵕ ⴽⵟⵓⴱⵕ_ⵏⵓⵡⴰⵏⴱⵉⵔ ⵏⵓⵡⴰⵏⴱⵉⵔ_ⴷⵓⵊⵏⴱⵉⵔ ⴷⵓⵊⵏⴱⵉⵔ".split("_"),
+                        "ⵉⵏⵏⴰⵢⵔ ⵉⵏⵏⴰⵢⵔ_ⴱⵕⴰⵢⵕ ⴱⵕⴰⵢⵕ_ⵎⴰⵕⵚ ⵎⴰⵕⵚ_ⵉⴱⵔⵉⵔ ⵉⴱⵔⵉⵔ_ⵎⴰⵢⵢⵓ ⵎⴰⵢⵢⵓ_ⵢⵓⵏⵢⵓ ⵢⵓⵏⵢⵓ_ⵢⵓⵍⵢⵓⵣ ⵢⵓⵍⵢⵓⵣ_ⵖⵓⵛⵜ ⵖⵓⵛⵜ_ⵛⵓⵜⴰⵏⴱⵉⵔ ⵛⵓⵜⴰⵏⴱⵉⵔ_ⴽⵟⵓⴱⵕ ⴽⵟⵓⴱⵕ_ⵏⵓⵡⴰⵏⴱⵉⵔ ⵏⵓⵡⴰⵏⴱⵉⵔ_ⴷⵓⵊⵏⴱⵉⵔ ⴷⵓⵊⵏⴱⵉⵔ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -54019,7 +54476,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "ⴰⵙⴰⵎⴰⵙ ⴰⵙⴰⵎⴰⵙ ⴰⵙⴰⵎⴰⵙ_ⴰⵢⵏⴰⵙ ⴰⵢⵏⴰⵙ ⴰⵢⵏⴰⵙ_ⴰⵙⵉⵏⴰⵙ ⴰⵙⵉⵏⴰⵙ ⴰⵙⵉⵏⴰⵙ_ⴰⴽⵔⴰⵙ ⴰⴽⵔⴰⵙ ⴰⴽⵔⴰⵙ_ⴰⴽⵡⴰⵙ ⴰⴽⵡⴰⵙ ⴰⴽⵡⴰⵙ_ⴰⵙⵉⵎⵡⴰⵙ ⴰⵙⵉⵎⵡⴰⵙ ⴰⵙⵉⵎⵡⴰⵙ_ⴰⵙⵉⴹⵢⴰⵙ ⴰⵙⵉⴹⵢⴰⵙ ⴰⵙⵉⴹⵢⴰⵙ".split("_"),
+                        "ⴰⵙⴰⵎⴰⵙ ⴰⵙⴰⵎⴰⵙ ⴰⵙⴰⵎⴰⵙ_ⴰⵢⵏⴰⵙ ⴰⵢⵏⴰⵙ ⴰⵢⵏⴰⵙ_ⴰⵙⵉⵏⴰⵙ ⴰⵙⵉⵏⴰⵙ ⴰⵙⵉⵏⴰⵙ_ⴰⴽⵔⴰⵙ ⴰⴽⵔⴰⵙ ⴰⴽⵔⴰⵙ_ⴰⴽⵡⴰⵙ ⴰⴽⵡⴰⵙ ⴰⴽⵡⴰⵙ_ⴰⵙⵉⵎⵡⴰⵙ ⴰⵙⵉⵎⵡⴰⵙ ⴰⵙⵉⵎⵡⴰⵙ_ⴰⵙⵉⴹⵢⴰⵙ ⴰⵙⵉⴹⵢⴰⵙ ⴰⵙⵉⴹⵢⴰⵙ"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -54152,7 +54610,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -54405,47 +54865,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -54454,7 +54914,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "січень січ_лютий лют_березень бер_квітень квіт_травень трав_червень черв_липень лип_серпень серп_вересень вер_жовтень жовт_листопад лист_грудень груд".split("_"),
+                        "січень січ_лютий лют_березень бер_квітень квіт_травень трав_червень черв_липень лип_серпень серп_вересень вер_жовтень жовт_листопад лист_грудень груд"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -54557,7 +55018,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "січень січ_лютий лют_березень бер_квітень квіт_травень трав_червень черв_липень лип_серпень серп_вересень вер_жовтень жовт_листопад лист_грудень груд".split("_"),
+                        "січень січ_лютий лют_березень бер_квітень квіт_травень трав_червень черв_липень лип_серпень серп_вересень вер_жовтень жовт_листопад лист_грудень груд"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -54568,7 +55030,8 @@
             function(assert) {
                 var months = {
                         'nominative':
-                            "січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень".split("_"),
+                            "січень_лютий_березень_квітень_травень_червень_липень_серпень_вересень_жовтень_листопад_грудень"
+                                .split("_"),
                         'accusative':
                             "січня_лютого_березня_квітня_травня_червня_липня_серпня_вересня_жовтня_листопада_грудня"
                                 .split("_")
@@ -54586,7 +55049,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "неділя нд нд_понеділок пн пн_вівторок вт вт_середа ср ср_четвер чт чт_п’ятниця пт пт_субота сб сб".split("_"),
+                        "неділя нд нд_понеділок пн пн_вівторок вт вт_середа ср ср_четвер чт чт_п’ятниця пт пт_субота сб сб"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -54743,7 +55207,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -54996,47 +55462,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -55045,7 +55511,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "январ янв_феврал фев_март мар_апрел апр_май май_июн июн_июл июл_август авг_сентябр сен_октябр окт_ноябр ноя_декабр дек".split("_"),
+                        "январ янв_феврал фев_март мар_апрел апр_май май_июн июн_июл июл_август авг_сентябр сен_октябр окт_ноябр ноя_декабр дек"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -55140,7 +55607,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "январ янв_феврал фев_март мар_апрел апр_май май_июн июн_июл июл_август авг_сентябр сен_октябр окт_ноябр ноя_декабр дек".split("_"),
+                        "январ янв_феврал фев_март мар_апрел апр_май май_июн июн_июл июл_август авг_сентябр сен_октябр окт_ноябр ноя_декабр дек"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -55150,7 +55618,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "Якшанба Якш Як_Душанба Душ Ду_Сешанба Сеш Се_Чоршанба Чор Чо_Пайшанба Пай Па_Жума Жум Жу_Шанба Шан Ша".split("_"),
+                        "Якшанба Якш Як_Душанба Душ Ду_Сешанба Сеш Се_Чоршанба Чор Чо_Пайшанба Пай Па_Жума Жум Жу_Шанба Шан Ша"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -55300,7 +55769,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -55553,47 +56024,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -55603,7 +56074,8 @@
             function(assert) {
                 var i,
                     tests =
-                        "tháng 1,Th01_tháng 2,Th02_tháng 3,Th03_tháng 4,Th04_tháng 5,Th05_tháng 6,Th06_tháng 7,Th07_tháng 8,Th08_tháng 9,Th09_tháng 10,Th10_tháng 11,Th11_tháng 12,Th12".split("_");
+                        "tháng 1,Th01_tháng 2,Th02_tháng 3,Th03_tháng 4,Th04_tháng 5,Th05_tháng 6,Th06_tháng 7,Th07_tháng 8,Th08_tháng 9,Th09_tháng 10,Th10_tháng 11,Th11_tháng 12,Th12"
+                            .split("_");
 
                 function equalTest(input, mmm, i) {
                     assert.equal(moment(input, mmm).month(), i, input + " should be month " + i);
@@ -55699,7 +56171,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "tháng 1,Th01_tháng 2,Th02_tháng 3,Th03_tháng 4,Th04_tháng 5,Th05_tháng 6,Th06_tháng 7,Th07_tháng 8,Th08_tháng 9,Th09_tháng 10,Th10_tháng 11,Th11_tháng 12,Th12".split("_");
+                        "tháng 1,Th01_tháng 2,Th02_tháng 3,Th03_tháng 4,Th04_tháng 5,Th05_tháng 6,Th06_tháng 7,Th07_tháng 8,Th08_tháng 9,Th09_tháng 10,Th10_tháng 11,Th11_tháng 12,Th12"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM,MMM"), expected[i], expected[i]);
@@ -55710,7 +56183,8 @@
             function(assert) {
                 var i,
                     expected =
-                        "chủ nhật CN CN_thứ hai T2 T2_thứ ba T3 T3_thứ tư T4 T4_thứ năm T5 T5_thứ sáu T6 T6_thứ bảy T7 T7".split("_");
+                        "chủ nhật CN CN_thứ hai T2 T2_thứ ba T3 T3_thứ tư T4 T4_thứ năm T5 T5_thứ sáu T6 T6_thứ bảy T7 T7"
+                            .split("_");
 
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -55856,7 +56330,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -56109,47 +56585,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -56158,7 +56634,8 @@
         test("parse",
             function(assert) {
                 var tests =
-                        "J~áñúá~rý J~áñ_F~ébrú~árý ~Féb_~Márc~h ~Már_Áp~ríl ~Ápr_~Máý ~Máý_~Júñé~ ~Júñ_Júl~ý ~Júl_Áú~gúst~ ~Áúg_Sép~témb~ér ~Sép_Ó~ctób~ér ~Óct_Ñ~óvém~bér ~Ñóv_~Décé~mbér ~Déc".split("_"),
+                        "J~áñúá~rý J~áñ_F~ébrú~árý ~Féb_~Márc~h ~Már_Áp~ríl ~Ápr_~Máý ~Máý_~Júñé~ ~Júñ_Júl~ý ~Júl_Áú~gúst~ ~Áúg_Sép~témb~ér ~Sép_Ó~ctób~ér ~Óct_Ñ~óvém~bér ~Ñóv_~Décé~mbér ~Déc"
+                            .split("_"),
                     i;
 
                 function equalTest(input, mmm, i) {
@@ -56253,7 +56730,8 @@
         test("format month",
             function(assert) {
                 var expected =
-                        "J~áñúá~rý J~áñ_F~ébrú~árý ~Féb_~Márc~h ~Már_Áp~ríl ~Ápr_~Máý ~Máý_~Júñé~ ~Júñ_Júl~ý ~Júl_Áú~gúst~ ~Áúg_Sép~témb~ér ~Sép_Ó~ctób~ér ~Óct_Ñ~óvém~bér ~Ñóv_~Décé~mbér ~Déc".split("_"),
+                        "J~áñúá~rý J~áñ_F~ébrú~árý ~Féb_~Márc~h ~Már_Áp~ríl ~Ápr_~Máý ~Máý_~Júñé~ ~Júñ_Júl~ý ~Júl_Áú~gúst~ ~Áúg_Sép~témb~ér ~Sép_Ó~ctób~ér ~Óct_Ñ~óvém~bér ~Ñóv_~Décé~mbér ~Déc"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -56263,7 +56741,8 @@
         test("format week",
             function(assert) {
                 var expected =
-                        "S~úñdá~ý S~úñ S~ú_Mó~ñdáý~ ~Móñ Mó~_Túé~sdáý~ ~Túé Tú_Wéd~ñésd~áý ~Wéd ~Wé_T~húrs~dáý ~Thú T~h_~Fríd~áý ~Frí Fr~_S~átúr~dáý ~Sát Sá".split("_"),
+                        "S~úñdá~ý S~úñ S~ú_Mó~ñdáý~ ~Móñ Mó~_Túé~sdáý~ ~Túé Tú_Wéd~ñésd~áý ~Wéd ~Wé_T~húrs~dáý ~Thú T~h_~Fríd~áý ~Frí Fr~_S~átúr~dáý ~Sát Sá"
+                            .split("_"),
                     i;
                 for (i = 0; i < expected.length; i++) {
                     assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);
@@ -56423,7 +56902,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -56676,47 +57157,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -56954,7 +57435,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -57207,47 +57690,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -57465,7 +57948,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -57718,47 +58203,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -58168,7 +58653,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -58421,47 +58908,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -58474,11 +58961,11 @@
                 var a = moment().hours(13).minutes(0).seconds(0);
                 assert.equal(moment(a)
                     .calendar(null,
-                    {
-                        'sameDay': function() {
-                            return "h:mmA";
-                        }
-                    }),
+                        {
+                            'sameDay': function() {
+                                return "h:mmA";
+                            }
+                        }),
                     "1:00PM",
                     "should equate");
             });
@@ -58487,7 +58974,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -58740,47 +59229,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -59951,10 +60440,10 @@
         test("parsing into a locale",
             function(assert) {
                 moment.defineLocale("parselocale",
-                {
-                    months: "one_two_three_four_five_six_seven_eight_nine_ten_eleven_twelve".split("_"),
-                    monthsShort: "one_two_three_four_five_six_seven_eight_nine_ten_eleven_twelve".split("_")
-                });
+                    {
+                        months: "one_two_three_four_five_six_seven_eight_nine_ten_eleven_twelve".split("_"),
+                        monthsShort: "one_two_three_four_five_six_seven_eight_nine_ten_eleven_twelve".split("_")
+                    });
 
                 moment.locale("en");
 
@@ -60049,12 +60538,12 @@
                 var ver = getVerifier(assert);
                 try {
                     moment.locale("dow:1,doy:4",
-                    {
-                        weekdays: "dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi".split("_"),
-                        weekdaysShort: "dim._lun._mar._mer._jeu._ven._sam.".split("_"),
-                        weekdaysMin: "Di_Lu_Ma_Me_Je_Ve_Sa".split("_"),
-                        week: { dow: 1, doy: 4 }
-                    });
+                        {
+                            weekdays: "dimanche_lundi_mardi_mercredi_jeudi_vendredi_samedi".split("_"),
+                            weekdaysShort: "dim._lun._mar._mer._jeu._ven._sam.".split("_"),
+                            weekdaysMin: "Di_Lu_Ma_Me_Je_Ve_Sa".split("_"),
+                            week: { dow: 1, doy: 4 }
+                        });
                     ver("1999 37 4", "GGGG WW E", "1999 09 16", "iso ignores locale");
                     ver("1999 37 7", "GGGG WW E", "1999 09 19", "iso ignores locale");
 
@@ -60205,7 +60694,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -60458,47 +60949,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -60542,7 +61033,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -60795,47 +61288,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -60869,7 +61362,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -61122,47 +61617,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -61264,7 +61759,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -61517,47 +62014,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -61886,7 +62383,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -62139,47 +62638,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -63024,7 +63523,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -63277,47 +63778,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -63373,7 +63874,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -63626,47 +64129,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -64019,11 +64522,11 @@
         test("toJSON skips postformat",
             function(assert) {
                 moment.defineLocale("postformat",
-                {
-                    postformat: function(s) {
-                        s.replace(/./g, "X");
-                    }
-                });
+                    {
+                        postformat: function(s) {
+                            s.replace(/./g, "X");
+                        }
+                    });
                 assert.equal(moment
                     .utc([2000, 0, 1])
                     .toJSON(),
@@ -64201,7 +64704,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -64454,47 +64959,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -64583,7 +65088,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -64836,47 +65343,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -65217,7 +65724,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -65470,47 +65979,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -65545,7 +66054,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -65798,47 +66309,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -65936,15 +66447,15 @@
                     assert.ok(!invalid.clone().subtract(5, "days").isValid());
                     assert.deepEqual(invalid.toArray(), [NaN, NaN, NaN, NaN, NaN, NaN, NaN]);
                     assert.deepEqual(invalid.toObject(),
-                    {
-                        years: NaN,
-                        months: NaN,
-                        date: NaN,
-                        hours: NaN,
-                        minutes: NaN,
-                        seconds: NaN,
-                        milliseconds: NaN
-                    });
+                        {
+                            years: NaN,
+                            months: NaN,
+                            date: NaN,
+                            hours: NaN,
+                            minutes: NaN,
+                            seconds: NaN,
+                            milliseconds: NaN
+                        });
                     assert.ok(moment.isDate(invalid.toDate()));
                     assert.ok(isNaN(invalid.toDate().valueOf()));
                     assert.equal(invalid.toJSON(), null);
@@ -66030,7 +66541,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -66283,47 +66796,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -66599,7 +67112,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -66852,47 +67367,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -66922,7 +67437,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -67175,47 +67692,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -67514,7 +68031,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -67767,47 +68286,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -68490,7 +69009,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -68743,47 +69264,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -68818,7 +69339,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -69071,47 +69594,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -69163,7 +69686,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -69416,47 +69941,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -69693,7 +70218,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -69946,47 +70473,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -70367,7 +70894,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -70620,47 +71149,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -71041,7 +71570,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -71294,47 +71825,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -71663,7 +72194,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -71916,47 +72449,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -71974,7 +72507,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -72227,47 +72762,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -72276,10 +72811,11 @@
         test("default",
             function(assert) {
                 assert.deepEqual(moment.months(),
-                [
-                    "January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-                    "November", "December"
-                ]);
+                    [
+                        "January", "February", "March", "April", "May", "June", "July", "August", "September",
+                        "October",
+                        "November", "December"
+                    ]);
                 assert.deepEqual(moment.monthsShort(),
                     ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]);
                 assert.deepEqual(moment.weekdays(),
@@ -72318,14 +72854,14 @@
                     };
 
                 moment.locale("numerologists",
-                {
-                    months: months,
-                    monthsShort: monthsShort,
-                    weekdays: weekdays,
-                    weekdaysShort: weekdaysShort,
-                    weekdaysMin: weekdaysMin,
-                    week: week
-                });
+                    {
+                        months: months,
+                        monthsShort: monthsShort,
+                        weekdays: weekdays,
+                        weekdaysShort: weekdaysShort,
+                        weekdaysMin: weekdaysMin,
+                        week: week
+                    });
 
                 assert.deepEqual(moment.months(), months);
                 assert.deepEqual(moment.monthsShort(), monthsShort);
@@ -72366,12 +72902,12 @@
                             .split("_");
 
                 moment.locale("difficult",
-                {
-                    monthsShort: function(m, format) {
-                        var arr = format.match(/-MMM-/) ? monthsShortWeird : monthsShort;
-                        return arr[m.month()];
-                    }
-                });
+                    {
+                        monthsShort: function(m, format) {
+                            var arr = format.match(/-MMM-/) ? monthsShortWeird : monthsShort;
+                            return arr[m.month()];
+                        }
+                    });
 
                 assert.deepEqual(moment.monthsShort(), monthsShort);
                 assert.deepEqual(moment.monthsShort("MMM"), monthsShort);
@@ -72386,7 +72922,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -72639,47 +73177,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -72701,48 +73239,48 @@
         }
 
         module("locale",
-        {
-            setup: function() {
-                // TODO: Remove once locales are switched to ES6
-                each([
-                        {
-                            name: "en-gb",
-                            data: {}
-                        }, {
-                            name: "en-ca",
-                            data: {}
-                        }, {
-                            name: "es",
-                            data: {
-                                relativeTime: { past: "hace %s", s: "unos segundos", d: "un día" },
-                                months:
-                                    "enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre"
-                                        .split("_")
+            {
+                setup: function() {
+                    // TODO: Remove once locales are switched to ES6
+                    each([
+                            {
+                                name: "en-gb",
+                                data: {}
+                            }, {
+                                name: "en-ca",
+                                data: {}
+                            }, {
+                                name: "es",
+                                data: {
+                                    relativeTime: { past: "hace %s", s: "unos segundos", d: "un día" },
+                                    months:
+                                        "enero_febrero_marzo_abril_mayo_junio_julio_agosto_septiembre_octubre_noviembre_diciembre"
+                                            .split("_")
+                                }
+                            }, {
+                                name: "fr",
+                                data: {}
+                            }, {
+                                name: "fr-ca",
+                                data: {}
+                            }, {
+                                name: "it",
+                                data: {}
+                            }, {
+                                name: "zh-cn",
+                                data: {
+                                    months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_")
+                                }
                             }
-                        }, {
-                            name: "fr",
-                            data: {}
-                        }, {
-                            name: "fr-ca",
-                            data: {}
-                        }, {
-                            name: "it",
-                            data: {}
-                        }, {
-                            name: "zh-cn",
-                            data: {
-                                months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_")
+                        ],
+                        function(locale) {
+                            if (moment.locale(locale.name) !== locale.name) {
+                                moment.defineLocale(locale.name, locale.data);
                             }
-                        }
-                    ],
-                    function(locale) {
-                        if (moment.locale(locale.name) !== locale.name) {
-                            moment.defineLocale(locale.name, locale.data);
-                        }
-                    });
-                moment.locale("en");
-            }
-        });
+                        });
+                    moment.locale("en");
+                }
+            });
 
         test("library getters and setters",
             function(assert) {
@@ -72806,12 +73344,12 @@
         test("library ensure inheritance",
             function(assert) {
                 moment.locale("made-up",
-                {
-                    // I put them out of order
-                    months: "February_March_April_May_June_July_August_September_October_November_December_January"
-                        .split("_")
-                    // the rest of the properties should be inherited.
-                });
+                    {
+                        // I put them out of order
+                        months: "February_March_April_May_June_July_August_September_October_November_December_January"
+                            .split("_")
+                        // the rest of the properties should be inherited.
+                    });
 
                 assert.equal(moment([2012, 5, 6]).format("MMMM"), "July", "Override some of the configs");
                 assert.equal(moment([2012, 5, 6]).format("MMM"), "Jun", "But not all of them");
@@ -72822,23 +73360,23 @@
                 var locale = "test-inherit-lt";
 
                 moment.defineLocale(locale,
-                {
-                    longDateFormat: {
-                        LT: "-[LT]-",
-                        L: "-[L]-",
-                        LL: "-[LL]-",
-                        LLL: "-[LLL]-",
-                        LLLL: "-[LLLL]-"
-                    },
-                    calendar: {
-                        sameDay: "[sameDay] LT",
-                        nextDay: "[nextDay] L",
-                        nextWeek: "[nextWeek] LL",
-                        lastDay: "[lastDay] LLL",
-                        lastWeek: "[lastWeek] LLLL",
-                        sameElse: "L"
-                    }
-                });
+                    {
+                        longDateFormat: {
+                            LT: "-[LT]-",
+                            L: "-[L]-",
+                            LL: "-[LL]-",
+                            LLL: "-[LLL]-",
+                            LLLL: "-[LLLL]-"
+                        },
+                        calendar: {
+                            sameDay: "[sameDay] LT",
+                            nextDay: "[nextDay] L",
+                            nextWeek: "[nextWeek] LL",
+                            lastDay: "[lastDay] LLL",
+                            lastWeek: "[lastWeek] LLLL",
+                            sameElse: "L"
+                        }
+                    });
 
                 moment.locale("es");
 
@@ -73167,13 +73705,13 @@
                 }
 
                 moment.locale("made-up-2",
-                {
-                    months: fakeReplace,
-                    monthsShort: fakeReplace,
-                    weekdays: fakeReplace,
-                    weekdaysShort: fakeReplace,
-                    weekdaysMin: fakeReplace
-                });
+                    {
+                        months: fakeReplace,
+                        monthsShort: fakeReplace,
+                        weekdays: fakeReplace,
+                        weekdaysShort: fakeReplace,
+                        weekdaysMin: fakeReplace
+                    });
 
                 assert.equal(moment().format("[test] dd ddd dddd MMM MMMM"),
                     "test test test test test test",
@@ -73191,18 +73729,18 @@
                 test.expectedDeprecations("defineLocaleOverride");
 
                 moment.locale("partial-lang",
-                {
-                    months: "a b c d e f g h i j k l".split(" ")
-                });
+                    {
+                        months: "a b c d e f g h i j k l".split(" ")
+                    });
 
                 assert.equal(moment([2011, 0, 1]).format("MMMM"),
                     "a",
                     "should be able to set locale values when creating the localeuage");
 
                 moment.locale("partial-lang",
-                {
-                    monthsShort: "A B C D E F G H I J K L".split(" ")
-                });
+                    {
+                        monthsShort: "A B C D E F G H I J K L".split(" ")
+                    });
 
                 assert.equal(moment([2011, 0, 1]).format("MMMM MMM"),
                     "a A",
@@ -73214,11 +73752,11 @@
         test("start/endOf week feature for first-day-is-monday locales",
             function(assert) {
                 moment.locale("monday-lang",
-                {
-                    week: {
-                        dow: 1 // Monday is the first day of the week
-                    }
-                });
+                    {
+                        week: {
+                            dow: 1 // Monday is the first day of the week
+                        }
+                    });
 
                 moment.locale("monday-lang");
                 assert.equal(moment([2013, 0, 1]).startOf("week").day(),
@@ -73233,12 +73771,12 @@
         test("meridiem parsing",
             function(assert) {
                 moment.locale("meridiem-parsing",
-                {
-                    meridiemParse: /[bd]/i,
-                    isPM: function(input) {
-                        return input === "b";
-                    }
-                });
+                    {
+                        meridiemParse: /[bd]/i,
+                        isPM: function(input) {
+                            return input === "b";
+                        }
+                    });
 
                 moment.locale("meridiem-parsing");
                 assert.equal(moment("2012-01-01 3b", "YYYY-MM-DD ha").hour(),
@@ -73253,9 +73791,9 @@
         test("invalid date formatting",
             function(assert) {
                 moment.locale("has-invalid",
-                {
-                    invalidDate: "KHAAAAAAAAAAAN!"
-                });
+                    {
+                        invalidDate: "KHAAAAAAAAAAAN!"
+                    });
 
                 assert.equal(moment.invalid().format(), "KHAAAAAAAAAAAN!");
                 assert.equal(moment.invalid().format("YYYY-MM-DD"), "KHAAAAAAAAAAAN!");
@@ -73363,7 +73901,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -73616,47 +74156,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -73665,25 +74205,25 @@
         test("calendar",
             function(assert) {
                 moment.defineLocale("base-cal",
-                {
-                    calendar: {
-                        sameDay: "[Today at] HH:mm",
-                        nextDay: "[Tomorrow at] HH:mm",
-                        nextWeek: "[Next week at] HH:mm",
-                        lastDay: "[Yesterday at] HH:mm",
-                        lastWeek: "[Last week at] HH:mm",
-                        sameElse: "[whatever]"
-                    }
-                });
+                    {
+                        calendar: {
+                            sameDay: "[Today at] HH:mm",
+                            nextDay: "[Tomorrow at] HH:mm",
+                            nextWeek: "[Next week at] HH:mm",
+                            lastDay: "[Yesterday at] HH:mm",
+                            lastWeek: "[Last week at] HH:mm",
+                            sameElse: "[whatever]"
+                        }
+                    });
                 moment.defineLocale("child-cal",
-                {
-                    parentLocale: "base-cal",
-                    calendar: {
-                        sameDay: "[Today] HH:mm",
-                        nextDay: "[Tomorrow] HH:mm",
-                        nextWeek: "[Next week] HH:mm"
-                    }
-                });
+                    {
+                        parentLocale: "base-cal",
+                        calendar: {
+                            sameDay: "[Today] HH:mm",
+                            nextDay: "[Tomorrow] HH:mm",
+                            nextWeek: "[Next week] HH:mm"
+                        }
+                    });
 
                 moment.locale("child-cal");
                 var anchor = moment.utc("2015-05-05T12:00:00", moment.ISO_8601);
@@ -73717,20 +74257,20 @@
         test("missing",
             function(assert) {
                 moment.defineLocale("base-cal-2",
-                {
-                    calendar: {
-                        sameDay: "[Today at] HH:mm",
-                        nextDay: "[Tomorrow at] HH:mm",
-                        nextWeek: "[Next week at] HH:mm",
-                        lastDay: "[Yesterday at] HH:mm",
-                        lastWeek: "[Last week at] HH:mm",
-                        sameElse: "[whatever]"
-                    }
-                });
+                    {
+                        calendar: {
+                            sameDay: "[Today at] HH:mm",
+                            nextDay: "[Tomorrow at] HH:mm",
+                            nextWeek: "[Next week at] HH:mm",
+                            lastDay: "[Yesterday at] HH:mm",
+                            lastWeek: "[Last week at] HH:mm",
+                            sameElse: "[whatever]"
+                        }
+                    });
                 moment.defineLocale("child-cal-2",
-                {
-                    parentLocale: "base-cal-2"
-                });
+                    {
+                        parentLocale: "base-cal-2"
+                    });
                 moment.locale("child-cal-2");
                 var anchor = moment.utc("2015-05-05T12:00:00", moment.ISO_8601);
                 assert.equal(anchor.clone().add(3, "hours").calendar(anchor),
@@ -73761,24 +74301,24 @@
         test("long date format",
             function(assert) {
                 moment.defineLocale("base-ldf",
-                {
-                    longDateFormat: {
-                        LTS: "h:mm:ss A",
-                        LT: "h:mm A",
-                        L: "MM/DD/YYYY",
-                        LL: "MMMM D, YYYY",
-                        LLL: "MMMM D, YYYY h:mm A",
-                        LLLL: "dddd, MMMM D, YYYY h:mm A"
-                    }
-                });
+                    {
+                        longDateFormat: {
+                            LTS: "h:mm:ss A",
+                            LT: "h:mm A",
+                            L: "MM/DD/YYYY",
+                            LL: "MMMM D, YYYY",
+                            LLL: "MMMM D, YYYY h:mm A",
+                            LLLL: "dddd, MMMM D, YYYY h:mm A"
+                        }
+                    });
                 moment.defineLocale("child-ldf",
-                {
-                    parentLocale: "base-ldf",
-                    longDateFormat: {
-                        LLL: "[child] MMMM D, YYYY h:mm A",
-                        LLLL: "[child] dddd, MMMM D, YYYY h:mm A"
-                    }
-                });
+                    {
+                        parentLocale: "base-ldf",
+                        longDateFormat: {
+                            LLL: "[child] MMMM D, YYYY h:mm A",
+                            LLLL: "[child] dddd, MMMM D, YYYY h:mm A"
+                        }
+                    });
 
                 moment.locale("child-ldf");
                 var anchor = moment.utc("2015-09-06T12:34:56", moment.ISO_8601);
@@ -73797,44 +74337,44 @@
         test("ordinal",
             function(assert) {
                 moment.defineLocale("base-ordinal-1",
-                {
-                    ordinal: "%dx"
-                });
+                    {
+                        ordinal: "%dx"
+                    });
                 moment.defineLocale("child-ordinal-1",
-                {
-                    parentLocale: "base-ordinal-1",
-                    ordinal: "%dy"
-                });
+                    {
+                        parentLocale: "base-ordinal-1",
+                        ordinal: "%dy"
+                    });
 
                 assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"), "3y", "ordinal uses child string");
 
                 moment.defineLocale("base-ordinal-2",
-                {
-                    ordinal: "%dx"
-                });
+                    {
+                        ordinal: "%dx"
+                    });
                 moment.defineLocale("child-ordinal-2",
-                {
-                    parentLocale: "base-ordinal-2",
-                    ordinal: function(num) {
-                        return num + "y";
-                    }
-                });
+                    {
+                        parentLocale: "base-ordinal-2",
+                        ordinal: function(num) {
+                            return num + "y";
+                        }
+                    });
 
                 assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"),
                     "3y",
                     "ordinal uses child function");
 
                 moment.defineLocale("base-ordinal-3",
-                {
-                    ordinal: function(num) {
-                        return num + "x";
-                    }
-                });
+                    {
+                        ordinal: function(num) {
+                            return num + "x";
+                        }
+                    });
                 moment.defineLocale("child-ordinal-3",
-                {
-                    parentLocale: "base-ordinal-3",
-                    ordinal: "%dy"
-                });
+                    {
+                        parentLocale: "base-ordinal-3",
+                        ordinal: "%dy"
+                    });
 
                 assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"),
                     "3y",
@@ -73844,26 +74384,26 @@
         test("ordinal parse",
             function(assert) {
                 moment.defineLocale("base-ordinal-parse-1",
-                {
-                    ordinalParse: /\d{1,2}x/
-                });
+                    {
+                        ordinalParse: /\d{1,2}x/
+                    });
                 moment.defineLocale("child-ordinal-parse-1",
-                {
-                    parentLocale: "base-ordinal-parse-1",
-                    ordinalParse: /\d{1,2}y/
-                });
+                    {
+                        parentLocale: "base-ordinal-parse-1",
+                        ordinalParse: /\d{1,2}y/
+                    });
 
                 assert.ok(moment.utc("2015-01-1y", "YYYY-MM-Do", true).isValid(), "ordinal parse uses child");
 
                 moment.defineLocale("base-ordinal-parse-2",
-                {
-                    ordinalParse: /\d{1,2}x/
-                });
+                    {
+                        ordinalParse: /\d{1,2}x/
+                    });
                 moment.defineLocale("child-ordinal-parse-2",
-                {
-                    parentLocale: "base-ordinal-parse-2",
-                    ordinalParse: null
-                });
+                    {
+                        parentLocale: "base-ordinal-parse-2",
+                        ordinalParse: null
+                    });
 
                 assert.ok(moment.utc("2015-01-1", "YYYY-MM-Do", true).isValid(), "ordinal parse uses child (default)");
             });
@@ -73871,15 +74411,15 @@
         test("months",
             function(assert) {
                 moment.defineLocale("base-months",
-                {
-                    months: "One_Two_Three_Four_Five_Six_Seven_Eight_Nine_Ten_Eleven_Twelve".split("_")
-                });
+                    {
+                        months: "One_Two_Three_Four_Five_Six_Seven_Eight_Nine_Ten_Eleven_Twelve".split("_")
+                    });
                 moment.defineLocale("child-months",
-                {
-                    parentLocale: "base-months",
-                    months: "First_Second_Third_Fourth_Fifth_Sixth_Seventh_Eighth_Ninth_Tenth_Eleventh_Twelveth "
-                        .split("_")
-                });
+                    {
+                        parentLocale: "base-months",
+                        months: "First_Second_Third_Fourth_Fifth_Sixth_Seventh_Eighth_Ninth_Tenth_Eleventh_Twelveth "
+                            .split("_")
+                    });
                 assert.ok(moment.utc("2015-01-01", "YYYY-MM-DD").format("MMMM"), "First", "months uses child");
             });
 
@@ -73887,7 +74427,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -74140,47 +74682,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -74190,24 +74732,24 @@
             function(assert) {
                 moment.defineLocale("cal", null);
                 moment.defineLocale("cal",
-                {
-                    calendar: {
-                        sameDay: "[Today at] HH:mm",
-                        nextDay: "[Tomorrow at] HH:mm",
-                        nextWeek: "[Next week at] HH:mm",
-                        lastDay: "[Yesterday at] HH:mm",
-                        lastWeek: "[Last week at] HH:mm",
-                        sameElse: "[whatever]"
-                    }
-                });
+                    {
+                        calendar: {
+                            sameDay: "[Today at] HH:mm",
+                            nextDay: "[Tomorrow at] HH:mm",
+                            nextWeek: "[Next week at] HH:mm",
+                            lastDay: "[Yesterday at] HH:mm",
+                            lastWeek: "[Last week at] HH:mm",
+                            sameElse: "[whatever]"
+                        }
+                    });
                 moment.updateLocale("cal",
-                {
-                    calendar: {
-                        sameDay: "[Today] HH:mm",
-                        nextDay: "[Tomorrow] HH:mm",
-                        nextWeek: "[Next week] HH:mm"
-                    }
-                });
+                    {
+                        calendar: {
+                            sameDay: "[Today] HH:mm",
+                            nextDay: "[Tomorrow] HH:mm",
+                            nextWeek: "[Next week] HH:mm"
+                        }
+                    });
 
                 moment.locale("cal");
                 var anchor = moment.utc("2015-05-05T12:00:00", moment.ISO_8601);
@@ -74242,20 +74784,19 @@
             function(assert) {
                 moment.defineLocale("cal-2", null);
                 moment.defineLocale("cal-2",
-                {
-                    calendar: {
-                        sameDay: "[Today at] HH:mm",
-                        nextDay: "[Tomorrow at] HH:mm",
-                        nextWeek: "[Next week at] HH:mm",
-                        lastDay: "[Yesterday at] HH:mm",
-                        lastWeek: "[Last week at] HH:mm",
-                        sameElse: "[whatever]"
-                    }
-                });
+                    {
+                        calendar: {
+                            sameDay: "[Today at] HH:mm",
+                            nextDay: "[Tomorrow at] HH:mm",
+                            nextWeek: "[Next week at] HH:mm",
+                            lastDay: "[Yesterday at] HH:mm",
+                            lastWeek: "[Last week at] HH:mm",
+                            sameElse: "[whatever]"
+                        }
+                    });
                 moment.updateLocale("cal-2",
-                {
-                
-                });
+                    {
+                    });
                 moment.locale("cal-2");
                 var anchor = moment.utc("2015-05-05T12:00:00", moment.ISO_8601);
                 assert.equal(anchor.clone().add(3, "hours").calendar(anchor),
@@ -74287,23 +74828,23 @@
             function(assert) {
                 moment.defineLocale("ldf", null);
                 moment.defineLocale("ldf",
-                {
-                    longDateFormat: {
-                        LTS: "h:mm:ss A",
-                        LT: "h:mm A",
-                        L: "MM/DD/YYYY",
-                        LL: "MMMM D, YYYY",
-                        LLL: "MMMM D, YYYY h:mm A",
-                        LLLL: "dddd, MMMM D, YYYY h:mm A"
-                    }
-                });
+                    {
+                        longDateFormat: {
+                            LTS: "h:mm:ss A",
+                            LT: "h:mm A",
+                            L: "MM/DD/YYYY",
+                            LL: "MMMM D, YYYY",
+                            LLL: "MMMM D, YYYY h:mm A",
+                            LLLL: "dddd, MMMM D, YYYY h:mm A"
+                        }
+                    });
                 moment.updateLocale("ldf",
-                {
-                    longDateFormat: {
-                        LLL: "[child] MMMM D, YYYY h:mm A",
-                        LLLL: "[child] dddd, MMMM D, YYYY h:mm A"
-                    }
-                });
+                    {
+                        longDateFormat: {
+                            LLL: "[child] MMMM D, YYYY h:mm A",
+                            LLLL: "[child] dddd, MMMM D, YYYY h:mm A"
+                        }
+                    });
 
                 moment.locale("ldf");
                 var anchor = moment.utc("2015-09-06T12:34:56", moment.ISO_8601);
@@ -74323,27 +74864,27 @@
             function(assert) {
                 moment.defineLocale("ordinal-1", null);
                 moment.defineLocale("ordinal-1",
-                {
-                    ordinal: "%dx"
-                });
+                    {
+                        ordinal: "%dx"
+                    });
                 moment.updateLocale("ordinal-1",
-                {
-                    ordinal: "%dy"
-                });
+                    {
+                        ordinal: "%dy"
+                    });
 
                 assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"), "3y", "ordinal uses child string");
 
                 moment.defineLocale("ordinal-2", null);
                 moment.defineLocale("ordinal-2",
-                {
-                    ordinal: "%dx"
-                });
+                    {
+                        ordinal: "%dx"
+                    });
                 moment.updateLocale("ordinal-2",
-                {
-                    ordinal: function(num) {
-                        return num + "y";
-                    }
-                });
+                    {
+                        ordinal: function(num) {
+                            return num + "y";
+                        }
+                    });
 
                 assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"),
                     "3y",
@@ -74351,15 +74892,15 @@
 
                 moment.defineLocale("ordinal-3", null);
                 moment.defineLocale("ordinal-3",
-                {
-                    ordinal: function(num) {
-                        return num + "x";
-                    }
-                });
+                    {
+                        ordinal: function(num) {
+                            return num + "x";
+                        }
+                    });
                 moment.updateLocale("ordinal-3",
-                {
-                    ordinal: "%dy"
-                });
+                    {
+                        ordinal: "%dy"
+                    });
 
                 assert.equal(moment.utc("2015-02-03", moment.ISO_8601).format("Do"),
                     "3y",
@@ -74370,25 +74911,25 @@
             function(assert) {
                 moment.defineLocale("ordinal-parse-1", null);
                 moment.defineLocale("ordinal-parse-1",
-                {
-                    ordinalParse: /\d{1,2}x/
-                });
+                    {
+                        ordinalParse: /\d{1,2}x/
+                    });
                 moment.updateLocale("ordinal-parse-1",
-                {
-                    ordinalParse: /\d{1,2}y/
-                });
+                    {
+                        ordinalParse: /\d{1,2}y/
+                    });
 
                 assert.ok(moment.utc("2015-01-1y", "YYYY-MM-Do", true).isValid(), "ordinal parse uses child");
 
                 moment.defineLocale("ordinal-parse-2", null);
                 moment.defineLocale("ordinal-parse-2",
-                {
-                    ordinalParse: /\d{1,2}x/
-                });
+                    {
+                        ordinalParse: /\d{1,2}x/
+                    });
                 moment.updateLocale("ordinal-parse-2",
-                {
-                    ordinalParse: null
-                });
+                    {
+                        ordinalParse: null
+                    });
 
                 assert.ok(moment.utc("2015-01-1", "YYYY-MM-Do", true).isValid(), "ordinal parse uses child (default)");
             });
@@ -74397,15 +74938,15 @@
             function(assert) {
                 moment.defineLocale("months", null);
                 moment.defineLocale("months",
-                {
-                    months: "One_Two_Three_Four_Five_Six_Seven_Eight_Nine_Ten_Eleven_Twelve".split("_")
-                });
+                    {
+                        months: "One_Two_Three_Four_Five_Six_Seven_Eight_Nine_Ten_Eleven_Twelve".split("_")
+                    });
                 moment.updateLocale("months",
-                {
-                    parentLocale: "base-months",
-                    months: "First_Second_Third_Fourth_Fifth_Sixth_Seventh_Eighth_Ninth_Tenth_Eleventh_Twelveth "
-                        .split("_")
-                });
+                    {
+                        parentLocale: "base-months",
+                        months: "First_Second_Third_Fourth_Fifth_Sixth_Seventh_Eighth_Ninth_Tenth_Eleventh_Twelveth "
+                            .split("_")
+                    });
                 assert.ok(moment.utc("2015-01-01", "YYYY-MM-DD").format("MMMM"), "First", "months uses child");
             });
 
@@ -74413,7 +74954,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -74666,47 +75209,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -74762,7 +75305,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -75015,47 +75560,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -75089,7 +75634,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -75342,47 +75889,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -75428,7 +75975,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -75681,47 +76230,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -75792,7 +76341,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -76045,47 +76596,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -76314,7 +76865,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -76567,47 +77120,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -76637,29 +77190,29 @@
             };
 
         module("preparse and postformat",
-        {
-            setup: function() {
-                moment.locale("symbol",
-                {
-                    preparse: function(string) {
-                        return string.replace(/[!@#$%\^&*()]/g,
-                            function(match) {
-                                return numberMap[match];
-                            });
-                    },
+            {
+                setup: function() {
+                    moment.locale("symbol",
+                        {
+                            preparse: function(string) {
+                                return string.replace(/[!@#$%\^&*()]/g,
+                                    function(match) {
+                                        return numberMap[match];
+                                    });
+                            },
 
-                    postformat: function(string) {
-                        return string.replace(/\d/g,
-                            function(match) {
-                                return symbolMap[match];
-                            });
-                    }
-                });
-            },
-            teardown: function() {
-                moment.defineLocale("symbol", null);
-            }
-        });
+                            postformat: function(string) {
+                                return string.replace(/\d/g,
+                                    function(match) {
+                                        return symbolMap[match];
+                                    });
+                            }
+                        });
+                },
+                teardown: function() {
+                    moment.defineLocale("symbol", null);
+                }
+            });
 
         test("transform",
             function(assert) {
@@ -76701,7 +77254,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -76954,47 +77509,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -77120,7 +77675,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -77373,47 +77930,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -77570,7 +78127,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -77823,47 +78382,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -78289,7 +78848,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -78542,47 +79103,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -78605,7 +79166,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -78858,47 +79421,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -78928,7 +79491,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -79181,47 +79746,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -79313,7 +79878,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -79566,47 +80133,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -80153,7 +80720,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -80406,47 +80975,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -80814,7 +81383,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -81067,47 +81638,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -81254,7 +81825,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -81507,47 +82080,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -81824,7 +82397,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -82077,47 +82652,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -82215,7 +82790,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -82468,47 +83045,47 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
@@ -82647,7 +83224,9 @@
 (function(global, factory) {
     typeof exports === "object" && typeof module !== "undefined" && typeof require === "function"
         ? factory(require("../../moment"))
-        : typeof define === "function" && define.amd ? define(["../../moment"], factory) : factory(global.moment);
+        : typeof define === "function" && define.amd
+        ? define(["../../moment"], factory)
+        : factory(global.moment);
 }(this,
     function(moment) {
         "use strict";
@@ -82900,56 +83479,56 @@
 
         function module(name, lifecycle) {
             QUnit.module(name,
-            {
-                setup: function() {
-                    moment.locale("en");
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale("en");
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        teardownDeprecationHandler(test, moment, "core");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    teardownDeprecationHandler(test, moment, "core");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
         }
 
         function localeModule(name, lifecycle) {
             QUnit.module("locale:" + name,
-            {
-                setup: function() {
-                    moment.locale(name);
-                    moment.createFromInputFallback = function(config) {
-                        throw new Error("input not handled by moment: " + config._i);
-                    };
-                    setupDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.setup) {
-                        lifecycle.setup();
+                {
+                    setup: function() {
+                        moment.locale(name);
+                        moment.createFromInputFallback = function(config) {
+                            throw new Error("input not handled by moment: " + config._i);
+                        };
+                        setupDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.setup) {
+                            lifecycle.setup();
+                        }
+                    },
+                    teardown: function() {
+                        moment.locale("en");
+                        teardownDeprecationHandler(test, moment, "locale");
+                        if (lifecycle && lifecycle.teardown) {
+                            lifecycle.teardown();
+                        }
                     }
-                },
-                teardown: function() {
-                    moment.locale("en");
-                    teardownDeprecationHandler(test, moment, "locale");
-                    if (lifecycle && lifecycle.teardown) {
-                        lifecycle.teardown();
-                    }
-                }
-            });
+                });
             defineCommonLocaleTests(name, -1, -1);
         }
 
         module("zones",
-        {
-            'setup': function() {
-                test.expectedDeprecations("moment().zone");
-            }
-        });
+            {
+                'setup': function() {
+                    test.expectedDeprecations("moment().zone");
+                }
+            });
 
         test("set zone",
             function(assert) {

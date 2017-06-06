@@ -10,11 +10,11 @@ test("passing a function",
         var a = moment().hours(13).minutes(0).seconds(0);
         assert.equal(moment(a)
             .calendar(null,
-            {
-                'sameDay': function() {
-                    return "h:mmA";
-                }
-            }),
+                {
+                    'sameDay': function() {
+                        return "h:mmA";
+                    }
+                }),
             "1:00PM",
             "should equate");
     });
@@ -48,18 +48,18 @@ test("extending calendar options",
         };
 
         moment.updateLocale("en",
-        {
-            calendar: {
-                sameDay: "[Today at] LT",
-                nextDay: "[Tomorrow at] LT",
-                nextWeek: "dddd [at] LT",
-                lastDay: "[Yesterday at] LT",
-                lastWeek: "[Last] dddd [at] LT",
-                thisMonth: "[This month on the] Do",
-                nextMonth: "[Next month on the] Do",
-                sameElse: "L"
-            }
-        });
+            {
+                calendar: {
+                    sameDay: "[Today at] LT",
+                    nextDay: "[Tomorrow at] LT",
+                    nextWeek: "dddd [at] LT",
+                    lastDay: "[Yesterday at] LT",
+                    lastWeek: "[Last] dddd [at] LT",
+                    thisMonth: "[This month on the] Do",
+                    nextMonth: "[Next month on the] Do",
+                    sameElse: "L"
+                }
+            });
         var a = moment("2016-01-01").add(28, "days");
         var b = moment("2016-01-01").add(1, "month");
         try {

@@ -1743,9 +1743,9 @@
                     opts = $.extend({}, defaults, locopts, elopts, options);
                 if ($this.hasClass("input-daterange") || opts.inputs) {
                     $.extend(opts,
-                    {
-                        inputs: opts.inputs || $this.find("input").toArray()
-                    });
+                        {
+                            inputs: opts.inputs || $this.find("input").toArray()
+                        });
                     data = new DateRangePicker(this, opts);
                 } else {
                     data = new Datepicker(this, opts);

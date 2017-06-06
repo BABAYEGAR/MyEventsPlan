@@ -5,7 +5,8 @@ localeModule("tl-ph");
 test("parse",
     function(assert) {
         var tests =
-                "Enero Ene_Pebrero Peb_Marso Mar_Abril Abr_Mayo May_Hunyo Hun_Hulyo Hul_Agosto Ago_Setyembre Set_Oktubre Okt_Nobyembre Nob_Disyembre Dis".split("_"),
+                "Enero Ene_Pebrero Peb_Marso Mar_Abril Abr_Mayo May_Hunyo Hun_Hulyo Hul_Agosto Ago_Setyembre Set_Oktubre Okt_Nobyembre Nob_Disyembre Dis"
+                    .split("_"),
             i;
 
         function equalTest(input, mmm, i) {
@@ -100,7 +101,8 @@ test("format ordinal",
 test("format month",
     function(assert) {
         var expected =
-                "Enero Ene_Pebrero Peb_Marso Mar_Abril Abr_Mayo May_Hunyo Hun_Hulyo Hul_Agosto Ago_Setyembre Set_Oktubre Okt_Nobyembre Nob_Disyembre Dis".split("_"),
+                "Enero Ene_Pebrero Peb_Marso Mar_Abril Abr_Mayo May_Hunyo Hun_Hulyo Hul_Agosto Ago_Setyembre Set_Oktubre Okt_Nobyembre Nob_Disyembre Dis"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -110,7 +112,8 @@ test("format month",
 test("format week",
     function(assert) {
         var expected =
-                "Linggo Lin Li_Lunes Lun Lu_Martes Mar Ma_Miyerkules Miy Mi_Huwebes Huw Hu_Biyernes Biy Bi_Sabado Sab Sab".split("_"),
+                "Linggo Lin Li_Lunes Lun Lu_Martes Mar Ma_Miyerkules Miy Mi_Huwebes Huw Hu_Biyernes Biy Bi_Sabado Sab Sab"
+                    .split("_"),
             i;
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

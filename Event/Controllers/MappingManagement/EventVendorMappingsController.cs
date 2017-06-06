@@ -5,6 +5,7 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.MappingManagement
@@ -15,12 +16,13 @@ namespace MyEventPlan.Controllers.MappingManagement
         private readonly EventDataContext dbc = new EventDataContext();
 
         // GET: EventVendorMappings
+        [SessionExpire]
         public ActionResult Index(long? id)
         {
             ViewBag.Event = id;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var mappings =
-                _db.EventVendorMapping.Where(n => (n.EventId == id) && (n.EventPlannerId == loggedinuser.EventPlannerId));
+                _db.EventVendorMapping.Where(n => n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId);
             var vedors =
                 from a in _db.Vendors
                 join b in mappings on a.VendorId equals b.VendorId
@@ -38,6 +40,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         }
 
         // GET: EventVendorMappings/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -49,6 +52,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         }
 
         // GET: EventVendorMappings/Create
+        [SessionExpire]
         public ActionResult Create()
         {
             ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name");
@@ -61,6 +65,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Create(
             [Bind(Include = "EventVendorMappingId,EventId,VendorId")] EventVendorMapping eventVendorMapping,
             FormCollection collectedValues)
@@ -92,7 +97,7 @@ namespace MyEventPlan.Controllers.MappingManagement
             }
             var mappings =
                 _db.EventVendorMapping.Where(
-                    n => (n.EventId == eventId) && (n.EventPlannerId == loggedinuser.EventPlannerId));
+                    n => n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId);
             var vedors =
                 from a in _db.Vendors
                 join b in mappings on a.VendorId equals b.VendorId
@@ -104,6 +109,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         }
 
         // GET: EventVendorMappings/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -121,6 +127,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include = "EventVendorMappingId,EventId,VendorId,CreatedBy,DateCreated")] EventVendorMapping
                 eventVendorMapping)
@@ -149,6 +156,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         }
 
         // GET: EventVendorMappings/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -158,18 +166,23 @@ namespace MyEventPlan.Controllers.MappingManagement
                 return HttpNotFound();
             return View(eventVendorMapping);
         }
+
         // POST: EventVendorMappings/Delete/5
+        [SessionExpire]
         public ActionResult RemoveVendorFromEvent(long? vendorId, long? eventId)
         {
-            var eventVendorMapping = _db.EventVendorMapping.SingleOrDefault(n => n.EventId == eventId && n.VendorId == vendorId );
+            var eventVendorMapping =
+                _db.EventVendorMapping.SingleOrDefault(n => n.EventId == eventId && n.VendorId == vendorId);
             _db.EventVendorMapping.Remove(eventVendorMapping);
             _db.SaveChanges();
             return RedirectToAction("EventVendors", "Vendors");
         }
+
         // POST: EventVendorMappings/Delete/5
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var eventVendorMapping = _db.EventVendorMapping.Find(id);
@@ -179,6 +192,7 @@ namespace MyEventPlan.Controllers.MappingManagement
             return RedirectToAction("Index", new {id = eventId});
         }
 
+        [SessionExpire]
         public ActionResult AddVendorToEvent(long? vendorId, long eventId)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;

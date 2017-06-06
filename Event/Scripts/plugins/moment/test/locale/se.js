@@ -6,7 +6,8 @@ test("parse",
     function(assert) {
         var i,
             tests =
-                "ođđajagemánnu ođđj_guovvamánnu guov_njukčamánnu njuk_cuoŋománnu cuo_miessemánnu mies_geassemánnu geas_suoidnemánnu suoi_borgemánnu borg_čakčamánnu čakč_golggotmánnu golg_skábmamánnu skáb_juovlamánnu juov".split("_");
+                "ođđajagemánnu ođđj_guovvamánnu guov_njukčamánnu njuk_cuoŋománnu cuo_miessemánnu mies_geassemánnu geas_suoidnemánnu suoi_borgemánnu borg_čakčamánnu čakč_golggotmánnu golg_skábmamánnu skáb_juovlamánnu juov"
+                    .split("_");
 
         function equalTest(input, mmm, i) {
             assert.equal(moment(input, mmm).month(), i, input + " should be month " + (i + 1));
@@ -102,7 +103,8 @@ test("format month",
     function(assert) {
         var i,
             expected =
-                "ođđajagemánnu ođđj_guovvamánnu guov_njukčamánnu njuk_cuoŋománnu cuo_miessemánnu mies_geassemánnu geas_suoidnemánnu suoi_borgemánnu borg_čakčamánnu čakč_golggotmánnu golg_skábmamánnu skáb_juovlamánnu juov".split("_");
+                "ođđajagemánnu ođđj_guovvamánnu guov_njukčamánnu njuk_cuoŋománnu cuo_miessemánnu mies_geassemánnu geas_suoidnemánnu suoi_borgemánnu borg_čakčamánnu čakč_golggotmánnu golg_skábmamánnu skáb_juovlamánnu juov"
+                    .split("_");
 
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, i, 1]).format("MMMM MMM"), expected[i], expected[i]);
@@ -113,7 +115,8 @@ test("format week",
     function(assert) {
         var i,
             expected =
-                "sotnabeaivi sotn s_vuossárga vuos v_maŋŋebárga maŋ m_gaskavahkku gask g_duorastat duor d_bearjadat bear b_lávvardat láv L".split("_");
+                "sotnabeaivi sotn s_vuossárga vuos v_maŋŋebárga maŋ m_gaskavahkku gask g_duorastat duor d_bearjadat bear b_lávvardat láv L"
+                    .split("_");
 
         for (i = 0; i < expected.length; i++) {
             assert.equal(moment([2011, 0, 2 + i]).format("dddd ddd dd"), expected[i], expected[i]);

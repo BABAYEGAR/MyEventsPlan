@@ -555,6 +555,7 @@
     <Content Include="Content\ImageUploader\js\jquery.Jcrop.min.js" />
     <Content Include="Content\ImageUploader\js\jquery.min.js" />
     <Content Include="Content\ImageUploader\js\script.js" />
+    <Content Include="Content\jquery.twbsPagination.min.js" />
     <Content Include="Content\MaterialDesign\assets\css\bootstrap.min.css" />
     <Content Include="Content\MaterialDesign\assets\css\CustomCss.css" />
     <Content Include="Content\MaterialDesign\assets\css\demo.css" />

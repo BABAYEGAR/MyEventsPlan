@@ -2,13 +2,14 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Event;
 using Event.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using MyEventPlan.Controllers;
+using MyEventPlan.Data.Service.AuthenticationManagement;
 
-namespace Event.Controllers
+namespace MyEventPlan.Controllers
 {
     [Authorize]
     public class ManageController : Controller
@@ -28,14 +29,14 @@ namespace Event.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get { return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>(); }
-            private set { _signInManager = value; }
+            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            private set => _signInManager = value;
         }
 
         public ApplicationUserManager UserManager
         {
-            get { return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>(); }
-            private set { _userManager = value; }
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
         }
 
         //
@@ -96,6 +97,7 @@ namespace Event.Controllers
 
         //
         // GET: /Manage/AddPhoneNumber
+        [SessionExpire]
         public ActionResult AddPhoneNumber()
         {
             return View();
@@ -199,6 +201,7 @@ namespace Event.Controllers
 
         //
         // GET: /Manage/ChangePassword
+        [SessionExpire]
         public ActionResult ChangePassword()
         {
             return View();
@@ -227,6 +230,7 @@ namespace Event.Controllers
 
         //
         // GET: /Manage/SetPassword
+        [SessionExpire]
         public ActionResult SetPassword()
         {
             return View();
@@ -273,7 +277,7 @@ namespace Event.Controllers
                 AuthenticationManager.GetExternalAuthenticationTypes()
                     .Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider))
                     .ToList();
-            ViewBag.ShowRemoveButton = (user.PasswordHash != null) || (userLogins.Count > 1);
+            ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
             return View(new ManageLoginsViewModel
             {
                 CurrentLogins = userLogins,
@@ -285,6 +289,7 @@ namespace Event.Controllers
         // POST: /Manage/LinkLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult LinkLogin(string provider)
         {
             // Request a redirect to the external login provider to link a login for the current user
@@ -307,7 +312,7 @@ namespace Event.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (_userManager != null))
+            if (disposing && _userManager != null)
             {
                 _userManager.Dispose();
                 _userManager = null;
@@ -321,10 +326,7 @@ namespace Event.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get { return HttpContext.GetOwinContext().Authentication; }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {

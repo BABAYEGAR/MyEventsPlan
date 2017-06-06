@@ -18,6 +18,7 @@ namespace MyEventPlan.Controllers.EventManagement
         private readonly EventDataContext dbd = new EventDataContext();
 
         // GET: EventPlanners
+        [SessionExpire]
         public ActionResult Index()
         {
             var eventPlanners = db.EventPlanners.Include(e => e.Role);
@@ -25,6 +26,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventPlanners/Details/5
+        [SessionExpire]
         public ActionResult EventPlannerDetails(long? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventPlanners/Details/5
+        [SessionExpire]
         public ActionResult Details(long? id)
         {
             if (id == null)
@@ -136,6 +139,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventPlanners/Edit/5
+        [SessionExpire]
         public ActionResult Edit(long? id)
         {
             if (id == null)
@@ -152,6 +156,7 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult Edit(
             [Bind(Include =
                 "EventPlannerId,Name,LocationId,Email,Mobile,ConfirmPassword,FacebookPage,TwitterPage,InstagramPage,Website,PricingDetails" +
@@ -198,6 +203,7 @@ namespace MyEventPlan.Controllers.EventManagement
 
 
         // GET: EventPlanners/Delete/5
+        [SessionExpire]
         public ActionResult Delete(long? id)
         {
             if (id == null)
@@ -212,6 +218,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
             var eventPlanner = dbd.EventPlanners.Find(id);
@@ -276,25 +283,15 @@ namespace MyEventPlan.Controllers.EventManagement
                 foreach (var item in vendors)
                     dbd.Vendors.Remove(item);
                 foreach (var item in resourceMapping)
-                {
                     dbd.EventResourceMapping.Remove(item);
-                }
                 foreach (var item in staffMapping)
-                {
                     dbd.StaffEventMapping.Remove(item);
-                }
                 foreach (var item in budget)
-                {
                     dbd.Budgets.Remove(item);
-                }
                 foreach (var item in checkList)
-                {
                     dbd.CheckLists.Remove(item);
-                }
                 foreach (var item in listItems)
-                {
                     dbd.CheckListItems.Remove(item);
-                }
                 //get event invoive and delete the payments and items
                 foreach (var item in invoice)
                 {
@@ -308,60 +305,34 @@ namespace MyEventPlan.Controllers.EventManagement
                     dbd.Invoices.Remove(item);
                 }
                 foreach (var item in geustList)
-                {
                     dbd.GuestLists.Remove(item);
-                }
                 foreach (var item in guests)
-                {
                     dbd.Guests.Remove(item);
-                }
                 foreach (var item in appointment)
-                {
                     dbd.Appointments.Remove(item);
-                }
                 foreach (var item in vendorMapping)
-                {
                     dbd.EventVendorMappings.Remove(item);
-                }
                 foreach (var item in notes)
-                {
                     dbd.Notes.Remove(item);
-                }
                 foreach (var item in tasks)
-                {
                     dbd.Tasks.Remove(item);
-                }
                 dbd.Event.Remove(items);
             }
             foreach (var item in subscription)
-            {
                 dbd.SubscriptionInvoices.Remove(item);
-            }
             foreach (var item in resources)
-            {
                 dbd.Resources.Remove(item);
-            }
             foreach (var item in contacts)
-            {
                 dbd.Contacts.Remove(item);
-            }
 
             foreach (var item in settings)
-            {
                 dbd.EventPlannerPackageSettings.Remove(item);
-            }
             foreach (var item in reviews)
-            {
                 dbd.EventPlannerReviews.Remove(item);
-            }
             foreach (var item in enquiry)
-            {
                 dbd.EventPlannerEnquiries.Remove(item);
-            }
             if (user != null)
-            {
                 dbd.AppUsers.Remove(user);
-            }
 
             dbd.EventPlanners.Remove(eventPlanner);
             dbd.SaveChanges();
