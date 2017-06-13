@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Create";
     ViewBag.Header = "Create a new role";
-    Layout = "../Shared/_LayoutForm.cshtml";
+    Layout = "../Shared/Layout/_LayoutForm.cshtml";
 }
 @using (Html.BeginForm("Create", "Roles", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
@@ -23,7 +23,6 @@
             @Html.ValidationMessageFor(model => model.ManageApplicationUser, "", new {@class = "text-danger"})
         </div>
     </div>
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageRoles, new {@class = "control-label"})
         <div class="controls">
@@ -31,7 +30,6 @@
             @Html.ValidationMessageFor(model => model.ManageRoles, "", new {@class = "text-danger"})
         </div>
     </div>
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageEvents, new {@class = "control-label"})
         <div class="controls">
@@ -60,7 +58,6 @@
             @Html.ValidationMessageFor(model => model.ManageEventType, "", new {@class = "text-danger span8"})
         </div>
     </div>
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageEventVendors, new {@class = "control-label"})
         <div class="controls">
@@ -68,7 +65,6 @@
             @Html.ValidationMessageFor(model => model.ManageEventVendors, "", new {@class = "text-danger span8"})
         </div>
     </div>
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageVendors, new {@class = "control-label"})
         <div class="controls">
@@ -76,7 +72,6 @@
             @Html.ValidationMessageFor(model => model.ManageVendors, "", new {@class = "text-danger span8"})
         </div>
     </div>
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageVendorServices, new {@class = "control-label"})
         <div class="controls">
@@ -84,8 +79,6 @@
             @Html.ValidationMessageFor(model => model.ManageVendorServices, "", new {@class = "text-danger span8"})
         </div>
     </div>
-
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageInvoices, new {@class = "control-label"})
         <div class="controls">
@@ -93,7 +86,6 @@
             @Html.ValidationMessageFor(model => model.ManageInvoices, "", new {@class = "text-danger span8"})
         </div>
     </div>
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageBudgets, new {@class = "control-label"})
         <div class="controls">
@@ -101,7 +93,6 @@
             @Html.ValidationMessageFor(model => model.ManageBudgets, "", new {@class = "text-danger span8"})
         </div>
     </div>
-
     <div class="control-group">
         @Html.LabelFor(model => model.ManageCheckList, new {@class = "control-label"})
         <div class="controls">

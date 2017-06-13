@@ -47,107 +47,109 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6 col-md-9 col-sm-9">
-        <div class="card card-stats">
-            <div class="card-content boldtext">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="@Url.Action("Index")">My Events</a>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary fa fa-pencil" data-toggle="modal" data-target="#myModal">
-                            Edit Event
-                        </button>
+    @if (loggedinuser.EventPlannerId != null)
+    {
+        <div class="col-lg-6 col-md-9 col-sm-9">
+            <div class="card card-stats">
+                <div class="card-content boldtext">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="@Url.Action("Index")">My Events</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary fa fa-pencil" data-toggle="modal" data-target="#myModal">
+                                Edit Event
+                            </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title pull-left" id="myModalLabel">Edit Event</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        @{
-                                            Html.RenderPartial("EventPlanning/EditEventModal", Model);
-                                        }
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal1">
-                            Add Appointment
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title pull-left" id="myModalLabel1">Create a New Appointment</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        @{
-                                            Html.RenderPartial("EventPlanning/CreateAppointmentModal", appointment);
-                                        }
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title pull-left" id="myModalLabel">Edit Event</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @{
+                                                Html.RenderPartial("EventPlanning/EditEventModal", Model);
+                                            }
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary fa fa-plus" data-toggle="modal" data-target="#myModal1">
+                                Add Appointment
+                            </button>
 
-                        </div>
-                    </li>
-                    <li class="breadcrumb-item">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal2">
-                            Delete Event
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title pull-left" id="myModalLabel2">Delete Event</h4>
-                                    </div>@using (Html.BeginForm("Delete", "Events", new {id = Model.EventId}))
-                                          {
-                                              <div class="modal-body">
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title pull-left" id="myModalLabel1">Create a New Appointment</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            @{
+                                                Html.RenderPartial("EventPlanning/CreateAppointmentModal", appointment);
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
 
-                                                  @Html.AntiForgeryToken()
-                                                  <div class="alert alert-danger alert-dismissable">
-                                                      Deleting this Event will also delete the Clients, Appointments, Vendors Attached, Guests, CheckList, invoices, budget and all othee information associated with this Event
+                            </div>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal2">
+                                Delete Event
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <h4 class="modal-title pull-left" id="myModalLabel2">Delete Event</h4>
+                                        </div>@using (Html.BeginForm("Delete", "Events", new {id = Model.EventId}))
+                                              {
+                                                  <div class="modal-body">
+
+                                                      @Html.AntiForgeryToken()
+                                                      <div class="alert alert-danger alert-dismissable">
+                                                          Deleting this Event will also delete the Clients, Appointments, Vendors Attached, Guests, CheckList, invoices, budget and all othee information associated with this Event
+                                                      </div>
+                                                      <p>
+                                                          Are you sure you want to delete the Event?
+                                                      </p>
+
                                                   </div>
-                                                  <p>
-                                                      Are you sure you want to delete the Event?
-                                                  </p>
-
-                                              </div>
-                                              <div class="modal-footer">
-                                                  <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
-                                                  <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
-                                              </div>
-                                          }
+                                                  <div class="modal-footer">
+                                                      <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash"/>
+                                                      <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left"/>
+                                                  </div>
+                                              }
+                                    </div>
                                 </div>
-                            </div>
 
-                        </div>
-                    </li>
-                </ol>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
             </div>
         </div>
-    </div>
-
+    }
 }
 @if (role != null)
 {
@@ -280,7 +282,7 @@
                 </div>
             </div>
         }
-        @if (eventPlanner != null && (role.ManageNotes && eventPlanner.Type == EventPlannerTypeEnum.Organization.ToString()))
+        @if (role.ManageNotes)
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
