@@ -144,7 +144,7 @@ namespace MyEventPlan.Controllers.EventManagement
             }
             return View();
         }
-
+        [SessionExpire]
         public void UpdateEvent(int id, string newEventStart, string newEventEnd)
         {
             new CalenderEvent().UpdateCalendarEvent(id, newEventStart, newEventEnd);

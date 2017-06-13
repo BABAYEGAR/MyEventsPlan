@@ -15,9 +15,18 @@
                     @Html.AntiForgeryToken()
                     @Html.Hidden("Type", type)
                     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-                    <h2 class="form-title">
-                        Event planner Sign Up<strong> (Begining with 10 days Free Trail) </strong>
-                    </h2>
+                    if (type == EventPlannerTypeEnum.Individual.ToString())
+                     {
+                         <h2 class="form-title">
+                             Sign Up as an Individual to Plan your Dream Event<strong> (Begining with 10 days Free Trail) </strong>
+                         </h2>
+                     }
+                    if (type == EventPlannerTypeEnum.Organization.ToString())
+                    {
+                        <h2 class="form-title">
+                            "Sign Up as an Event Planner to make your clients’ Dream Event Come true”<strong> (Begining with 10 days Free Trail) </strong>
+                        </h2>
+                    }
                     <div class="form-group">
                         @Html.LabelFor(model => model.Name, new {@class = "col-md-4 control-label"})
                         <div class="col-md-8">

@@ -49,7 +49,8 @@ namespace MyEventPlan.Controllers.RoleManagement
         public ActionResult Create(
             [Bind(
                 Include =
-                    "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals"
+                    "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageProspects,ManageInvoices,ManageGuestList,ManageBudgets,ManagePackages,ManageLocations,"+
+                "ManageVendors,ManageEventVendors,ManageVendorServices,ManageCalendar,ManageStaff,ManageResources,ManageCheckList,ManageContacts,ManageNotes,ManageTasks"
             )] Role role)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -97,7 +98,8 @@ namespace MyEventPlan.Controllers.RoleManagement
         public ActionResult Edit(
             [Bind(
                 Include =
-                    "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageEventPlanners,ManageVendors,ManageVendorServices,ManageProspects,ManageInvoices,ManageContracts,ManageProposals,CreatedBy,DateCreated"
+                    "RoleId,Name,ManageApplicationUser,ManageRoles,ManageEvents,ManageEventType,ManageProspects,ManageInvoices,ManageGuestList,ManageBudgets,ManagePackages,ManageLocations,"+
+                    "ManageVendors,ManageEventVendors,ManageVendorServices,ManageCalendar,ManageStaff,ManageResources,ManageCheckList,ManageContacts,ManageNotes,ManageTasks,DateCreated,CreatedBy"
             )] Role role)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;

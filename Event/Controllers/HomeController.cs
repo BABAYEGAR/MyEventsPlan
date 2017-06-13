@@ -19,7 +19,7 @@ namespace MyEventPlan.Controllers
             return View();
         }
 
-       
+        [SessionExpire]
         public ActionResult Dashboard()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -47,7 +47,7 @@ namespace MyEventPlan.Controllers
             return View();
         }
 
-       
+        [SessionExpire]
         public ActionResult ViewProfile()
         {
             return View();

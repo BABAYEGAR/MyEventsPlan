@@ -1,10 +1,15 @@
 ﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
 @model Event
 @{
     ViewBag.Title = "View";
     ViewBag.Header = Model.Name;
     Layout = "../Shared/Layout/_LayoutEventDashboard.cshtml";
     var role = Session["role"] as Role;
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+    var dbConnect = new EventDataContext();
+    var eventPlanner = dbConnect.EventPlanners.Find(loggedinuser.EventPlannerId);
 
     //recent event details
 
@@ -189,7 +194,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageStaff)
+        @if (eventPlanner != null && role.ManageStaff && eventPlanner.Type == EventPlannerTypeEnum.Organization.ToString())
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -210,7 +215,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageEvents)
+        @if (role.ManageEvents && eventPlanner.Type == EventPlannerTypeEnum.Organization.ToString())
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -275,7 +280,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageNotes)
+        @if (eventPlanner != null && (role.ManageNotes && eventPlanner.Type == EventPlannerTypeEnum.Organization.ToString()))
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">
@@ -361,7 +366,7 @@
                 </div>
             </div>
         }
-        @if (role.ManageTasks)
+        @if (role.ManageTasks && eventPlanner.Type == EventPlannerTypeEnum.Organization.ToString())
         {
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card card-stats">

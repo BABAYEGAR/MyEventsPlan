@@ -23,13 +23,13 @@
                             <a href="@Url.Action("Index", "Home")">Home</a>
                         </li>
                         <li>
-                            <a href="#">Event Planning</a>
+                            <a href="#">Start Planning</a>
                             <ul>
                                 <li>
                                     <a href="@Url.Action("Create", "EventPlanners", new {type = individual})">I'm an Event Planner (Individual)</a>
                                 </li>
                                 <li>
-                                    <a href="@Url.Action("Create", "EventPlanners", new {type = organization})">We are Event Planners (Organization)</a>
+                                    <a href="@Url.Action("Create", "EventPlanners", new {type = organization})">I'm an Event Planner</a>
                                 </li>
 
                             </ul>
@@ -38,11 +38,11 @@
                             <a href="#">Vendor</a>
                             <ul>
                                 <li>
-                                    <a href="@Url.Action("Pricing", "VendorPackages")">Are you Vendor?</a>
+                                    <a href="@Url.Action("Pricing", "VendorPackages")">Become a Vendor?</a>
                                 </li>
                             </ul>
                         </li>
-                        <li>
+                        @*<li>
                             <a href="#" title="Home" class="animsition-link">Vendor Services</a>
                             <ul>
                                 @foreach (var item in services)
@@ -52,7 +52,7 @@
                                     </li>
                                 }
                             </ul>
-                        </li>
+                        </li>*@
                         @*<li>
                         <a href="#">Planning Tools</a>
                         <ul>
@@ -79,7 +79,7 @@
                             </li>
                         </ul>
                     </li>*@
-                        <li>
+                        @*<li>
                             <a href="#">Features</a>
                             <ul>
                                 @*<li>
@@ -92,7 +92,7 @@
                                         <a href="blog-single.html">Blog Single</a>
                                     </li>
                                 </ul>
-                            </li>*@
+                            </li>
                                 <li>
                                     <a href="about-us.html">About us</a>
                                 </li>
@@ -105,7 +105,7 @@
                                 <li>
                                     <a href="faq.html">FAQ's</a>
                                 </li>
-                                @*<li>
+                               <li>
                                 <a href="404-error.html">404 Error</a>
                             </li>
                             <li>
@@ -136,9 +136,9 @@
                             </li>
                             <li>
                                 <a href="wedding-guideline.html">Template Guideline</a>
-                            </li>*@
+                            </li>
                             </ul>
-                        </li>
+                        </li>*@
                         @*<li>
                         <a href="#">Real Weddings</a>
                         <ul>
