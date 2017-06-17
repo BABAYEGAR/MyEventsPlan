@@ -6,54 +6,69 @@
 
     var dbEvent = new EventDataContext();
     var packages = dbEvent.VendorPackages.ToList();
+    var eventPlannerPackages = dbEvent.EventPlannerPackages.ToList();
     ViewBag.Header = "Vendor Registration";
-    ViewBag.SubHeader = "Sign up with MyMyEventsPlan Today for Free. Grow your business today by connecting to thousands of clients. Manage your event listings and calendar at any time.";
+    ViewBag.SubHeader = "Sign up with MyEventsPlan Today for Free. Grow your business today by connecting to thousands of clients. Manage your event listings and calendar at any time.";
 }
 @section links{
     <li>
-        <a href="@Url.Action("Index","Home")">Home</a>
+        <a href="@Url.Action("Index", "Home")">Home</a>
     </li>
     <li class="active">Pricing Table</li>
 }
-<div class="section-space100">
-    <div class="container">
-        <div class="row">
-            <h1 class="text-center" style="font-weight: bolder">How it Works</h1>
-            <div class="col-md-4">
-                <div class="feature-block mb30 text-center">
-                    <div class="feature-icon"><i class="icon-group icon-primary icon-size-60"></i>
-                    </div>
-                    <div class="feature-info">
-                        <h2>Step 1</h2>
-                        <p>Select a plan and get started.</p>
-                    </div>
+<div class="row pricing-container">
+    <h1 class="text-center" style="font-weight: bolder">EventPlanner Pricing</h1>
+    <br/>
+    @foreach (var item in eventPlannerPackages)
+    {
+        if (item.PackageGrade == EventPlannerPackageEnum.High.ToString())
+        {
+            <div class="col-md-4 pricing-box pricing-box-top">
+                <div class="well-box">
+                    <h2 class="price-title">@item.PackageName</h2>
+                    <h1 class="price-plan">
+                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/month</span>
+                    </h1>
+                    <p>@item.Description</p>
+                    @*<a href="@Url.Action("Register", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>*@
                 </div>
+                <ul class="check-circle list-group">
+                    @{
+                        var packageItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == item.EventPlannerPackageId);
+                    }
+                    @foreach (var items in packageItems)
+                    {
+                        <li class="list-group-item">@items.ItemName</li>
+                    }
+                </ul>
             </div>
-            <div class="col-md-4">
-                <div class="feature-block mb30 text-center">
-                    <div class="feature-icon"><i class="icon-table icon-primary icon-size-60"></i>
-                    </div>
-                    <div class="feature-info">
-                        <h2>Step 2</h2>
-                        <p>Fill out the vendor registration form.</p>
-                    </div>
+        }
+        else
+        {
+            <div class="col-md-4 pricing-box pricing-box-regualr">
+                <div class="well-box">
+                    <h2 class="price-title">@item.PackageName</h2>
+                    <h1 class="price-plan">
+                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/month</span>
+                    </h1>
+                    <p>@item.Description</p>
+                    @*<a href="@Url.Action("Register", "Vendors", new {id = item.EventPlannerPackageId})" class="btn btn-default btn-sm">Sign Up</a>*@
                 </div>
+                <ul class="check-circle list-group">
+                    @{
+                        var packageItems = dbEvent.VendorPackageItems.Where(n => n.VendorPackageId == item.EventPlannerPackageId);
+                    }
+                    @foreach (var items in packageItems)
+                    {
+                        <li class="list-group-item">@items.ItemName</li>
+                    }
+                </ul>
             </div>
-            <div class="col-md-4">
-                <div class="feature-block mb30 text-center">
-                    <div class="feature-icon"><i class="icon-wedding-dinner icon-primary icon-size-60"></i>
-                    </div>
-                    <div class="feature-info">
-                        <h2>Step 3</h2>
-                        <p>Start connecting with your clients.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        }
+    }
+
 </div>
 <div></div>
-<br/>
 <div class="row pricing-container">
     <h1 class="text-center" style="font-weight: bolder">Vendor Pricing</h1>
     <br/>
@@ -68,7 +83,7 @@
                         <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/month</span>
                     </h1>
                     <p>@item.Description</p>
-                    <a href="@Url.Action("Register", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
+                    @*<a href="@Url.Action("Register", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>*@
                 </div>
                 <ul class="check-circle list-group">
                     @{
@@ -90,7 +105,7 @@
                         <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/month</span>
                     </h1>
                     <p>@item.Description</p>
-                    <a href="@Url.Action("Register", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>
+                    @*<a href="@Url.Action("Register", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Sign Up</a>*@
                 </div>
                 <ul class="check-circle list-group">
                     @{
@@ -117,21 +132,21 @@
         <div class="col-md-6 question-block">
             <div class="question-answer">
                 <h2>
-                    <span class="question-sign">Q</span> What is MyEventsPlan?
+                    <span class="question-sign">Q</span> Which payment methods are supported?
                 </h2>
-                <p>It’s a Web-based software application that provides event management tools for planning and registration of various kinds of events.</p>
+                <p>Sed lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam sollicitudin ultriciesleo non viverra neque laoreet amazin consectetur nisl sedblandit turpis enimac urabitur.</p>
             </div>
             <div class="question-answer">
                 <h2>
-                    <span class="question-sign">Q</span> How does it work?
+                    <span class="question-sign">Q</span> What uisque ulrices eficiturn interdum justo?
                 </h2>
-                <p>MyEventsPlan is entirely online, and so all you would need a web browser to access. Upon creating an account on our website, you can then log into your account via the login page and start using the software tools. </p>
+                <p>Sed lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam sollicitudin ultriciesleo non viverra neque laoreet amazin consectetur nisl sedblandit turpis enimac urabitur.</p>
             </div>
             <div class="question-answer">
                 <h2>
-                    <span class="question-sign">Q</span>What Web browsers are best for using MyEventsPlan?
+                    <span class="question-sign">Q</span> How ullam diissim nisiege luctus anteui?
                 </h2>
-                <p>We recommend using a current version of either Google Chrome, Firefox or Safari. However, you can also use Microsoft Edge. </p>
+                <p>Mauris metus leoelemetum condimentum tellus velornare dictum ligula uisque vestibulum molestieerat euleifend turpis fermentum quisras offer massaelit potentiorbi rhoncus pellen tesque exanibus. </p>
             </div>
         </div>
         <div class="col-md-6 question-block">
@@ -143,15 +158,15 @@
             </div>
             <div class="question-answer">
                 <h2>
-                    <span class="question-sign">Q</span> Can I access my MyEventsPlan account on my tablet or smartphone?
+                    <span class="question-sign">Q</span> Why tibulum consectetur lorem sagittis?
                 </h2>
-                <p>Yes, the application is mobile-responsive so you can use it via the Web browser on your tablet or smartphone. We don't offer native apps, but our software is built to work great via the Web browser on all devices.</p>
+                <p>Aenean varius ornare diamquis scelerisque. umsociis natoque penatibus etmagnis disarturientsitamet augue suscipit utfringilla velit sollicitudin In velest inturpis one sagittis interdu.</p>
             </div>
             <div class="question-answer">
                 <h2>
-                    <span class="question-sign">Q</span>How can I create an account with MyEventsPlan?
+                    <span class="question-sign">Q</span> Why sociis natoque magnis diaturient montes?
                 </h2>
-                <p>First time visit allows you to create a trial account free for 30 days. After which, you will need to sign up for a paid subscription in order to continue to use our tools.</p>
+                <p>Lacinia lectus sedurna luctus interdumras commodo porttitor always faucibus Nullam interdum libero utfringilla cursus tortor magna consectetur nisl sedblandit turpis urabitur.</p>
             </div>
         </div>
     </div>

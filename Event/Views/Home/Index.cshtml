@@ -5,7 +5,7 @@
     Layout = "../Shared/Layout/_LayoutAppTheme.cshtml";
     var db = new EventDataContext();
     var allVendors = db.Vendors.OrderByDescending(n => n.AverageRating).ToList();
-    var countedVendors = allVendors.Take(6);
+    //var countedVendors = allVendors.Take(6);
 
     var allPlanners = db.EventPlanners.Include(m => m.Location).ToList();
     var countedPlanners = allPlanners.Take(3);
@@ -17,7 +17,6 @@
     <div id="slider" class="owl-carousel owl-theme slider">
         <div class="item slider-shade">
             <img src="~/Content/Dashboard/images/slider-1.jpg" alt="Wedding couple just married"/>
-
         </div>
         <div class="item slider-shade">
             <img src="~/Content/Dashboard/images/slider-2.jpg" alt="Wedding couple just married"/>
@@ -31,31 +30,14 @@
         <!-- Find search section-->
         <div class="container">
             <div class="row">
-                <div class="col-md-offset-1 col-md-10 finder-block">
+                <div class="col-md-offset-1 col-md-10 finder-block" id="sliderText1">
                     <div class="finder-caption">
                         <h1>Find your perfect Wedding Vendor</h1>
                         <p>
-                            Over <strong>1200+ Wedding Vendor </strong>for you special date &amp; Find the perfect venue &amp; save you date.
+                           The All-In-One Event Management Platform for efficient and timely planning of all events
                         </p>
                     </div>
-                    <div class="finder-form-transparent">
-                        @using (Html.BeginForm("ListOfVendors", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data"}))
-                        {
-                            <div class="row">
-                                <div class="form-group col-md-4">
-                                    @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Vendor Service", new {@class = "form-control"})
-                                    @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
-                                </div>
-                                <div class="form-group col-md-4">
-                                            @Html.DropDownListFor(m => m.LocationId, null, "Select Vendor Location", new {@class = "form-control"})
-                                            @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
-                                    </div>
-                                <div class="form-group col-md-4">
-                                    <input type="submit" value="Find Vendors" id="findvendors" class="btn btn-primary btn-lg btn-block"/>
-                                </div>
-                            </div>
-                        }
-                    </div>
+ 
                 </div>
             </div>
         </div>
@@ -169,44 +151,35 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title mb60 text-center">
-                    <h1>More than 2,000 Wedding Vendors</h1>
-                    <p> Donec sagittis blandit ex consequat pulvin ondimentum tortor eitae suscipit augupibus </p>
+                    <h1>Find your perfect Event Vendor</h1>
+                    <p>Browse and connect with the top-rated in every category with reviews and ratings </p>
                 </div>
             </div>
         </div>
-        <div class="row">
-            @foreach (var item in countedVendors)
-            {
-                <div class="col-md-4">
-                    <div class="vendor-total-list mb30">
-                        <!-- vendor-total-list -->
-                        <div class="vendor-total-thumb">
-                            <!-- vendor-total-thumb -->
-                            <a href="@Url.Action("Details", "Vendors", new {id = item.VendorId})">
-                                <img src="~/UploadedFiles/VendorLogo/@item.Logo" class="img-responsive" alt="" height="360px" width="250px">
-                            </a>
-                        </div>
-                        <!-- /.vendor-total-thumb -->
-                        <div class="well-box vendor-total-info">
-                            <!-- vendor-total-info -->
-                            <h2 class="vendor-total-title">
-                                <a href="@Url.Action("Details", "Vendors", new {id = item.VendorId})" class="title">@item.Name </a><span class="badge badge-primary"></span>
-                            </h2>
-                        </div>
-                        <!-- /.vendor-total-info -->
-                    </div>
-                    <!-- /.vendor-total-list -->
+        @using (Html.BeginForm("ListOfVendors", "Vendors", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        {
+            <div class="row">
+                <div class="form-group col-md-4">
+                    @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Vendor Service", new {@class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
                 </div>
-            }
-
+                <div class="form-group col-md-4">
+                    @Html.DropDownListFor(m => m.LocationId, null, "Select Vendor Location", new {@class = "form-control"})
+                    @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="submit" value="Find Vendors" id="findvendors" class="btn btn-primary btn-md btn-block"/>
+                </div>
+            </div>
+        }
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <a href="@Url.Action("ListOfVendors", "Vendors")" class="btn btn-default btn-lg">View All Vendor</a>
+                <a href="@Url.Action("ListOfVendors", "Vendors")" class="btn btn-default btn-md">View All Vendor</a>
             </div>
         </div>
     </div>
-</div>
+
 <div class="section-space80">
     <!-- Real Weddings -->
     <div class="container">
@@ -214,7 +187,7 @@
             <div class="col-md-12">
                 <div class="section-title mb60 text-center">
                     <h1>Be inspired by the Best Event Planners</h1>
-                    <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text.</p>
+                    <p>Browse and Connect with the best Event Planners to make your event a dream come true.  </p>
                 </div>
             </div>
         </div>
@@ -233,9 +206,6 @@
                             <h2 class="real-wedding-title">
                                 <a href="#" class="title">@item.Name</a>
                             </h2>
-                            @*<p class="real-wed-meta">
-                                <span class="wed-day-meta"><i class="icon-wedding-day icon-size-18"></i> 5 june,2016</span> <span class="wed-location-meta"> <i class="icon-wedding-location icon-size-18"></i> Surat, @item.Mobile</span>
-                            </p>*@
                         </div>
                     </div>
                     <!-- /.real wedding block -->
@@ -245,23 +215,12 @@
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <a href="#" class="btn btn-default btn-lg">View More Event Plannners</a>
+                <a href="#" class="btn btn-default btn-md">View More Event Plannners</a>
             </div>
         </div>
     </div>
 </div>
 <!-- /.Real Weddings -->
-@*<section class="module parallax parallax-2">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8 parallax-caption">
-                <h2>Are you trying our planning tools ?</h2>
-                <p>Donec sagittis blandit ex consequat pulvinm condimentum tortor lorem ipsum oleo sit ament eitae suscipit augupibus. </p>
-                <a href="#" class="btn btn-primary">Start Planning Today</a>
-            </div>
-        </div>
-    </div>
-</section>*@
 <div class="section-space80 bg-light">
     <div class="container">
         <div class="row">

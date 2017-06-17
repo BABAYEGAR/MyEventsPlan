@@ -370,6 +370,18 @@
     <Compile Include="Migrations\201706030730188_MigrateSeventTwo.Designer.cs">
       <DependentUpon>201706030730188_MigrateSeventTwo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706151142584_Migrate71.cs" />
+    <Compile Include="Migrations\201706151142584_Migrate71.Designer.cs">
+      <DependentUpon>201706151142584_Migrate71.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706151200459_Migrate72.cs" />
+    <Compile Include="Migrations\201706151200459_Migrate72.Designer.cs">
+      <DependentUpon>201706151200459_Migrate72.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706170349279_migrate80.cs" />
+    <Compile Include="Migrations\201706170349279_migrate80.Designer.cs">
+      <DependentUpon>201706170349279_migrate80.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -587,6 +599,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706030730188_MigrateSeventTwo.resx">
       <DependentUpon>201706030730188_MigrateSeventTwo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706151142584_Migrate71.resx">
+      <DependentUpon>201706151142584_Migrate71.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706151200459_Migrate72.resx">
+      <DependentUpon>201706151200459_Migrate72.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706170349279_migrate80.resx">
+      <DependentUpon>201706170349279_migrate80.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

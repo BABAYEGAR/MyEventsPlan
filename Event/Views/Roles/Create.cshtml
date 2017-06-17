@@ -128,7 +128,13 @@
             @Html.ValidationMessageFor(model => model.ManageResources, "", new {@class = "text-danger span8"})
         </div>
     </div>
-
+    <div class="control-group">
+        @Html.LabelFor(model => model.ManageNotes, new {@class = "control-label"})
+        <div class="controls">
+            @Html.EditorFor(model => model.ManageNotes)
+            @Html.ValidationMessageFor(model => model.ManageNotes, "", new {@class = "text-danger span8"})
+        </div>
+    </div>
 
     <div class="control-group">
         <div class="controls">

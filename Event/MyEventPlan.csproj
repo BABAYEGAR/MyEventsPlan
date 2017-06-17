@@ -522,6 +522,7 @@
     <Content Include="Content\Dashboard\images\slider-1.jpg" />
     <Content Include="Content\Dashboard\images\slider-2.jpg" />
     <Content Include="Content\Dashboard\images\slider-3.jpg" />
+    <Content Include="Content\Dashboard\images\slider1.jpg" />
     <Content Include="Content\Dashboard\images\user.png" />
     <Content Include="Content\Dashboard\jquery.countdown.js" />
     <Content Include="Content\Dashboard\scripts\common.js" />
@@ -1631,6 +1632,8 @@
     <Content Include="Views\EventPlannerEnquiries\Details.cshtml" />
     <Content Include="Views\EventPlannerEnquiries\Edit.cshtml" />
     <Content Include="Views\EventPlannerEnquiries\Index.cshtml" />
+    <Content Include="Views\Home\Pricing.cshtml" />
+    <Content Include="Views\Events\FloorPlan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

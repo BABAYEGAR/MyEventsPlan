@@ -11,8 +11,6 @@ namespace Event.Data.Objects.Entities
         [Required]
         [DisplayName("Item Name")]
         public string ItemName { get; set; }
-        [Required]
-        public long Amount { get; set; }
         public long EventPlannerPackageId { get; set; }
         [ForeignKey("EventPlannerPackageId")]
         public EventPlannerPackage EventPlannerPackage { get; set; }

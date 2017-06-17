@@ -11,11 +11,13 @@ namespace Event.Data.Objects.Entities
         [DisplayName("Package Name")]
         public string PackageName { get; set; }
         [Required]
+        [DisplayName("Package Amount")]
+        public long? Amount { get; set; }
+        [Required]
         [DisplayName("Package Grade")]
         public string PackageGrade { get; set; }
         [Required]
         public string Description { get; set; }
-        public long? Amount { get; set; }
         public IEnumerable<VendorPackageSetting> VendorPackageSettings { get; set; }
         public IEnumerable<VendorPackageItem> VendorPackageItems { get; set; }
     }

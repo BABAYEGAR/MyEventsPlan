@@ -75,7 +75,6 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                 db.SaveChanges();
 
                 var package = db.EventPlannerPackages.Find(eventPlannerPackageItem.EventPlannerPackageId);
-                if (package != null) package.Amount = db.EventPlannerPackageItems.Sum(m => m.Amount);
 
                 db.Entry(eventPlannerPackageItem).State = EntityState.Modified;
                 db.SaveChanges();
@@ -132,7 +131,6 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                 db.SaveChanges();
 
                 var package = db.EventPlannerPackages.Find(eventPlannerPackageItem.EventPlannerPackageId);
-                if (package != null) package.Amount = db.EventPlannerPackageItems.Sum(m => m.Amount);
 
                 db.Entry(eventPlannerPackageItem).State = EntityState.Modified;
                 db.SaveChanges();

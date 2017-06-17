@@ -73,7 +73,6 @@ namespace MyEventPlan.Controllers.VendorPackage
                 db.SaveChanges();
 
                 var package = db.VendorPackages.Find(vendorPackageItem.VendorPackageId);
-                if (package != null) package.Amount = db.VendorPackageItems.Sum(m => m.Amount);
 
                 db.Entry(vendorPackageItem).State = EntityState.Modified;
                 db.SaveChanges();
@@ -125,7 +124,6 @@ namespace MyEventPlan.Controllers.VendorPackage
                 db.SaveChanges();
 
                 var package = db.VendorPackages.Find(vendorPackageItem.VendorPackageId);
-                if (package != null) package.Amount = db.VendorPackageItems.Sum(m => m.Amount);
 
                 db.Entry(vendorPackageItem).State = EntityState.Modified;
                 db.SaveChanges();
@@ -160,7 +158,6 @@ namespace MyEventPlan.Controllers.VendorPackage
             db.VendorPackageItems.Remove(vendorPackageItem);
             db.SaveChanges();
             var package = db.VendorPackages.Find(vendorPackageItem.VendorPackageId);
-            if (package != null) package.Amount = db.VendorPackageItems.Sum(m => m.Amount) - vendorPackageItem.Amount;
 
             db.Entry(vendorPackageItem).State = EntityState.Modified;
             db.SaveChanges();

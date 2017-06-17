@@ -15,16 +15,28 @@
                     @Html.AntiForgeryToken()
                     @Html.Hidden("Type", type)
                     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                    <h2 class="form-title">Upload Logo</h2>
+                    <!-- File Button -->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <div class="photo-upload">
+                                <img src="~/Content/AppTheme/images/avatar.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col-md-8 upload-file">
+                            <input id="filebutton" name="filebutton" class="input-file" type="file">
+                        </div>
+                    </div>
                     if (type == EventPlannerTypeEnum.Individual.ToString())
                      {
                          <h2 class="form-title">
-                             Sign Up as an Individual to Plan your Dream Event<strong> (Begining with 10 days Free Trail) </strong>
+                             Sign Up as an Individual to Plan your Dream Event<strong> </strong>
                          </h2>
                      }
                     if (type == EventPlannerTypeEnum.Organization.ToString())
                     {
                         <h2 class="form-title">
-                            "Sign Up as an Event Planner to make your clients’ Dream Event Come true”<strong> (Begining with 10 days Free Trail) </strong>
+                            "Sign Up as an Event Planner to make your clients’ Dream Event Come true”<strong> </strong>
                         </h2>
                     }
                     <div class="form-group">

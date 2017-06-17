@@ -8,6 +8,7 @@ using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
 using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Enum;
+using MyEventPlan.Data.Service.FileUploader;
 
 namespace MyEventPlan.Controllers.EventManagement
 {
@@ -73,10 +74,15 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 var password = new Hashing().HashPassword(collectedValues["ConfirmPassword"]);
                 var role = db.Roles.FirstOrDefault(m => m.Name == "Event Planner");
+                var logo = Request.Files["logo"];
                 eventPlanner.RoleId = role?.RoleId;
                 eventPlanner.Password = password;
                 eventPlanner.ConfirmPassword = password;
                 eventPlanner.Type = collectedValues["Type"];
+                if (logo != null && logo.FileName != "")
+                {
+                    eventPlanner.Logo = new FileUploader().UploadFile(logo, UploadType.EventPlannerLogo);
+                }
                 if (dbc.AppUsers.Any(n => n.Email == eventPlanner.Email))
                 {
                     TempData["display"] = "The email entered already exist! Try another one!";

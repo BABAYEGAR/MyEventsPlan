@@ -90,7 +90,12 @@ namespace MyEventPlan.Controllers.EventManagement
             ViewBag.EventTypeId = new SelectList(_db.EventTypes, "EventTypeId", "Name");
             return View();
         }
-
+        // GET: Events/FloorPlan
+        [SessionExpire]
+        public ActionResult FloorPlan()
+        {
+            return View();
+        }
         //// GET: Events
         public JsonResult GetMyEvents()
         {
