@@ -19,7 +19,7 @@
                     <div class="form-group">
                         <div class="col-md-4">
                             <div class="photo-upload">
-                                <img src="~/Content/AppTheme/images/avatar.jpg" alt="">
+                                <img src="~/Content/AppTheme/images/avatar.jpg" alt="" id="avatar" width="220px" height="250px">
                             </div>
                         </div>
                         <div class="col-md-8 upload-file">
@@ -94,7 +94,9 @@
         </div>
     </div>
 </div>
-<script>
+@section scripts
+{
+    <script>
     function payWithPaystack() {
         var handler = window.PaystackPop.setup({
             key: 'pk_test_d19305d69eba56904f42be1c7a8a1fa0259f0760',
@@ -132,4 +134,28 @@
         });
     }
 
+
 </script>
+<!-- jQuery read image data and show preview code -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        //Image file input change event
+        $("#filebutton").change(function () {
+            readImageData(this);//Call image read and render function
+        });
+    });
+
+    function readImageData(imgData) {
+        if (imgData.files && imgData.files[0]) {
+            var readerObj = new FileReader();
+
+            readerObj.onload = function (element) {
+                $('#avatar').attr('src', element.target.result);
+            }
+
+            readerObj.readAsDataURL(imgData.files[0]);
+        }
+    }
+</script>
+
+}

@@ -330,7 +330,14 @@
         <div class="profile-sidebar side-box">
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
-                <img src="~/UploadedFiles/EventPlannerLogo/@Model.Logo" class="img-responsive img-circle" alt="">
+                @if (Model.Logo != null)
+                {
+                    <img src="~/UploadedFiles/EventPlannerLogo/@Model.Logo" alt="" class="img-responsive img-circle">
+                }
+                else
+                {
+                    <img src="~/Content/AppTheme/images/hall.png" class="img-responsive img-circle"/>
+                }
             </div>
             <div class="profile-usertitle">
                 <div class="profile-usertitle-name">

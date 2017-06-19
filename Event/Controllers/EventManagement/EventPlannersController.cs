@@ -27,7 +27,6 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         // GET: EventPlanners/Details/5
-        [SessionExpire]
         public ActionResult EventPlannerDetails(long? id)
         {
             if (id == null)
@@ -101,6 +100,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 appuser.DateLastModified = DateTime.Now;
                 appuser.LastModifiedBy = null;
                 appuser.CreatedBy = null;
+                appuser.BackgroundColor = BackgroundColor.Default.ToString();
                 appuser.Status = UserAccountStatus.Enabled.ToString();
 
                 var checkeventPlanner = db.EventPlanners.SingleOrDefault(n => n.Email == eventPlanner.Email);

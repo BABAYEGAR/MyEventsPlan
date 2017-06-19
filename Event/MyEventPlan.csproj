@@ -284,6 +284,7 @@
     <Content Include="Content\AppTheme\images\guest-confirm.png" />
     <Content Include="Content\AppTheme\images\guest-list.png" />
     <Content Include="Content\AppTheme\images\gust-arrange.png" />
+    <Content Include="Content\AppTheme\images\hall.png" />
     <Content Include="Content\AppTheme\images\hero-image-2.jpg" />
     <Content Include="Content\AppTheme\images\hero-image-3.jpg" />
     <Content Include="Content\AppTheme\images\hero-image.jpg" />

@@ -77,6 +77,7 @@ namespace MyEventPlan.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [SessionExpire]
      
         public ActionResult Setting()
         {
@@ -86,7 +87,8 @@ namespace MyEventPlan.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-     
+
+        [SessionExpire]
         public ActionResult UserProfile()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;

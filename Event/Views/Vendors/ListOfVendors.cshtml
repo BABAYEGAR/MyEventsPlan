@@ -193,7 +193,15 @@
                     <div class="vendor-image">
                         <!-- venue pic -->
                         <a href="@Url.Action("Details", new {id = item.VendorId})">
-                            <img src="~/UploadedFiles/VendorLogo/@item.Logo" alt="wedding venue" class="img-responsive" width="715px" height="400px">
+                       
+                            @if (item.Logo != null)
+                            {
+                                <img src="~/UploadedFiles/VendorLogo/@item.Logo" alt="wedding venue" class="img-responsive" width="715px" height="400px">
+                            }
+                            else
+                            {
+                                <img src="~/Content/AppTheme/images/hall.png" class="img-responsive" width="715px" height="400px"/>
+                            }
                         </a>
                     </div>
                     <!-- /.venue pic -->
@@ -285,7 +293,6 @@
         }
         <div class="col-md-12 tp-pagination" id="page-selection">
         </div>
-        <pioneer-pagination info="@ViewBag.PaginatedMeta" route="/blog"></pioneer-pagination>
     </div>
 </div>
 </div>

@@ -9,21 +9,26 @@
 
     var allPlanners = db.EventPlanners.Include(m => m.Location).ToList();
     var countedPlanners = allPlanners.Take(3);
-
-
 }
+<style>
+    .finder-caption h1 {
+        font-size: 42px;
+        font-weight: 400;
+        letter-spacing: -2px;
+    }
+</style>
 <div class="slider-bg">
     <!-- slider start-->
     <div id="slider" class="owl-carousel owl-theme slider">
         <div class="item slider-shade">
-            <img src="~/Content/Dashboard/images/slider-1.jpg" alt="Wedding couple just married"/>
+            <img src="~/Content/Dashboard/images/slider-1.jpg" alt="Wedding couple just married" id="slider1"/>
         </div>
         <div class="item slider-shade">
-            <img src="~/Content/Dashboard/images/slider-2.jpg" alt="Wedding couple just married"/>
+            <img src="~/Content/Dashboard/images/slider-2.jpg" alt="Wedding couple just married" id="slider2"/>
         </div>
         <div class="item slider-shade">
 
-            <img src="~/Content/Dashboard/images/slider-3.jpg" alt="Wedding couple just married"/>
+            <img src="~/Content/Dashboard/images/slider-3.jpg" alt="Wedding couple just married" id="slider3"/>
         </div>
     </div>
     <div class="find-section">
@@ -31,13 +36,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-offset-1 col-md-10 finder-block" id="sliderText1">
-                    <div class="finder-caption">
-                        <h1>Find your perfect Wedding Vendor</h1>
-                        <p>
-                           The All-In-One Event Management Platform for efficient and timely planning of all events
-                        </p>
+                    @*<div class="finder-caption" id="text1">
+                        <h1>The All-In-One Event Management Platform for efficient and timely planning of all events</h1>
                     </div>
- 
+                    <div class="finder-caption" id="text2">
+                        <h1>Event Planning made easy with My Events Plan.</h1>
+                    </div>*@
+                    <div class="finder-caption" id="text3">
+                        <h1>The Event Planning Platform that connects event vendors with clients. Making your Dream Event a Reality. From event booking to planning to effective communication, our event management software does it all.</h1>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -160,11 +168,11 @@
         {
             <div class="row">
                 <div class="form-group col-md-4">
-                    @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Vendor Service", new {@class = "form-control"})
+                    @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Vendor Service", new {@class = "form-control",id = "category" })
                     @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
                 </div>
                 <div class="form-group col-md-4">
-                    @Html.DropDownListFor(m => m.LocationId, null, "Select Vendor Location", new {@class = "form-control"})
+                    @Html.DropDownListFor(m => m.LocationId, null, "Select Vendor Location", new {@class = "form-control",id = "service"})
                     @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
                 </div>
                 <div class="form-group col-md-4">
@@ -172,13 +180,13 @@
                 </div>
             </div>
         }
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <a href="@Url.Action("ListOfVendors", "Vendors")" class="btn btn-default btn-md">View All Vendor</a>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <a href="@Url.Action("ListOfVendors", "Vendors")" class="btn btn-default btn-md">View All Vendor</a>
         </div>
     </div>
+</div>
 
 <div class="section-space80">
     <!-- Real Weddings -->
@@ -187,7 +195,7 @@
             <div class="col-md-12">
                 <div class="section-title mb60 text-center">
                     <h1>Be inspired by the Best Event Planners</h1>
-                    <p>Browse and Connect with the best Event Planners to make your event a dream come true.  </p>
+                    <p>Browse and Connect with the best Event Planners to make your event a dream come true. </p>
                 </div>
             </div>
         </div>
@@ -199,12 +207,19 @@
                         <!-- real wedding block -->
                         <div class="real-wedding-img">
                             <a href="@Url.Action("EventPlannerDetails", "EventPlanners", new {id = item.EventPlannerId})">
-                                <img src="~/UploadedFiles/EventPlannerLogo/@item.Logo" alt="" class="img-responsive">
+                                @if (item.Logo != null)
+                                {
+                                    <img src="~/UploadedFiles/EventPlannerLogo/@item.Logo" alt="" class="img-responsive">
+                                }
+                                else
+                                {
+                                    <img src="~/Content/AppTheme/images/hall.png" class="img-responsive"/>
+                                }
                             </a>
                         </div>
                         <div class="real-wedding-info well-box text-center">
                             <h2 class="real-wedding-title">
-                                <a href="#" class="title">@item.Name</a>
+                                <a href="@Url.Action("EventPlannerDetails", "EventPlanners", new {id = item.EventPlannerId})" class="title">@item.Name</a>
                             </h2>
                         </div>
                     </div>
@@ -238,8 +253,11 @@
                         <i class="icon-curtains icon-size-60 icon-light"></i>
                     </div>
                     <div class="feature-info">
-                        <h3>Create & Manage Event Bookings</h3>
+                        <h4>Create & Manage Event Bookings</h4>
                         <p>Book events with dates and color codes.</p>
+                        <p>
+                            
+                        </p>
                     </div>
                 </div>
             </div>
@@ -249,8 +267,11 @@
                         <i class="icon-check icon-size-60 icon-light"></i>
                     </div>
                     <div class="feature-info">
-                        <h3>Boost your events efficiency</h3>
+                        <h4>Boost your events efficiency</h4>
                         <p>Boost your events efficiency.</p>
+                        <p>
+                            
+                        </p>
                     </div>
                 </div>
             </div>
@@ -260,7 +281,7 @@
                         <i class="icon-guest-list icon-size-60 icon-light"></i>
                     </div>
                     <div class="feature-info">
-                        <h3>Collaborate online</h3>
+                        <h4>Collaborate online</h4>
                         <p>With team members, staff, vendors and clients in real time.</p>
                     </div>
                 </div>
@@ -273,8 +294,9 @@
                         <i class="icon-guest-list icon-size-60 icon-light"></i>
                     </div>
                     <div class="feature-info">
-                        <h3>Track Attendees and Guest</h3>
+                        <h4>Track Attendees and Guest</h4>
                         <p>With RSVP details and real-time guest listings that can be updated. </p>
+
                     </div>
                 </div>
             </div>
@@ -284,7 +306,7 @@
                         <i class="icon-store icon-size-60 icon-light"></i>
                     </div>
                     <div class="feature-info">
-                        <h3>Promote your business and make sales</h3>
+                        <h4>Promote your business & make sales</h4>
                         <p>By tracking and managing leads and contacts. </p>
                     </div>
                 </div>
@@ -296,23 +318,21 @@
     <script>
         $(window)
             .load(function() {
-                $(function() {
                     $("#category")
                         .change(function() {
-                            if ($("#category").val() === "0") {
+                            if ($("#category").val() == "") {
                                 $("#findvendors").prop("disabled", true);
-                                console.log($("#service").val());
                             } else
                                 $("#findvendors").prop("disabled", false);
                         });
                     $("#service")
                         .change(function() {
-                            if ($("#service").val() === "0") {
+                            if ($("#service").val() == "") {
                                 $("#findvendors").prop("disabled", true);
                             } else
                                 $("#findvendors").prop("disabled", false);
                         });
                 });
-            });
+         
     </script>
 }

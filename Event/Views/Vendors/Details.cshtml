@@ -101,12 +101,12 @@
             <i class="fa fa-photo"></i> <span class="tab-title">Photos</span>
         </a>
     </li>
-    <li role="presentation">
+    @*<li role="presentation">
         <a href="#about" title="about info" aria-controls="about" role="tab" data-toggle="tab">
             <i class="fa fa-info-circle"></i>
             <span class="tab-title">About</span>
         </a>
-    </li>
+    </li>*@
     <li role="presentation">
         <a href="#onmap" title="Location" aria-controls="onmap" role="tab" data-toggle="tab">
             <i class="fa fa-map-marker"></i> <span class="tab-title">Details</span>
@@ -466,7 +466,14 @@
         <div class="profile-sidebar side-box">
             <!-- SIDEBAR USERPIC -->
             <div class="profile-userpic">
-                <img src="~/UploadedFiles/VendorLogo/@Model.Logo" class="img-responsive img-circle" alt="">
+                @if (Model.Logo != null)
+                {
+                    <img src="~/UploadedFiles/EventPlannerLogo/@Model.Logo" alt="" class="img-responsive img-circle">
+                }
+                else
+                {
+                    <img src="~/Content/AppTheme/images/hall.png" class="img-responsive img-circle"/>
+                }
             </div>
             <div class="profile-usertitle">
                 <div class="profile-usertitle-name">

@@ -15,30 +15,30 @@
                     @Html.AntiForgeryToken()
                     @Html.Hidden("Type", type)
                     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-                    <h2 class="form-title">Upload Logo</h2>
-                    <!-- File Button -->
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <div class="photo-upload">
-                                <img src="~/Content/AppTheme/images/avatar.jpg" alt="">
-                            </div>
-                        </div>
-                        <div class="col-md-8 upload-file">
-                            <input id="filebutton" name="filebutton" class="input-file" type="file">
-                        </div>
-                    </div>
                     if (type == EventPlannerTypeEnum.Individual.ToString())
-                     {
-                         <h2 class="form-title">
-                             Sign Up as an Individual to Plan your Dream Event<strong> </strong>
-                         </h2>
-                     }
+                    {
+                        <h2 class="form-title">
+                            Sign Up as an Individual to Plan your Dream Event<strong> </strong>
+                        </h2>
+                    }
                     if (type == EventPlannerTypeEnum.Organization.ToString())
                     {
                         <h2 class="form-title">
                             "Sign Up as an Event Planner to make your clients’ Dream Event Come true”<strong> </strong>
                         </h2>
                     }
+                    <!-- File Button -->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <div class="photo-upload">
+                                <img src="~/Content/AppTheme/images/avatar.jpg" alt="" id="avatar" width="220px" height="250px">
+                            </div>
+                        </div>
+                        <div class="col-md-8 upload-file">
+                            <input id="filebutton" name="filebutton" class="input-file" type="file">
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         @Html.LabelFor(model => model.Name, new {@class = "col-md-4 control-label"})
                         <div class="col-md-8">
@@ -95,3 +95,27 @@
         </div>
     </div>
 </div>
+@section scripts
+{
+    <!-- jQuery read image data and show preview code -->
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //Image file input change event
+            $("#filebutton").change(function () {
+                readImageData(this);//Call image read and render function
+            });
+        });
+
+        function readImageData(imgData) {
+            if (imgData.files && imgData.files[0]) {
+                var readerObj = new FileReader();
+
+                readerObj.onload = function (element) {
+                    $('#avatar').attr('src', element.target.result);
+                }
+
+                readerObj.readAsDataURL(imgData.files[0]);
+            }
+        }
+    </script>
+}
