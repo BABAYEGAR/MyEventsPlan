@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.Personal
 {
     public class PersonalCheckListItemsController : Controller
     {
-        private readonly PersonalCheckListItemDataContext db = new PersonalCheckListItemDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: PersonalCheckListItems
         [SessionExpire]
         public ActionResult Index(long? checkListId)
         {
-            var personalCheckListItems = db.PersonalCheckListItems.Where(n => n.PersonalCheckListId == checkListId)
+            var personalCheckListItems = _databaseConnection.PersonalCheckListItems.Where(n => n.PersonalCheckListId == checkListId)
                 .Include(p => p.PersonalCheckList);
             ViewBag.checkListId = checkListId;
             return View(personalCheckListItems.ToList());
@@ -30,7 +30,7 @@ namespace MyEventPlan.Controllers.Personal
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var personalCheckListItem = db.PersonalCheckListItems.Find(id);
+            var personalCheckListItem = _databaseConnection.PersonalCheckListItems.Find(id);
             if (personalCheckListItem == null)
                 return HttpNotFound();
             return View(personalCheckListItem);
@@ -42,7 +42,7 @@ namespace MyEventPlan.Controllers.Personal
         [SessionExpire]
         public ActionResult CheckItem(int[] table_records, FormCollection collectedValues)
         {
-            var allMappings = db.PersonalCheckListItems.ToList();
+            var allMappings = _databaseConnection.PersonalCheckListItems.ToList();
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var checkListId = Convert.ToInt64(collectedValues["checkListId"]);
             if (table_records != null)
@@ -60,20 +60,20 @@ namespace MyEventPlan.Controllers.Personal
                     }
                     else
                     {
-                        var item = db.PersonalCheckListItems.Find(id);
+                        var item = _databaseConnection.PersonalCheckListItems.Find(id);
                         item.Checked = true;
                         item.DateLastModified = DateTime.Now;
                         if (loggedinuser != null) item.LastModifiedBy = loggedinuser.AppUserId;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
+                        _databaseConnection.Entry(item).State = EntityState.Modified;
+                        _databaseConnection.SaveChanges();
 
-                        var allItems = db.PersonalCheckListItems.Where(n => n.PersonalCheckListId == checkListId);
-                        var checkList = db.PersonalCheckLists.Find(checkListId);
+                        var allItems = _databaseConnection.PersonalCheckListItems.Where(n => n.PersonalCheckListId == checkListId);
+                        var checkList = _databaseConnection.PersonalCheckLists.Find(checkListId);
                         if (allItems.All(n => n.Checked))
                         {
                             checkList.Status = ChecklistStatusEnum.Completed.ToString();
-                            db.Entry(checkList).State = EntityState.Modified;
-                            db.SaveChanges();
+                            _databaseConnection.Entry(checkList).State = EntityState.Modified;
+                            _databaseConnection.SaveChanges();
                         }
 
                         TempData["display"] = "you have succesfully checked the item(s)!";
@@ -124,8 +124,8 @@ namespace MyEventPlan.Controllers.Personal
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.PersonalCheckListItems.Add(personalCheckListItem);
-                db.SaveChanges();
+                _databaseConnection.PersonalCheckListItems.Add(personalCheckListItem);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "Your have successfully created a new item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {checkListId = personalCheckListItem.PersonalCheckListId});
@@ -139,10 +139,10 @@ namespace MyEventPlan.Controllers.Personal
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var personalCheckListItem = db.PersonalCheckListItems.Find(id);
+            var personalCheckListItem = _databaseConnection.PersonalCheckListItems.Find(id);
             if (personalCheckListItem == null)
                 return HttpNotFound();
-            ViewBag.PersonalCheckListId = new SelectList(db.PersonalCheckLists, "PersonalCheckListId", "Name",
+            ViewBag.PersonalCheckListId = new SelectList(_databaseConnection.PersonalCheckLists, "PersonalCheckListId", "Name",
                 personalCheckListItem.PersonalCheckListId);
             return View(personalCheckListItem);
         }
@@ -171,8 +171,8 @@ namespace MyEventPlan.Controllers.Personal
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(personalCheckListItem).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(personalCheckListItem).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "Your have successfully modified the item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {checkListId = personalCheckListItem.PersonalCheckListId});
@@ -186,7 +186,7 @@ namespace MyEventPlan.Controllers.Personal
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var personalCheckListItem = db.PersonalCheckListItems.Find(id);
+            var personalCheckListItem = _databaseConnection.PersonalCheckListItems.Find(id);
             if (personalCheckListItem == null)
                 return HttpNotFound();
             return View(personalCheckListItem);
@@ -199,9 +199,9 @@ namespace MyEventPlan.Controllers.Personal
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var personalCheckListItem = db.PersonalCheckListItems.Find(id);
-            db.PersonalCheckListItems.Remove(personalCheckListItem);
-            db.SaveChanges();
+            var personalCheckListItem = _databaseConnection.PersonalCheckListItems.Find(id);
+            _databaseConnection.PersonalCheckListItems.Remove(personalCheckListItem);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "Your have successfully deleted the item!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new {checkListId = personalCheckListItem.PersonalCheckListId});
@@ -210,7 +210,7 @@ namespace MyEventPlan.Controllers.Personal
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -4,9 +4,9 @@
 @{
 
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    var dbc = new NotificationDataContext();
-    var userNotifications = dbc.Notifications.Where(n => n.AppUserId == loggedinuser.AppUserId);
-    var userUnreadNotifications = dbc.Notifications.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false);
+    var databaseConnection = new EventDataContext();
+    var userNotifications = databaseConnection.Notifications.Where(n => n.AppUserId == loggedinuser.AppUserId);
+    var userUnreadNotifications = databaseConnection.Notifications.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false);
 }
 <nav class="navbar navbar-transparent navbar-absolute">
     <div class="container-fluid">

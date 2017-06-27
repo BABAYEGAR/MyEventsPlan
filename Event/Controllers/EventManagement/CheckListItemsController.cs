@@ -12,15 +12,14 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class CheckListItemsController : Controller
     {
-        private readonly CheckListItemDataContext db = new CheckListItemDataContext();
-        private readonly CheckListDataContext dbc = new CheckListDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: CheckListItems
         [SessionExpire]
         public ActionResult Index(long? checkListId)
         {
             var checkListItems =
-                db.CheckListItems.Where(n => n.CheckListId == checkListId)
+                _databaseConnection.CheckListItems.Where(n => n.CheckListId == checkListId)
                     .Include(c => c.CheckList)
                     .Include(c => c.Event);
             ViewBag.checkListId = checkListId;
@@ -33,7 +32,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var checkListItem = db.CheckListItems.Find(id);
+            var checkListItem = _databaseConnection.CheckListItems.Find(id);
             if (checkListItem == null)
                 return HttpNotFound();
             return View(checkListItem);
@@ -45,7 +44,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult CheckItem(int[] table_records, FormCollection collectedValues)
         {
-            var allMappings = db.CheckListItems.ToList();
+            var allMappings = _databaseConnection.CheckListItems.ToList();
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var checkListId = Convert.ToInt64(collectedValues["checkListId"]);
             if (table_records != null)
@@ -63,20 +62,20 @@ namespace MyEventPlan.Controllers.EventManagement
                     }
                     else
                     {
-                        var item = db.CheckListItems.Find(id);
+                        var item = _databaseConnection.CheckListItems.Find(id);
                         item.Checked = true;
                         item.DateLastModified = DateTime.Now;
                         if (loggedinuser != null) item.LastModifiedBy = loggedinuser.AppUserId;
-                        db.Entry(item).State = EntityState.Modified;
-                        db.SaveChanges();
+                        _databaseConnection.Entry(item).State = EntityState.Modified;
+                        _databaseConnection.SaveChanges();
 
-                        var allItems = dbc.CheckListItems.Where(n => n.CheckListId == checkListId);
-                        var checkList = dbc.CheckLists.Find(checkListId);
+                        var allItems = _databaseConnection.CheckListItems.Where(n => n.CheckListId == checkListId);
+                        var checkList = _databaseConnection.CheckLists.Find(checkListId);
                         if (allItems.All(n => n.Checked))
                         {
                             checkList.Status = ChecklistStatusEnum.Completed.ToString();
-                            dbc.Entry(checkList).State = EntityState.Modified;
-                            dbc.SaveChanges();
+                            _databaseConnection.Entry(checkList).State = EntityState.Modified;
+                            _databaseConnection.SaveChanges();
                         }
 
                         TempData["display"] = "you have succesfully checked the item(s)!";
@@ -126,8 +125,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.CheckListItems.Add(checkListItem);
-                db.SaveChanges();
+                _databaseConnection.CheckListItems.Add(checkListItem);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "Your have successfully created a new item!";
                 TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
@@ -142,14 +141,14 @@ namespace MyEventPlan.Controllers.EventManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var checkListItem = db.CheckListItems.Find(id);
+            var checkListItem = _databaseConnection.CheckListItems.Find(id);
             if (checkListItem == null)
                 return HttpNotFound();
             checkListItem.Checked = false;
             checkListItem.DateLastModified = DateTime.Now;
             if (loggedinuser != null) checkListItem.LastModifiedBy = loggedinuser.AppUserId;
-            db.Entry(checkListItem).State = EntityState.Modified;
-            db.SaveChanges();
+            _databaseConnection.Entry(checkListItem).State = EntityState.Modified;
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
         }
 
@@ -159,7 +158,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var checkListItem = db.CheckListItems.Find(id);
+            var checkListItem = _databaseConnection.CheckListItems.Find(id);
             if (checkListItem == null)
                 return HttpNotFound();
             return View(checkListItem);
@@ -189,8 +188,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(checkListItem).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(checkListItem).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "Your have successfully modified the item!";
                 TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
@@ -204,7 +203,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var checkListItem = db.CheckListItems.Find(id);
+            var checkListItem = _databaseConnection.CheckListItems.Find(id);
             if (checkListItem == null)
                 return HttpNotFound();
             return View(checkListItem);
@@ -217,10 +216,10 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var checkListItem = db.CheckListItems.Find(id);
+            var checkListItem = _databaseConnection.CheckListItems.Find(id);
             var checkListId = checkListItem.CheckListId;
-            db.CheckListItems.Remove(checkListItem);
-            db.SaveChanges();
+            _databaseConnection.CheckListItems.Remove(checkListItem);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "Your have successfully deleted the item!";
             TempData["notificationtype"] = NotificationType.Info.ToString();
             return RedirectToAction("Index", new {checkListId});
@@ -229,7 +228,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

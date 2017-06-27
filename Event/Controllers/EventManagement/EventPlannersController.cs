@@ -14,15 +14,13 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class EventPlannersController : Controller
     {
-        private readonly EventPlannerDataContext db = new EventPlannerDataContext();
-        private readonly AppUserDataContext dbc = new AppUserDataContext();
-        private readonly EventDataContext dbd = new EventDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventPlanners
         [SessionExpire]
         public ActionResult Index()
         {
-            var eventPlanners = db.EventPlanners.Include(e => e.Role);
+            var eventPlanners = _databaseConnection.EventPlanners.Include(e => e.Role);
             return View(eventPlanners.ToList());
         }
 
@@ -31,7 +29,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlanner = db.EventPlanners.Find(id);
+            var eventPlanner = _databaseConnection.EventPlanners.Find(id);
             if (eventPlanner == null)
                 return HttpNotFound();
             return View(eventPlanner);
@@ -43,7 +41,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlanner = db.EventPlanners.Find(id);
+            var eventPlanner = _databaseConnection.EventPlanners.Find(id);
             if (eventPlanner == null)
                 return HttpNotFound();
             return View(eventPlanner);
@@ -53,7 +51,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Create(string type)
         {
             ViewBag.type = type;
-            ViewBag.LocationId = new SelectList(dbd.Locations, "LocationId", "Name");
+            ViewBag.LocationId = new SelectList(_databaseConnection.Locations, "LocationId", "Name");
             return View();
         }
 
@@ -72,7 +70,7 @@ namespace MyEventPlan.Controllers.EventManagement
             if (ModelState.IsValid)
             {
                 var password = new Hashing().HashPassword(collectedValues["ConfirmPassword"]);
-                var role = db.Roles.FirstOrDefault(m => m.Name == "Event Planner");
+                var role = _databaseConnection.Roles.FirstOrDefault(m => m.Name == "Event Planner");
                 var logo = Request.Files["logo"];
                 eventPlanner.RoleId = role?.RoleId;
                 eventPlanner.Password = password;
@@ -82,7 +80,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     eventPlanner.Logo = new FileUploader().UploadFile(logo, UploadType.EventPlannerLogo);
                 }
-                if (dbc.AppUsers.Any(n => n.Email == eventPlanner.Email))
+                if (_databaseConnection.AppUsers.Any(n => n.Email == eventPlanner.Email))
                 {
                     TempData["display"] = "The email entered already exist! Try another one!";
                     TempData["notificationtype"] = NotificationType.Error.ToString();
@@ -103,23 +101,23 @@ namespace MyEventPlan.Controllers.EventManagement
                 appuser.BackgroundColor = BackgroundColor.Default.ToString();
                 appuser.Status = UserAccountStatus.Enabled.ToString();
 
-                var checkeventPlanner = db.EventPlanners.SingleOrDefault(n => n.Email == eventPlanner.Email);
+                var checkeventPlanner = _databaseConnection.EventPlanners.SingleOrDefault(n => n.Email == eventPlanner.Email);
                 if (checkeventPlanner != null)
                 {
                     TempData["planner"] = "The email already exist, try another email!";
                     TempData["notificationtype"] = NotificationType.Error.ToString();
                     return RedirectToAction("Create", eventPlanner);
                 }
-                db.EventPlanners.Add(eventPlanner);
-                db.SaveChanges();
+                _databaseConnection.EventPlanners.Add(eventPlanner);
+                _databaseConnection.SaveChanges();
 
 
                 appuser.EventPlannerId = eventPlanner.EventPlannerId;
                 appuser.RoleId = eventPlanner.RoleId;
 
 
-                dbc.AppUsers.Add(appuser);
-                dbc.SaveChanges();
+                _databaseConnection.AppUsers.Add(appuser);
+                _databaseConnection.SaveChanges();
 
                 var eventPlannerSetting = new EventPlannerPackageSetting();
                 eventPlannerSetting.EventPlannerId = eventPlanner.EventPlannerId;
@@ -133,8 +131,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 eventPlannerSetting.DateCreated = DateTime.Now;
                 eventPlannerSetting.DateLastModified = DateTime.Now;
 
-                dbd.EventPlannerPackageSettings.Add(eventPlannerSetting);
-                dbd.SaveChanges();
+                _databaseConnection.EventPlannerPackageSettings.Add(eventPlannerSetting);
+                _databaseConnection.SaveChanges();
                 new MailerDaemon().NewEventPlanner(eventPlanner, appuser.AppUserId);
                 TempData["login"] = "You have successfully signed up to MyEventsPlan!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -150,10 +148,10 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlanner = db.EventPlanners.Find(id);
+            var eventPlanner = _databaseConnection.EventPlanners.Find(id);
             if (eventPlanner == null)
                 return HttpNotFound();
-            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", eventPlanner.RoleId);
+            ViewBag.RoleId = new SelectList(_databaseConnection.Roles, "RoleId", "Name", eventPlanner.RoleId);
             return View(eventPlanner);
         }
 
@@ -176,7 +174,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 //create app user
                 if (loggedinuser != null)
                 {
-                    var appuser = dbc.AppUsers.Find(loggedinuser.AppUserId);
+                    var appuser = _databaseConnection.AppUsers.Find(loggedinuser.AppUserId);
 
                     if (appuser != null)
                     {
@@ -187,10 +185,10 @@ namespace MyEventPlan.Controllers.EventManagement
                         appuser.DateLastModified = DateTime.Now;
                         appuser.LastModifiedBy = null;
 
-                        db.Entry(eventPlanner).State = EntityState.Modified;
-                        db.SaveChanges();
-                        dbc.Entry(appuser).State = EntityState.Modified;
-                        dbc.SaveChanges();
+                        _databaseConnection.Entry(eventPlanner).State = EntityState.Modified;
+                        _databaseConnection.SaveChanges();
+                        _databaseConnection.Entry(appuser).State = EntityState.Modified;
+                        _databaseConnection.SaveChanges();
 
                         Session["eventplanner"] = eventPlanner;
                         Session["myeventplanloggedinuser"] = appuser;
@@ -214,7 +212,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlanner = db.EventPlanners.Find(id);
+            var eventPlanner = _databaseConnection.EventPlanners.Find(id);
             if (eventPlanner == null)
                 return HttpNotFound();
             return View(eventPlanner);
@@ -227,121 +225,121 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventPlanner = dbd.EventPlanners.Find(id);
-            var user = dbd.AppUsers.SingleOrDefault(n => n.EventPlannerId == id);
-            var events = dbd.Event.Where(n => n.EventPlannerId == id).ToList();
-            var prospects = dbd.Prospects.Where(n => n.EventPlannerId == id).ToList();
-            var subscription = dbd.SubscriptionInvoices.Where(n => n.EventPlannerId == id).ToList();
-            var settings = dbd.EventPlannerPackageSettings.Where(n => n.EventPlannerId == id).ToList();
-            var resources = dbd.Resources.Where(n => n.EventPlannerId == id).ToList();
-            var contacts = dbd.Contacts.Where(n => n.EventPlannerId == id).ToList();
-            var reviews = dbd.EventPlannerReviews.Where(n => n.EventPlannerId == id).ToList();
-            var enquiry = dbd.EventPlannerEnquiries.Where(n => n.EventPlannerId == id).ToList();
+            var eventPlanner = _databaseConnection.EventPlanners.Find(id);
+            var user = _databaseConnection.AppUsers.SingleOrDefault(n => n.EventPlannerId == id);
+            var events = _databaseConnection.Event.Where(n => n.EventPlannerId == id).ToList();
+            var prospects = _databaseConnection.Prospects.Where(n => n.EventPlannerId == id).ToList();
+            var subscription = _databaseConnection.SubscriptionInvoices.Where(n => n.EventPlannerId == id).ToList();
+            var settings = _databaseConnection.EventPlannerPackageSettings.Where(n => n.EventPlannerId == id).ToList();
+            var resources = _databaseConnection.Resources.Where(n => n.EventPlannerId == id).ToList();
+            var contacts = _databaseConnection.Contacts.Where(n => n.EventPlannerId == id).ToList();
+            var reviews = _databaseConnection.EventPlannerReviews.Where(n => n.EventPlannerId == id).ToList();
+            var enquiry = _databaseConnection.EventPlannerEnquiries.Where(n => n.EventPlannerId == id).ToList();
 
 
             foreach (var item in prospects)
-                dbd.Prospects.Remove(item);
+                _databaseConnection.Prospects.Remove(item);
             foreach (var items in events)
             {
-                var clients = dbd.Clients.Where(n => n.EventId == items.EventId);
-                var vendors = dbd.Vendors.Where(n => n.EventId == items.EventId);
-                var resourceMapping = dbd.EventResourceMapping.Where(n => n.EventId == items.EventId);
-                var staffMapping = dbd.StaffEventMapping.Where(n => n.EventId == items.EventId);
-                var budget = dbd.Budgets.Where(n => n.EventId == items.EventId);
-                var checkList = dbd.CheckLists.Where(n => n.EventId == items.EventId);
-                var listItems = dbd.CheckListItems.Where(n => n.EventId == items.EventId);
-                var invoice = dbd.Invoices.Where(n => n.EventId == items.EventId);
-                var geustList = dbd.GuestLists.Where(n => n.EventId == items.EventId);
-                var guests = dbd.Guests.Where(n => n.EventId == items.EventId);
-                var appointment = dbd.Appointments.Where(n => n.EventId == items.EventId);
-                var vendorMapping = dbd.EventVendorMappings.Where(n => n.EventId == items.EventId);
-                var notes = dbd.Notes.Where(n => n.EventId == items.EventId);
-                var tasks = dbd.Tasks.Where(n => n.EventId == items.EventId);
+                var clients = _databaseConnection.Clients.Where(n => n.EventId == items.EventId);
+                var vendors = _databaseConnection.Vendors.Where(n => n.EventId == items.EventId);
+                var resourceMapping = _databaseConnection.EventResourceMapping.Where(n => n.EventId == items.EventId);
+                var staffMapping = _databaseConnection.StaffEventMapping.Where(n => n.EventId == items.EventId);
+                var budget = _databaseConnection.Budgets.Where(n => n.EventId == items.EventId);
+                var checkList = _databaseConnection.CheckLists.Where(n => n.EventId == items.EventId);
+                var listItems = _databaseConnection.CheckListItems.Where(n => n.EventId == items.EventId);
+                var invoice = _databaseConnection.Invoices.Where(n => n.EventId == items.EventId);
+                var geustList = _databaseConnection.GuestLists.Where(n => n.EventId == items.EventId);
+                var guests = _databaseConnection.Guests.Where(n => n.EventId == items.EventId);
+                var appointment = _databaseConnection.Appointments.Where(n => n.EventId == items.EventId);
+                var vendorMapping = _databaseConnection.EventVendorMappings.Where(n => n.EventId == items.EventId);
+                var notes = _databaseConnection.Notes.Where(n => n.EventId == items.EventId);
+                var tasks = _databaseConnection.Tasks.Where(n => n.EventId == items.EventId);
                 foreach (var item in clients)
                 {
                     //get clients with their login details and their messages
-                    var users = dbd.AppUsers.Where(n => n.ClientId == item.ClientId);
+                    var users = _databaseConnection.AppUsers.Where(n => n.ClientId == item.ClientId);
                     foreach (var itemsss in users)
                     {
-                        var messages = dbd.Messages.Where(n => n.AppUserId == itemsss.AppUserId);
-                        var groupMembers = dbd.MessageGroupMembers.Where(n => n.AppUserId == itemsss.AppUserId);
-                        var notifications = dbd.Notifications.Where(n => n.AppUserId == itemsss.AppUserId);
-                        var checklist = dbd.PersonalCheckLists.Where(n => n.AppUserId == itemsss.AppUserId);
+                        var messages = _databaseConnection.Messages.Where(n => n.AppUserId == itemsss.AppUserId);
+                        var groupMembers = _databaseConnection.MessageGroupMembers.Where(n => n.AppUserId == itemsss.AppUserId);
+                        var notifications = _databaseConnection.Notifications.Where(n => n.AppUserId == itemsss.AppUserId);
+                        var checklist = _databaseConnection.PersonalCheckLists.Where(n => n.AppUserId == itemsss.AppUserId);
                         foreach (var itemss in messages)
-                            dbd.Messages.Remove(itemss);
+                            _databaseConnection.Messages.Remove(itemss);
                         foreach (var member in groupMembers)
-                            dbd.MessageGroupMembers.Remove(member);
+                            _databaseConnection.MessageGroupMembers.Remove(member);
                         foreach (var notification in notifications)
-                            dbd.Notifications.Remove(notification);
+                            _databaseConnection.Notifications.Remove(notification);
                         foreach (var list in checklist)
                         {
                             var checklistItems =
-                                dbd.PersonalCheckListItems.Where(
+                                _databaseConnection.PersonalCheckListItems.Where(
                                     n => n.PersonalCheckListId == list.PersonalCheckListId);
                             foreach (var listItem in checklistItems)
-                                dbd.PersonalCheckListItems.Remove(listItem);
-                            dbd.PersonalCheckLists.Remove(list);
+                                _databaseConnection.PersonalCheckListItems.Remove(listItem);
+                            _databaseConnection.PersonalCheckLists.Remove(list);
                         }
-                        dbd.AppUsers.Remove(itemsss);
+                        _databaseConnection.AppUsers.Remove(itemsss);
                     }
-                    dbd.Clients.Remove(item);
+                    _databaseConnection.Clients.Remove(item);
                 }
                 foreach (var item in vendors)
-                    dbd.Vendors.Remove(item);
+                    _databaseConnection.Vendors.Remove(item);
                 foreach (var item in resourceMapping)
-                    dbd.EventResourceMapping.Remove(item);
+                    _databaseConnection.EventResourceMapping.Remove(item);
                 foreach (var item in staffMapping)
-                    dbd.StaffEventMapping.Remove(item);
+                    _databaseConnection.StaffEventMapping.Remove(item);
                 foreach (var item in budget)
-                    dbd.Budgets.Remove(item);
+                    _databaseConnection.Budgets.Remove(item);
                 foreach (var item in checkList)
-                    dbd.CheckLists.Remove(item);
+                    _databaseConnection.CheckLists.Remove(item);
                 foreach (var item in listItems)
-                    dbd.CheckListItems.Remove(item);
+                    _databaseConnection.CheckListItems.Remove(item);
                 //get event invoive and delete the payments and items
                 foreach (var item in invoice)
                 {
-                    var payments = dbd.InvoicePayments.Where(n => n.InvoiceId == item.InvoiceId);
-                    var invoiceItems = dbd.InvoiceItems.Where(n => n.InvoiceId == item.InvoiceId);
+                    var payments = _databaseConnection.InvoicePayments.Where(n => n.InvoiceId == item.InvoiceId);
+                    var invoiceItems = _databaseConnection.InvoiceItems.Where(n => n.InvoiceId == item.InvoiceId);
 
                     foreach (var itemss in payments)
-                        dbd.InvoicePayments.Remove(itemss);
+                        _databaseConnection.InvoicePayments.Remove(itemss);
                     foreach (var itemss in invoiceItems)
-                        dbd.InvoiceItems.Remove(itemss);
-                    dbd.Invoices.Remove(item);
+                        _databaseConnection.InvoiceItems.Remove(itemss);
+                    _databaseConnection.Invoices.Remove(item);
                 }
                 foreach (var item in geustList)
-                    dbd.GuestLists.Remove(item);
+                    _databaseConnection.GuestLists.Remove(item);
                 foreach (var item in guests)
-                    dbd.Guests.Remove(item);
+                    _databaseConnection.Guests.Remove(item);
                 foreach (var item in appointment)
-                    dbd.Appointments.Remove(item);
+                    _databaseConnection.Appointments.Remove(item);
                 foreach (var item in vendorMapping)
-                    dbd.EventVendorMappings.Remove(item);
+                    _databaseConnection.EventVendorMappings.Remove(item);
                 foreach (var item in notes)
-                    dbd.Notes.Remove(item);
+                    _databaseConnection.Notes.Remove(item);
                 foreach (var item in tasks)
-                    dbd.Tasks.Remove(item);
-                dbd.Event.Remove(items);
+                    _databaseConnection.Tasks.Remove(item);
+                _databaseConnection.Event.Remove(items);
             }
             foreach (var item in subscription)
-                dbd.SubscriptionInvoices.Remove(item);
+                _databaseConnection.SubscriptionInvoices.Remove(item);
             foreach (var item in resources)
-                dbd.Resources.Remove(item);
+                _databaseConnection.Resources.Remove(item);
             foreach (var item in contacts)
-                dbd.Contacts.Remove(item);
+                _databaseConnection.Contacts.Remove(item);
 
             foreach (var item in settings)
-                dbd.EventPlannerPackageSettings.Remove(item);
+                _databaseConnection.EventPlannerPackageSettings.Remove(item);
             foreach (var item in reviews)
-                dbd.EventPlannerReviews.Remove(item);
+                _databaseConnection.EventPlannerReviews.Remove(item);
             foreach (var item in enquiry)
-                dbd.EventPlannerEnquiries.Remove(item);
+                _databaseConnection.EventPlannerEnquiries.Remove(item);
             if (user != null)
-                dbd.AppUsers.Remove(user);
+                _databaseConnection.AppUsers.Remove(user);
 
-            dbd.EventPlanners.Remove(eventPlanner);
-            dbd.SaveChanges();
+            _databaseConnection.EventPlanners.Remove(eventPlanner);
+            _databaseConnection.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -349,7 +347,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.FinancialManagement
 {
     public class InvoicePaymentsController : Controller
     {
-        private readonly InvoicePaymentDataContext db = new InvoicePaymentDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: InvoicePayments
         [SessionExpire]
         public ActionResult Index(long? id)
         {
-            var invoicePayments = db.InvoicePayments.Where(n => n.InvoiceId == id).Include(i => i.Invoice);
+            var invoicePayments = _databaseConnection.InvoicePayments.Where(n => n.InvoiceId == id).Include(i => i.Invoice);
             ViewBag.invoiceId = id;
             return View(invoicePayments.ToList());
         }
@@ -29,7 +29,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var invoicePayment = db.InvoicePayments.Find(id);
+            var invoicePayment = _databaseConnection.InvoicePayments.Find(id);
             if (invoicePayment == null)
                 return HttpNotFound();
             return View(invoicePayment);
@@ -67,8 +67,8 @@ namespace MyEventPlan.Controllers.FinancialManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.InvoicePayments.Add(invoicePayment);
-                db.SaveChanges();
+                _databaseConnection.InvoicePayments.Add(invoicePayment);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a payment to the invoice!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {id = invoicePayment.InvoiceId});
@@ -82,7 +82,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var invoicePayment = db.InvoicePayments.Find(id);
+            var invoicePayment = _databaseConnection.InvoicePayments.Find(id);
             if (invoicePayment == null)
                 return HttpNotFound();
             return View(invoicePayment);
@@ -112,8 +112,8 @@ namespace MyEventPlan.Controllers.FinancialManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(invoicePayment).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(invoicePayment).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the payment for the invoice!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {id = invoicePayment.InvoiceId});
@@ -127,7 +127,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var invoicePayment = db.InvoicePayments.Find(id);
+            var invoicePayment = _databaseConnection.InvoicePayments.Find(id);
             if (invoicePayment == null)
                 return HttpNotFound();
             return View(invoicePayment);
@@ -140,10 +140,10 @@ namespace MyEventPlan.Controllers.FinancialManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var invoicePayment = db.InvoicePayments.Find(id);
+            var invoicePayment = _databaseConnection.InvoicePayments.Find(id);
             var invoiceId = invoicePayment.InvoiceId;
-            db.InvoicePayments.Remove(invoicePayment);
-            db.SaveChanges();
+            _databaseConnection.InvoicePayments.Remove(invoicePayment);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted the payment for the invoice!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new {id = invoiceId});
@@ -152,7 +152,7 @@ namespace MyEventPlan.Controllers.FinancialManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

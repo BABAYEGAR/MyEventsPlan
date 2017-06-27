@@ -19,6 +19,7 @@
         @Html.LabelFor(model => model.Name)
         @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
     </div>
+
     <div class="mui-textfield mui-textfield--float-label">
         @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {placeholder = "Select Start Date", id = "datetimepickers6"}})
         @Html.LabelFor(model => model.StartDate)

@@ -14,14 +14,14 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class StaffsController : Controller
     {
-        private readonly StaffDataContext db = new StaffDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Staffs
         [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var staff = db.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(s => s.Role);
+            var staff = _databaseConnection.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(s => s.Role);
             return View(staff.ToList());
         }
 
@@ -30,14 +30,14 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var staff =
-                db.Staff.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.StaffId == id);
+                _databaseConnection.Staff.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.StaffId == id);
             if (staff != null)
                 staff.Status = StaffStatus.Activated.ToString();
             TempData["display"] = "You have successfully activated the staff!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
 
-            db.Entry(staff).State = EntityState.Modified;
-            db.SaveChanges();
+            _databaseConnection.Entry(staff).State = EntityState.Modified;
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -46,14 +46,14 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var staff =
-                db.Staff.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.StaffId == id);
+                _databaseConnection.Staff.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId && n.StaffId == id);
             if (staff != null)
                 staff.Status = StaffStatus.Deactivated.ToString();
             TempData["display"] = "You have successfully activated the staff!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
 
-            db.Entry(staff).State = EntityState.Modified;
-            db.SaveChanges();
+            _databaseConnection.Entry(staff).State = EntityState.Modified;
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -63,7 +63,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var staff = db.Staff.Find(id);
+            var staff = _databaseConnection.Staff.Find(id);
             if (staff == null)
                 return HttpNotFound();
             return View(staff);
@@ -86,8 +86,8 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Create([Bind(Include = "StaffId,Firstname,Lastname,Email,Mobile")] Staff staff)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var role = db.Roles.SingleOrDefault(n => n.Name == "Staff");
-            var listExist = db.Staff.Where(m => m.EventPlannerId == staff.EventPlannerId && m.Email == staff.Email)
+            var role = _databaseConnection.Roles.SingleOrDefault(n => n.Name == "Staff");
+            var listExist = _databaseConnection.Staff.Where(m => m.EventPlannerId == staff.EventPlannerId && m.Email == staff.Email)
                 .ToList();
             if (ModelState.IsValid)
             {
@@ -114,8 +114,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Staff.Add(staff);
-                db.SaveChanges();
+                _databaseConnection.Staff.Add(staff);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a staff!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -131,7 +131,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var staff = db.Staff.Find(id);
+            var staff = _databaseConnection.Staff.Find(id);
             if (staff == null)
                 return HttpNotFound();
             //ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", staff.RoleId);
@@ -164,8 +164,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(staff).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(staff).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified a staff!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -180,7 +180,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var staff = db.Staff.Find(id);
+            var staff = _databaseConnection.Staff.Find(id);
             if (staff == null)
                 return HttpNotFound();
             return View(staff);
@@ -193,9 +193,9 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var staff = db.Staff.Find(id);
-            db.Staff.Remove(staff);
-            db.SaveChanges();
+            var staff = _databaseConnection.Staff.Find(id);
+            _databaseConnection.Staff.Remove(staff);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted a staff!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -204,7 +204,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

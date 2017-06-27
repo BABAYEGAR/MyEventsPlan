@@ -12,14 +12,14 @@ namespace MyEventPlan.Controllers.ResourceManagement
 {
     public class ResourcesController : Controller
     {
-        private readonly ResourceDataContext db = new ResourceDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Resources
         [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var resources = db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            var resources = _databaseConnection.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(resources.ToList());
         }
 
@@ -29,7 +29,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var resource = db.Resources.Find(id);
+            var resource = _databaseConnection.Resources.Find(id);
             if (resource == null)
                 return HttpNotFound();
             return View(resource);
@@ -68,8 +68,8 @@ namespace MyEventPlan.Controllers.ResourceManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Resources.Add(resource);
-                db.SaveChanges();
+                _databaseConnection.Resources.Add(resource);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added an item to your inventory!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -83,7 +83,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var resource = db.Resources.Find(id);
+            var resource = _databaseConnection.Resources.Find(id);
             if (resource == null)
                 return HttpNotFound();
             ;
@@ -113,8 +113,8 @@ namespace MyEventPlan.Controllers.ResourceManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(resource).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(resource).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the item in your inventory!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -128,7 +128,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var resource = db.Resources.Find(id);
+            var resource = _databaseConnection.Resources.Find(id);
             if (resource == null)
                 return HttpNotFound();
             return View(resource);
@@ -141,9 +141,9 @@ namespace MyEventPlan.Controllers.ResourceManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var resource = db.Resources.Find(id);
-            db.Resources.Remove(resource);
-            db.SaveChanges();
+            var resource = _databaseConnection.Resources.Find(id);
+            _databaseConnection.Resources.Remove(resource);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted the item in your inventory!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -152,7 +152,7 @@ namespace MyEventPlan.Controllers.ResourceManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

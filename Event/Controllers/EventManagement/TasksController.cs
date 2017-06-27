@@ -12,17 +12,16 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class TasksController : Controller
     {
-        private readonly TaskDataContext db = new TaskDataContext();
-        private readonly StaffDataContext dbc = new StaffDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Tasks
         [SessionExpire]
         public ActionResult Index(long? eventId)
         {
-            var tasks = db.Tasks.Where(n => n.EventId == eventId).Include(t => t.Event).Include(t => t.Staff);
+            var tasks = _databaseConnection.Tasks.Where(n => n.EventId == eventId).Include(t => t.Event).Include(t => t.Staff);
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.eventId = eventId;
-            ViewBag.StaffId = new SelectList(dbc.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+            ViewBag.StaffId = new SelectList(_databaseConnection.Staff.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
                 "StaffId", "DisplayName");
             return View(tasks.ToList());
         }
@@ -33,7 +32,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var task = db.Tasks.Find(id);
+            var task = _databaseConnection.Tasks.Find(id);
             if (task == null)
                 return HttpNotFound();
             return View(task);
@@ -43,7 +42,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name");
             return View();
         }
 
@@ -72,8 +71,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Tasks.Add(task);
-                db.SaveChanges();
+                _databaseConnection.Tasks.Add(task);
+                _databaseConnection.SaveChanges();
                 TempData["task"] = "Your have successfully added a new task!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = task.EventId});
@@ -87,7 +86,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var task = db.Tasks.Find(id);
+            var task = _databaseConnection.Tasks.Find(id);
             if (task == null)
                 return HttpNotFound();
             return View(task);
@@ -116,8 +115,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(task).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(task).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["task"] = "Your have successfully added a new task!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = task.EventId});
@@ -131,7 +130,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var task = db.Tasks.Find(id);
+            var task = _databaseConnection.Tasks.Find(id);
             if (task == null)
                 return HttpNotFound();
             return View(task);
@@ -144,16 +143,16 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var task = db.Tasks.Find(id);
-            db.Tasks.Remove(task);
-            db.SaveChanges();
+            var task = _databaseConnection.Tasks.Find(id);
+            _databaseConnection.Tasks.Remove(task);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

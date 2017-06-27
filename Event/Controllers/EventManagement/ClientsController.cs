@@ -13,8 +13,7 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class ClientsController : Controller
     {
-        private readonly ClientDataContext db = new ClientDataContext();
-        private readonly EventDataContext dbc = new EventDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Clients
         [SessionExpire]
@@ -22,7 +21,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var clients =
-                db.Clients.Where(n => n.EventId == events.EventId).Include(c => c.Event).Include(c => c.EventPlanner);
+                _databaseConnection.Clients.Where(n => n.EventId == events.EventId).Include(c => c.Event).Include(c => c.EventPlanner);
             return View(clients.ToList());
         }
 
@@ -32,7 +31,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var clients =
-                db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(c => c.Event)
+                _databaseConnection.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(c => c.Event)
                     .Include(c => c.EventPlanner);
             return View(clients.ToList());
         }
@@ -43,7 +42,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var client = db.Clients.Find(id);
+            var client = _databaseConnection.Clients.Find(id);
             if (client == null)
                 return HttpNotFound();
             return View(client);
@@ -54,9 +53,9 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult CreateLoginAccessForClient(long? id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var role = dbc.Roles.SingleOrDefault(n => n.Name == "Client");
+            var role = _databaseConnection.Roles.SingleOrDefault(n => n.Name == "Client");
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
-            var client = db.Clients.Find(id);
+            var client = _databaseConnection.Clients.Find(id);
             var appUser = new AppUser();
             appUser.Firstname = client.Name;
             appUser.Lastname = client.Name;
@@ -73,8 +72,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 appUser.LastModifiedBy = loggedinuser.AppUserId;
                 appUser.ClientId = id;
             }
-            dbc.AppUsers.Add(appUser);
-            dbc.SaveChanges();
+            _databaseConnection.AppUsers.Add(appUser);
+            _databaseConnection.SaveChanges();
             if (events != null) new MailerDaemon().NewClientLogin(client, appUser.AppUserId, events.Name);
             TempData["display"] = "The login acces link has been successfully sent to the clients email!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -103,7 +102,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 client.DateCreated = DateTime.Now;
                 client.DateLastModified = DateTime.Now;
                 if (events != null) client.EventId = events.EventId;
-                var clientExist = db.Clients
+                var clientExist = _databaseConnection.Clients
                     .Where(m => m.Email == client.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
                 if (loggedinuser != null)
                 {
@@ -123,8 +122,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Clients.Add(client);
-                db.SaveChanges();
+                _databaseConnection.Clients.Add(client);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a new client!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {id = client.EventId});
@@ -138,7 +137,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var client = db.Clients.Find(id);
+            var client = _databaseConnection.Clients.Find(id);
             if (client == null)
                 return HttpNotFound();
             return View(client);
@@ -168,12 +167,12 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(client).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(client).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", client.EventId);
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname",
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name", client.EventId);
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname",
                 client.EventPlannerId);
             return View(client);
         }
@@ -184,7 +183,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var client = db.Clients.Find(id);
+            var client = _databaseConnection.Clients.Find(id);
             if (client == null)
                 return HttpNotFound();
             return View(client);
@@ -197,16 +196,16 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var client = db.Clients.Find(id);
-            db.Clients.Remove(client);
-            db.SaveChanges();
+            var client = _databaseConnection.Clients.Find(id);
+            _databaseConnection.Clients.Remove(client);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

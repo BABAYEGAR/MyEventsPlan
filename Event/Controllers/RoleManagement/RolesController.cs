@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.RoleManagement
 {
     public class RolesController : Controller
     {
-        private readonly RoleDataContext db = new RoleDataContext();
+        private readonly EventDataContext _databaseConnectiondb = new EventDataContext();
 
         // GET: Roles
         [SessionExpire]
         public ActionResult Index()
         {
-            return View(db.Roles.ToList());
+            return View(_databaseConnectiondb.Roles.ToList());
         }
 
         // GET: Roles/Details/5
@@ -27,7 +27,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = db.Roles.Find(id);
+            var role = _databaseConnectiondb.Roles.Find(id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -69,8 +69,8 @@ namespace MyEventPlan.Controllers.RoleManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Roles.Add(role);
-                db.SaveChanges();
+                _databaseConnectiondb.Roles.Add(role);
+                _databaseConnectiondb.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -83,7 +83,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = db.Roles.Find(id);
+            var role = _databaseConnectiondb.Roles.Find(id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -116,8 +116,8 @@ namespace MyEventPlan.Controllers.RoleManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(role).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnectiondb.Entry(role).State = EntityState.Modified;
+                _databaseConnectiondb.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(role);
@@ -129,7 +129,7 @@ namespace MyEventPlan.Controllers.RoleManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var role = db.Roles.Find(id);
+            var role = _databaseConnectiondb.Roles.Find(id);
             if (role == null)
                 return HttpNotFound();
             return View(role);
@@ -142,16 +142,16 @@ namespace MyEventPlan.Controllers.RoleManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var role = db.Roles.Find(id);
-            db.Roles.Remove(role);
-            db.SaveChanges();
+            var role = _databaseConnectiondb.Roles.Find(id);
+            _databaseConnectiondb.Roles.Remove(role);
+            _databaseConnectiondb.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnectiondb.Dispose();
             base.Dispose(disposing);
         }
     }

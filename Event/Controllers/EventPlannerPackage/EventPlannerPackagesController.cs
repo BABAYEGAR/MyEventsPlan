@@ -12,16 +12,13 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
 {
     public class EventPlannerPackagesController : Controller
     {
-        private readonly EventDataContext _dbd = new EventDataContext();
-        private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
-        private readonly EventPlannerPackageSettingDataContext _dbf = new EventPlannerPackageSettingDataContext();
-        private readonly EventPlannerPackageDataContext db = new EventPlannerPackageDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventPlannerPackages
         [SessionExpire]
         public ActionResult Index()
         {
-            return View(db.EventPlannerPackages.ToList());
+            return View(_databaseConnection.EventPlannerPackages.ToList());
         }
 
         [HttpGet]
@@ -30,7 +27,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         public ActionResult Pricing()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var packages = db.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
+            var packages = _databaseConnection.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
 
             var packageSubscribed =
                 packages.SingleOrDefault(
@@ -39,7 +36,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                         n.Status == PackageStatusEnum.Active.ToString());
             if (packageSubscribed != null)
                 Session["subscribe"] = packageSubscribed;
-            return View(db.EventPlannerPackages.ToList());
+            return View(_databaseConnection.EventPlannerPackages.ToList());
         }
 
         [HttpGet]
@@ -48,7 +45,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         public ActionResult Invoice(long id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var selectedPackage = db.EventPlannerPackages.Find(id);
+            var selectedPackage = _databaseConnection.EventPlannerPackages.Find(id);
             var subscriptionInvoice = new SubscriptionInvoice();
 
             //random number
@@ -85,7 +82,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
             var package = Session["package"] as Event.Data.Objects.Entities.EventPlannerPackage;
             var invoice = Session["invoice"] as SubscriptionInvoice;
             var packageToSubscribed = new EventPlannerPackageSetting();
-            var packages = _dbd.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
+            var packages = _databaseConnection.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
             //current subscription
             var packageSubscribed =
                 packages.SingleOrDefault(
@@ -99,8 +96,8 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                 //make the current package inactive
                 packageSubscribed.Status = PackageStatusEnum.Inactive.ToString();
                 packageSubscribed.DateLastModified = DateTime.Now;
-                _dbf.Entry(packageSubscribed).State = EntityState.Modified;
-                _dbf.SaveChanges();
+                _databaseConnection.Entry(packageSubscribed).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
 
                 //populate new package
                 if (loggedinuser != null && loggedinuser.EventPlannerId != null)
@@ -124,12 +121,12 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                     packageToSubscribed.AllowedEvent = package.MaximumEvents;
                 }
                 //commit package to database
-                _dbf.EventPlannerPackageSettings.Add(packageToSubscribed);
-                _dbf.SaveChanges();
+                _databaseConnection.EventPlannerPackageSettings.Add(packageToSubscribed);
+                _databaseConnection.SaveChanges();
 
                 //commit invoice to database
-                if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
-                _dbe.SaveChanges();
+                if (invoice != null) _databaseConnection.SubscriptionInvoices.Add(invoice);
+                _databaseConnection.SaveChanges();
                 Session["package"] = null;
                 Session["invoice"] = null;
                 Session["subscribe"] = packageSubscribed;
@@ -158,10 +155,10 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                 packageToSubscribed.EventPlannerPackageId = package.EventPlannerPackageId;
                 packageToSubscribed.AllowedEvent = package.MaximumEvents;
             }
-            _dbf.EventPlannerPackageSettings.Add(packageToSubscribed);
-            _dbf.SaveChanges();
-            if (invoice != null) _dbe.SubscriptionInvoices.Add(invoice);
-            _dbe.SaveChanges();
+            _databaseConnection.EventPlannerPackageSettings.Add(packageToSubscribed);
+            _databaseConnection.SaveChanges();
+            if (invoice != null) _databaseConnection.SubscriptionInvoices.Add(invoice);
+            _databaseConnection.SaveChanges();
 
             Session["package"] = null;
             Session["invoice"] = null;
@@ -179,7 +176,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackage = db.EventPlannerPackages.Find(id);
+            var eventPlannerPackage = _databaseConnection.EventPlannerPackages.Find(id);
             if (eventPlannerPackage == null)
                 return HttpNotFound();
             return View(eventPlannerPackage);
@@ -220,14 +217,14 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                if (db.EventPlannerPackages.Any(n => n.PackageGrade == eventPlannerPackage.PackageGrade))
+                if (_databaseConnection.EventPlannerPackages.Any(n => n.PackageGrade == eventPlannerPackage.PackageGrade))
                 {
                     TempData["display"] = "A package already exist with this package grade, Try again!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Index");
                 }
-                db.EventPlannerPackages.Add(eventPlannerPackage);
-                db.SaveChanges();
+                _databaseConnection.EventPlannerPackages.Add(eventPlannerPackage);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a package!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -242,7 +239,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackage = db.EventPlannerPackages.Find(id);
+            var eventPlannerPackage = _databaseConnection.EventPlannerPackages.Find(id);
             if (eventPlannerPackage == null)
                 return HttpNotFound();
             return View(eventPlannerPackage);
@@ -273,8 +270,8 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(eventPlannerPackage).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventPlannerPackage).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the pacakge!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -288,7 +285,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackage = db.EventPlannerPackages.Find(id);
+            var eventPlannerPackage = _databaseConnection.EventPlannerPackages.Find(id);
             if (eventPlannerPackage == null)
                 return HttpNotFound();
             return View(eventPlannerPackage);
@@ -301,9 +298,9 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventPlannerPackage = db.EventPlannerPackages.Find(id);
-            db.EventPlannerPackages.Remove(eventPlannerPackage);
-            db.SaveChanges();
+            var eventPlannerPackage = _databaseConnection.EventPlannerPackages.Find(id);
+            _databaseConnection.EventPlannerPackages.Remove(eventPlannerPackage);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted the!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -312,7 +309,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

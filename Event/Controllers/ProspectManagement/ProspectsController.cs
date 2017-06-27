@@ -13,17 +13,16 @@ namespace MyEventPlan.Controllers.ProspectManagement
 {
     public class ProspectsController : Controller
     {
-        private readonly ProspectDataContext db = new ProspectDataContext();
-        private readonly EventDataContext dbc = new EventDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Prospects
         [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name");
+            ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name");
             var prospects =
-                db.Prospects.OrderByDescending(n => n.StartDate)
+                _databaseConnection.Prospects.OrderByDescending(n => n.StartDate)
                     .Include(p => p.EventType)
                     .Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(prospects.ToList());
@@ -33,7 +32,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         public ActionResult FollowUp(FormCollection collectedValues)
         {
             var prospectId = Convert.ToInt64(collectedValues["id"]);
-            var prospect = db.Prospects.Find(prospectId);
+            var prospect = _databaseConnection.Prospects.Find(prospectId);
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var message = collectedValues["Message"];
             if (new MailerDaemon().FolowUpProspect(prospect, loggedinuser, message))
@@ -51,11 +50,11 @@ namespace MyEventPlan.Controllers.ProspectManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var prospect = db.Prospects.Find(id);
+            var prospect = _databaseConnection.Prospects.Find(id);
 
             if (prospect == null)
                 return HttpNotFound();
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
+            ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
         }
 
@@ -63,7 +62,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name");
+            ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name");
             return View();
         }
 
@@ -99,15 +98,15 @@ namespace MyEventPlan.Controllers.ProspectManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Prospects.Add(prospect);
-                db.SaveChanges();
+                _databaseConnection.Prospects.Add(prospect);
+                _databaseConnection.SaveChanges();
 
                 TempData["display"] = "You have successfully added a prospect!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
+            ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
         }
 
@@ -118,7 +117,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var prospect = db.Prospects.Find(id);
+            var prospect = _databaseConnection.Prospects.Find(id);
             if (prospect == null)
                 return HttpNotFound();
             var events = new Event.Data.Objects.Entities.Event();
@@ -140,12 +139,12 @@ namespace MyEventPlan.Controllers.ProspectManagement
             events.DateLastModified = DateTime.Now;
             events.Status = EventStausEnum.New.ToString();
             events.EventTypeId = prospect.EventTypeId;
-            dbc.Event.Add(events);
-            dbc.SaveChanges();
+            _databaseConnection.Event.Add(events);
+            _databaseConnection.SaveChanges();
 
-            var prospectForDelete = db.Prospects.Find(id);
-            db.Prospects.Remove(prospectForDelete);
-            db.SaveChanges();
+            var prospectForDelete = _databaseConnection.Prospects.Find(id);
+            _databaseConnection.Prospects.Remove(prospectForDelete);
+            _databaseConnection.SaveChanges();
 
             TempData["display"] = "You have successfully converted the prospect to an event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -158,12 +157,12 @@ namespace MyEventPlan.Controllers.ProspectManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var prospect = db.Prospects.Find(id);
+            var prospect = _databaseConnection.Prospects.Find(id);
             prospect.Status = ProspectStausEnum.Cancelled.ToString();
             prospect.DateLastModified = DateTime.Now;
             if (loggedinuser != null) prospect.LastModifiedBy = loggedinuser.AppUserId;
-            db.Entry(prospect).State = EntityState.Modified;
-            db.SaveChanges();
+            _databaseConnection.Entry(prospect).State = EntityState.Modified;
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully cancelled the prospect!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -175,10 +174,10 @@ namespace MyEventPlan.Controllers.ProspectManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var prospect = db.Prospects.Find(id);
+            var prospect = _databaseConnection.Prospects.Find(id);
             if (prospect == null)
                 return HttpNotFound();
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
+            ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
         }
 
@@ -211,13 +210,13 @@ namespace MyEventPlan.Controllers.ProspectManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(prospect).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(prospect).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the prospect!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventTypeId = new SelectList(db.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
+            ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name", prospect.EventTypeId);
             return View(prospect);
         }
 
@@ -227,7 +226,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var prospect = db.Prospects.Find(id);
+            var prospect = _databaseConnection.Prospects.Find(id);
             if (prospect == null)
                 return HttpNotFound();
             return View(prospect);
@@ -240,9 +239,9 @@ namespace MyEventPlan.Controllers.ProspectManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var prospect = db.Prospects.Find(id);
-            db.Prospects.Remove(prospect);
-            db.SaveChanges();
+            var prospect = _databaseConnection.Prospects.Find(id);
+            _databaseConnection.Prospects.Remove(prospect);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have deleted the prospect!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -251,7 +250,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

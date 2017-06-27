@@ -12,14 +12,14 @@ namespace MyEventPlan.Controllers.MessageManagement
 {
     public class MessageGroupsController : Controller
     {
-        private readonly MessageGroupDataContext db = new MessageGroupDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: MessageGroups
         [SessionExpire]
         public ActionResult Index()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            return View(db.MessageGroups.Where(n => n.CreatedBy == loggedinuser.AppUserId).ToList());
+            return View(_databaseConnection.MessageGroups.Where(n => n.CreatedBy == loggedinuser.AppUserId).ToList());
         }
 
         // GET: MessageGroups/Details/5
@@ -28,7 +28,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var messageGroup = db.MessageGroups.Find(id);
+            var messageGroup = _databaseConnection.MessageGroups.Find(id);
             if (messageGroup == null)
                 return HttpNotFound();
             return View(messageGroup);
@@ -67,8 +67,8 @@ namespace MyEventPlan.Controllers.MessageManagement
                 }
                 TempData["display"] = "You have successfully added a new message group!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                db.MessageGroups.Add(messageGroup);
-                db.SaveChanges();
+                _databaseConnection.MessageGroups.Add(messageGroup);
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -81,7 +81,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var messageGroup = db.MessageGroups.Find(id);
+            var messageGroup = _databaseConnection.MessageGroups.Find(id);
             if (messageGroup == null)
                 return HttpNotFound();
             return View(messageGroup);
@@ -112,9 +112,9 @@ namespace MyEventPlan.Controllers.MessageManagement
                 }
                 TempData["display"] = "You have successfully modified the message group!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                db.MessageGroups.Add(messageGroup);
-                db.Entry(messageGroup).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.MessageGroups.Add(messageGroup);
+                _databaseConnection.Entry(messageGroup).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(messageGroup);
@@ -126,7 +126,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var messageGroup = db.MessageGroups.Find(id);
+            var messageGroup = _databaseConnection.MessageGroups.Find(id);
             if (messageGroup == null)
                 return HttpNotFound();
             return View(messageGroup);
@@ -139,9 +139,9 @@ namespace MyEventPlan.Controllers.MessageManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var messageGroup = db.MessageGroups.Find(id);
-            db.MessageGroups.Remove(messageGroup);
-            db.SaveChanges();
+            var messageGroup = _databaseConnection.MessageGroups.Find(id);
+            _databaseConnection.MessageGroups.Remove(messageGroup);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted the message group!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -150,7 +150,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

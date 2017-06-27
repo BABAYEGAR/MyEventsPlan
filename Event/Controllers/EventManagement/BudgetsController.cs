@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class BudgetsController : Controller
     {
-        private readonly BudgetDataContext db = new BudgetDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Budgets
         [SessionExpire]
         public ActionResult Index(long id)
         {
-            var budgets = db.Budgets.Where(n => n.EventId == id).Include(b => b.Event);
+            var budgets = _databaseConnection.Budgets.Where(n => n.EventId == id).Include(b => b.Event);
             return View(budgets.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var budget = db.Budgets.Find(id);
+            var budget = _databaseConnection.Budgets.Find(id);
             if (budget == null)
                 return HttpNotFound();
             return View(budget);
@@ -57,11 +57,11 @@ namespace MyEventPlan.Controllers.EventManagement
                 if (events != null)
                 {
                     var targetBudget = Convert.ToInt64(events.TargetBudget);
-                    var eventBudget = db.Budgets.Where(n => n.EventId == events.EventId).ToList();
+                    var eventBudget = _databaseConnection.Budgets.Where(n => n.EventId == events.EventId).ToList();
                     long totalAmount = 0;
                     if (eventBudget.Count > 0)
                     {
-                        var sum = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
+                        var sum = _databaseConnection.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
                         if (sum != null)
                             totalAmount = (long) sum;
                     }
@@ -84,8 +84,8 @@ namespace MyEventPlan.Controllers.EventManagement
                             TempData["notificationtype"] = NotificationType.Info.ToString();
                             return RedirectToAction("Login", "Account");
                         }
-                        db.Budgets.Add(budget);
-                        db.SaveChanges();
+                        _databaseConnection.Budgets.Add(budget);
+                        _databaseConnection.SaveChanges();
                         TempData["display"] = "Your have successfully added the budget for an item!";
                         TempData["notificationtype"] = NotificationType.Info.ToString();
                         return RedirectToAction("Index", new {id = events.EventId});
@@ -104,7 +104,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var budget = db.Budgets.Find(id);
+            var budget = _databaseConnection.Budgets.Find(id);
             if (budget == null)
                 return HttpNotFound();
             return View(budget);
@@ -122,11 +122,11 @@ namespace MyEventPlan.Controllers.EventManagement
             Budget budget)
         {
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
-            var eventBudget = db.Budgets.Where(n => n.EventId == events.EventId).ToList();
+            var eventBudget = _databaseConnection.Budgets.Where(n => n.EventId == events.EventId).ToList();
             long totalAmount = 0;
             if (eventBudget.Count > 0)
             {
-                var sum = db.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
+                var sum = _databaseConnection.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
                 if (sum != null)
                     totalAmount = (long) sum;
             }
@@ -149,8 +149,8 @@ namespace MyEventPlan.Controllers.EventManagement
                         TempData["notificationtype"] = NotificationType.Info.ToString();
                         return RedirectToAction("Login", "Account");
                     }
-                    db.Entry(budget).State = EntityState.Modified;
-                    db.SaveChanges();
+                    _databaseConnection.Entry(budget).State = EntityState.Modified;
+                    _databaseConnection.SaveChanges();
                     TempData["display"] = "Your have successfully modified the budget for the item!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Index");
@@ -165,7 +165,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var budget = db.Budgets.Find(id);
+            var budget = _databaseConnection.Budgets.Find(id);
             if (budget == null)
                 return HttpNotFound();
             return View(budget);
@@ -178,16 +178,16 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id, long eventId)
         {
-            var budget = db.Budgets.Find(id);
-            db.Budgets.Remove(budget);
-            db.SaveChanges();
+            var budget = _databaseConnection.Budgets.Find(id);
+            _databaseConnection.Budgets.Remove(budget);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index", new {id = eventId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

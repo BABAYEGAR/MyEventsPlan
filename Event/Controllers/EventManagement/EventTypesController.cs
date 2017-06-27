@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class EventTypesController : Controller
     {
-        private readonly EventTypeDataContext db = new EventTypeDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventTypes
         [SessionExpire]
         public ActionResult Index()
         {
-            return View(db.EventTypes.ToList());
+            return View(_databaseConnection.EventTypes.ToList());
         }
 
         // GET: EventTypes/Details/5
@@ -27,7 +27,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventType = db.EventTypes.Find(id);
+            var eventType = _databaseConnection.EventTypes.Find(id);
             if (eventType == null)
                 return HttpNotFound();
             return View(eventType);
@@ -64,8 +64,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.EventTypes.Add(eventType);
-                db.SaveChanges();
+                _databaseConnection.EventTypes.Add(eventType);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added an event type!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -80,7 +80,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventType = db.EventTypes.Find(id);
+            var eventType = _databaseConnection.EventTypes.Find(id);
             if (eventType == null)
                 return HttpNotFound();
             return View(eventType);
@@ -108,8 +108,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(eventType).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventType).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully edit an event type!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -123,7 +123,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventType = db.EventTypes.Find(id);
+            var eventType = _databaseConnection.EventTypes.Find(id);
             if (eventType == null)
                 return HttpNotFound();
             return View(eventType);
@@ -136,9 +136,9 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventType = db.EventTypes.Find(id);
-            db.EventTypes.Remove(eventType);
-            db.SaveChanges();
+            var eventType = _databaseConnection.EventTypes.Find(id);
+            _databaseConnection.EventTypes.Remove(eventType);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted an event type!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -147,7 +147,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

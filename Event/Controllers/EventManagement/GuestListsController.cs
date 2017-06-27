@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class GuestListsController : Controller
     {
-        private readonly GuestListDataContext db = new GuestListDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: GuestLists
         [SessionExpire]
         public ActionResult Index(long? eventId)
         {
-            var guestLists = db.GuestLists.Where(n => n.EventId == eventId).Include(g => g.Event);
+            var guestLists = _databaseConnection.GuestLists.Where(n => n.EventId == eventId).Include(g => g.Event);
             ViewBag.eventId = eventId;
             return View(guestLists.ToList());
         }
@@ -29,7 +29,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var guestList = db.GuestLists.Find(id);
+            var guestList = _databaseConnection.GuestLists.Find(id);
             if (guestList == null)
                 return HttpNotFound();
             return View(guestList);
@@ -55,7 +55,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 guestList.DateCreated = DateTime.Now;
                 guestList.DateLastModified = DateTime.Now;
-                var listExist = db.GuestLists.Where(m => m.EventId == guestList.EventId && m.Name == guestList.Name)
+                var listExist = _databaseConnection.GuestLists.Where(m => m.EventId == guestList.EventId && m.Name == guestList.Name)
                     .ToList();
                 if (loggedinuser != null)
                 {
@@ -74,8 +74,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.GuestLists.Add(guestList);
-                db.SaveChanges();
+                _databaseConnection.GuestLists.Add(guestList);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a new guest list!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = guestList.EventId});
@@ -89,7 +89,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var guestList = db.GuestLists.Find(id);
+            var guestList = _databaseConnection.GuestLists.Find(id);
             if (guestList == null)
                 return HttpNotFound();
             return View(guestList);
@@ -117,8 +117,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(guestList).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(guestList).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the guest list!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = guestList.EventId});
@@ -132,7 +132,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var guestList = db.GuestLists.Find(id);
+            var guestList = _databaseConnection.GuestLists.Find(id);
             if (guestList == null)
                 return HttpNotFound();
             return View(guestList);
@@ -145,10 +145,10 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var guestList = db.GuestLists.Find(id);
+            var guestList = _databaseConnection.GuestLists.Find(id);
             var eventId = guestList.EventId;
-            db.GuestLists.Remove(guestList);
-            db.SaveChanges();
+            _databaseConnection.GuestLists.Remove(guestList);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted the guest list!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new {eventId = guestList.EventId});
@@ -157,7 +157,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -12,9 +12,9 @@ namespace MyEventPlan.Data.Service.Calender
     {
         public  List<Event.Data.Objects.Entities.Appointment> LoadAllEventsAppointments(long? id)
         {
-            using (AppointmentDataContext ent = new AppointmentDataContext())
+            using (EventDataContext databaseConnection = new EventDataContext())
             {
-                var rslt = ent.Appointments.Where(n=>n.EventPlannerId == id && n.StartDate >= DateTime.Now);
+                var rslt = databaseConnection.Appointments.Where(n=>n.EventPlannerId == id && n.StartDate >= DateTime.Now);
                 List<Event.Data.Objects.Entities.Appointment> result = new List<Event.Data.Objects.Entities.Appointment>();
                 foreach (var item in rslt)
                 {
@@ -38,9 +38,9 @@ namespace MyEventPlan.Data.Service.Calender
         }
         public List<Event.Data.Objects.Entities.Appointment> LoadAllUserAppointments(long? id)
         {
-            using (AppointmentDataContext ent = new AppointmentDataContext())
+            using (EventDataContext databaseConnection = new EventDataContext())
             {
-                var rslt = ent.Appointments.Where(n => n.EventPlannerId == id).Include(n=>n.Event);
+                var rslt = databaseConnection.Appointments.Where(n => n.EventPlannerId == id).Include(n=>n.Event);
                 List<Event.Data.Objects.Entities.Appointment> result = new List<Event.Data.Objects.Entities.Appointment>();
                 foreach (var item in rslt)
                 {
@@ -66,24 +66,24 @@ namespace MyEventPlan.Data.Service.Calender
         public  void UpdateCalendarEventAppoitment(int id, string newEventStart, string newEventEnd)
         {
             // EventStart comes ISO 8601 format, eg:  "2000-01-10T10:00:00Z" - need to convert to DateTime
-            using (AppointmentDataContext ent = new AppointmentDataContext())
+            using (EventDataContext databaseConnection = new EventDataContext())
             {
-                var rec = ent.Appointments.FirstOrDefault(s => s.AppointmentId == id);
+                var rec = databaseConnection.Appointments.FirstOrDefault(s => s.AppointmentId == id);
                 if (rec != null)
                 {
                     rec.StartDate = Convert.ToDateTime(newEventStart);
                     rec.EndDate = Convert.ToDateTime(newEventEnd);
-                    ent.Entry(rec).State = EntityState.Modified;
-                    ent.SaveChanges();
+                    databaseConnection.Entry(rec).State = EntityState.Modified;
+                    databaseConnection.SaveChanges();
                 }
             }
         }
-        public bool CreateNewAppointment(string title, string newEventStartDate, string newEventEndDate, long appUserId, string location, string note,
-       long plannerId,long eventId)
+        public bool CreateNewAppointment(string title,string reason, string newEventStartDate, string newEventEndDate, long appUserId, string location, string note,
+       long plannerId,long? eventId)
         {
             try
             {
-                AppointmentDataContext ent = new AppointmentDataContext();
+                EventDataContext databaseConnection = new EventDataContext();
                 Event.Data.Objects.Entities.Appointment rec = new Event.Data.Objects.Entities.Appointment
                 {
                     Name = title,
@@ -91,6 +91,7 @@ namespace MyEventPlan.Data.Service.Calender
                     EndDate = Convert.ToDateTime(newEventEndDate),
                     Location = location,
                     EventPlannerId = plannerId,
+                    For = typeof(AppointmentType).GetEnumName(int.Parse(reason)),
                     Notes = note,
                     StartTime = Convert.ToDateTime(newEventStartDate).ToShortTimeString(),
                     EndTime = Convert.ToDateTime(newEventEndDate).ToShortTimeString(),
@@ -101,8 +102,8 @@ namespace MyEventPlan.Data.Service.Calender
                     EventId = eventId
                 };
 
-                ent.Appointments.Add(rec);
-                ent.SaveChanges();
+                databaseConnection.Appointments.Add(rec);
+                databaseConnection.SaveChanges();
             }
             catch (Exception)
             {

@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorServicesController : Controller
     {
-        private readonly VendorServiceDataContext db = new VendorServiceDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: VendorServices
         [SessionExpire]
         public ActionResult Index()
         {
-            return View(db.VendorService.ToList());
+            return View(_databaseConnection.VendorServices.ToList());
         }
 
         // GET: VendorServices/Details/5
@@ -27,7 +27,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorService = db.VendorService.Find(id);
+            var vendorService = _databaseConnection.VendorServices.Find(id);
             if (vendorService == null)
                 return HttpNotFound();
             return View(vendorService);
@@ -65,8 +65,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.VendorService.Add(vendorService);
-                db.SaveChanges();
+                _databaseConnection.VendorServices.Add(vendorService);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a vendor service!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -81,7 +81,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorService = db.VendorService.Find(id);
+            var vendorService = _databaseConnection.VendorServices.Find(id);
             if (vendorService == null)
                 return HttpNotFound();
             return View(vendorService);
@@ -111,8 +111,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(vendorService).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(vendorService).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified a vendor service!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -126,7 +126,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorService = db.VendorService.Find(id);
+            var vendorService = _databaseConnection.VendorServices.Find(id);
             if (vendorService == null)
                 return HttpNotFound();
             return View(vendorService);
@@ -139,9 +139,9 @@ namespace MyEventPlan.Controllers.VendorManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var vendorService = db.VendorService.Find(id);
-            db.VendorService.Remove(vendorService);
-            db.SaveChanges();
+            var vendorService = _databaseConnection.VendorServices.Find(id);
+            _databaseConnection.VendorServices.Remove(vendorService);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted a vendor service!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -150,7 +150,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

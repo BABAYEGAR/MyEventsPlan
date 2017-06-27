@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class CheckListsController : Controller
     {
-        private readonly CheckListDataContext db = new CheckListDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: CheckLists
         [SessionExpire]
         public ActionResult Index(long? eventId)
         {
-            var checkLists = db.CheckLists.Where(n => n.EventId == eventId).Include(c => c.Event);
+            var checkLists = _databaseConnection.CheckLists.Where(n => n.EventId == eventId).Include(c => c.Event);
             ViewBag.eventId = eventId;
             return View(checkLists.ToList());
         }
@@ -29,7 +29,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var checkList = db.CheckLists.Find(id);
+            var checkList = _databaseConnection.CheckLists.Find(id);
             if (checkList == null)
                 return HttpNotFound();
             return View(checkList);
@@ -55,7 +55,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 checkList.DateCreated = DateTime.Now;
                 checkList.DateLastModified = DateTime.Now;
-                var listExist = db.CheckLists.Where(m => m.EventId == checkList.EventId && m.Name == checkList.Name)
+                var listExist = _databaseConnection.CheckLists.Where(m => m.EventId == checkList.EventId && m.Name == checkList.Name)
                     .ToList();
                 if (loggedinuser != null)
                 {
@@ -75,8 +75,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.CheckLists.Add(checkList);
-                db.SaveChanges();
+                _databaseConnection.CheckLists.Add(checkList);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "Your have successfully created a new list!";
                 TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index", new {eventId = checkList.EventId});
@@ -90,7 +90,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var checkList = db.CheckLists.Find(id);
+            var checkList = _databaseConnection.CheckLists.Find(id);
             if (checkList == null)
                 return HttpNotFound();
             return View(checkList);
@@ -119,8 +119,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(checkList).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(checkList).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "Your have successfully modified the list!";
                 TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index", new {eventId = checkList.EventId});
@@ -134,7 +134,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var checkList = db.CheckLists.Find(id);
+            var checkList = _databaseConnection.CheckLists.Find(id);
             if (checkList == null)
                 return HttpNotFound();
             return View(checkList);
@@ -147,10 +147,10 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var checkList = db.CheckLists.Find(id);
+            var checkList = _databaseConnection.CheckLists.Find(id);
             var eventId = checkList.EventId;
-            db.CheckLists.Remove(checkList);
-            db.SaveChanges();
+            _databaseConnection.CheckLists.Remove(checkList);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "Your have successfully deleted the list!";
             TempData["notificationtype"] = NotificationType.Info.ToString();
             return RedirectToAction("Index", new {eventId});
@@ -159,7 +159,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

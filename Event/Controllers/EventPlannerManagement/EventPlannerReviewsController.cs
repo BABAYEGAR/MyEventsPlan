@@ -11,14 +11,13 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
 {
     public class EventPlannerReviewsController : Controller
     {
-        private readonly EventPlannerReviewDataContext db = new EventPlannerReviewDataContext();
-        private readonly EventPlannerDataContext dbc = new EventPlannerDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventPlannerReviews
      
         public ActionResult Index()
         {
-            var eventPlannerReviews = db.EventPlannerReviews.Include(e => e.EventPlanner);
+            var eventPlannerReviews = _databaseConnection.EventPlannerReviews.Include(e => e.EventPlanner);
             return View(eventPlannerReviews.ToList());
         }
 
@@ -28,7 +27,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerReview = db.EventPlannerReviews.Find(id);
+            var eventPlannerReview = _databaseConnection.EventPlannerReviews.Find(id);
             if (eventPlannerReview == null)
                 return HttpNotFound();
             return View(eventPlannerReview);
@@ -38,7 +37,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
      
         public ActionResult Create()
         {
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name");
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Name");
             return View();
         }
 
@@ -60,11 +59,11 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
                 eventPlannerReview.DateCreated = DateTime.Now;
                 eventPlannerReview.DateLastModified = DateTime.Now;
 
-                db.EventPlannerReviews.Add(eventPlannerReview);
-                db.SaveChanges();
+                _databaseConnection.EventPlannerReviews.Add(eventPlannerReview);
+                _databaseConnection.SaveChanges();
 
-                var planner = dbc.EventPlanners.Find(eventPlannerReview.EventPlannerId);
-                var reviews = db.EventPlannerReviews.Where(n => n.EventPlannerId == eventPlannerReview.EventPlannerId)
+                var planner = _databaseConnection.EventPlanners.Find(eventPlannerReview.EventPlannerId);
+                var reviews = _databaseConnection.EventPlannerReviews.Where(n => n.EventPlannerId == eventPlannerReview.EventPlannerId)
                     .ToList();
                 long? totalRatings = 0;
                 long? totalPossibleRatings = 0;
@@ -81,8 +80,8 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
                         planner.AverageRating = ratings;
                     }
                 }
-                dbc.Entry(planner).State = EntityState.Modified;
-                dbc.SaveChanges();
+                _databaseConnection.Entry(planner).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("EventPlannerDetails", "EventPlanners",
                     new {id = eventPlannerReview.EventPlannerId});
             }
@@ -96,10 +95,10 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerReview = db.EventPlannerReviews.Find(id);
+            var eventPlannerReview = _databaseConnection.EventPlannerReviews.Find(id);
             if (eventPlannerReview == null)
                 return HttpNotFound();
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name",
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Name",
                 eventPlannerReview.EventPlannerId);
             return View(eventPlannerReview);
         }
@@ -117,11 +116,11 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         {
             if (ModelState.IsValid)
             {
-                db.Entry(eventPlannerReview).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventPlannerReview).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name",
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Name",
                 eventPlannerReview.EventPlannerId);
             return View(eventPlannerReview);
         }
@@ -132,7 +131,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerReview = db.EventPlannerReviews.Find(id);
+            var eventPlannerReview = _databaseConnection.EventPlannerReviews.Find(id);
             if (eventPlannerReview == null)
                 return HttpNotFound();
             return View(eventPlannerReview);
@@ -145,16 +144,16 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
      
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventPlannerReview = db.EventPlannerReviews.Find(id);
-            db.EventPlannerReviews.Remove(eventPlannerReview);
-            db.SaveChanges();
+            var eventPlannerReview = _databaseConnection.EventPlannerReviews.Find(id);
+            _databaseConnection.EventPlannerReviews.Remove(eventPlannerReview);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -12,7 +12,7 @@ namespace MyEventPlan.Controllers.MappingManagement
 {
     public class StaffEventMappingsController : Controller
     {
-        private readonly StaffEventMappingDataContext db = new StaffEventMappingDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: StaffEventMappings
         [SessionExpire]
@@ -21,16 +21,16 @@ namespace MyEventPlan.Controllers.MappingManagement
             ViewBag.Event = id;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var mappings =
-                db.StaffEventMapping.Where(n => n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId);
+                _databaseConnection.StaffEventMapping.Where(n => n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId);
             var vedors =
-                from a in db.Staff
+                from a in _databaseConnection.Staff
                 join b in mappings on a.StaffId equals b.StaffId
                 where a.EventPlannerId == loggedinuser.EventPlannerId
                 select a;
 
-            ViewBag.StaffId = new SelectList(db.Staff.Except(vedors), "StaffId", "DisplayName");
+            ViewBag.StaffId = new SelectList(_databaseConnection.Staff.Except(vedors), "StaffId", "DisplayName");
             var staffEventMapping =
-                db.StaffEventMapping.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId)
+                _databaseConnection.StaffEventMapping.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId)
                     .Include(e => e.Event)
                     .Include(e => e.Staff);
             return View(staffEventMapping.Where(n => n.EventId == id).ToList());
@@ -42,7 +42,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var staffEventMapping = db.StaffEventMapping.Find(id);
+            var staffEventMapping = _databaseConnection.StaffEventMapping.Find(id);
             if (staffEventMapping == null)
                 return HttpNotFound();
             return View(staffEventMapping);
@@ -52,9 +52,9 @@ namespace MyEventPlan.Controllers.MappingManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname");
-            ViewBag.StaffId = new SelectList(db.Staff, "StaffId", "Firstname");
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name");
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname");
+            ViewBag.StaffId = new SelectList(_databaseConnection.Staff, "StaffId", "Firstname");
             return View();
         }
 
@@ -86,22 +86,22 @@ namespace MyEventPlan.Controllers.MappingManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.StaffEventMapping.Add(staffEventMapping);
-                db.SaveChanges();
+                _databaseConnection.StaffEventMapping.Add(staffEventMapping);
+                _databaseConnection.SaveChanges();
                 TempData["mapping"] = "You have successfully assigned the staff to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {id = eventId});
             }
             var mappings =
-                db.StaffEventMapping.Where(
+                _databaseConnection.StaffEventMapping.Where(
                     n => n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId);
             var vedors =
-                from a in db.Staff
+                from a in _databaseConnection.Staff
                 join b in mappings on a.StaffId equals b.StaffId
                 where a.EventPlannerId == loggedinuser.EventPlannerId
                 select a;
 
-            ViewBag.StaffId = new SelectList(db.Staff.Except(vedors), "StaffId", "Firstname");
+            ViewBag.StaffId = new SelectList(_databaseConnection.Staff.Except(vedors), "StaffId", "Firstname");
             return View(staffEventMapping);
         }
 
@@ -111,13 +111,13 @@ namespace MyEventPlan.Controllers.MappingManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var staffEventMapping = db.StaffEventMapping.Find(id);
+            var staffEventMapping = _databaseConnection.StaffEventMapping.Find(id);
             if (staffEventMapping == null)
                 return HttpNotFound();
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", staffEventMapping.EventId);
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname",
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name", staffEventMapping.EventId);
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname",
                 staffEventMapping.EventPlannerId);
-            ViewBag.StaffId = new SelectList(db.Staff, "StaffId", "Firstname", staffEventMapping.StaffId);
+            ViewBag.StaffId = new SelectList(_databaseConnection.Staff, "StaffId", "Firstname", staffEventMapping.StaffId);
             return View(staffEventMapping);
         }
 
@@ -135,14 +135,14 @@ namespace MyEventPlan.Controllers.MappingManagement
         {
             if (ModelState.IsValid)
             {
-                db.Entry(staffEventMapping).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(staffEventMapping).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", staffEventMapping.EventId);
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname",
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name", staffEventMapping.EventId);
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname",
                 staffEventMapping.EventPlannerId);
-            ViewBag.StaffId = new SelectList(db.Staff, "StaffId", "Firstname", staffEventMapping.StaffId);
+            ViewBag.StaffId = new SelectList(_databaseConnection.Staff, "StaffId", "Firstname", staffEventMapping.StaffId);
             return View(staffEventMapping);
         }
 
@@ -152,7 +152,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var staffEventMapping = db.StaffEventMapping.Find(id);
+            var staffEventMapping = _databaseConnection.StaffEventMapping.Find(id);
             if (staffEventMapping == null)
                 return HttpNotFound();
             return View(staffEventMapping);
@@ -165,10 +165,10 @@ namespace MyEventPlan.Controllers.MappingManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var staffEventMapping = db.StaffEventMapping.Find(id);
+            var staffEventMapping = _databaseConnection.StaffEventMapping.Find(id);
             var eventId = staffEventMapping.EventId;
-            db.StaffEventMapping.Remove(staffEventMapping);
-            db.SaveChanges();
+            _databaseConnection.StaffEventMapping.Remove(staffEventMapping);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index", new {id = eventId});
         }
 
@@ -178,17 +178,17 @@ namespace MyEventPlan.Controllers.MappingManagement
         [SessionExpire]
         public ActionResult UnassignStaff(long id)
         {
-            var staffEventMapping = db.StaffEventMapping.Find(id);
+            var staffEventMapping = _databaseConnection.StaffEventMapping.Find(id);
             var eventId = staffEventMapping.EventId;
-            db.StaffEventMapping.Remove(staffEventMapping);
-            db.SaveChanges();
+            _databaseConnection.StaffEventMapping.Remove(staffEventMapping);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index", new {id = eventId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

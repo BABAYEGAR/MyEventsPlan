@@ -12,8 +12,7 @@ namespace MyEventPlan.Controllers.MappingManagement
 {
     public class EventVendorMappingsController : Controller
     {
-        private readonly EventVendorMappingDataContext _db = new EventVendorMappingDataContext();
-        private readonly EventDataContext dbc = new EventDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventVendorMappings
         [SessionExpire]
@@ -22,18 +21,18 @@ namespace MyEventPlan.Controllers.MappingManagement
             ViewBag.Event = id;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var mappings =
-                _db.EventVendorMapping.Where(n => n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId);
+                _databaseConnection.EventVendorMappings.Where(n => n.EventId == id && n.EventPlannerId == loggedinuser.EventPlannerId);
             var vedors =
-                from a in _db.Vendors
+                from a in _databaseConnection.Vendors
                 join b in mappings on a.VendorId equals b.VendorId
                 where a.EventPlannerId == loggedinuser.EventPlannerId
                 select a;
 
-            ViewBag.VendorId = new SelectList(_db.Vendors.Except(vedors), "VendorId", "Name");
-            ViewBag.VendorServiceId = new SelectList(dbc.VendorServices, "VendorServiceId", "ServiceName");
-            ViewBag.LocationId = new SelectList(dbc.Locations, "LocationId", "Name");
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors.Except(vedors), "VendorId", "Name");
+            ViewBag.VendorServiceId = new SelectList(_databaseConnection.VendorServices, "VendorServiceId", "ServiceName");
+            ViewBag.LocationId = new SelectList(_databaseConnection.Locations, "LocationId", "Name");
             var eventVendorMapping =
-                _db.EventVendorMapping.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId)
+                _databaseConnection.EventVendorMappings.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId)
                     .Include(e => e.Event)
                     .Include(e => e.Vendor);
             return View(eventVendorMapping.Where(n => n.EventId == id).ToList());
@@ -45,7 +44,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventVendorMapping = _db.EventVendorMapping.Find(id);
+            var eventVendorMapping = _databaseConnection.EventVendorMappings.Find(id);
             if (eventVendorMapping == null)
                 return HttpNotFound();
             return View(eventVendorMapping);
@@ -55,8 +54,8 @@ namespace MyEventPlan.Controllers.MappingManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name");
-            ViewBag.VendorId = new SelectList(_db.Vendors, "VendorId", "Name");
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name");
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name");
             return View();
         }
 
@@ -89,22 +88,22 @@ namespace MyEventPlan.Controllers.MappingManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                _db.EventVendorMapping.Add(eventVendorMapping);
-                _db.SaveChanges();
+                _databaseConnection.EventVendorMappings.Add(eventVendorMapping);
+                _databaseConnection.SaveChanges();
                 TempData["mapping"] = "You have successfully assigned the vendor to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {id = eventId});
             }
             var mappings =
-                _db.EventVendorMapping.Where(
+                _databaseConnection.EventVendorMappings.Where(
                     n => n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId);
             var vedors =
-                from a in _db.Vendors
+                from a in _databaseConnection.Vendors
                 join b in mappings on a.VendorId equals b.VendorId
                 where a.EventPlannerId == loggedinuser.EventPlannerId
                 select a;
 
-            ViewBag.VendorId = new SelectList(_db.Vendors.Except(vedors), "VendorId", "Name");
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors.Except(vedors), "VendorId", "Name");
             return View(eventVendorMapping);
         }
 
@@ -114,11 +113,11 @@ namespace MyEventPlan.Controllers.MappingManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventVendorMapping = _db.EventVendorMapping.Find(id);
+            var eventVendorMapping = _databaseConnection.EventVendorMappings.Find(id);
             if (eventVendorMapping == null)
                 return HttpNotFound();
-            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name", eventVendorMapping.EventId);
-            ViewBag.VendorId = new SelectList(_db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name", eventVendorMapping.EventId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
             return View(eventVendorMapping);
         }
 
@@ -146,12 +145,12 @@ namespace MyEventPlan.Controllers.MappingManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                _db.Entry(eventVendorMapping).State = EntityState.Modified;
-                _db.SaveChanges();
+                _databaseConnection.Entry(eventVendorMapping).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventId = new SelectList(_db.Event, "EventId", "Name", eventVendorMapping.EventId);
-            ViewBag.VendorId = new SelectList(_db.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name", eventVendorMapping.EventId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", eventVendorMapping.VendorId);
             return View(eventVendorMapping);
         }
 
@@ -161,7 +160,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventVendorMapping = _db.EventVendorMapping.Find(id);
+            var eventVendorMapping = _databaseConnection.EventVendorMappings.Find(id);
             if (eventVendorMapping == null)
                 return HttpNotFound();
             return View(eventVendorMapping);
@@ -172,9 +171,9 @@ namespace MyEventPlan.Controllers.MappingManagement
         public ActionResult RemoveVendorFromEvent(long? vendorId, long? eventId)
         {
             var eventVendorMapping =
-                _db.EventVendorMapping.SingleOrDefault(n => n.EventId == eventId && n.VendorId == vendorId);
-            _db.EventVendorMapping.Remove(eventVendorMapping);
-            _db.SaveChanges();
+                _databaseConnection.EventVendorMappings.SingleOrDefault(n => n.EventId == eventId && n.VendorId == vendorId);
+            _databaseConnection.EventVendorMappings.Remove(eventVendorMapping);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("EventVendors", "Vendors");
         }
 
@@ -185,10 +184,10 @@ namespace MyEventPlan.Controllers.MappingManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventVendorMapping = _db.EventVendorMapping.Find(id);
+            var eventVendorMapping = _databaseConnection.EventVendorMappings.Find(id);
             var eventId = eventVendorMapping.EventId;
-            _db.EventVendorMapping.Remove(eventVendorMapping);
-            _db.SaveChanges();
+            _databaseConnection.EventVendorMappings.Remove(eventVendorMapping);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index", new {id = eventId});
         }
 
@@ -215,8 +214,8 @@ namespace MyEventPlan.Controllers.MappingManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                _db.EventVendorMapping.Add(eventVendorMapping);
-                _db.SaveChanges();
+                _databaseConnection.EventVendorMappings.Add(eventVendorMapping);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully assigned the vendor to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("EventVendors", "Vendors");
@@ -227,7 +226,7 @@ namespace MyEventPlan.Controllers.MappingManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                _db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

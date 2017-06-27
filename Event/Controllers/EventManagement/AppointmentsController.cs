@@ -13,7 +13,7 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class AppointmentsController : Controller
     {
-        private readonly AppointmentDataContext _db = new AppointmentDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Appointments
         [SessionExpire]
@@ -22,7 +22,7 @@ namespace MyEventPlan.Controllers.EventManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.eventId = eventId;
             var appointments =
-                _db.Appointments.Where(n => n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId)
+                _databaseConnection.Appointments.Where(n => n.EventId == eventId && n.EventPlannerId == loggedinuser.EventPlannerId)
                     .OrderByDescending(n => n.StartDate)
                     .Include(a => a.Event);
             return View(appointments.ToList());
@@ -33,7 +33,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Calendar()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            ViewBag.EventId = new SelectList(_db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+            ViewBag.EventId = new SelectList(_databaseConnection.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
                 "EventId", "Name");
             return View();
         }
@@ -43,8 +43,6 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var appointments = new CalenderAppointment().LoadAllUserAppointments(loggedinuser?.EventPlannerId);
-            foreach (var item in appointments)
-            {
                 var appointmentList = from e in appointments
                     select new
                     {
@@ -61,8 +59,6 @@ namespace MyEventPlan.Controllers.EventManagement
                     };
                 var rows = appointmentList.ToArray();
                 return Json(rows, JsonRequestBehavior.AllowGet);
-            }
-            return Json(appointments.ToArray(), JsonRequestBehavior.AllowGet);
         }
 
         // POST: Appointment/UpdateCalendarAppointment/5
@@ -75,7 +71,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var appointmentId = Convert.ToInt64(collectedValues["appointmentId"]);
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var calendarAppointment = _db.Appointments.Find(appointmentId);
+            var calendarAppointment = _databaseConnection.Appointments.Find(appointmentId);
             if (calendarAppointment != null)
             {
                 calendarAppointment.DateLastModified = DateTime.Now;
@@ -87,9 +83,9 @@ namespace MyEventPlan.Controllers.EventManagement
                 calendarAppointment.EndDate = Convert.ToDateTime(collectedValues["EndDate"]);
                 calendarAppointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                 calendarAppointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
-                _db.Entry(calendarAppointment).State = EntityState.Modified;
+                _databaseConnection.Entry(calendarAppointment).State = EntityState.Modified;
             }
-            _db.SaveChanges();
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Calendar");
         }
 
@@ -105,20 +101,20 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var appointment = _db.Appointments.Find(id);
+            var appointment = _databaseConnection.Appointments.Find(id);
             if (appointment == null)
                 return HttpNotFound();
             return View(appointment);
         }
 
         [SessionExpire]
-        public bool CreateNewAppointment(string title, string newEventStartDate, string newEventEndDate,
+        public bool CreateNewAppointment(string title,string reason ,string newEventStartDate, string newEventEndDate,
             long appUserId, string location, string note,
-            long plannerId, long eventId)
+            long plannerId, long? eventId)
         {
             try
             {
-                new CalenderAppointment().CreateNewAppointment(title, newEventStartDate, newEventEndDate, appUserId,
+                new CalenderAppointment().CreateNewAppointment(title,reason, newEventStartDate, newEventEndDate, appUserId,
                     location, note,
                     plannerId, eventId);
             }
@@ -168,8 +164,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                _db.Appointments.Add(appointment);
-                _db.SaveChanges();
+                _databaseConnection.Appointments.Add(appointment);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = appointment.EventId});
@@ -209,8 +205,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                _db.Appointments.Add(appointment);
-                _db.SaveChanges();
+                _databaseConnection.Appointments.Add(appointment);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Details", "Events", new {id = appointment.EventId});
@@ -224,7 +220,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var appointment = _db.Appointments.Find(id);
+            var appointment = _databaseConnection.Appointments.Find(id);
             if (appointment == null)
                 return HttpNotFound();
             return View(appointment);
@@ -258,8 +254,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                _db.Entry(appointment).State = EntityState.Modified;
-                _db.SaveChanges();
+                _databaseConnection.Entry(appointment).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified an appointment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = appointment.EventId});
@@ -273,7 +269,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var appointment = _db.Appointments.Find(id);
+            var appointment = _databaseConnection.Appointments.Find(id);
             if (appointment == null)
                 return HttpNotFound();
             return View(appointment);
@@ -286,17 +282,17 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var appointment = _db.Appointments.Find(id);
+            var appointment = _databaseConnection.Appointments.Find(id);
             var eventId = appointment.EventId;
-            _db.Appointments.Remove(appointment);
-            _db.SaveChanges();
+            _databaseConnection.Appointments.Remove(appointment);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index", new {eventId});
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                _db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

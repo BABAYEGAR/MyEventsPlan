@@ -13,14 +13,13 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class AppUsersController : Controller
     {
-        private readonly AppUserDataContext db = new AppUserDataContext();
-        private readonly EventPlannerDataContext dbc = new EventPlannerDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: AppUsers
         [SessionExpire]
         public ActionResult Index()
         {
-            var appUsers = db.AppUsers.Include(a => a.EventPlanner).Include(a => a.Role);
+            var appUsers = _databaseConnection.AppUsers.Include(a => a.EventPlanner).Include(a => a.Role);
             return View(appUsers.ToList());
         }
 
@@ -28,10 +27,10 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult EnableUser(long? id)
         {
-            var appUser = db.AppUsers.Find(id);
+            var appUser = _databaseConnection.AppUsers.Find(id);
             appUser.Status = UserAccountStatus.Enabled.ToString();
-            db.Entry(appUser).State = EntityState.Modified;
-            db.SaveChanges();
+            _databaseConnection.Entry(appUser).State = EntityState.Modified;
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -39,10 +38,10 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DisableUser(long? id)
         {
-            var appUser = db.AppUsers.Find(id);
+            var appUser = _databaseConnection.AppUsers.Find(id);
             appUser.Status = UserAccountStatus.Disabled.ToString();
-            db.Entry(appUser).State = EntityState.Modified;
-            db.SaveChanges();
+            _databaseConnection.Entry(appUser).State = EntityState.Modified;
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -63,12 +62,12 @@ namespace MyEventPlan.Controllers.EventManagement
             AppUser user = null;
             if (loggedinuser != null)
             {
-                user = db.AppUsers.Find(loggedinuser.AppUserId);
+                user = _databaseConnection.AppUsers.Find(loggedinuser.AppUserId);
                 var bgColor = typeof(BackgroundColor).GetEnumName(int.Parse(collectedValues["BackgroundColor"]));
                 user.BackgroundColor = bgColor;
-                db.Entry(user).State = EntityState.Modified;
+                _databaseConnection.Entry(user).State = EntityState.Modified;
             }
-            db.SaveChanges();
+            _databaseConnection.SaveChanges();
             Session["myeventplanloggedinuser"] = user;
             TempData["display"] = "You have successfully changed your background color!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -89,19 +88,19 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult ImageUpload(FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var plannerUser = dbc.EventPlanners.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            var plannerUser = _databaseConnection.EventPlanners.SingleOrDefault(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             EventPlanner user = null;
             var image = Request.Files["image_file"];
             if (loggedinuser != null)
             {
-                user = dbc.EventPlanners.Find(loggedinuser.EventPlannerId);
+                user = _databaseConnection.EventPlanners.Find(loggedinuser.EventPlannerId);
                 if (user != null)
                 {
                     user.Logo = new FileUploader().UploadFile(image, UploadType.EventPlannerLogo);
-                    dbc.Entry(user).State = EntityState.Modified;
+                    _databaseConnection.Entry(user).State = EntityState.Modified;
                 }
             }
-            dbc.SaveChanges();
+            _databaseConnection.SaveChanges();
             Session["eventplanner"] = user;
             TempData["display"] = "You have successfully changed your logo/image!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -114,7 +113,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var appUser = db.AppUsers.Find(id);
+            var appUser = _databaseConnection.AppUsers.Find(id);
             if (appUser == null)
                 return HttpNotFound();
             return View(appUser);
@@ -124,8 +123,8 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname");
-            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name");
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname");
+            ViewBag.RoleId = new SelectList(_databaseConnection.Roles, "RoleId", "Name");
             return View();
         }
 
@@ -144,14 +143,14 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (ModelState.IsValid)
             {
-                db.AppUsers.Add(appUser);
-                db.SaveChanges();
+                _databaseConnection.AppUsers.Add(appUser);
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname",
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname",
                 appUser.EventPlannerId);
-            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", appUser.RoleId);
+            ViewBag.RoleId = new SelectList(_databaseConnection.Roles, "RoleId", "Name", appUser.RoleId);
             return View(appUser);
         }
 
@@ -161,12 +160,12 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var appUser = db.AppUsers.Find(id);
+            var appUser = _databaseConnection.AppUsers.Find(id);
             if (appUser == null)
                 return HttpNotFound();
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname",
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname",
                 appUser.EventPlannerId);
-            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", appUser.RoleId);
+            ViewBag.RoleId = new SelectList(_databaseConnection.Roles, "RoleId", "Name", appUser.RoleId);
             return View(appUser);
         }
 
@@ -184,13 +183,13 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (ModelState.IsValid)
             {
-                db.Entry(appUser).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(appUser).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Firstname",
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname",
                 appUser.EventPlannerId);
-            ViewBag.RoleId = new SelectList(db.Roles, "RoleId", "Name", appUser.RoleId);
+            ViewBag.RoleId = new SelectList(_databaseConnection.Roles, "RoleId", "Name", appUser.RoleId);
             return View(appUser);
         }
 
@@ -215,16 +214,16 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     if (loggedinuser.EventPlannerId != null)
                     {
-                        var planner = dbc.EventPlanners.Find(loggedinuser.EventPlannerId);
+                        var planner = _databaseConnection.EventPlanners.Find(loggedinuser.EventPlannerId);
                         if (planner != null)
                         {
                             planner.Name = appUser.Firstname + " " + appUser.Lastname;
                             planner.Email = appUser.Email;
                             planner.Mobile = appUser.Mobile;
 
-                            dbc.Entry(planner).State = EntityState.Modified;
+                            _databaseConnection.Entry(planner).State = EntityState.Modified;
                         }
-                        dbc.SaveChanges();
+                        _databaseConnection.SaveChanges();
                     }
                 }
                 else
@@ -233,8 +232,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(appUser).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(appUser).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 Session["myeventplanloggedinuser"] = appUser;
                 TempData["display"] = "You have successfully updated your profile!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -249,7 +248,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var appUser = db.AppUsers.Find(id);
+            var appUser = _databaseConnection.AppUsers.Find(id);
             if (appUser == null)
                 return HttpNotFound();
             return View(appUser);
@@ -262,20 +261,20 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var appUser = db.AppUsers.Find(id);
+            var appUser = _databaseConnection.AppUsers.Find(id);
 
-            var subscriptionSetting = db.EventPlannerPackageSettings.Where(n => n.AppUserId == id);
+            var subscriptionSetting = _databaseConnection.EventPlannerPackageSettings.Where(n => n.AppUserId == id);
             foreach (var item in subscriptionSetting)
-                db.EventPlannerPackageSettings.Remove(item);
-            db.AppUsers.Remove(appUser);
-            db.SaveChanges();
+                _databaseConnection.EventPlannerPackageSettings.Remove(item);
+            _databaseConnection.AppUsers.Remove(appUser);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -88,6 +88,7 @@
     <Compile Include="Encryption\QueryStingEncoder.cs" />
     <Compile Include="Encryption\SerializeObject.cs" />
     <Compile Include="Encryption\StringCleaner.cs" />
+    <Compile Include="Enum\AppointmentType.cs" />
     <Compile Include="Enum\PackageStatusEnum.cs" />
     <Compile Include="Enum\AppNotificationType.cs" />
     <Compile Include="Enum\EventPlannerTypeEnum.cs" />

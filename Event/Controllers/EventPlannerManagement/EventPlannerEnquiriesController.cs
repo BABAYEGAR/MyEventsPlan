@@ -11,13 +11,13 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
 {
     public class EventPlannerEnquiriesController : Controller
     {
-        private readonly EventPlannerEnquiryDataContext db = new EventPlannerEnquiryDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventPlannerEnquiries
      
         public ActionResult Index()
         {
-            var eventPlannerEnquiries = db.EventPlannerEnquiries.Include(e => e.EventPlanner);
+            var eventPlannerEnquiries = _databaseConnection.EventPlannerEnquiries.Include(e => e.EventPlanner);
             return View(eventPlannerEnquiries.ToList());
         }
 
@@ -27,7 +27,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerEnquiry = db.EventPlannerEnquiries.Find(id);
+            var eventPlannerEnquiry = _databaseConnection.EventPlannerEnquiries.Find(id);
             if (eventPlannerEnquiry == null)
                 return HttpNotFound();
             return View(eventPlannerEnquiry);
@@ -37,7 +37,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
      
         public ActionResult Create()
         {
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name");
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Name");
             return View();
         }
 
@@ -56,8 +56,8 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
             {
                 eventPlannerEnquiry.DateCreated = DateTime.Now;
                 eventPlannerEnquiry.DateLastModified = DateTime.Now;
-                db.EventPlannerEnquiries.Add(eventPlannerEnquiry);
-                db.SaveChanges();
+                _databaseConnection.EventPlannerEnquiries.Add(eventPlannerEnquiry);
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("EventPlannerDetails", "EventPlanners",
                     new {id = eventPlannerEnquiry.EventPlannerId});
             }
@@ -72,10 +72,10 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerEnquiry = db.EventPlannerEnquiries.Find(id);
+            var eventPlannerEnquiry = _databaseConnection.EventPlannerEnquiries.Find(id);
             if (eventPlannerEnquiry == null)
                 return HttpNotFound();
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name",
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Name",
                 eventPlannerEnquiry.EventPlannerId);
             return View(eventPlannerEnquiry);
         }
@@ -93,11 +93,11 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         {
             if (ModelState.IsValid)
             {
-                db.Entry(eventPlannerEnquiry).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventPlannerEnquiry).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanners, "EventPlannerId", "Name",
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Name",
                 eventPlannerEnquiry.EventPlannerId);
             return View(eventPlannerEnquiry);
         }
@@ -108,7 +108,7 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerEnquiry = db.EventPlannerEnquiries.Find(id);
+            var eventPlannerEnquiry = _databaseConnection.EventPlannerEnquiries.Find(id);
             if (eventPlannerEnquiry == null)
                 return HttpNotFound();
             return View(eventPlannerEnquiry);
@@ -121,16 +121,16 @@ namespace MyEventPlan.Controllers.EventPlannerManagement
      
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventPlannerEnquiry = db.EventPlannerEnquiries.Find(id);
-            db.EventPlannerEnquiries.Remove(eventPlannerEnquiry);
-            db.SaveChanges();
+            var eventPlannerEnquiry = _databaseConnection.EventPlannerEnquiries.Find(id);
+            _databaseConnection.EventPlannerEnquiries.Remove(eventPlannerEnquiry);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

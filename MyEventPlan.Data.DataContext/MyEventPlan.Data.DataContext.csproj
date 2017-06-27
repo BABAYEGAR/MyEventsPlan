@@ -49,54 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext\EventPlannerEnquiryDataContext.cs" />
-    <Compile Include="DataContext\VendorEnquiryDataContext.cs" />
-    <Compile Include="DataContext\VendorImageDataContext.cs" />
-    <Compile Include="DataContext\EventPlannerReviewDataContext.cs" />
-    <Compile Include="DataContext\VendorReviewDataContext.cs" />
-    <Compile Include="DataContext\VendorPackageSettingDataContext.cs" />
-    <Compile Include="DataContext\VendorPackageItemDataContext.cs" />
-    <Compile Include="DataContext\VendorPackageDataContext.cs" />
-    <Compile Include="DataContext\EventPlannerPackageItemDataContext.cs" />
-    <Compile Include="DataContext\SubscriptionInvoiceDataContext.cs" />
-    <Compile Include="DataContext\EventPlannerPackageSettingDataContext.cs" />
-    <Compile Include="DataContext\PersonalCheckListItemDataContext.cs" />
-    <Compile Include="DataContext\PersonalCheckListDataContext.cs" />
-    <Compile Include="DataContext\InvoicePaymentDataContext.cs" />
-    <Compile Include="DataContext\InvoiceItemDataContext.cs" />
-    <Compile Include="DataContext\EventPlannerPackageDataContext.cs" />
-    <Compile Include="DataContext\InvoiceDataContext.cs" />
-    <Compile Include="DataContext\BudgetDataContext.cs" />
-    <Compile Include="DataContext\PasswordResetDataContext.cs" />
-    <Compile Include="DataContext\NotificationDataContext.cs" />
-    <Compile Include="DataContext\SettingDataContext.cs" />
-    <Compile Include="DataContext\MessageGroupMemberDataContext.cs" />
-    <Compile Include="DataContext\MessageGroupDataContext.cs" />
-    <Compile Include="DataContext\MessageDataContext.cs" />
-    <Compile Include="DataContext\ClientDataContext.cs" />
-    <Compile Include="DataContext\EventResourceMappingDataContext.cs" />
-    <Compile Include="DataContext\LocationDataContext.cs" />
-    <Compile Include="DataContext\ResourceDataContext.cs" />
-    <Compile Include="DataContext\NewsActionDataContext.cs" />
-    <Compile Include="DataContext\NewsDataContext.cs" />
-    <Compile Include="DataContext\TaskDataContext.cs" />
-    <Compile Include="DataContext\NoteDataContext.cs" />
-    <Compile Include="DataContext\CheckListItemDataContext.cs" />
-    <Compile Include="DataContext\CheckListDataContext.cs" />
-    <Compile Include="DataContext\GuestListDataContext.cs" />
-    <Compile Include="DataContext\GuestDataContext.cs" />
-    <Compile Include="DataContext\StaffEventMappingDataContext.cs" />
-    <Compile Include="DataContext\EventVendorMappingDataContext.cs" />
-    <Compile Include="DataContext\StaffDataContext.cs" />
-    <Compile Include="DataContext\ContactDataContext.cs" />
-    <Compile Include="DataContext\AppUserDataContext.cs" />
-    <Compile Include="DataContext\EventPlannerDataContext.cs" />
-    <Compile Include="DataContext\VendorServiceDataContext.cs" />
-    <Compile Include="DataContext\VendorDataContext.cs" />
-    <Compile Include="DataContext\RoleDataContext.cs" />
-    <Compile Include="DataContext\ProspectDataContext.cs" />
-    <Compile Include="DataContext\AppointmentDataContext.cs" />
-    <Compile Include="DataContext\EventTypeDataContext.cs" />
     <Compile Include="DataContext\EventDataContext.cs" />
     <Compile Include="Migrations\201703172308209_migrate1.cs" />
     <Compile Include="Migrations\201703172308209_migrate1.Designer.cs">
@@ -382,6 +334,10 @@
     <Compile Include="Migrations\201706170349279_migrate80.Designer.cs">
       <DependentUpon>201706170349279_migrate80.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706262327502_Migrate81.cs" />
+    <Compile Include="Migrations\201706262327502_Migrate81.Designer.cs">
+      <DependentUpon>201706262327502_Migrate81.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -608,6 +564,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706170349279_migrate80.resx">
       <DependentUpon>201706170349279_migrate80.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706262327502_Migrate81.resx">
+      <DependentUpon>201706262327502_Migrate81.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

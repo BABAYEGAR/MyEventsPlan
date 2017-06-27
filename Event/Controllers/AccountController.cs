@@ -19,10 +19,8 @@ namespace MyEventPlan.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly AppUserDataContext _db = new AppUserDataContext();
-        private readonly PasswordResetDataContext _dbc = new PasswordResetDataContext();
-        private readonly EventDataContext _dbd = new EventDataContext();
-        private readonly SubscriptionInvoiceDataContext _dbe = new SubscriptionInvoiceDataContext();
+
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -56,7 +54,7 @@ namespace MyEventPlan.Controllers
         public ActionResult Pricing()
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var packages = _dbd.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
+            var packages = _databaseConnection.EventPlannerPackageSettings.Include(n => n.EventPlannerPackage);
 
             var packageSubscribed =
                 packages.SingleOrDefault(
@@ -101,7 +99,7 @@ namespace MyEventPlan.Controllers
         public ActionResult VerifyEmail(FormCollection collectedValues)
         {
             var email = collectedValues["Email"];
-            var user = _db.AppUsers.SingleOrDefault(n => n.Email == email);
+            var user = _databaseConnection.AppUsers.SingleOrDefault(n => n.Email == email);
 
             Session["user"] = user;
             TempData["display"] = "Your email has been successfully verified. Change your password!";
@@ -114,9 +112,9 @@ namespace MyEventPlan.Controllers
      
         public ActionResult VerifyAccount(long id)
         {
-            var user = _db.AppUsers.Find(id);
-            _db.Entry(user).State = EntityState.Modified;
-            _db.SaveChanges();
+            var user = _databaseConnection.AppUsers.Find(id);
+            _databaseConnection.Entry(user).State = EntityState.Modified;
+            _databaseConnection.SaveChanges();
             Session["myeventplanloggedinuser"] = user;
             return RedirectToAction("Dashboard", "Home");
         }
@@ -126,7 +124,7 @@ namespace MyEventPlan.Controllers
      
         public ActionResult ChangeClientPassword(long? id)
         {
-            var user = _db.AppUsers.Find(id);
+            var user = _databaseConnection.AppUsers.Find(id);
             Session["user"] = user;
             return View();
         }
@@ -140,14 +138,14 @@ namespace MyEventPlan.Controllers
             var password = collectedValues["ConfirmPassword"];
             if (loggedinuser != null)
             {
-                var user = _db.AppUsers.Find(loggedinuser.AppUserId);
+                var user = _databaseConnection.AppUsers.Find(loggedinuser.AppUserId);
                 if (user != null)
                 {
                     user.Password = new Hashing().HashPassword(password);
-                    _db.Entry(user).State = EntityState.Modified;
+                    _databaseConnection.Entry(user).State = EntityState.Modified;
                 }
             }
-            _db.SaveChanges();
+            _databaseConnection.SaveChanges();
             Session["user"] = null;
             TempData["login"] = "You have successfully changed your password!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -171,14 +169,14 @@ namespace MyEventPlan.Controllers
             var password = collectedValues["ConfirmPassword"];
             if (loggedinuser != null)
             {
-                var user = _db.AppUsers.Find(loggedinuser.AppUserId);
+                var user = _databaseConnection.AppUsers.Find(loggedinuser.AppUserId);
                 if (user != null)
                 {
                     user.Password = new Hashing().HashPassword(password);
-                    _db.Entry(user).State = EntityState.Modified;
+                    _databaseConnection.Entry(user).State = EntityState.Modified;
                 }
             }
-            _db.SaveChanges();
+            _databaseConnection.SaveChanges();
             Session["myeventplanloggedinuser"] = loggedinuser;
             TempData["display"] = "You have successfully changed your password!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -204,11 +202,11 @@ namespace MyEventPlan.Controllers
             var password = collectedValues["ConfirmPassword"];
             if (loggedinuser != null)
             {
-                var user = _db.AppUsers.Find(loggedinuser.AppUserId);
+                var user = _databaseConnection.AppUsers.Find(loggedinuser.AppUserId);
                 if (user != null)
                 {
                     user.Password = new Hashing().HashPassword(password);
-                    _db.Entry(user).State = EntityState.Modified;
+                    _databaseConnection.Entry(user).State = EntityState.Modified;
                 }
             }
             var generator = new Random();
@@ -218,8 +216,8 @@ namespace MyEventPlan.Controllers
             reset.Date = DateTime.Now;
             reset.Code = number;
             if (loggedinuser != null) reset.Email = loggedinuser.Email;
-            _dbc.PasswordResets.Add(reset);
-            _db.SaveChanges();
+            _databaseConnection.PasswordResets.Add(reset);
+            _databaseConnection.SaveChanges();
             //_dbc.SaveChanges();
 
             Session["user"] = null;
@@ -258,7 +256,7 @@ namespace MyEventPlan.Controllers
 
                     //package setting
                     var packageSubscribed =
-                        _dbe.EventPlannerPackageSettings.SingleOrDefault(
+                        _databaseConnection.EventPlannerPackageSettings.SingleOrDefault(
                             n =>
                                 n.EventPlannerId == user.EventPlannerId &&
                                 n.Status == PackageStatusEnum.Active.ToString());
@@ -266,13 +264,13 @@ namespace MyEventPlan.Controllers
                         Session["subscribe"] = packageSubscribed;
                     if (user.EventPlannerId != null)
                     {
-                        var eventPlanner = _db.EventPlanners.Find(user.EventPlannerId);
+                        var eventPlanner = _databaseConnection.EventPlanners.Find(user.EventPlannerId);
                         Session["eventplanner"] = eventPlanner;
                         return RedirectToAction("Dashboard", "Home");
                     }
                     if (user.VendorId != null)
                     {
-                        var vendor = _dbd.Vendors.Find(user.VendorId);
+                        var vendor = _databaseConnection.Vendors.Find(user.VendorId);
                         Session["vendor"] = vendor;
                         return RedirectToAction("Profile", "Vendors");
                     }

@@ -11,14 +11,13 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorReviewsController : Controller
     {
-        private readonly VendorReviewDataContext db = new VendorReviewDataContext();
-        private readonly VendorDataContext dbc = new VendorDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: VendorReviews
-       
+
         public ActionResult Index()
         {
-            var vendorReviews = db.VendorReviews.Include(v => v.Vendor);
+            var vendorReviews = _databaseConnection.VendorReviews.Include(v => v.Vendor);
             return View(vendorReviews.ToList());
         }
 
@@ -28,7 +27,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorReview = db.VendorReviews.Find(id);
+            var vendorReview = _databaseConnection.VendorReviews.Find(id);
             if (vendorReview == null)
                 return HttpNotFound();
             return View(vendorReview);
@@ -38,7 +37,7 @@ namespace MyEventPlan.Controllers.VendorManagement
        
         public ActionResult Create()
         {
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name");
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name");
             return View();
         }
 
@@ -59,28 +58,24 @@ namespace MyEventPlan.Controllers.VendorManagement
                 vendorReview.DateCreated = DateTime.Now;
                 vendorReview.DateLastModified = DateTime.Now;
 
-                db.VendorReviews.Add(vendorReview);
-                db.SaveChanges();
+                _databaseConnection.VendorReviews.Add(vendorReview);
+                _databaseConnection.SaveChanges();
 
-                var vendor = dbc.Vendors.Find(vendorReview.VendorId);
-                var reviews = db.VendorReviews.Where(n => n.VendorId == vendorReview.VendorId).ToList();
-                long? totalRatings = 0;
-                long? totalPossibleRatings = 0;
-                double? ratingValue = 0;
-                long ratings = 0;
+                var vendor = _databaseConnection.Vendors.Find(vendorReview.VendorId);
+                var reviews = _databaseConnection.VendorReviews.Where(n => n.VendorId == vendorReview.VendorId).ToList();
                 if (reviews.Count > 0)
                 {
-                    totalRatings = reviews.Sum(n => n.Rating);
-                    totalPossibleRatings = reviews.Count * 5;
-                    ratingValue = totalRatings * 5 / totalPossibleRatings;
+                    var totalRatings = reviews.Sum(n => n.Rating);
+                    long? totalPossibleRatings = reviews.Count * 5;
+                    double? ratingValue = totalRatings * 5 / totalPossibleRatings;
                     if (ratingValue != null)
                     {
-                        ratings = (long) Math.Round((double) ratingValue);
-                        vendor.AverageRating = ratings;
+                        var ratings = (long) Math.Round((double) ratingValue);
+                        if (vendor != null) vendor.AverageRating = ratings;
                     }
                 }
-                dbc.Entry(vendor).State = EntityState.Modified;
-                dbc.SaveChanges();
+                _databaseConnection.Entry(vendor).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Details", "Vendors", new {id = vendorReview.VendorId});
             }
             return View(vendorReview);
@@ -92,10 +87,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorReview = db.VendorReviews.Find(id);
+            var vendorReview = _databaseConnection.VendorReviews.Find(id);
             if (vendorReview == null)
                 return HttpNotFound();
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorReview.VendorId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorReview.VendorId);
             return View(vendorReview);
         }
 
@@ -112,11 +107,11 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vendorReview).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(vendorReview).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorReview.VendorId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorReview.VendorId);
             return View(vendorReview);
         }
 
@@ -126,7 +121,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorReview = db.VendorReviews.Find(id);
+            var vendorReview = _databaseConnection.VendorReviews.Find(id);
             if (vendorReview == null)
                 return HttpNotFound();
             return View(vendorReview);
@@ -139,16 +134,16 @@ namespace MyEventPlan.Controllers.VendorManagement
        
         public ActionResult DeleteConfirmed(long id)
         {
-            var vendorReview = db.VendorReviews.Find(id);
-            db.VendorReviews.Remove(vendorReview);
-            db.SaveChanges();
+            var vendorReview = _databaseConnection.VendorReviews.Find(id);
+            _databaseConnection.VendorReviews.Remove(vendorReview);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

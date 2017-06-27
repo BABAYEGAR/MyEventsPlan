@@ -13,14 +13,13 @@ namespace MyEventPlan.Controllers.NewsManagement
 {
     public class NewsController : Controller
     {
-        private readonly NewsDataContext db = new NewsDataContext();
-        private readonly EventDataContext dbc = new EventDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: News
         [SessionExpire]
         public ActionResult Index()
         {
-            var newses = db.Newses.Include(n => n.EventPlanner);
+            var newses = _databaseConnection.Newses.Include(n => n.EventPlanner);
             return View(newses.ToList());
         }
 
@@ -30,8 +29,8 @@ namespace MyEventPlan.Controllers.NewsManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var newses =
-                db.Newses.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(n => n.EventPlanner);
-            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+                _databaseConnection.Newses.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(n => n.EventPlanner);
+            ViewBag.EventId = new SelectList(_databaseConnection.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
                 "EventId", "Name");
             return View("Index", newses.ToList());
         }
@@ -42,7 +41,7 @@ namespace MyEventPlan.Controllers.NewsManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var news = db.Newses.Find(id);
+            var news = _databaseConnection.Newses.Find(id);
             if (news == null)
                 return HttpNotFound();
             return View(news);
@@ -52,7 +51,7 @@ namespace MyEventPlan.Controllers.NewsManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name");
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name");
             return View();
         }
 
@@ -85,12 +84,12 @@ namespace MyEventPlan.Controllers.NewsManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Newses.Add(news);
-                db.SaveChanges();
+                _databaseConnection.Newses.Add(news);
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("MyNewsFeeds");
             }
 
-            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+            ViewBag.EventId = new SelectList(_databaseConnection.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
                 "EventId", "Name");
             return View(news);
         }
@@ -102,10 +101,10 @@ namespace MyEventPlan.Controllers.NewsManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var news = db.Newses.Find(id);
+            var news = _databaseConnection.Newses.Find(id);
             if (news == null)
                 return HttpNotFound();
-            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+            ViewBag.EventId = new SelectList(_databaseConnection.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
                 "EventId", "Name");
             return View(news);
         }
@@ -136,11 +135,11 @@ namespace MyEventPlan.Controllers.NewsManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(news).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(news).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.EventId = new SelectList(db.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
+            ViewBag.EventId = new SelectList(_databaseConnection.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
                 "EventId", "Name");
             return View(news);
         }
@@ -151,7 +150,7 @@ namespace MyEventPlan.Controllers.NewsManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var news = db.Newses.Find(id);
+            var news = _databaseConnection.Newses.Find(id);
             if (news == null)
                 return HttpNotFound();
             return View(news);
@@ -164,9 +163,9 @@ namespace MyEventPlan.Controllers.NewsManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var news = db.Newses.Find(id);
-            db.Newses.Remove(news);
-            db.SaveChanges();
+            var news = _databaseConnection.Newses.Find(id);
+            _databaseConnection.Newses.Remove(news);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -174,13 +173,13 @@ namespace MyEventPlan.Controllers.NewsManagement
         public ActionResult LikeOrDislikeANews(long? id, string like, string dislike)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var news = db.Newses.Find(id);
+            var news = _databaseConnection.Newses.Find(id);
             var newsAction = new NewsAction();
-            var actionLikeCheck = dbc.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId
+            var actionLikeCheck = _databaseConnection.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId
                                                                        && n.NewsId == news.NewsId &&
                                                                        n.Action == NewsActionEnum.Like.ToString());
 
-            var actionDisLikeCheck = dbc.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId
+            var actionDisLikeCheck = _databaseConnection.NewsActions.SingleOrDefault(n => n.AppUserId == loggedinuser.AppUserId
                                                                           && n.NewsId == news.NewsId &&
                                                                           n.Action == NewsActionEnum.Dislike
                                                                               .ToString());
@@ -208,9 +207,9 @@ namespace MyEventPlan.Controllers.NewsManagement
                 return PartialView("_LikeOrDislikePartial", news);
             if (actionDisLikeCheck != null && dislike != null)
                 return PartialView("_LikeOrDislikePartial", news);
-            dbc.Entry(news).State = EntityState.Modified;
-            dbc.NewsActions.Add(newsAction);
-            dbc.SaveChanges();
+            _databaseConnection.Entry(news).State = EntityState.Modified;
+            _databaseConnection.NewsActions.Add(newsAction);
+            _databaseConnection.SaveChanges();
             return PartialView("_LikeOrDislikePartial", news);
         }
 
@@ -218,14 +217,14 @@ namespace MyEventPlan.Controllers.NewsManagement
         [SessionExpire]
         public ActionResult ReloadCompleteView(long newsId)
         {
-            var news = db.Newses.Find(newsId);
+            var news = _databaseConnection.Newses.Find(newsId);
             return PartialView("_LikeOrDislikePartial", news);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

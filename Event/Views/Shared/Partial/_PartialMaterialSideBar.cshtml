@@ -3,7 +3,7 @@
 @using MyEventPlan.Data.Service.Enum
 @{
     var role = Session["role"] as Role;
-    var messageDb = new MessageDataContext();
+    var databaseConnection = new EventDataContext();
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
     //long unreadMessages = messageDb.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false).ToList().Count;
     string color = null;

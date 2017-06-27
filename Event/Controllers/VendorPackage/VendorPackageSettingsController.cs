@@ -10,13 +10,13 @@ namespace MyEventPlan.Controllers.VendorPackage
 {
     public class VendorPackageSettingsController : Controller
     {
-        private readonly VendorPackageSettingDataContext db = new VendorPackageSettingDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: VendorPackageSettings
         [SessionExpire]
         public ActionResult Index()
         {
-            var vendorPackageSetting = db.VendorPackageSetting.Include(v => v.AppUser).Include(v => v.Vendor)
+            var vendorPackageSetting = _databaseConnection.VendorPackageSettings.Include(v => v.AppUser).Include(v => v.Vendor)
                 .Include(v => v.VendorPackage);
             return View(vendorPackageSetting.ToList());
         }
@@ -27,7 +27,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorPackageSetting = db.VendorPackageSetting.Find(id);
+            var vendorPackageSetting = _databaseConnection.VendorPackageSettings.Find(id);
             if (vendorPackageSetting == null)
                 return HttpNotFound();
             return View(vendorPackageSetting);
@@ -37,9 +37,9 @@ namespace MyEventPlan.Controllers.VendorPackage
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname");
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name");
-            ViewBag.VendorPackageId = new SelectList(db.VendorPackages, "VendorPackageId", "PackageName");
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname");
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name");
+            ViewBag.VendorPackageId = new SelectList(_databaseConnection.VendorPackages, "VendorPackageId", "PackageName");
             return View();
         }
 
@@ -56,14 +56,14 @@ namespace MyEventPlan.Controllers.VendorPackage
         {
             if (ModelState.IsValid)
             {
-                db.VendorPackageSetting.Add(vendorPackageSetting);
-                db.SaveChanges();
+                _databaseConnection.VendorPackageSettings.Add(vendorPackageSetting);
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", vendorPackageSetting.AppUserId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorPackageSetting.VendorId);
-            ViewBag.VendorPackageId = new SelectList(db.VendorPackages, "VendorPackageId", "PackageName",
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", vendorPackageSetting.AppUserId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorPackageSetting.VendorId);
+            ViewBag.VendorPackageId = new SelectList(_databaseConnection.VendorPackages, "VendorPackageId", "PackageName",
                 vendorPackageSetting.VendorPackageId);
             return View(vendorPackageSetting);
         }
@@ -74,12 +74,12 @@ namespace MyEventPlan.Controllers.VendorPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorPackageSetting = db.VendorPackageSetting.Find(id);
+            var vendorPackageSetting = _databaseConnection.VendorPackageSettings.Find(id);
             if (vendorPackageSetting == null)
                 return HttpNotFound();
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", vendorPackageSetting.AppUserId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorPackageSetting.VendorId);
-            ViewBag.VendorPackageId = new SelectList(db.VendorPackages, "VendorPackageId", "PackageName",
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", vendorPackageSetting.AppUserId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorPackageSetting.VendorId);
+            ViewBag.VendorPackageId = new SelectList(_databaseConnection.VendorPackages, "VendorPackageId", "PackageName",
                 vendorPackageSetting.VendorPackageId);
             return View(vendorPackageSetting);
         }
@@ -97,13 +97,13 @@ namespace MyEventPlan.Controllers.VendorPackage
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vendorPackageSetting).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(vendorPackageSetting).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", vendorPackageSetting.AppUserId);
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorPackageSetting.VendorId);
-            ViewBag.VendorPackageId = new SelectList(db.VendorPackages, "VendorPackageId", "PackageName",
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", vendorPackageSetting.AppUserId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorPackageSetting.VendorId);
+            ViewBag.VendorPackageId = new SelectList(_databaseConnection.VendorPackages, "VendorPackageId", "PackageName",
                 vendorPackageSetting.VendorPackageId);
             return View(vendorPackageSetting);
         }
@@ -114,7 +114,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorPackageSetting = db.VendorPackageSetting.Find(id);
+            var vendorPackageSetting = _databaseConnection.VendorPackageSettings.Find(id);
             if (vendorPackageSetting == null)
                 return HttpNotFound();
             return View(vendorPackageSetting);
@@ -127,16 +127,16 @@ namespace MyEventPlan.Controllers.VendorPackage
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var vendorPackageSetting = db.VendorPackageSetting.Find(id);
-            db.VendorPackageSetting.Remove(vendorPackageSetting);
-            db.SaveChanges();
+            var vendorPackageSetting = _databaseConnection.VendorPackageSettings.Find(id);
+            _databaseConnection.VendorPackageSettings.Remove(vendorPackageSetting);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

@@ -13,13 +13,13 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorImagesController : Controller
     {
-        private readonly VendorImageDataContext db = new VendorImageDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: VendorImages
         [SessionExpire]
         public ActionResult Index()
         {
-            var vendorImages = db.VendorImages.Include(v => v.Vendor);
+            var vendorImages = _databaseConnection.VendorImages.Include(v => v.Vendor);
             return View(vendorImages.ToList());
         }
 
@@ -29,7 +29,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorImage = db.VendorImages.Find(id);
+            var vendorImage = _databaseConnection.VendorImages.Find(id);
             if (vendorImage == null)
                 return HttpNotFound();
             return View(vendorImage);
@@ -39,7 +39,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name");
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name");
             return View();
         }
 
@@ -103,14 +103,14 @@ namespace MyEventPlan.Controllers.VendorManagement
                     return RedirectToAction("Login", "Account");
                 }
 
-                db.VendorImages.Add(vendorImage);
-                db.SaveChanges();
+                _databaseConnection.VendorImages.Add(vendorImage);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added Image(s)!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Profile", "Vendors");
             }
 
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorImage.VendorId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorImage.VendorId);
             return View(vendorImage);
         }
 
@@ -120,10 +120,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorImage = db.VendorImages.Find(id);
+            var vendorImage = _databaseConnection.VendorImages.Find(id);
             if (vendorImage == null)
                 return HttpNotFound();
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorImage.VendorId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorImage.VendorId);
             return View(vendorImage);
         }
 
@@ -183,11 +183,11 @@ namespace MyEventPlan.Controllers.VendorManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(vendorImage).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(vendorImage).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Profile", "Vendors");
             }
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorImage.VendorId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorImage.VendorId);
             return View(vendorImage);
         }
 
@@ -197,7 +197,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorImage = db.VendorImages.Find(id);
+            var vendorImage = _databaseConnection.VendorImages.Find(id);
             if (vendorImage == null)
                 return HttpNotFound();
             return View(vendorImage);
@@ -210,16 +210,16 @@ namespace MyEventPlan.Controllers.VendorManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var vendorImage = db.VendorImages.Find(id);
-            db.VendorImages.Remove(vendorImage);
-            db.SaveChanges();
+            var vendorImage = _databaseConnection.VendorImages.Find(id);
+            _databaseConnection.VendorImages.Remove(vendorImage);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

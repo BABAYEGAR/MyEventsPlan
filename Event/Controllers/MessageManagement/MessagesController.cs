@@ -13,9 +13,7 @@ namespace MyEventPlan.Controllers.MessageManagement
 {
     public class MessagesController : Controller
     {
-        private readonly MessageDataContext db = new MessageDataContext();
-        private readonly NotificationDataContext dbc = new NotificationDataContext();
-        private readonly EventDataContext dbd = new EventDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Messages
         [SessionExpire]
@@ -23,23 +21,23 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var messages =
-                db.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId)
+                _databaseConnection.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId)
                     .Include(m => m.AppUser)
                     .Include(m => m.MessageGroup);
             var allUsers =
-                db.AppUsers.Where(
+                _databaseConnection.AppUsers.Where(
                     n =>
                         n.AppUserId != loggedinuser.AppUserId && n.AppUserId != 4 && n.ClientId != null &&
                         n.VendorId != null);
-            var eventPlannerEvents = dbd.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+            var eventPlannerEvents = _databaseConnection.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             var eventPlannerEventsMapping =
-                dbd.EventVendorMappings.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
+                _databaseConnection.EventVendorMappings.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             var users = new List<AppUser>();
             foreach (var item in allUsers)
             {
                 if (item.ClientId != null)
                 {
-                    var client = dbd.Clients.Find(item.ClientId);
+                    var client = _databaseConnection.Clients.Find(item.ClientId);
                     if (eventPlannerEvents.Any(n => n.EventId == client.EventId))
                         users.Add(item);
                 }
@@ -49,7 +47,7 @@ namespace MyEventPlan.Controllers.MessageManagement
             }
             ViewBag.AppUserId = new SelectList(users,
                 "AppUserId", "DisplayName");
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name");
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name");
             return View(messages.ToList());
         }
 
@@ -59,12 +57,12 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var messages =
-                db.Messages.Where(n => n.Sender == loggedinuser.AppUserId)
+                _databaseConnection.Messages.Where(n => n.Sender == loggedinuser.AppUserId)
                     .Include(m => m.AppUser)
                     .Include(m => m.MessageGroup);
-            ViewBag.AppUserId = new SelectList(db.AppUsers.Where(n => n.AppUserId != loggedinuser.AppUserId),
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers.Where(n => n.AppUserId != loggedinuser.AppUserId),
                 "AppUserId", "DisplayName");
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name");
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name");
             return View(messages.ToList());
         }
 
@@ -75,13 +73,13 @@ namespace MyEventPlan.Controllers.MessageManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var message = db.Messages.Find(id);
-            var notification = dbc.Notifications.Find(notificationId);
+            var message = _databaseConnection.Messages.Find(id);
+            var notification = _databaseConnection.Notifications.Find(notificationId);
             notification.Read = true;
             notification.DateLastModified = DateTime.Now;
             if (loggedinuser != null) notification.LastModifiedBy = loggedinuser.AppUserId;
-            dbc.Entry(notification).State = EntityState.Modified;
-            dbc.SaveChanges();
+            _databaseConnection.Entry(notification).State = EntityState.Modified;
+            _databaseConnection.SaveChanges();
             return View(message);
         }
 
@@ -89,8 +87,8 @@ namespace MyEventPlan.Controllers.MessageManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname");
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name");
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname");
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name");
             return View();
         }
 
@@ -116,8 +114,8 @@ namespace MyEventPlan.Controllers.MessageManagement
                         message.CreatedBy = loggedinuser.AppUserId;
                         message.Sender = loggedinuser.AppUserId;
                         message.Read = false;
-                        db.Messages.Add(message);
-                        db.SaveChanges();
+                        _databaseConnection.Messages.Add(message);
+                        _databaseConnection.SaveChanges();
                     }
                     else
                     {
@@ -128,7 +126,7 @@ namespace MyEventPlan.Controllers.MessageManagement
                 }
                 if (message.MessageGroupId != null)
                 {
-                    var group = db.MessageGroupMembers.Where(n => n.MessageGroupId == message.MessageGroupId);
+                    var group = _databaseConnection.MessageGroupMembers.Where(n => n.MessageGroupId == message.MessageGroupId);
                     foreach (var item in group.ToList())
                     {
                         message.AppUserId = item.AppUserId;
@@ -141,15 +139,15 @@ namespace MyEventPlan.Controllers.MessageManagement
                         message.DateCreated = DateTime.Now;
                         message.DateLastModified = DateTime.Now;
                         message.Read = false;
-                        db.Messages.Add(message);
-                        db.SaveChanges();
+                        _databaseConnection.Messages.Add(message);
+                        _databaseConnection.SaveChanges();
                         message.AppUserId = null;
                     }
                 }
 
                 if (message.MessageGroupId != null)
                 {
-                    var group = db.MessageGroupMembers.Where(n => n.MessageGroupId == message.MessageGroupId);
+                    var group = _databaseConnection.MessageGroupMembers.Where(n => n.MessageGroupId == message.MessageGroupId);
                     foreach (var item in group.ToList())
                     {
                         var notification = new Notification();
@@ -165,8 +163,8 @@ namespace MyEventPlan.Controllers.MessageManagement
                             notification.LastModifiedBy = loggedinuser.AppUserId;
                         }
                         notification.NotificationType = AppNotificationType.Message.ToString();
-                        dbc.Notifications.Add(notification);
-                        dbc.SaveChanges();
+                        _databaseConnection.Notifications.Add(notification);
+                        _databaseConnection.SaveChanges();
                     }
                 }
 
@@ -185,16 +183,16 @@ namespace MyEventPlan.Controllers.MessageManagement
                         notification.LastModifiedBy = loggedinuser.AppUserId;
                     }
                     notification.NotificationType = AppNotificationType.Message.ToString();
-                    dbc.Notifications.Add(notification);
-                    dbc.SaveChanges();
+                    _databaseConnection.Notifications.Add(notification);
+                    _databaseConnection.SaveChanges();
                 }
                 TempData["display"] = "Your platform message has been sent successfully!";
                 TempData["notificationtype"] = NotificationType.Info.ToString();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", message.AppUserId);
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name", message.MessageGroupId);
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", message.AppUserId);
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name", message.MessageGroupId);
             return View(message);
         }
 
@@ -204,11 +202,11 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var message = db.Messages.Find(id);
+            var message = _databaseConnection.Messages.Find(id);
             if (message == null)
                 return HttpNotFound();
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", message.AppUserId);
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name", message.MessageGroupId);
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", message.AppUserId);
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name", message.MessageGroupId);
             return View(message);
         }
 
@@ -226,12 +224,12 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (ModelState.IsValid)
             {
-                db.Entry(message).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(message).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", message.AppUserId);
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name", message.MessageGroupId);
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", message.AppUserId);
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name", message.MessageGroupId);
             return View(message);
         }
 
@@ -241,7 +239,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var message = db.Messages.Find(id);
+            var message = _databaseConnection.Messages.Find(id);
             if (message == null)
                 return HttpNotFound();
             return View(message);
@@ -254,16 +252,16 @@ namespace MyEventPlan.Controllers.MessageManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var message = db.Messages.Find(id);
-            db.Messages.Remove(message);
-            db.SaveChanges();
+            var message = _databaseConnection.Messages.Find(id);
+            _databaseConnection.Messages.Remove(message);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

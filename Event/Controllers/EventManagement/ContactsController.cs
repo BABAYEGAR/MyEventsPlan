@@ -12,7 +12,7 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class ContactsController : Controller
     {
-        private readonly ContactDataContext db = new ContactDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Contacts
         [SessionExpire]
@@ -20,7 +20,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var contact =
-                db.Contact.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(c => c.EventPlanner);
+                _databaseConnection.Contacts.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId).Include(c => c.EventPlanner);
             return View(contact.ToList());
         }
 
@@ -30,7 +30,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var contact = db.Contact.Find(id);
+            var contact = _databaseConnection.Contacts.Find(id);
             if (contact == null)
                 return HttpNotFound();
             return View(contact);
@@ -55,7 +55,7 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 if (loggedinuser != null) contact.EventPlannerId = loggedinuser.EventPlannerId;
-                var contactExist = db.Contact
+                var contactExist = _databaseConnection.Contacts
                     .Where(m => m.Email == contact.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
                 if (loggedinuser != null)
                 {
@@ -70,8 +70,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     contact.DateLastModified = DateTime.Now;
                     contact.LastModifiedBy = loggedinuser.AppUserId;
                 }
-                db.Contact.Add(contact);
-                db.SaveChanges();
+                _databaseConnection.Contacts.Add(contact);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a contact!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -85,7 +85,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var contact = db.Contact.Find(id);
+            var contact = _databaseConnection.Contacts.Find(id);
             if (contact == null)
                 return HttpNotFound();
             return View(contact);
@@ -109,10 +109,10 @@ namespace MyEventPlan.Controllers.EventManagement
                     contact.DateLastModified = DateTime.Now;
                     contact.LastModifiedBy = loggedinuser.AppUserId;
                 }
-                db.Contact.Add(contact);
-                db.SaveChanges();
-                db.Entry(contact).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Contacts.Add(contact);
+                _databaseConnection.SaveChanges();
+                _databaseConnection.Entry(contact).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the contact!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -126,7 +126,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var contact = db.Contact.Find(id);
+            var contact = _databaseConnection.Contacts.Find(id);
             if (contact == null)
                 return HttpNotFound();
             return View(contact);
@@ -139,9 +139,9 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var contact = db.Contact.Find(id);
-            db.Contact.Remove(contact);
-            db.SaveChanges();
+            var contact = _databaseConnection.Contacts.Find(id);
+            _databaseConnection.Contacts.Remove(contact);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted the contact!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -150,7 +150,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

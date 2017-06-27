@@ -11,13 +11,13 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class VendorEnquiriesController : Controller
     {
-        private readonly VendorEnquiryDataContext db = new VendorEnquiryDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: VendorEnquiries
-       
+
         public ActionResult Index()
         {
-            var vendorEnquiries = db.VendorEnquiries.Include(v => v.Vendor);
+            var vendorEnquiries = _databaseConnection.VendorEnquiries.Include(v => v.Vendor);
             return View(vendorEnquiries.ToList());
         }
 
@@ -27,7 +27,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorEnquiry = db.VendorEnquiries.Find(id);
+            var vendorEnquiry = _databaseConnection.VendorEnquiries.Find(id);
             if (vendorEnquiry == null)
                 return HttpNotFound();
             return View(vendorEnquiry);
@@ -37,7 +37,7 @@ namespace MyEventPlan.Controllers.VendorManagement
        
         public ActionResult Create()
         {
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name");
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name");
             return View();
         }
 
@@ -56,8 +56,8 @@ namespace MyEventPlan.Controllers.VendorManagement
             {
                 vendorEnquiry.DateCreated = DateTime.Now;
                 vendorEnquiry.DateLastModified = DateTime.Now;
-                db.VendorEnquiries.Add(vendorEnquiry);
-                db.SaveChanges();
+                _databaseConnection.VendorEnquiries.Add(vendorEnquiry);
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Details", "Vendors", new {id = vendorEnquiry.VendorId});
             }
             return View(vendorEnquiry);
@@ -69,10 +69,10 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorEnquiry = db.VendorEnquiries.Find(id);
+            var vendorEnquiry = _databaseConnection.VendorEnquiries.Find(id);
             if (vendorEnquiry == null)
                 return HttpNotFound();
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorEnquiry.VendorId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorEnquiry.VendorId);
             return View(vendorEnquiry);
         }
 
@@ -89,11 +89,11 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vendorEnquiry).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(vendorEnquiry).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.VendorId = new SelectList(db.Vendors, "VendorId", "Name", vendorEnquiry.VendorId);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name", vendorEnquiry.VendorId);
             return View(vendorEnquiry);
         }
 
@@ -103,7 +103,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorEnquiry = db.VendorEnquiries.Find(id);
+            var vendorEnquiry = _databaseConnection.VendorEnquiries.Find(id);
             if (vendorEnquiry == null)
                 return HttpNotFound();
             return View(vendorEnquiry);
@@ -116,16 +116,16 @@ namespace MyEventPlan.Controllers.VendorManagement
        
         public ActionResult DeleteConfirmed(long id)
         {
-            var vendorEnquiry = db.VendorEnquiries.Find(id);
-            db.VendorEnquiries.Remove(vendorEnquiry);
-            db.SaveChanges();
+            var vendorEnquiry = _databaseConnection.VendorEnquiries.Find(id);
+            _databaseConnection.VendorEnquiries.Remove(vendorEnquiry);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

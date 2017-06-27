@@ -10,7 +10,7 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
 {
     public class AuthenticationFactory
     {
-        private readonly AppUserDataContext _db = new AppUserDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         /// <summary>
         ///     This ,ethod is used to authenticate a users login
@@ -21,7 +21,7 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
         public AppUser AuthenticateAppUserLogin(string email, string password)
         {
             AppUser user = null;
-            user = _db.AppUsers.SingleOrDefault(n => n.Email == email);
+            user = _databaseConnection.AppUsers.SingleOrDefault(n => n.Email == email);
             var hashPassword = user != null && new Hashing().ValidatePassword(password,user.Password);
             if (hashPassword)
             {
@@ -42,15 +42,15 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
         public AppUser ForgotPasswordRequest(string email)
         {
             email = email.Trim();
-            var user = _db.AppUsers.SingleOrDefault(m=>m.Email == email);
+            var user = _databaseConnection.AppUsers.SingleOrDefault(m=>m.Email == email);
             if (user != null)
             {
-                var appuser = _db.AppUsers.Find(user.AppUserId);
+                var appuser = _databaseConnection.AppUsers.Find(user.AppUserId);
                 var newPassword = Membership.GeneratePassword(8, 1);
                 appuser.Password = newPassword;
-                _db.Entry(appuser).State = EntityState.Modified;
+                _databaseConnection.Entry(appuser).State = EntityState.Modified;
             }
-            _db.SaveChanges();
+            _databaseConnection.SaveChanges();
             //new MailerDaemon().ResetUserPassword(appuser);
             return user;
         }
@@ -62,12 +62,12 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
         /// <param name="userId"></param>
         public void ResetUserPassword(string newPassword, int userId)
         {
-            var user = _db.AppUsers.Find(userId);
+            var user = _databaseConnection.AppUsers.Find(userId);
             user.Password = newPassword;
             var hashPasword = new Md5Ecryption().ConvertStringToMd5Hash(newPassword);
-            _db.Entry(user).State = EntityState.Modified;
+            _databaseConnection.Entry(user).State = EntityState.Modified;
             user.Password = hashPasword;
-            _db.SaveChanges();
+            _databaseConnection.SaveChanges();
         }
 
         /// <summary>
@@ -94,12 +94,12 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
             var encryptedNewPassword = GetPasswordHash(newPassword);
             if (encryptedNewPassword == null) throw new ArgumentNullException(nameof(encryptedNewPassword));
             bool isPasswordChanged;
-            var user = _db.AppUsers.Find(userId);
+            var user = _databaseConnection.AppUsers.Find(userId);
             if (user.Password == encryptedOldPassword)
             {
                 user.Password = encryptedNewPassword;
-                _db.Entry(user).State = EntityState.Modified;
-                _db.SaveChanges();
+                _databaseConnection.Entry(user).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 isPasswordChanged = true;
             }
             else

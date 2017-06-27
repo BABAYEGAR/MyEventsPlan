@@ -12,19 +12,19 @@ namespace MyEventPlan.Controllers.VendorPackage
 {
     public class VendorPackagesController : Controller
     {
-        private readonly VendorPackageDataContext db = new VendorPackageDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: VendorPackages
         [SessionExpire]
         public ActionResult Index()
         {
-            return View(db.VendorPackages.ToList());
+            return View(_databaseConnection.VendorPackages.ToList());
         }
 
         // GET: VendorPackages
         public ActionResult Pricing()
         {
-            return View(db.VendorPackages.ToList());
+            return View(_databaseConnection.VendorPackages.ToList());
         }
 
         // GET: VendorPackages/Details/5
@@ -33,7 +33,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorPackage = db.VendorPackages.Find(id);
+            var vendorPackage = _databaseConnection.VendorPackages.Find(id);
             if (vendorPackage == null)
                 return HttpNotFound();
             return View(vendorPackage);
@@ -45,7 +45,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         public ActionResult Invoice(long id)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-            var selectedPackage = db.VendorPackages.Find(id);
+            var selectedPackage = _databaseConnection.VendorPackages.Find(id);
             var subscriptionInvoice = new SubscriptionInvoice();
 
             //random number
@@ -102,14 +102,14 @@ namespace MyEventPlan.Controllers.VendorPackage
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                if (db.VendorPackages.Any(n => n.PackageGrade == vendorPackage.PackageGrade))
+                if (_databaseConnection.VendorPackages.Any(n => n.PackageGrade == vendorPackage.PackageGrade))
                 {
                     TempData["display"] = "A package already exist with this package grade, Try again!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Index");
                 }
-                db.VendorPackages.Add(vendorPackage);
-                db.SaveChanges();
+                _databaseConnection.VendorPackages.Add(vendorPackage);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a vendor pacakge!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -124,7 +124,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorPackage = db.VendorPackages.Find(id);
+            var vendorPackage = _databaseConnection.VendorPackages.Find(id);
             if (vendorPackage == null)
                 return HttpNotFound();
             return View(vendorPackage);
@@ -154,8 +154,8 @@ namespace MyEventPlan.Controllers.VendorPackage
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(vendorPackage).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(vendorPackage).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the vendor pacakge!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {id = vendorPackage.VendorPackageId});
@@ -169,7 +169,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var vendorPackage = db.VendorPackages.Find(id);
+            var vendorPackage = _databaseConnection.VendorPackages.Find(id);
             if (vendorPackage == null)
                 return HttpNotFound();
             return View(vendorPackage);
@@ -182,9 +182,9 @@ namespace MyEventPlan.Controllers.VendorPackage
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var vendorPackage = db.VendorPackages.Find(id);
-            db.VendorPackages.Remove(vendorPackage);
-            db.SaveChanges();
+            var vendorPackage = _databaseConnection.VendorPackages.Find(id);
+            _databaseConnection.VendorPackages.Remove(vendorPackage);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted the vendor pacakge!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -193,7 +193,7 @@ namespace MyEventPlan.Controllers.VendorPackage
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

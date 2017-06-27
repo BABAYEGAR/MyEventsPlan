@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class NotesController : Controller
     {
-        private readonly NoteDataContext db = new NoteDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Notes
         [SessionExpire]
         public ActionResult Index(long? eventId)
         {
-            var notes = db.Notes.Where(n => n.EventId == eventId).Include(n => n.Event);
+            var notes = _databaseConnection.Notes.Where(n => n.EventId == eventId).Include(n => n.Event);
             ViewBag.eventId = eventId;
             return View(notes.ToList());
         }
@@ -29,7 +29,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var note = db.Notes.Find(id);
+            var note = _databaseConnection.Notes.Find(id);
             if (note == null)
                 return HttpNotFound();
             return View(note);
@@ -66,8 +66,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Notes.Add(note);
-                db.SaveChanges();
+                _databaseConnection.Notes.Add(note);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a built in note!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = note.EventId});
@@ -81,7 +81,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var note = db.Notes.Find(id);
+            var note = _databaseConnection.Notes.Find(id);
             if (note == null)
                 return HttpNotFound();
             return View(note);
@@ -110,8 +110,8 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(note).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(note).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the built in note!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = note.EventId});
@@ -125,7 +125,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var note = db.Notes.Find(id);
+            var note = _databaseConnection.Notes.Find(id);
             if (note == null)
                 return HttpNotFound();
             return View(note);
@@ -138,10 +138,10 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var note = db.Notes.Find(id);
+            var note = _databaseConnection.Notes.Find(id);
             var eventId = note.EventId;
-            db.Notes.Remove(note);
-            db.SaveChanges();
+            _databaseConnection.Notes.Remove(note);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deleted the built in note!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index", new {eventId});
@@ -150,7 +150,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

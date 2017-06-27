@@ -10,13 +10,13 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
 {
     public class EventPlannerPackageSettingsController : Controller
     {
-        private readonly EventPlannerPackageSettingDataContext db = new EventPlannerPackageSettingDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventPlannerPackageSettings
         [SessionExpire]
         public ActionResult Index()
         {
-            var eventPlannerPackageSettings = db.EventPlannerPackageSettings.Include(e => e.AppUser)
+            var eventPlannerPackageSettings = _databaseConnection.EventPlannerPackageSettings.Include(e => e.AppUser)
                 .Include(e => e.EventPlanner).Include(e => e.EventPlannerPackage);
             return View(eventPlannerPackageSettings.ToList());
         }
@@ -27,7 +27,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackageSetting = db.EventPlannerPackageSettings.Find(id);
+            var eventPlannerPackageSetting = _databaseConnection.EventPlannerPackageSettings.Find(id);
             if (eventPlannerPackageSetting == null)
                 return HttpNotFound();
             return View(eventPlannerPackageSetting);
@@ -53,8 +53,8 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (ModelState.IsValid)
             {
-                db.EventPlannerPackageSettings.Add(eventPlannerPackageSetting);
-                db.SaveChanges();
+                _databaseConnection.EventPlannerPackageSettings.Add(eventPlannerPackageSetting);
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(eventPlannerPackageSetting);
@@ -66,14 +66,14 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackageSetting = db.EventPlannerPackageSettings.Find(id);
+            var eventPlannerPackageSetting = _databaseConnection.EventPlannerPackageSettings.Find(id);
             if (eventPlannerPackageSetting == null)
                 return HttpNotFound();
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname",
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname",
                 eventPlannerPackageSetting.AppUserId);
-            ViewBag.EventPlannerId = new SelectList(db.EventPlanner, "EventPlannerId", "Firstname",
+            ViewBag.EventPlannerId = new SelectList(_databaseConnection.EventPlanners, "EventPlannerId", "Firstname",
                 eventPlannerPackageSetting.EventPlannerId);
-            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId",
+            ViewBag.EventPlannerPackageId = new SelectList(_databaseConnection.EventPlannerPackages, "EventPlannerPackageId",
                 "PackageName", eventPlannerPackageSetting.EventPlannerPackageId);
             return View(eventPlannerPackageSetting);
         }
@@ -91,8 +91,8 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (ModelState.IsValid)
             {
-                db.Entry(eventPlannerPackageSetting).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventPlannerPackageSetting).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
             return View(eventPlannerPackageSetting);
@@ -104,7 +104,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackageSetting = db.EventPlannerPackageSettings.Find(id);
+            var eventPlannerPackageSetting = _databaseConnection.EventPlannerPackageSettings.Find(id);
             if (eventPlannerPackageSetting == null)
                 return HttpNotFound();
             return View(eventPlannerPackageSetting);
@@ -117,16 +117,16 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventPlannerPackageSetting = db.EventPlannerPackageSettings.Find(id);
-            db.EventPlannerPackageSettings.Remove(eventPlannerPackageSetting);
-            db.SaveChanges();
+            var eventPlannerPackageSetting = _databaseConnection.EventPlannerPackageSettings.Find(id);
+            _databaseConnection.EventPlannerPackageSettings.Remove(eventPlannerPackageSetting);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

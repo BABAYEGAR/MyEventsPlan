@@ -12,7 +12,7 @@ namespace MyEventPlan.Controllers.EventManagement
 {
     public class EventResourceMappingsController : Controller
     {
-        private readonly EventResourceMappingDataContext db = new EventResourceMappingDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventResourceMappings
         [SessionExpire]
@@ -21,10 +21,10 @@ namespace MyEventPlan.Controllers.EventManagement
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var eventResourceMapping =
-                db.EventResourceMapping.Where(n => n.EventId == events.EventId).Include(e => e.Event)
+                _databaseConnection.EventResourceMapping.Where(n => n.EventId == events.EventId).Include(e => e.Event)
                     .Include(e => e.Resource);
             ViewBag.ResourceId = new SelectList(
-                db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name");
+                _databaseConnection.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name");
             return View(eventResourceMapping.ToList());
         }
 
@@ -35,7 +35,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventResourceMapping = db.EventResourceMapping.Find(id);
+            var eventResourceMapping = _databaseConnection.EventResourceMapping.Find(id);
             if (eventResourceMapping == null)
                 return HttpNotFound();
             return View(eventResourceMapping);
@@ -75,7 +75,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     return RedirectToAction("Login", "Account");
                 }
                 var resourceId = eventResourceMapping.ResourceId;
-                var resource = db.Resources.Find(resourceId);
+                var resource = _databaseConnection.Resources.Find(resourceId);
                 if (resource.Quantity > eventResourceMapping.Quantity)
                 {
                     resource.Quantity = resource.Quantity - eventResourceMapping.Quantity;
@@ -88,9 +88,9 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Error.ToString();
                     return RedirectToAction("Index", new {eventId = eventResourceMapping.EventId});
                 }
-                db.Entry(resource).State = EntityState.Modified;
-                db.EventResourceMapping.Add(eventResourceMapping);
-                db.SaveChanges();
+                _databaseConnection.Entry(resource).State = EntityState.Modified;
+                _databaseConnection.EventResourceMapping.Add(eventResourceMapping);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully allocated the resource(s) to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = eventResourceMapping.EventId});
@@ -105,12 +105,12 @@ namespace MyEventPlan.Controllers.EventManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventResourceMapping = db.EventResourceMapping.Find(id);
+            var eventResourceMapping = _databaseConnection.EventResourceMapping.Find(id);
             if (eventResourceMapping == null)
                 return HttpNotFound();
-            ViewBag.EventId = new SelectList(db.Event, "EventId", "Name", eventResourceMapping.EventId);
+            ViewBag.EventId = new SelectList(_databaseConnection.Event, "EventId", "Name", eventResourceMapping.EventId);
             ViewBag.ResourceId = new SelectList(
-                db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name",
+                _databaseConnection.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name",
                 eventResourceMapping.ResourceId);
             return View(eventResourceMapping);
         }
@@ -135,7 +135,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     eventResourceMapping.LastModifiedBy = loggedinuser.AppUserId;
                     var resourceId = eventResourceMapping.ResourceId;
-                    var resource = db.Resources.Find(resourceId);
+                    var resource = _databaseConnection.Resources.Find(resourceId);
                     if (resource.Quantity > eventResourceMapping.Quantity)
                     {
                         resource.Quantity = resource.Quantity - eventResourceMapping.Quantity;
@@ -155,14 +155,14 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["notificationtype"] = NotificationType.Success.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(eventResourceMapping).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventResourceMapping).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["resourcemap"] = "You have successfully added the resource to the event!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {eventId = eventResourceMapping.EventId});
             }
             ViewBag.ResourceId = new SelectList(
-                db.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name",
+                _databaseConnection.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId), "ResourceId", "Name",
                 eventResourceMapping.ResourceId);
             return View(eventResourceMapping);
         }
@@ -173,7 +173,7 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventResourceMapping = db.EventResourceMapping.Find(id);
+            var eventResourceMapping = _databaseConnection.EventResourceMapping.Find(id);
             if (eventResourceMapping == null)
                 return HttpNotFound();
             return View(eventResourceMapping);
@@ -186,16 +186,16 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventResourceMapping = db.EventResourceMapping.Find(id);
+            var eventResourceMapping = _databaseConnection.EventResourceMapping.Find(id);
 
             var resourceId = eventResourceMapping.ResourceId;
-            var resource = db.Resources.Find(resourceId);
+            var resource = _databaseConnection.Resources.Find(resourceId);
             resource.Quantity = resource.Quantity + eventResourceMapping.Quantity;
             resource.DateLastModified = DateTime.Now;
 
-            db.Entry(resource).State = EntityState.Modified;
-            db.EventResourceMapping.Remove(eventResourceMapping);
-            db.SaveChanges();
+            _databaseConnection.Entry(resource).State = EntityState.Modified;
+            _databaseConnection.EventResourceMapping.Remove(eventResourceMapping);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deallocated the resources from the event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -204,7 +204,7 @@ namespace MyEventPlan.Controllers.EventManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

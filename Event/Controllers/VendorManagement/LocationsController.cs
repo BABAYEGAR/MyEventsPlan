@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.VendorManagement
 {
     public class LocationsController : Controller
     {
-        private readonly LocationDataContext db = new LocationDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: Locations
         [SessionExpire]
         public ActionResult Index()
         {
-            return View(db.Locations.ToList());
+            return View(_databaseConnection.Locations.ToList());
         }
 
         // GET: Locations/Details/5
@@ -27,7 +27,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var location = db.Locations.Find(id);
+            var location = _databaseConnection.Locations.Find(id);
             if (location == null)
                 return HttpNotFound();
             return View(location);
@@ -64,8 +64,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Locations.Add(location);
-                db.SaveChanges();
+                _databaseConnection.Locations.Add(location);
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a location!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -80,7 +80,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var location = db.Locations.Find(id);
+            var location = _databaseConnection.Locations.Find(id);
             if (location == null)
                 return HttpNotFound();
             return View(location);
@@ -108,8 +108,8 @@ namespace MyEventPlan.Controllers.VendorManagement
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(location).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(location).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully modified the location!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index");
@@ -123,7 +123,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var location = db.Locations.Find(id);
+            var location = _databaseConnection.Locations.Find(id);
             if (location == null)
                 return HttpNotFound();
             return View(location);
@@ -136,9 +136,9 @@ namespace MyEventPlan.Controllers.VendorManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var location = db.Locations.Find(id);
-            db.Locations.Remove(location);
-            db.SaveChanges();
+            var location = _databaseConnection.Locations.Find(id);
+            _databaseConnection.Locations.Remove(location);
+            _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully the location!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
             return RedirectToAction("Index");
@@ -147,7 +147,7 @@ namespace MyEventPlan.Controllers.VendorManagement
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

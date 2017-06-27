@@ -12,13 +12,13 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
 {
     public class EventPlannerPackageItemsController : Controller
     {
-        private readonly EventPlannerPackageItemDataContext db = new EventPlannerPackageItemDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: EventPlannerPackageItems
         [SessionExpire]
         public ActionResult Index(long id)
         {
-            var eventPlannerPackageItems = db.EventPlannerPackageItems.Include(e => e.EventPlannerPackage)
+            var eventPlannerPackageItems = _databaseConnection.EventPlannerPackageItems.Include(e => e.EventPlannerPackage)
                 .Where(n => n.EventPlannerPackageId == id);
             ViewBag.packageId = id;
             return View(eventPlannerPackageItems.ToList());
@@ -30,7 +30,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
+            var eventPlannerPackageItem = _databaseConnection.EventPlannerPackageItems.Find(id);
             if (eventPlannerPackageItem == null)
                 return HttpNotFound();
             return View(eventPlannerPackageItem);
@@ -40,7 +40,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId",
+            ViewBag.EventPlannerPackageId = new SelectList(_databaseConnection.EventPlannerPackages, "EventPlannerPackageId",
                 "PackageName");
             return View();
         }
@@ -71,20 +71,20 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.EventPlannerPackageItems.Add(eventPlannerPackageItem);
-                db.SaveChanges();
+                _databaseConnection.EventPlannerPackageItems.Add(eventPlannerPackageItem);
+                _databaseConnection.SaveChanges();
 
-                var package = db.EventPlannerPackages.Find(eventPlannerPackageItem.EventPlannerPackageId);
+                var package = _databaseConnection.EventPlannerPackages.Find(eventPlannerPackageItem.EventPlannerPackageId);
 
-                db.Entry(eventPlannerPackageItem).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventPlannerPackageItem).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
 
                 TempData["display"] = "You have successfully added an item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {id = eventPlannerPackageItem.EventPlannerPackageId});
             }
 
-            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId",
+            ViewBag.EventPlannerPackageId = new SelectList(_databaseConnection.EventPlannerPackages, "EventPlannerPackageId",
                 "PackageName", eventPlannerPackageItem.EventPlannerPackageId);
             return View(eventPlannerPackageItem);
         }
@@ -95,10 +95,10 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
+            var eventPlannerPackageItem = _databaseConnection.EventPlannerPackageItems.Find(id);
             if (eventPlannerPackageItem == null)
                 return HttpNotFound();
-            ViewBag.EventPlannerPackageId = new SelectList(db.EventPlannerPackages, "EventPlannerPackageId",
+            ViewBag.EventPlannerPackageId = new SelectList(_databaseConnection.EventPlannerPackages, "EventPlannerPackageId",
                 "PackageName", eventPlannerPackageItem.EventPlannerPackageId);
             return View(eventPlannerPackageItem);
         }
@@ -127,13 +127,13 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Login", "Account");
                 }
-                db.Entry(eventPlannerPackageItem).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventPlannerPackageItem).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
 
-                var package = db.EventPlannerPackages.Find(eventPlannerPackageItem.EventPlannerPackageId);
+                var package = _databaseConnection.EventPlannerPackages.Find(eventPlannerPackageItem.EventPlannerPackageId);
 
-                db.Entry(eventPlannerPackageItem).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(eventPlannerPackageItem).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
 
                 TempData["display"] = "You have successfully modified the item!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -148,7 +148,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
+            var eventPlannerPackageItem = _databaseConnection.EventPlannerPackageItems.Find(id);
             if (eventPlannerPackageItem == null)
                 return HttpNotFound();
             return View(eventPlannerPackageItem);
@@ -161,9 +161,9 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var eventPlannerPackageItem = db.EventPlannerPackageItems.Find(id);
-            db.EventPlannerPackageItems.Remove(eventPlannerPackageItem);
-            db.SaveChanges();
+            var eventPlannerPackageItem = _databaseConnection.EventPlannerPackageItems.Find(id);
+            _databaseConnection.EventPlannerPackageItems.Remove(eventPlannerPackageItem);
+            _databaseConnection.SaveChanges();
 
             TempData["display"] = "You have successfully deleted the item!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -173,7 +173,7 @@ namespace MyEventPlan.Controllers.EventPlannerPackage
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }

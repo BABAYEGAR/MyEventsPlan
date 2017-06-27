@@ -12,14 +12,13 @@ namespace MyEventPlan.Controllers.MessageManagement
 {
     public class MessageGroupMembersController : Controller
     {
-        private readonly MessageGroupMemberDataContext db = new MessageGroupMemberDataContext();
-        private readonly EventDataContext dbc = new EventDataContext();
+        private readonly EventDataContext _databaseConnection = new EventDataContext();
 
         // GET: MessageGroupMembers
         [SessionExpire]
         public ActionResult Index()
         {
-            var messageGroupMembers = db.MessageGroupMembers.Include(m => m.AppUser).Include(m => m.MessageGroup);
+            var messageGroupMembers = _databaseConnection.MessageGroupMembers.Include(m => m.AppUser).Include(m => m.MessageGroup);
             return View(messageGroupMembers.ToList());
         }
 
@@ -32,7 +31,7 @@ namespace MyEventPlan.Controllers.MessageManagement
             IQueryable<AppUser> users;
             if (loggedinuser != null && loggedinuser.EventPlannerId != null)
             {
-                users = dbc.AppUsers.Where(n => n.CreatedBy == loggedinuser.AppUserId);
+                users = _databaseConnection.AppUsers.Where(n => n.CreatedBy == loggedinuser.AppUserId);
                 return View(users.ToList());
             }
 
@@ -45,7 +44,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         [SessionExpire]
         public ActionResult GroupMember(int[] table_records, FormCollection collectedValues)
         {
-            var allMappings = dbc.MessageGroupMembers.ToList();
+            var allMappings = _databaseConnection.MessageGroupMembers.ToList();
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var groupId = Convert.ToInt64(collectedValues["MessageGroupId"]);
             if (table_records != null)
@@ -74,8 +73,8 @@ namespace MyEventPlan.Controllers.MessageManagement
                                 CreatedBy = loggedinuser.AppUserId
                             };
 
-                            dbc.MessageGroupMembers.Add(groupMembers);
-                            dbc.SaveChanges();
+                            _databaseConnection.MessageGroupMembers.Add(groupMembers);
+                            _databaseConnection.SaveChanges();
 
                             TempData["display"] = "you have succesfully added the users(s) to the group!";
                             TempData["notificationtype"] = NotificationType.Success.ToString();
@@ -104,7 +103,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var messageGroupMember = db.MessageGroupMembers.Find(id);
+            var messageGroupMember = _databaseConnection.MessageGroupMembers.Find(id);
             if (messageGroupMember == null)
                 return HttpNotFound();
             return View(messageGroupMember);
@@ -114,8 +113,8 @@ namespace MyEventPlan.Controllers.MessageManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname");
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name");
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname");
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name");
             return View();
         }
 
@@ -133,13 +132,13 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (ModelState.IsValid)
             {
-                db.MessageGroupMembers.Add(messageGroupMember);
-                db.SaveChanges();
+                _databaseConnection.MessageGroupMembers.Add(messageGroupMember);
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", messageGroupMember.AppUserId);
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name",
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", messageGroupMember.AppUserId);
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name",
                 messageGroupMember.MessageGroupId);
             return View(messageGroupMember);
         }
@@ -150,11 +149,11 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var messageGroupMember = db.MessageGroupMembers.Find(id);
+            var messageGroupMember = _databaseConnection.MessageGroupMembers.Find(id);
             if (messageGroupMember == null)
                 return HttpNotFound();
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", messageGroupMember.AppUserId);
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name",
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", messageGroupMember.AppUserId);
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name",
                 messageGroupMember.MessageGroupId);
             return View(messageGroupMember);
         }
@@ -173,12 +172,12 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (ModelState.IsValid)
             {
-                db.Entry(messageGroupMember).State = EntityState.Modified;
-                db.SaveChanges();
+                _databaseConnection.Entry(messageGroupMember).State = EntityState.Modified;
+                _databaseConnection.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.AppUserId = new SelectList(db.AppUsers, "AppUserId", "Firstname", messageGroupMember.AppUserId);
-            ViewBag.MessageGroupId = new SelectList(db.MessageGroups, "MessageGroupId", "Name",
+            ViewBag.AppUserId = new SelectList(_databaseConnection.AppUsers, "AppUserId", "Firstname", messageGroupMember.AppUserId);
+            ViewBag.MessageGroupId = new SelectList(_databaseConnection.MessageGroups, "MessageGroupId", "Name",
                 messageGroupMember.MessageGroupId);
             return View(messageGroupMember);
         }
@@ -189,7 +188,7 @@ namespace MyEventPlan.Controllers.MessageManagement
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var messageGroupMember = db.MessageGroupMembers.Find(id);
+            var messageGroupMember = _databaseConnection.MessageGroupMembers.Find(id);
             if (messageGroupMember == null)
                 return HttpNotFound();
             return View(messageGroupMember);
@@ -202,16 +201,16 @@ namespace MyEventPlan.Controllers.MessageManagement
         [SessionExpire]
         public ActionResult DeleteConfirmed(long id)
         {
-            var messageGroupMember = db.MessageGroupMembers.Find(id);
-            db.MessageGroupMembers.Remove(messageGroupMember);
-            db.SaveChanges();
+            var messageGroupMember = _databaseConnection.MessageGroupMembers.Find(id);
+            _databaseConnection.MessageGroupMembers.Remove(messageGroupMember);
+            _databaseConnection.SaveChanges();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
-                db.Dispose();
+                _databaseConnection.Dispose();
             base.Dispose(disposing);
         }
     }
