@@ -6,8 +6,6 @@
     ViewBag.Title = "Details";
     ViewBag.TableHeader = Model.DisplayName + "Contact Card";
     ViewBag.TableSubHeader = "Details of Contact";
-    var userDb = new AppUserDataContext();
-    var role = Session["role"] as Role;
 }
 @section links{
 
@@ -86,6 +84,8 @@
     </div>
 
 </div>
+@Html.ActionLink("Manage Address", "Index", "ContactAddresses", new { contactId = Model.ContactId }, new { @class = "btn btn-success fa fa-map" })
+@Html.ActionLink("Manage Website", "Index", "ContactWebsites", new { contactId = Model.ContactId }, new { @class = "btn btn-success fa fa-globe" })
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete

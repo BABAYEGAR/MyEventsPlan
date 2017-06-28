@@ -6,6 +6,9 @@
     ViewBag.TableHeader = Model.Name + " Client Card";
     ViewBag.TableSubHeader = "Details of Client";
     var events = Session["event"] as Event;
+    var passwordReset = new PasswordReset();
+    passwordReset.Email = Model.Email;
+    passwordReset.Code = Model.ClientId;
 }
 @section links{
     <ol class="breadcrumb">
@@ -81,7 +84,30 @@
     </div>
 
 </div>
-@Html.ActionLink("Generate Login Access", "CreateLoginAccessForClient", new {id = Model.ClientId}, new {@class = "btn btn-warning  icon-user"})
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-warning  icon-lock" data-toggle="modal" data-target="#myModals">
+    Generate Login Access
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalLabels">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabels">Generate Login Access</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EventPlanning/CreateLoginCredential", passwordReset);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
     Delete Client

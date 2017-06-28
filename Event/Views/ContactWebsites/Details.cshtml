@@ -1,0 +1,99 @@
+﻿@model Event.Data.Objects.Entities.ContactWebsite
+@{
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
+    ViewBag.Title = "Details";
+    ViewBag.TableHeader = "Contact Website";
+    ViewBag.TableSubHeader = "Details of Contact Websites";
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Contacts")">Contacts</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "ContactWebsites",new{contactId = Model.ContactId})">Contact Websites</a>
+        </li>
+    </ol>
+}
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.Type)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Type)
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Website)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Website)
+    </dd>
+
+  
+</dl>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary fa fa-pencil" data-toggle="modal" data-target="#myModal">
+    Edit Website
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit contact website</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EventPlanning/EditContactWebsiteModal", Model);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
+    Delete Website
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete contact website</h4>
+            </div>
+
+            @using (Html.BeginForm("Delete", "ContactWebsites", new { id = Model.ContactWebsiteId }))
+            {
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to remove the website?
+
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Remove" class="btn btn-danger pull-right fa fa-trash" />
+                    <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

@@ -1,12 +1,99 @@
 ﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
 @model IEnumerable<Budget>
 @{
     ViewBag.Title = "List";
     var events = Session["event"] as Event;
-    ViewBag.TableSubHeader = "List of budgets for " + events?.Name + "!";
+    ViewBag.TableSubHeader = "List of budgets for " + events.Name + "!";
     ViewBag.TableHeader = "Event Budget";
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var budget = new Budget();
+    var db = new EventDataContext();
+
+    var estimated = Model.Sum(n => n.EstimatedAmount);
+    var negotiated = Model.Sum(n => n.NegotiatedAmount);
+    var actual = Model.Sum(n => n.ActualAmount);
+    var toDate = Model.Sum(n => n.PaidTillDate);
+    var due = Model.Sum(n => n.AmountStillDue);
+
+}
+@section topSection{
+    <div class="content">
+        <div class="container-fluid">
+         
+                <div class="col-lg-2 col-md-2 col-sm-2 col-md-offset-1" style="color: blue">
+                    <div class="card card-stats">
+                        <div class="card-content">
+                            <p class="category"></p>
+                            <h4 class="title pull-left">
+                                ESTIMATED
+                            </h4>
+                            <br/>
+                            <br/>
+                            <h1 class="pull-left">
+                                <h1 class="pull-left">N @estimated.0</h1>
+                            </h1>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2" style="color: green">
+                    <div class="card card-stats">
+                        <div class="card-content">
+                            <p class="category"></p>
+                            <h4 class="title pull-left">
+                                NEGOTIATED
+                            </h4>
+                            <br/>
+                            <br/>
+                            <h1 class="pull-left">N @negotiated.0</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2" style="color: palegoldenrod;">
+                    <div class="card card-stats">
+                        <div class="card-content">
+                            <p class="category"></p>
+                            <h4 class="title pull-left">
+                                ACTUAL
+                            </h4>
+                            <br/>
+                            <br/>
+                            <h1 class="pull-left">N @actual.0</h1>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2" style="color: palegoldenrod;">
+                    <div class="card card-stats">
+                        <div class="card-content">
+                            <p class="category"></p>
+                            <h4 class="title pull-left">
+                                PAID-TO-DATE
+                            </h4>
+                            <br/>
+                            <br/>
+                            <h1 class="pull-left">N @toDate.0</h1>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-2" style="color: palegoldenrod;">
+                    <div class="card card-stats">
+                        <div class="card-content">
+                            <p class="category"></p>
+                            <h4 class="title pull-left">
+                                STILL DUE
+                            </h4>
+                            <br/>
+                            <br/>
+                            <h1 class="pull-left">N @due.0</h1>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    </div>
 }
 @section links{
 

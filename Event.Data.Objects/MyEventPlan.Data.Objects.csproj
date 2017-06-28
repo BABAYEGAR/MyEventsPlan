@@ -42,9 +42,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Appointment.cs" />
+    <Compile Include="Entities\AppointmentContactMapping.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Budget.cs" />
+    <Compile Include="Entities\ContactWebsite.cs" />
+    <Compile Include="Entities\ContactAddress.cs" />
     <Compile Include="Entities\EventPlannerEnquiry.cs" />
+    <Compile Include="Entities\ToDo.cs" />
     <Compile Include="Entities\VendorEnquiry.cs" />
     <Compile Include="Entities\VendorPackageItem.cs" />
     <Compile Include="Entities\VendorPackage.cs" />

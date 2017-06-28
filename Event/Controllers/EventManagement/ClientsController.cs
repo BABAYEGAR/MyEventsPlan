@@ -50,34 +50,41 @@ namespace MyEventPlan.Controllers.EventManagement
 
         // GET: Clients/Details/5
         [SessionExpire]
-        public ActionResult CreateLoginAccessForClient(long? id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateLoginAccessForClient(FormCollection collection)
         {
+            long id = Convert.ToInt64(collection["Code"]);
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             var role = _databaseConnection.Roles.SingleOrDefault(n => n.Name == "Client");
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var client = _databaseConnection.Clients.Find(id);
             var appUser = new AppUser();
-            appUser.Firstname = client.Name;
-            appUser.Lastname = client.Name;
-            appUser.Email = client.Email;
-            appUser.Mobile = client.Mobile;
-            if (role != null) appUser.RoleId = role.RoleId;
-            appUser.DateLastModified = DateTime.Now;
-            appUser.DateCreated = DateTime.Now;
-            appUser.Password = new Hashing().HashPassword("Password");
-            appUser.Status = UserAccountStatus.Enabled.ToString();
-            if (loggedinuser != null)
+            if (client != null)
             {
-                appUser.CreatedBy = loggedinuser.AppUserId;
-                appUser.LastModifiedBy = loggedinuser.AppUserId;
-                appUser.ClientId = id;
+                appUser.Firstname = client.Name;
+                appUser.Lastname = client.Name;
+                appUser.Email = client.Email;
+                appUser.Mobile = client.Mobile;
+                if (role != null) appUser.RoleId = role.RoleId;
+                appUser.DateLastModified = DateTime.Now;
+                appUser.DateCreated = DateTime.Now;
+                appUser.Password = new Hashing().HashPassword(collection["ConfirmPassword"]);
+                appUser.Status = UserAccountStatus.Enabled.ToString();
+                if (loggedinuser != null)
+                {
+                    appUser.CreatedBy = loggedinuser.AppUserId;
+                    appUser.LastModifiedBy = loggedinuser.AppUserId;
+                    appUser.ClientId = id;
+                }
+                _databaseConnection.AppUsers.Add(appUser);
+                _databaseConnection.SaveChanges();
+                if (events != null) new MailerDaemon().NewClientLogin(client, appUser.AppUserId, events.Name);
+                TempData["display"] = "The login acces link has been successfully sent to the clients email!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Index", new {id = client.EventId});
             }
-            _databaseConnection.AppUsers.Add(appUser);
-            _databaseConnection.SaveChanges();
-            if (events != null) new MailerDaemon().NewClientLogin(client, appUser.AppUserId, events.Name);
-            TempData["display"] = "The login acces link has been successfully sent to the clients email!";
-            TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new {id = client.EventId});
+            return RedirectToAction("Index", new { id = client.EventId });
         }
 
         // GET: Clients/Create
@@ -116,13 +123,23 @@ namespace MyEventPlan.Controllers.EventManagement
                     client.CreatedBy = loggedinuser.AppUserId;
                     client.EventPlannerId = loggedinuser.EventPlannerId;
                 }
-                else
-                {
-                    TempData["login"] = "Your session has expired, Login again!";
-                    TempData["notificationtype"] = NotificationType.Info.ToString();
-                    return RedirectToAction("Login", "Account");
-                }
                 _databaseConnection.Clients.Add(client);
+                _databaseConnection.SaveChanges();
+
+                //create client as a contact
+                var contact = new Contact();
+                contact.Firstname = client.Name;
+                contact.Lastname = client.Name;
+                contact.Email = client.Email;
+                contact.Title = "Planner";
+                contact.EventPlannerId = loggedinuser.EventPlannerId;
+                contact.Mobile = client.Mobile;
+                contact.CreatedBy = loggedinuser.AppUserId;
+                contact.DateCreated = DateTime.Now;
+                contact.DateLastModified = DateTime.Now;
+                contact.LastModifiedBy = loggedinuser.AppUserId;
+
+                _databaseConnection.Contacts.Add(contact);
                 _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a new client!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();

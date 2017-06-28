@@ -54,7 +54,7 @@
             </div>
             <div class="modal-body">
                 @{
-                    Html.RenderPartial("EditInvoiceModal", Model);
+                    Html.RenderPartial("EventPlanning/EditInvoiceModal", Model);
                 }
             </div>
         </div>
@@ -95,12 +95,12 @@
 </div>
 @if (Model.EventId != null)
 {
-    @Html.ActionLink("Unlink from event", "UnlinkInvoiceFromEvent", "Invoices", new {id = Model.InvoiceId, eventId = Model.EventId}, new {@class = "btn btn-danger  icon-check"})
+    @Html.ActionLink("Unlink from event", "UnlinkInvoiceFromEvent", "Invoices", new {id = Model.InvoiceId, eventId = Model.EventId}, new {@class = "btn btn-danger fa fa-link"})
 }
 else
 {
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary  icon-link" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-primary icon-link" data-toggle="modal" data-target="#myModal">
         Link Invoice to Event
     </button>
 
@@ -125,5 +125,5 @@ else
     </div>
 }
 
-@Html.ActionLink("Invoice Items", "Index", "InvoiceItems", new {id = Model.InvoiceId}, new {@class = "btn btn-success  icon-check"})
-@Html.ActionLink("Payments", "Index", "InvoicePayments", new {id = Model.InvoiceId}, new {@class = "btn btn-warning  icon-money"})
+@Html.ActionLink("Invoice Items", "Index", "InvoiceItems", new {id = Model.InvoiceId}, new {@class = "btn btn-success fa fa-list"})
+@Html.ActionLink("Payments", "Index", "InvoicePayments", new {id = Model.InvoiceId}, new {@class = "btn btn-warning fa fa-dollar"})

@@ -10,19 +10,19 @@
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.PaymentDate, new {htmlAttributes = new {placeholder = "Select Invoice Payement Date"}})
+        @Html.EditorFor(model => model.PaymentDate, new {htmlAttributes = new {placeholder = "Select invoice Payement Date"}})
         @Html.LabelFor(model => model.PaymentDate)
         @Html.ValidationMessageFor(model => model.PaymentDate, "", new {@class = "text-danger"})
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {placeholder = "Enter Invoice Payment Amount"}})
+        @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {placeholder = "Enter invoice Payment Amount"}})
         @Html.LabelFor(model => model.Amount)
         @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.Reference, new {htmlAttributes = new {placeholder = "Enter Invoice Payment Reference"}})
+        @Html.EditorFor(model => model.Reference, new {htmlAttributes = new {placeholder = "Enter invoice Payment Reference"}})
         @Html.LabelFor(model => model.Reference)
         @Html.ValidationMessageFor(model => model.Reference, "", new {@class = "text-danger"})
     </div>

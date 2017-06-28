@@ -196,7 +196,9 @@
     <Compile Include="Controllers\EventManagement\CheckListItemsController.cs" />
     <Compile Include="Controllers\EventManagement\CheckListsController.cs" />
     <Compile Include="Controllers\EventManagement\ClientsController.cs" />
+    <Compile Include="Controllers\EventManagement\ContactAddressesController.cs" />
     <Compile Include="Controllers\EventManagement\ContactsController.cs" />
+    <Compile Include="Controllers\EventManagement\ContactWebsitesController.cs" />
     <Compile Include="Controllers\EventManagement\EventPlannersController.cs" />
     <Compile Include="Controllers\EventManagement\EventResourceMappingsController.cs" />
     <Compile Include="Controllers\EventManagement\EventsController.cs" />
@@ -206,6 +208,7 @@
     <Compile Include="Controllers\EventManagement\NotesController.cs" />
     <Compile Include="Controllers\EventManagement\StaffsController.cs" />
     <Compile Include="Controllers\EventManagement\TasksController.cs" />
+    <Compile Include="Controllers\EventManagement\ToDoesController.cs" />
     <Compile Include="Controllers\EventPlannerManagement\EventPlannerEnquiriesController.cs" />
     <Compile Include="Controllers\EventPlannerManagement\EventPlannerReviewsController.cs" />
     <Compile Include="Controllers\EventPlannerPackage\EventPlannerPackageItemsController.cs" />
@@ -1635,6 +1638,29 @@
     <Content Include="Views\EventPlannerEnquiries\Index.cshtml" />
     <Content Include="Views\Home\Pricing.cshtml" />
     <Content Include="Views\Events\FloorPlan.cshtml" />
+    <Content Include="Views\ContactAddresses\Create.cshtml" />
+    <Content Include="Views\ContactAddresses\Delete.cshtml" />
+    <Content Include="Views\ContactAddresses\Details.cshtml" />
+    <Content Include="Views\ContactAddresses\Edit.cshtml" />
+    <Content Include="Views\ContactAddresses\Index.cshtml" />
+    <Content Include="Views\ContactWebsites\Create.cshtml" />
+    <Content Include="Views\ContactWebsites\Delete.cshtml" />
+    <Content Include="Views\ContactWebsites\Details.cshtml" />
+    <Content Include="Views\ContactWebsites\Edit.cshtml" />
+    <Content Include="Views\ContactWebsites\Index.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\CreateContactWebsiteModal.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\EditContactWebsiteModal.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\CreateContactAddressModal.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\EditContactAddressModal.cshtml" />
+    <Content Include="Views\ToDoes\Create.cshtml" />
+    <Content Include="Views\ToDoes\Delete.cshtml" />
+    <Content Include="Views\ToDoes\Details.cshtml" />
+    <Content Include="Views\ToDoes\Edit.cshtml" />
+    <Content Include="Views\ToDoes\Index.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\CreateToDoModal.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\EditToDoModal.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\CreateLoginCredential.cshtml" />
+    <Content Include="Views\Resources\ViewEvents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

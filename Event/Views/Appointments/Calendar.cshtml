@@ -20,6 +20,7 @@
     <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
     <link href="~/Content/Color/spectrum.css" rel="stylesheet"/>
 }
+
 <div id="popupUpdateEventForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -184,6 +185,12 @@
                     'Note': $('#eventNote').val(),
                     'plannerId': @loggedinuser.EventPlannerId,
                     'eventId': $('#eventId').val(),
+                    'Contacts': $('#contacts').val(),
+                    'SetReminder': $('#setReminder').val(),
+                    'ReminderLength': $('#reminderLength').val(),
+                    'ReminderLengthType': $('#reminderLengthType').val(),
+                    'ReminderRepeat': $('#reminderRepeat').val(),
+                    'SendEmailReminder': $('#sendEmailReminder').val(),
                 };
                 ClearPopupFormValues();
 

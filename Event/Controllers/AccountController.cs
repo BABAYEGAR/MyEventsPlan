@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
+using MyEventPlan.Data.Service.Contact;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers
@@ -266,6 +267,7 @@ namespace MyEventPlan.Controllers
                     {
                         var eventPlanner = _databaseConnection.EventPlanners.Find(user.EventPlannerId);
                         Session["eventplanner"] = eventPlanner;
+                        //new Gmail().GetAllGmailContacts("MyeventsPlan", "salxsaa@gmail.com", "Brigada95");
                         return RedirectToAction("Dashboard", "Home");
                     }
                     if (user.VendorId != null)

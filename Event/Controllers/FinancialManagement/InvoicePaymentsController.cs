@@ -49,13 +49,14 @@ namespace MyEventPlan.Controllers.FinancialManagement
         [ValidateAntiForgeryToken]
         [SessionExpire]
         public ActionResult Create(
-            [Bind(Include = "InvoicePaymentId,Amount,Reference,PaymentDate,InvoiceId")] InvoicePayment invoicePayment)
+            [Bind(Include = "InvoicePaymentId,Amount,Reference,PaymentDate,InvoiceId")] InvoicePayment invoicePayment,FormCollection collection)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             if (ModelState.IsValid)
             {
                 invoicePayment.DateCreated = DateTime.Now;
                 invoicePayment.DateLastModified = DateTime.Now;
+                invoicePayment.PaymentDate = Convert.ToDateTime(collection["PaymentDate"]);
                 if (loggedinuser != null)
                 {
                     invoicePayment.CreatedBy = loggedinuser.AppUserId;

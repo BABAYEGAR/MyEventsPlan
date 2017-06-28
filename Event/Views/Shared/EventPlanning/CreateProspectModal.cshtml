@@ -25,13 +25,13 @@
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {placeholder = "Enter Event Name"}})
+        @Html.EditorFor(model => model.Email, new {htmlAttributes = new {placeholder = "Enter an email address"}})
         @Html.LabelFor(model => model.Email)
         @Html.ValidationMessageFor(model => model.Email, "", new {@class = "text-danger"})
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.PhoneNumber, new {htmlAttributes = new {placeholder = "Enter Event Name"}})
+        @Html.EditorFor(model => model.PhoneNumber, new {htmlAttributes = new {placeholder = "Enter the phone number"}})
         @Html.LabelFor(model => model.PhoneNumber)
         @Html.ValidationMessageFor(model => model.PhoneNumber, "", new {@class = "text-danger"})
     </div>
@@ -72,7 +72,7 @@
 
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Create Event" class="btn btn-default"/>
+            <input type="submit" value="Create Prospect" class="btn btn-default"/>
         </div>
     </div>
 }

@@ -23,7 +23,10 @@ namespace Event.Data.Objects.Entities
         public long? EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public virtual EventPlanner EventPlanner { get; set; }
-        public IEnumerable<Appointment> Appointments { get; set; }
+        public IEnumerable<AppointmentContactMapping> AppointmentContactMappings { get; set; }
+        public IEnumerable<ContactAddress> ContactAddresses { get; set; }
+        public IEnumerable<ToDo> ToDoS { get; set; }
+        public IEnumerable<ContactWebsite> Websites { get; set; }
         public string DisplayName
 => Firstname + " " + Lastname;
     }

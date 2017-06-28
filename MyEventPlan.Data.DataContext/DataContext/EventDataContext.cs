@@ -68,6 +68,10 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<VendorImage> VendorImages { get; set; }
         public virtual DbSet<EventPlannerReview> EventPlannerReviews { get; set; }
         public virtual DbSet<EventPlannerEnquiry> EventPlannerEnquiries { get; set; }
+        public virtual DbSet<AppointmentContactMapping> AppointmentContactMapping { get; set; }
+        public virtual DbSet<ContactAddress> ContactAddress { get; set; }
+        public virtual DbSet<ContactWebsite> ContactWebsite { get; set; }
+        public virtual DbSet<ToDo> ToDos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -46,12 +46,12 @@
         @Html.LabelFor(model => model.Mobile)
         @Html.ValidationMessageFor(model => model.Mobile, "", new {@class = "text-danger"})
     </div>
-    <div class="mui-textfield mui-textfield--float-label">
+    @*<div class="mui-textfield mui-textfield--float-label">
 
         @Html.EditorFor(model => model.AveragePrice, new {htmlAttributes = new {placeholder = "Enter Average Price"}})
         @Html.LabelFor(model => model.AveragePrice)
         @Html.ValidationMessageFor(model => model.AveragePrice, "", new {@class = "text-danger"})
-    </div>
+    </div>*@
     <div class="mui-textfield mui-textfield--float-label">
 
         @Html.EditorFor(model => model.Website, new {htmlAttributes = new {placeholder = "Enter Website Url"}})

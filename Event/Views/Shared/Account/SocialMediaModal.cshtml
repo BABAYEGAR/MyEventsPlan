@@ -34,7 +34,7 @@
     </div>
     <div class="mui-textfield mui-textfield--float-label">
 
-        @Html.EditorFor(model => model.FacebookPage, new {htmlAttributes = new {placeholder = "Enter Facebook URL"}})
+        @Html.EditorFor(model => model.FacebookPage, new {htmlAttributes = new {placeholder = "Enter website URL"}})
         @Html.LabelFor(model => model.FacebookPage)
         @Html.ValidationMessageFor(model => model.FacebookPage, "", new {@class = "text-danger"})
     </div>

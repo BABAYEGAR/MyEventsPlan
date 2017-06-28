@@ -52,21 +52,22 @@
 }
 <div class="card-content table-responsive">
    <table class="table table-hover" id="grid">
-        <thead>
-        <tr>
-            <th>
-                @Html.DisplayName("Name")
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Mobile)
-            </th>
+       <thead>
+       <tr>
+           <th>
+               @Html.DisplayName("Name")
+           </th>
+           <th>
+               @Html.DisplayNameFor(model => model.Email)
+           </th>
+           <th>
+               @Html.DisplayNameFor(model => model.Mobile)
+           </th>
 
-            <th>Action</th>
-        </tr>
-
+           <th>Action</th>
+       </tr>
+       </thead>
+       <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -84,6 +85,6 @@
                 </td>
             </tr>
         }
-
+       </tbody>
     </table>
 </div>

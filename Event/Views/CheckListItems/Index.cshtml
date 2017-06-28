@@ -7,7 +7,7 @@
     ViewBag.TableSubHeader = "List of all Check-List Items";
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var checkListItem = new CheckListItem();
-    var db = new CheckListItemDataContext();
+    var db = new EventDataContext();
     long? listId = ViewBag.checkListId;
     var eventId = db.CheckLists.Find(listId).EventId;
 }

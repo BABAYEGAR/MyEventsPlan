@@ -1,0 +1,28 @@
+﻿@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@model Event.Data.Objects.Entities.ContactWebsite
+@{
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+}
+@using (Html.BeginForm("Edit", "ContactWebsites", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
+{
+    @Html.HiddenFor(m=>m.ContactWebsiteId)
+    @Html.HiddenFor(m => m.ContactId)
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="mui-select">
+        @Html.DropDownListFor(m => m.Type, EnumHelper.GetSelectList(typeof(ContactWebsiteType)), "Select a type", new {@class = "", id = "selectFor"})
+        @Html.ValidationMessageFor(model => model.Type, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.Website, new {htmlAttributes = new {placeholder = "Enter Check List Item Name"}})
+        @Html.LabelFor(model => model.Website)
+        @Html.ValidationMessageFor(model => model.Website, "", new {@class = "text-danger"})
+    </div>
+
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Update Website" class="btn btn-default"/>
+        </div>
+    </div>
+}

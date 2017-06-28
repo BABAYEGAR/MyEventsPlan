@@ -3,45 +3,89 @@
 @{
     Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
+@section css{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <style>
+        .main-panel > .content {
+            margin-top: 0px;
+            min-height: calc(100% - 123px);
+            padding: 0px 15px;
+        }
 
+        .bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:active, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover { color: white; }
+
+        .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) { width: 210%; }
+    </style>
+}
 @using (Html.BeginForm("CreateNewAppointment", "Appointments", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     <div class="modal-body">
 
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-        <div class="mui-textfield mui-textfield--float-label">
-            @Html.EditorFor(model => model.Name, new {htmlAttributes = new {placeholder = "Enter Event Name", id = "eventTitle"}})
-            @Html.LabelFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+        <div class="mui-row">
+            <div class="mui-textfield mui-col-md-6">
+                @Html.EditorFor(model => model.Name, new {htmlAttributes = new {placeholder = "Enter appointment Name", id = "eventTitle"}})
+
+                @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+            </div>
+            <div class="mui-select mui-col-md-6">
+                @Html.DropDownListFor(m => m.For, EnumHelper.GetSelectList(typeof(AppointmentType)), "Appointment is for?", new {@class = "", id = "selectFor"})
+                @Html.ValidationMessageFor(model => model.For, "", new {@class = "text-danger"})
+            </div>
         </div>
-        <div class="mui-select">
-            @Html.DropDownListFor(m => m.For, EnumHelper.GetSelectList(typeof(AppointmentType)), "Select a reason?", new {@class = "",id = "selectFor"})
-            @Html.ValidationMessageFor(model => model.For, "", new {@class = "text-danger"})
-        </div>
-        <div class="mui-select" id="events">
+
+        <div class="mui-select mui-col-md-12" id="events">
             @Html.DropDownListFor(m => m.EventId, (SelectList) ViewBag.EventTypeId, "Select an Event", new {@class = "", id = "eventId"})
             @Html.ValidationMessageFor(model => model.EventId, "", new {@class = "text-danger"})
         </div>
-        <div class="mui-textfield mui-textfield--float-label">
-            @Html.EditorFor(model => model.Location, new {htmlAttributes = new {placeholder = "Enter the Appointment Location", id = "eventLocation"}})
-            @Html.LabelFor(model => model.Location)
-            @Html.ValidationMessageFor(model => model.Location, "", new {@class = "text-danger"})
+            <div class="mui-textfield mui-col-md-12">
+                @Html.EditorFor(model => model.Location, new {htmlAttributes = new {placeholder = "Enter the Appointment Location", id = "eventLocation"}})
+                @Html.ValidationMessageFor(model => model.Location, "", new {@class = "text-danger"})
+            </div>
+            <div class="mui-textfield mui-col-md-12">
+                @Html.TextAreaFor(model => model.Notes, new {placeholder = "Enter the Appointment Note", id = "eventNote"})
+
+                @Html.ValidationMessageFor(model => model.Notes, "", new {@class = "text-danger"})
+            </div>
+        <div class="mui-row">
+            <div class="mui-textfield mui-col-md-6">
+                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {placeholder = "Select the Event Start Date", id = "eventStartDate"}})
+                @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+            </div>
+            <div class="mui-textfield mui-col-md-6">
+                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {placeholder = "Select the Event Start Date", id = "eventEndDate"}})
+                @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
+            </div>
         </div>
-        <div class="mui-textfield mui-textfield--float-label">
-            @Html.EditorFor(model => model.Notes, new {htmlAttributes = new {placeholder = "Enter the Appointment Note", id = "eventNote"}})
-            @Html.LabelFor(model => model.Notes)
-            @Html.ValidationMessageFor(model => model.Notes, "", new {@class = "text-danger"})
+        <div class="mui-select mui-col-md-6">
+            @Html.DropDownListFor(m => m.ContactId, (SelectList) ViewBag.ContactId, "Select contacts", new {@class = "selectpicker", id = "contacts", multiple = "multiple"})
+            @Html.ValidationMessageFor(model => model.ContactId, "", new {@class = "text-danger"})
         </div>
-        <div class="mui-textfield mui-textfield--float-label">
-            @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {placeholder = "Select the Event Start Date", id = "eventStartDate"}})
-            @Html.LabelFor(model => model.StartDate)
-            @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+        <div class="form-control col-md-6">
+            @Html.EditorFor(model => model.SetReminder, new {htmlAttributes = new {placeholder = "", id = "setReminder"}})
+            @Html.LabelFor(model => model.SetReminder)
+            @Html.ValidationMessageFor(model => model.SetReminder, "", new {@class = "text-danger"})
         </div>
-        <div class="mui-textfield mui-textfield--float-label">
-            @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {placeholder = "Select the Event Start Date", id = "eventEndDate"}})
-            @Html.LabelFor(model => model.EndDate)
-            @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
+        <div class="form-control col-md-6">
+            @Html.EditorFor(model => model.SendEmailReminder, new {htmlAttributes = new {placeholder = "", id = "sendEmailReminder" } })
+            @Html.LabelFor(model => model.SendEmailReminder)
+            @Html.ValidationMessageFor(model => model.SendEmailReminder, "", new {@class = "text-danger"})
+        </div>
+        <div class="clearfix"></div>
+        <div class="mui-textfield mui-col-md-12">
+            @Html.EditorFor(model => model.ReminderLength, new {htmlAttributes = new {placeholder = "Enter the Length", id = "reminderLength"}})
+            @Html.ValidationMessageFor(model => model.ReminderLength, "", new {@class = "text-danger"})
+        </div>
+        <div class="mui-row">
+            <div class="mui-select mui-col-md-6">
+                @Html.DropDownListFor(m => m.ReminderLengthType, EnumHelper.GetSelectList(typeof(ReminderLength)), "Select the length", new {@class = "", id = "reminderLengthType"})
+                @Html.ValidationMessageFor(model => model.ReminderLengthType, "", new {@class = "text-danger"})
+            </div>
+            <div class="mui-select mui-col-md-6">
+                @Html.DropDownListFor(m => m.ReminderRepeat, EnumHelper.GetSelectList(typeof(ReminderRepeat)), "Select a repeat", new {@class = "", id = "reminderRepeat"})
+                @Html.ValidationMessageFor(model => model.ReminderRepeat, "", new {@class = "text-danger"})
+            </div>
         </div>
     </div>
     <div class="modal-footer">
@@ -50,6 +94,13 @@
     </div>
 }
 @section scripts{
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+    <script>
+        $('.selectpicker').selectpicker();
+
+    </script>
     <script>
         $(window)
             .load(function() {
@@ -64,4 +115,5 @@
                     });
             });
     </script>
+
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -35,6 +36,8 @@ namespace MyEventPlan.Controllers.EventManagement
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.EventId = new SelectList(_databaseConnection.Event.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
                 "EventId", "Name");
+            ViewBag.ContactId = new SelectList(_databaseConnection.Contacts.Where(n=>n.EventPlannerId == loggedinuser.EventPlannerId).ToList(),
+                "ContactId", "Firstname");
             return View();
         }
 
@@ -53,7 +56,6 @@ namespace MyEventPlan.Controllers.EventManagement
                         note = e.Notes,
                         end = e.EndDate,
                         allDay = false,
-                        backgroundColor = e.Event.Color,
                         startTime = e.StartTime,
                         endTime = e.EndTime
                     };
@@ -109,16 +111,18 @@ namespace MyEventPlan.Controllers.EventManagement
 
         [SessionExpire]
         public bool CreateNewAppointment(string title,string reason ,string newEventStartDate, string newEventEndDate,
-            long appUserId, string location, string note,
-            long plannerId, long? eventId)
+            long appUserId,string[] contacts, string location, string note,
+            long plannerId, long? eventId,string setReminder,long? reminderLength
+            ,string reminderLengthType, string reminderRepeat,string sendEmailReminder)
         {
             try
             {
                 new CalenderAppointment().CreateNewAppointment(title,reason, newEventStartDate, newEventEndDate, appUserId,
                     location, note,
-                    plannerId, eventId);
+                    plannerId, eventId,contacts,setReminder,reminderLength
+                    , reminderLengthType, reminderRepeat, sendEmailReminder);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

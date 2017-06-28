@@ -75,5 +75,6 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<SubscriptionInvoice> SubscriptionInvoices { get; set; }
         public IEnumerable<EventPlannerReview> EventPlannerReviews { get; set; }
         public IEnumerable<EventPlannerEnquiry> EventPlannerEnquiries { get; set; }
+        public IEnumerable<ToDo> ToDos { get;set; }
     }
 }

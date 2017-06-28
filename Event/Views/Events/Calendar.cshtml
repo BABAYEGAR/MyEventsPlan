@@ -16,6 +16,9 @@
         </li>
     </ol>
 }
+@section add {
+    @Html.ActionLink("Manage ToDo(s)", "Index", "ToDoes", new { }, new { @class = "btn btn-primary fa fa-wrench pull-right" })
+}
 @section css{
     <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
     <link href="~/Content/Color/spectrum.css" rel="stylesheet"/>

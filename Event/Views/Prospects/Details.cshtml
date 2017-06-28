@@ -108,7 +108,39 @@
 </div>
 @if (Model.Status == ProspectStausEnum.Active.ToString())
 {
-    @Html.ActionLink("Cancel", "CancelProspect", new {id = Model.ProspectId}, new {@class = "btn  btn-warning fa fa-remove"})
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-warning fa fa-remove" data-toggle="modal" data-target="#myModals1">
+        Cancel Prospect
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModals1" tabindex="-1" role="dialog" aria-labelledby="myModalLabels1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabels1">Delete Prospect</h4>
+                </div>@using (Html.BeginForm("CancelProspect", "Prospects", new {id = Model.ProspectId}))
+                      {
+                          <div class="modal-body">
+
+                              @Html.AntiForgeryToken()
+                              <p>
+                                  Are you sure you want to cancel this prospect?<strong>Cancelling these prospect means that the lead will no longer be converted to an event you want to plan!</strong>
+                              </p>
+
+                          </div>
+                          <div class="modal-footer">
+                              <input type="submit" value="Yes, Cancel" class="btn btn-danger pull-right fa fa-trash"/>
+                              <input type="button" data-dismiss="modal" value="No, thank you" class="btn btn-default pull-left"/>
+                          </div>
+                      }
+            </div>
+        </div>
+
+    </div>
     <span>|</span>
     @Html.ActionLink("Convert To Event", "ConvertProspectToEvent", new {id = Model.ProspectId}, new {@class = "btn  btn-success"})
 }

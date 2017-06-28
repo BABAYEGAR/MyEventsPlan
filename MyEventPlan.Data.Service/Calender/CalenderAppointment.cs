@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
+using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Enum;
 
@@ -79,7 +80,8 @@ namespace MyEventPlan.Data.Service.Calender
             }
         }
         public bool CreateNewAppointment(string title,string reason, string newEventStartDate, string newEventEndDate, long appUserId, string location, string note,
-       long plannerId,long? eventId)
+       long plannerId,long? eventId,string[] contacts, string setReminder, long? reminderLength
+            , string reminderLengthType, string reminderRepeat, string sendEmailReminder)
         {
             try
             {
@@ -99,13 +101,34 @@ namespace MyEventPlan.Data.Service.Calender
                     LastModifiedBy = appUserId,
                     DateCreated = DateTime.Now,
                     DateLastModified = DateTime.Now,
-                    EventId = eventId
-                };
+                    EventId = eventId,
+                    ReminderLength = reminderLength,
+                    ReminderRepeat = reminderRepeat,
+                    ReminderLengthType = reminderLengthType,
+                    SetReminder = Convert.ToBoolean(setReminder),
+                    SendEmailReminder = Convert.ToBoolean(sendEmailReminder),
+                    SendTextMessageReminder = false
 
+                };
+                var contactList = contacts;
                 databaseConnection.Appointments.Add(rec);
                 databaseConnection.SaveChanges();
+                foreach (var item in contactList)
+                {
+                    var mapping = new AppointmentContactMapping();
+                    var contact = databaseConnection.Contacts.Find(Convert.ToInt64(item));
+                    if (contact != null) mapping.ContactId = contact.ContactId;
+                    mapping.AppointmentId = rec.AppointmentId;
+                    databaseConnection.AppointmentContactMapping.Add(mapping);
+                    databaseConnection.SaveChanges();
+
+                }
+             
+
+                //var appointContactMapping = new AppointmentContactMapping();
+                //appointContactMapping.ContactId
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

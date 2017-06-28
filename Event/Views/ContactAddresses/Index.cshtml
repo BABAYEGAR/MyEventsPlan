@@ -1,0 +1,86 @@
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<ContactAddress>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "Contact Address";
+    ViewBag.TableSubHeader = "List of all Contact addresses";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    var contactAddress = new ContactAddress();
+}
+
+@section add {
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary  fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Address
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Add a new contact address</h4>
+                </div>
+                <div class="modal-body">
+                    @{
+                        Html.RenderPartial("EventPlanning/CreateContactAddressModal", contactAddress);
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}
+@section links{
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Contacts")">My Contacts</a>
+        </li>
+    </ol>
+}
+<div class="card-content table-responsive">
+<table class="table table-hover" id="grid">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostalCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Country)
+        </th>
+        <th></th>
+    </tr>
+        </thead>
+    <tbody>
+@foreach (var item in Model) {
+    <tr>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostalCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.State)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Country)
+        </td>
+        <td>
+            @Html.ActionLink("Open", "Details", new {id = item.ContactAddressId}, new {@class = "btn btn-lg btn-default fa fa-folder-open"})
+        </td>
+    </tr>
+}
+</tbody>
+</table></div>

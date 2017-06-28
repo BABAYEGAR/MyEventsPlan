@@ -3,7 +3,7 @@
 @model Invoice
 @{
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    var db = new InvoiceDataContext();
+    var db = new EventDataContext();
     ViewBag.ClientId = new SelectList(db.Clients.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId),
         "ClientId", "Name", Model.ClientId);
     Layout = "../../Shared/Layout/_LayoutModal.cshtml";

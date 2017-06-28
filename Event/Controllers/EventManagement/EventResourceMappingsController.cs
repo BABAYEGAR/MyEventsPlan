@@ -193,8 +193,10 @@ namespace MyEventPlan.Controllers.EventManagement
             resource.Quantity = resource.Quantity + eventResourceMapping.Quantity;
             resource.DateLastModified = DateTime.Now;
 
+            eventResourceMapping.Quantity = 0;
+
             _databaseConnection.Entry(resource).State = EntityState.Modified;
-            _databaseConnection.EventResourceMapping.Remove(eventResourceMapping);
+            _databaseConnection.Entry(eventResourceMapping).State = EntityState.Modified;
             _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deallocated the resources from the event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();

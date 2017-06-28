@@ -3,7 +3,7 @@
 @{
     var events = Session["event"] as Event;
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "List of all vedors assigned to " + events?.Name + "!";
+    ViewBag.TableHeader = "List of all vedors assigned to " + events.Name + "!";
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var mapping = new EventVendorMapping();
     var vendor = new Vendor();

@@ -22,7 +22,13 @@ namespace MyEventPlan.Controllers.ResourceManagement
             var resources = _databaseConnection.Resources.Where(n => n.EventPlannerId == loggedinuser.EventPlannerId);
             return View(resources.ToList());
         }
-
+        [SessionExpire]
+        public ActionResult ViewEvents(long id)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var resources = _databaseConnection.EventResourceMapping.Where(n => n.ResourceId == id);
+            return View(resources.ToList());
+        }
         // GET: Resources/Details/5
         [SessionExpire]
         public ActionResult Details(long? id)

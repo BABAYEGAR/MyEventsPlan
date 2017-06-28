@@ -1,0 +1,54 @@
+﻿@using Event.Data.Objects.Entities
+@model IEnumerable<EventResourceMapping>
+@{
+    ViewBag.Title = "List";
+    ViewBag.TableHeader = "Resources Allocation";
+    ViewBag.TableSubHeader = "List of all my Resources Allocation";
+    Layout = "../Shared/Layout/_LayoutTable.cshtml";
+    var resource = new Resource();
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Resources")">My Resources</a>
+        </li>
+    </ol>
+}
+<div class="card-content table-responsive">
+   <table class="table table-hover" id="grid">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Event.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayName("Date Allocated")
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

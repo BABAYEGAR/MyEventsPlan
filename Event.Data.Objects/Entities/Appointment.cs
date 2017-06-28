@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -37,13 +38,14 @@ namespace Event.Data.Objects.Entities
         public long? ReminderLength { get; set; }
         [DisplayName("Reminder Length Type")]
         public string ReminderLengthType { get; set; }
+        [DisplayName("Reminder Repeat")]
+        public string ReminderRepeat { get; set; }
         public long? EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public virtual EventPlanner EventPlanner { get; set; }
         public long? ContactId { get; set; }
-        [ForeignKey("ContactId")]
-        public virtual Contact Contact { get; set; }
-        public bool? SendEmailReminder { get; set; }
+        public bool SendEmailReminder { get; set; }
         public bool? SendTextMessageReminder { get; set; }
+        public IEnumerable<AppointmentContactMapping> AppointmentContactMappings { get; set; }
     }
 }

@@ -1,0 +1,138 @@
+﻿@model Event.Data.Objects.Entities.ContactAddress
+@{
+    Layout = "../Shared/Layout/_LayoutView.cshtml";
+    ViewBag.Title = "Details";
+    ViewBag.TableHeader = "Contact Address";
+    ViewBag.TableSubHeader = "Details of Contact Address";
+}
+@section links{
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Dashboard", "Home")">My Dashboard</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "Contacts")">Contacts</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index", "ContactAddresses",new{contactId = Model.ContactId})">Contact Address</a>
+        </li>
+    </ol>
+}
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Street1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Street1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Street2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Street2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+    </dl>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary fa fa-pencil" data-toggle="modal" data-target="#myModal">
+    Edit Address
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Edit contact address</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                    Html.RenderPartial("EventPlanning/EditContactAddressModal", Model);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-danger fa fa-trash" data-toggle="modal" data-target="#myModal1">
+    Delete Address
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete contact address</h4>
+            </div>
+
+            @using (Html.BeginForm("Delete", "ContactAddresses", new { id = Model.ContactAddressId }))
+            {
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    <p>
+                        Are you sure you want to remove the address?
+
+                    </p>
+
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Remove" class="btn btn-danger pull-right fa fa-trash" />
+                    <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
