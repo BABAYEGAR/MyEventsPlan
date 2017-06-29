@@ -27,6 +27,7 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<ContactAddress> ContactAddresses { get; set; }
         public IEnumerable<ToDo> ToDoS { get; set; }
         public IEnumerable<ContactWebsite> Websites { get; set; }
+        public IEnumerable<Prospect> Prospects { get; set; }
         public string DisplayName
 => Firstname + " " + Lastname;
     }

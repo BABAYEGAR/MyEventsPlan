@@ -30,6 +30,7 @@ namespace MyEventPlan.Controllers.EventManagement
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var guestList = _databaseConnection.GuestLists.Find(id);
+            ViewBag.guestListId = id;
             if (guestList == null)
                 return HttpNotFound();
             return View(guestList);

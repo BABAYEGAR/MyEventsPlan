@@ -18,6 +18,11 @@
         @Html.LabelFor(model => model.Description)
         @Html.ValidationMessageFor(model => model.Description, "", new {@class = "text-danger"})
     </div>
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {placeholder = "Enter the amount"}})
+        @Html.LabelFor(model => model.Amount)
+        @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
+    </div>
     <div class="mui-select">
         @Html.DropDownListFor(m => m.PackageGrade, EnumHelper.GetSelectList(typeof(VendorPackageEnum)), "select the package grade")
         @Html.LabelFor(model => model.PackageGrade)

@@ -349,7 +349,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                 vendor.Password = new Hashing().HashPassword(vendor.ConfirmPassword);
                 vendor.ConfirmPassword = vendor.Password;
                 if (logo != null && logo.FileName != "")
-                    vendor.Logo = new FileUploader().UploadFile(logo, UploadType.vendorLogo);
+                    vendor.Logo = new FileUploader().UploadFile(logo, UploadType.VendorLogo);
 
                 Session["vendor"] = vendor;
 
@@ -656,7 +656,7 @@ namespace MyEventPlan.Controllers.VendorManagement
                 {
                     vendor.LastModifiedBy = loggedinuser.AppUserId;
                     if (logo != null && logo.FileName != "")
-                        vendor.Logo = new FileUploader().UploadFile(logo, UploadType.vendorLogo);
+                        vendor.Logo = new FileUploader().UploadFile(logo, UploadType.VendorLogo);
                 }
                 else
                 {

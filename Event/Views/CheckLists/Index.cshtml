@@ -1,4 +1,5 @@
 ﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
 @model IEnumerable<CheckList>
 @{
     var events = Session["event"] as Event;
@@ -7,6 +8,7 @@
     ViewBag.TableSubHeader = "List of all my Check-List";
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var checkList = new CheckList();
+    var db = new EventDataContext();
 }
 @section links{
 
@@ -59,6 +61,9 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
+                @Html.DisplayName("Completion Rate")
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>Action</th>
@@ -67,9 +72,21 @@
         <tbody>
         @foreach (var item in Model)
         {
+            var itemsCount = db.CheckListItems.Where(n => n.CheckListId == item.CheckListId).ToList();
+            var itemsCompletedCount = db.CheckListItems.Where(n => n.CheckListId == item.CheckListId && n.Checked).ToList();
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (itemsCount.Count == itemsCompletedCount.Count)
+                    {
+                        <span style="color: green">@itemsCompletedCount.Count of @itemsCount.Count</span>  
+                    }
+                    @if (itemsCount.Count != itemsCompletedCount.Count)
+                    {
+                        <span style="color: red">@itemsCompletedCount.Count of @itemsCount.Count</span>  
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)

@@ -47,7 +47,9 @@
     <Compile Include="Entities\Budget.cs" />
     <Compile Include="Entities\ContactWebsite.cs" />
     <Compile Include="Entities\ContactAddress.cs" />
+    <Compile Include="Entities\CustomQuestion.cs" />
     <Compile Include="Entities\EventPlannerEnquiry.cs" />
+    <Compile Include="Entities\MealChoice.cs" />
     <Compile Include="Entities\ToDo.cs" />
     <Compile Include="Entities\VendorEnquiry.cs" />
     <Compile Include="Entities\VendorPackageItem.cs" />
@@ -95,6 +97,8 @@
     <Compile Include="Entities\EventPlannerReview.cs" />
     <Compile Include="Entities\VendorReview.cs" />
     <Compile Include="Entities\VendorService.cs" />
+    <Compile Include="Entities\VisionBoard.cs" />
+    <Compile Include="Entities\VisionBoardComment.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

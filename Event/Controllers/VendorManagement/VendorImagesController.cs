@@ -72,25 +72,25 @@ namespace MyEventPlan.Controllers.VendorManagement
                     var imageNine = Request.Files["imageNine"];
                     var imageTen = Request.Files["imageTen"];
                     if (imageOne != null && imageOne.FileName != "")
-                        vendorImage.ImageOne = new FileUploader().UploadFile(imageOne, UploadType.vendorImage);
+                        vendorImage.ImageOne = new FileUploader().UploadFile(imageOne, UploadType.VendorImage);
                     if (imageTwo != null && imageTwo.FileName != "")
-                        vendorImage.ImageTwo = new FileUploader().UploadFile(imageTwo, UploadType.vendorImage);
+                        vendorImage.ImageTwo = new FileUploader().UploadFile(imageTwo, UploadType.VendorImage);
                     if (imageThree != null && imageThree.FileName != "")
-                        vendorImage.ImageThree = new FileUploader().UploadFile(imageThree, UploadType.vendorImage);
+                        vendorImage.ImageThree = new FileUploader().UploadFile(imageThree, UploadType.VendorImage);
                     if (imageFour != null && imageFour.FileName != "")
-                        vendorImage.ImageFour = new FileUploader().UploadFile(imageFour, UploadType.vendorImage);
+                        vendorImage.ImageFour = new FileUploader().UploadFile(imageFour, UploadType.VendorImage);
                     if (imageFive != null && imageFive.FileName != "")
-                        vendorImage.ImageFive = new FileUploader().UploadFile(imageFive, UploadType.vendorImage);
+                        vendorImage.ImageFive = new FileUploader().UploadFile(imageFive, UploadType.VendorImage);
                     if (imageSix != null && imageSix.FileName != "")
-                        vendorImage.ImageSix = new FileUploader().UploadFile(imageSix, UploadType.vendorImage);
+                        vendorImage.ImageSix = new FileUploader().UploadFile(imageSix, UploadType.VendorImage);
                     if (imageSeven != null && imageSeven.FileName != "")
-                        vendorImage.ImageSeven = new FileUploader().UploadFile(imageSeven, UploadType.vendorImage);
+                        vendorImage.ImageSeven = new FileUploader().UploadFile(imageSeven, UploadType.VendorImage);
                     if (imageEight != null && imageEight.FileName != "")
-                        vendorImage.ImageEight = new FileUploader().UploadFile(imageEight, UploadType.vendorImage);
+                        vendorImage.ImageEight = new FileUploader().UploadFile(imageEight, UploadType.VendorImage);
                     if (imageNine != null && imageNine.FileName != "")
-                        vendorImage.ImageNine = new FileUploader().UploadFile(imageNine, UploadType.vendorImage);
+                        vendorImage.ImageNine = new FileUploader().UploadFile(imageNine, UploadType.VendorImage);
                     if (imageTen != null && imageTen.FileName != "")
-                        vendorImage.ImageTen = new FileUploader().UploadFile(imageTen, UploadType.vendorImage);
+                        vendorImage.ImageTen = new FileUploader().UploadFile(imageTen, UploadType.VendorImage);
 
                     vendorImage.LastModifiedBy = loggedinuser.AppUserId;
                     vendorImage.CreatedBy = loggedinuser.AppUserId;
@@ -155,25 +155,25 @@ namespace MyEventPlan.Controllers.VendorManagement
                     var imageNine = Request.Files["imageNine"];
                     var imageTen = Request.Files["imageTen"];
                     if (imageOne != null && imageOne.FileName != "")
-                        vendorImage.ImageOne = new FileUploader().UploadFile(imageOne, UploadType.vendorImage);
+                        vendorImage.ImageOne = new FileUploader().UploadFile(imageOne, UploadType.VendorImage);
                     if (imageTwo != null && imageTwo.FileName != "")
-                        vendorImage.ImageTwo = new FileUploader().UploadFile(imageTwo, UploadType.vendorImage);
+                        vendorImage.ImageTwo = new FileUploader().UploadFile(imageTwo, UploadType.VendorImage);
                     if (imageThree != null && imageThree.FileName != "")
-                        vendorImage.ImageThree = new FileUploader().UploadFile(imageThree, UploadType.vendorImage);
+                        vendorImage.ImageThree = new FileUploader().UploadFile(imageThree, UploadType.VendorImage);
                     if (imageFour != null && imageFour.FileName != "")
-                        vendorImage.ImageFour = new FileUploader().UploadFile(imageFour, UploadType.vendorImage);
+                        vendorImage.ImageFour = new FileUploader().UploadFile(imageFour, UploadType.VendorImage);
                     if (imageFive != null && imageFive.FileName != "")
-                        vendorImage.ImageFive = new FileUploader().UploadFile(imageFive, UploadType.vendorImage);
+                        vendorImage.ImageFive = new FileUploader().UploadFile(imageFive, UploadType.VendorImage);
                     if (imageSix != null && imageSix.FileName != "")
-                        vendorImage.ImageSix = new FileUploader().UploadFile(imageSix, UploadType.vendorImage);
+                        vendorImage.ImageSix = new FileUploader().UploadFile(imageSix, UploadType.VendorImage);
                     if (imageSeven != null && imageSeven.FileName != "")
-                        vendorImage.ImageSeven = new FileUploader().UploadFile(imageSeven, UploadType.vendorImage);
+                        vendorImage.ImageSeven = new FileUploader().UploadFile(imageSeven, UploadType.VendorImage);
                     if (imageEight != null && imageEight.FileName != "")
-                        vendorImage.ImageEight = new FileUploader().UploadFile(imageEight, UploadType.vendorImage);
+                        vendorImage.ImageEight = new FileUploader().UploadFile(imageEight, UploadType.VendorImage);
                     if (imageNine != null && imageNine.FileName != "")
-                        vendorImage.ImageNine = new FileUploader().UploadFile(imageNine, UploadType.vendorImage);
+                        vendorImage.ImageNine = new FileUploader().UploadFile(imageNine, UploadType.VendorImage);
                     if (imageTen != null && imageTen.FileName != "")
-                        vendorImage.ImageTen = new FileUploader().UploadFile(imageTen, UploadType.vendorImage);
+                        vendorImage.ImageTen = new FileUploader().UploadFile(imageTen, UploadType.VendorImage);
 
                     vendorImage.LastModifiedBy = loggedinuser.AppUserId;
                 }

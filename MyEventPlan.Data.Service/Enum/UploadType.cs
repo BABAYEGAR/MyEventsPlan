@@ -4,9 +4,10 @@
     {
         ProfileImage,
         NewsImage,
-        vendorImage,
-        vendorLogo,
+        VendorImage,
+        VendorLogo,
         EventPlannerLogo,
+        VisionBoard
 
     }
 }

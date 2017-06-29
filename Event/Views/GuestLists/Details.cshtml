@@ -7,6 +7,15 @@
     ViewBag.TableHeader = Model.Name + " Guest-List";
     ViewBag.TableSubHeader = "Details of Guest-List";
     var events = Session["event"] as Event;
+
+    var db = new EventDataContext();
+    var meals = db.MealChoices.Where(n => n.GuestListId == Model.GuestListId).ToList();
+
+    var mealChoice = new MealChoice();
+    mealChoice.GuestListId = Model.GuestListId;
+
+    var customQuestions = db.CustomQuestions.Where(n => n.GuestListId == Model.GuestListId).ToList();
+    var questions = new CustomQuestion();
 }
 @section links{
     <ol class="breadcrumb">
@@ -101,3 +110,124 @@
     </div>
 
 </div>
+@section secondBody
+{
+    <div class="card">
+
+        <div class="card-content table-responsive">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-default  fa fa-plus pull-right" data-toggle="modal" data-target="#myModals">
+                Add Meal Choice
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModals" tabindex="-1" role="dialog" aria-labelledby="myModalLabels">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabels">Add a new meal choice</h4>
+                        </div>
+                        <div class="modal-body">
+                            @{
+                                Html.RenderPartial("EventPlanning/CreateMealChoiceModal", mealChoice);
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-header" data-background-color="purple">
+                <h4 class="title">Meal Choices</h4>
+                <p class="category">List of meal choices for the guest-list</p>
+            </div>
+            <table class="table table-hover" id="grid">
+                <thead>
+                <tr>
+                    <th>
+                        @Html.Display("Meal Choice")
+                    </th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in meals)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Choice)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Open", "Details","MealChoices", new {id = item.MealChoiceId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+
+        <div class="card-content table-responsive">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-default  fa fa-plus pull-right" data-toggle="modal" data-target="#myModals1">
+                Add Question
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="myModals1" tabindex="-1" role="dialog" aria-labelledby="myModalLabels1">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabels1">Add a new question</h4>
+                        </div>
+                        <div class="modal-body">
+                            @{
+                                Html.RenderPartial("EventPlanning/CreateCustomQuestionModal", questions);
+                            }
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-header" data-background-color="purple">
+                <h4 class="title">Custom Question</h4>
+                <p class="category">List of custom questions for the guest-list</p>
+            </div>
+            <table class="table table-hover" id="grid1">
+                <thead>
+                <tr>
+                    <th>
+                        @Html.Display("Question")
+                    </th>
+                    <th>
+                        @Html.Display("Answer")
+                    </th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var item in customQuestions)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Question)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Answer)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Open", "Details","CustomQuestions", new {id = item.CustomQuestionId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

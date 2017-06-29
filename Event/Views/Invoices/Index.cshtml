@@ -2,6 +2,7 @@
 @using MyEventPlan.Data.DataContext.DataContext
 @model IEnumerable<Invoice>
 @{
+
     ViewBag.Title = "List";
     long? eventId = ViewBag.id;
     if (eventId != null)
@@ -18,26 +19,46 @@
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var invoice = new Invoice();
     var db = new EventDataContext();
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+
+    var invoiceAmount = new List<long>();
+    var paymentAmount = new List<long>();
+    foreach (var items in db.InvoiceItems.Where(n => n.CreatedBy == loggedinuser.AppUserId))
+    {
+        var unitAmount = items.UnitCost * items.Quantity;
+        invoiceAmount.Add(unitAmount);
+    }
+    foreach (var items in db.InvoicePayments.Where(n => n.CreatedBy == loggedinuser.AppUserId))
+    {
+        if (items.Amount != null)
+        {
+            var unitAmount = (long) items.Amount;
+            paymentAmount.Add(unitAmount);
+        }
+    }
+    var totalInvoicedAmount = invoiceAmount.Sum();
+    var totalPaymentAmount = paymentAmount.Sum();
+    var remainingAmount = totalInvoicedAmount - totalPaymentAmount;
 }
 @section topSection{
     <div class="content">
         <div class="container-fluid">
-            <div class="col-lg-4 col-md-4 col-sm-4" style="color: blue">
-                <div class="card card-stats">
+            <div class="col-lg-4 col-md-4 col-sm-4" style="background-color: rgb(223, 137, 137);">
+                <div class="card card-stats"style="background-color: rgb(223, 137, 137); color: white">
                     <div class="card-content">
                         <p class="category"></p>
                         <h4 class="title pull-left">
-                            Total Invoiced
+                            Total Invoices
                         </h4>
                         <br/>
                         <br/>
-                        <h1 class="pull-left"><span id="totalPayments"></span></h1>
+                        <h1 class="pull-left">N @(String.Format("{0:n0}", @totalInvoicedAmount))</h1>
 
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4" style="color: green">
-                <div class="card card-stats">
+            <div class="col-lg-4 col-md-4 col-sm-4" style="background-color: rgb(128, 199, 128)">
+                <div class="card card-stats"style="background-color: rgb(128, 199, 128); color: white">
                     <div class="card-content">
                         <p class="category"></p>
                         <h4 class="title pull-left">
@@ -45,12 +66,12 @@
                         </h4>
                         <br/>
                         <br/>
-                        <h1 class="pull-left">$14.60</h1>
+                        <h1 class="pull-left">N @(String.Format("{0:n0}", @totalPaymentAmount))</h1>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-4 col-sm-4" style="color: palegoldenrod;">
-                <div class="card card-stats">
+            <div class="col-lg-4 col-md-4 col-sm-4" style="background-color: rgb(243, 238, 185);">
+                <div class="card card-stats"style="background-color: rgb(243, 238, 185); color: white">
                     <div class="card-content">
                         <p class="category"></p>
                         <h4 class="title pull-left">
@@ -58,7 +79,7 @@
                         </h4>
                         <br/>
                         <br/>
-                        <h1 class="pull-left">$14.60</h1>
+                        <h1 class="pull-left">N @(String.Format("{0:n0}", @remainingAmount))</h1>
                     </div>
 
                 </div>
@@ -112,7 +133,13 @@
                 @Html.DisplayNameFor(model => model.InvoiceNumber)
             </th>
             <th>
+                @Html.DisplayName("Client/Owner")
+            </th>
+            <th>
                 @Html.DisplayName("Amount")
+            </th>
+            <th>
+                @Html.DisplayName("Paid")
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DueDate)
@@ -122,7 +149,7 @@
         </thead>
         <tfoot>
         <tr>
-            <th colspan="4" style="text-align:left">Total:</th>
+            <th colspan="4" style="text-align: left">Total:</th>
             <th></th>
         </tr>
         </tfoot>
@@ -130,12 +157,20 @@
         @foreach (var item in Model)
         {
             var invoiceItems = db.InvoiceItems.Where(n => n.InvoiceId == item.InvoiceId);
-            List<long> invoiceAmount = null;
+            var invoicedAmount = new List<long>();
+            var paymentsAmount = new List<long>();
             foreach (var items in invoiceItems)
             {
                 var unitAmount = items.UnitCost * items.Quantity;
-                invoiceAmount.Add(unitAmount);
-
+                invoicedAmount.Add(unitAmount);
+            }
+            foreach (var items in db.InvoicePayments.Where(n => n.InvoiceId == item.InvoiceId))
+            {
+                if (items.Amount != null)
+                {
+                    var unitAmount = (long) items.Amount;
+                    paymentsAmount.Add(unitAmount);
+                }
             }
             <tr>
                 <td>
@@ -145,7 +180,13 @@
                     @Html.DisplayFor(modelItem => item.InvoiceNumber)
                 </td>
                 <td>
-                    @(invoiceAmount)
+                    @Html.DisplayFor(modelItem => item.Client.Name)
+                </td>
+                <td>
+                    @(String.Format("{0:n0}", @invoicedAmount.Sum()))
+                </td>
+                <td>
+                    @(String.Format("{0:n0}", @paymentsAmount.Sum()))
                 </td>
                 <td>
                     @item.DueDate.ToShortDateString()
@@ -163,41 +204,39 @@
 {
     <script>
         $(document).ready(function() {
-            $('#grid1').DataTable( {
-                "footerCallback": function ( row, data, start, end, display ) {
+            $('#grid1').DataTable({
+                "footerCallback": function(row, data, start, end, display) {
                     var api = this.api(), data;
- 
+
                     // Remove the formatting to get integer data for summation
-                    var intVal = function ( i ) {
-                        return typeof i === 'string' ?
-                            i.replace(/[\$,]/g, '')*1 :
-                            typeof i === 'number' ?
-                            i : 0;
+                    var intVal = function(i) {
+                        return typeof i === 'string' ? i.replace(/[\$,]/g, '') * 1 : typeof i === 'number' ? i : 0;
                     };
- 
+
                     // Total over all pages
                     total = api
-                        .column( 2 )
+                        .column(3)
                         .data()
-                        .reduce( function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0 );
- 
+                        .reduce(function(a, b) {
+                                return intVal(a) + intVal(b);
+                            },
+                            0);
+
                     // Total over this page
                     pageTotal = api
-                        .column( 2, { page: 'current'} )
+                        .column(3, { page: 'current' })
                         .data()
-                        .reduce( function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0 );
- 
+                        .reduce(function(a, b) {
+                                return intVal(a) + intVal(b);
+                            },
+                            0);
+
                     // Update footer
-                    $(api.column(2).footer()).html(
-                        'N' + pageTotal + ' ( N' + total + ' total)',
-                      
+                    $(api.column(3).footer()).html(
+                        'N' + pageTotal + ' ( N' + total + ' Total Invoices Amount)',
                     );
                 }
-            } );
+            });
         });
 
     </script>

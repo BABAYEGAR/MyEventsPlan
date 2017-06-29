@@ -6,11 +6,10 @@
     ViewBag.Title = "List";
     ViewBag.TableHeader = "Sent Messages";
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
-    var appUserDb = new AppUserDataContext();
-    var messageDb = new MessageDataContext();
+    var db = new EventDataContext();
     var message = new Message();
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
-    long unreadMessages = messageDb.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false).ToList().Count;
+    long unreadMessages = db.Messages.Where(n => n.AppUserId == loggedinuser.AppUserId && n.Read == false).ToList().Count;
 }
 <div class="span9">
     <div class="content">
@@ -76,7 +75,7 @@
                 </div>
             </div>
             <div class="module-body table">
-                <table class="table table-message">
+                <table class="table table-message" id="grid">
                     <tbody>
                     <tr class="heading">
                         <td class="cell-check">
@@ -106,7 +105,7 @@
                                     <i class="icon-star"></i>
                                 </td>
                                 <td class="cell-author hidden-phone hidden-tablet">
-                                    @(appUserDb.AppUsers.Find(item.AppUserId).DisplayName)
+                                    @(db.AppUsers.Find(item.AppUserId).DisplayName)
                                 </td>
                                 <td class="cell-title">
                                     @item.Subject
@@ -134,7 +133,7 @@
                                     <i class="icon-star"></i>
                                 </td>
                                 <td class="cell-author hidden-phone hidden-tablet">
-                                    @(appUserDb.AppUsers.Find(item.AppUserId).DisplayName)
+                                    @(db.AppUsers.Find(item.AppUserId).DisplayName)
                                 </td>
                                 <td class="cell-title">
                                     @item.Subject

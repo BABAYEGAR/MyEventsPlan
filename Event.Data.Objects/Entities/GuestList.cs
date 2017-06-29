@@ -18,5 +18,7 @@ namespace Event.Data.Objects.Entities
         [ForeignKey("EventPlannerId")]
         public virtual EventPlanner EventPlanner { get; set; }
         public IEnumerable<Guest> Guest { get; set; }
+        public IEnumerable<MealChoice> MealChoices { get; set; }
+        public IEnumerable<CustomQuestion> CustomQuestions { get; set; }
     }
 }

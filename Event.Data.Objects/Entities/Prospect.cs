@@ -50,6 +50,10 @@ namespace Event.Data.Objects.Entities
         public long? EventPlannerId { get; set; }
         [ForeignKey("EventPlannerId")]
         public virtual EventPlanner EventPlanner { get; set; }
+        [DisplayName("Contact")]
+        public long? ContactId { get; set; }
+        [ForeignKey("ContactId")]
+        public virtual Contact Contact { get; set; }
         public string Status { get; set; }
 
     }

@@ -14,6 +14,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
     public class ProspectsController : Controller
     {
         private readonly EventDataContext _databaseConnection = new EventDataContext();
+        private readonly EventDataContext _databaseConnection1 = new EventDataContext();
 
         // GET: Prospects
         [SessionExpire]
@@ -21,6 +22,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name");
+            ViewBag.ContactId = new SelectList(_databaseConnection.Contacts, "ContactId", "Firstname");
             var prospects =
                 _databaseConnection.Prospects.OrderByDescending(n => n.StartDate)
                     .Include(p => p.EventType)
@@ -82,6 +84,36 @@ namespace MyEventPlan.Controllers.ProspectManagement
             {
                 prospect.DateCreated = DateTime.Now;
                 prospect.DateLastModified = DateTime.Now;
+
+                //contact management
+                var contactExist = collectedValues["contactExist"];
+                var newContact = collectedValues["newContact"];
+                if (contactExist == "on")
+                {
+                    prospect.ContactId = Convert.ToInt64(collectedValues["ContactId"]);
+                }
+                if (newContact == "on")
+                {
+                    var contact = new Contact();
+
+                    contact.Title = collectedValues["ContactTitle"];
+                    contact.Firstname = collectedValues["Firstname"];
+                    contact.Lastname = collectedValues["Lastname"];
+                    contact.Email = collectedValues["ContactEmail"];
+                    contact.Mobile = collectedValues["Mobile"];
+                    if (loggedinuser != null)
+                    {
+                        contact.CreatedBy = loggedinuser.AppUserId;
+                        contact.LastModifiedBy = loggedinuser.AppUserId;
+                        contact.EventPlannerId = loggedinuser.EventPlannerId;
+                    }
+                    contact.DateCreated = DateTime.Now;
+                    contact.DateLastModified = DateTime.Now;
+                    _databaseConnection1.Contacts.Add(contact);
+                    _databaseConnection1.SaveChanges();
+
+                    prospect.ContactId = contact.ContactId;
+                }
                 if (loggedinuser != null)
                 {
                     prospect.CreatedBy = loggedinuser.AppUserId;

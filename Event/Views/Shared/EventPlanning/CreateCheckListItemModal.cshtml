@@ -1,7 +1,7 @@
 ﻿@using MyEventPlan.Data.DataContext.DataContext
 @model Event.Data.Objects.Entities.CheckListItem
 @{
-    var db = new CheckListDataContext();
+    var db = new EventDataContext();
     long checkListId = ViewBag.checkListId;
     var eventId = db.CheckLists.Find(checkListId).EventId;
     Layout = "../../Shared/Layout/_LayoutModal.cshtml";

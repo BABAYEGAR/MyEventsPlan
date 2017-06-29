@@ -35,20 +35,18 @@
 }
 <div class="card-content table-responsive">
    <table class="table table-hover" id="grid">
-        <thead class="text-primary">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.VendorPackage.PackageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>Action</th>
-        </tr>
-
+       <thead class="text-primary">
+       <tr>
+           <th>
+               @Html.DisplayNameFor(model => model.VendorPackage.PackageName)
+           </th>
+           <th>
+               @Html.DisplayNameFor(model => model.ItemName)
+           </th>
+           <th>Action</th>
+       </tr>
+       </thead>
+       <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -59,15 +57,12 @@
                     @Html.DisplayFor(modelItem => item.ItemName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
                     @Html.ActionLink("Open", "Details", new {id = item.VendorPackageItemId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
 
 
                 </td>
             </tr>
         }
-
+       </tbody>
     </table>
 </div>

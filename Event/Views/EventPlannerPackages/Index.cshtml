@@ -42,20 +42,21 @@
 }
 <div class="card-content table-responsive">
    <table class="table table-hover" id="grid">
-        <thead class="text-primary">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.PackageName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaximumEvents)
-            </th>
-            <th></th>
-        </tr>
-
+       <thead class="text-primary">
+       <tr>
+           <th>
+               @Html.DisplayNameFor(model => model.PackageName)
+           </th>
+           <th>
+               @Html.DisplayNameFor(model => model.Amount)
+           </th>
+           <th>
+               @Html.DisplayNameFor(model => model.MaximumEvents)
+           </th>
+           <th></th>
+       </tr>
+       </thead>
+       <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -74,6 +75,6 @@
                 </td>
             </tr>
         }
-
+       </tbody>
     </table>
 </div>

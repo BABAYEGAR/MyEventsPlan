@@ -69,7 +69,39 @@
         @Html.LabelFor(model => model.EndDate)
         @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
     </div>
+    <div class="form-control col-md-6">
+        @Html.Label("Existing Contact")
+        <input type="checkbox" id="contactExist" name="contactExist"/>
+    </div>
+    <div class="form-control col-md-6">
+        @Html.Label("New Contact")
+        <input type="checkbox" id="newContact" name="newContact"/>
+    </div>
+    <div id="selectcontactform">
+        <div class="mui-select">
+            @Html.DropDownListFor(m => m.ContactId, (SelectList) ViewBag.ContactId, "Select a contact", new {@class = ""})
+            @Html.ValidationMessageFor(model => model.ContactId, "", new {@class = "text-danger"})
+        </div>
 
+
+    </div>
+    <div id="contactForm">
+        <div class="mui-textfield mui-textfield--float-label">
+            @Html.Editor("ContactTitle", new {htmlAttributes = new {placeholder = "Enter Contact Title", required = "required"}})
+        </div>
+        <div class="mui-textfield mui-textfield--float-label">
+            @Html.Editor("Firstname", new {htmlAttributes = new {placeholder = "Enter Contact firstname", required = "required"}})
+        </div>
+        <div class="mui-textfield mui-textfield--float-label">
+            @Html.Editor("Lastname", new {htmlAttributes = new {placeholder = "Enter Contact lastname", required = "required"}})
+        </div>
+        <div class="mui-textfield mui-textfield--float-label">
+            @Html.Editor("ContactEmail", new {htmlAttributes = new {placeholder = "Enter Contact email address", required = "required"}})
+        </div>
+        <div class="mui-textfield mui-textfield--float-label">
+            @Html.Editor("Mobile", new {htmlAttributes = new {placeholder = "Enter Contact mobile", required = "required"}})
+        </div>
+    </div>
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Create Prospect" class="btn btn-default"/>
@@ -81,11 +113,10 @@
 <script src="~/Content/Color/spectrum.js"></script>
 <script type="text/javascript">
 
-
     jQuery('#datetimepicker5')
         .datetimepicker({
             format: 'm-d-Y',
-            onShow: function() {
+            onShow: function () {
                 this.setOptions({
                     minDate: 0
                 });
@@ -96,7 +127,7 @@
     jQuery('#datetimepicker6')
         .datetimepicker({
             format: 'm-d-Y H:i',
-            onShow: function() {
+            onShow: function () {
                 this.setOptions({
                     minDate: 0,
                     defaultDate: new Date()
@@ -106,7 +137,7 @@
     jQuery('#datetimepicker7')
         .datetimepicker({
             format: 'm-d-Y H:i',
-            onShow: function() {
+            onShow: function () {
                 this.setOptions({
                     minDate: jQuery('#datetimepicker6').val()
                 });
@@ -116,7 +147,7 @@
 
     //amount indicator
     $('input.number')
-        .keyup(function(event) {
+        .keyup(function (event) {
 
             if (event.which >= 37 && event.which <= 40) {
                 event.preventDefault();
@@ -126,4 +157,28 @@
             // the following line has been simplified. Revision history contains original.
             $this.val(num.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,"));
         });
+</script>
+<script>
+    
+    $(document).ready(function() {
+        $('#selectcontactform').hide();
+        $('#contactForm').hide();
+        $('#contactExist').change(function() {
+            if (this.checked) {
+                $('#selectcontactform').fadeIn('slow');
+                $('#newContact').attr('checked', false);
+            } else {
+                $('#selectcontactform').fadeOut('slow');
+            }
+
+        });
+        $('#newContact').change(function() {
+            if (this.checked){
+                $('#contactForm').fadeIn('slow');
+            $('#contactExist').attr('checked', false);
+            }else {
+                $('#contactForm').fadeOut('slow');
+            }
+        });
+    });
 </script>

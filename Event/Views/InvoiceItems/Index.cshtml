@@ -79,7 +79,7 @@
                     @Html.DisplayFor(modelItem => item.Quantity)
                 </td>
                 <td>
-                    @(item.UnitCost * item.Quantity)
+                   @(String.Format("{0:n0}", item.UnitCost * item.Quantity))
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ItemDate)

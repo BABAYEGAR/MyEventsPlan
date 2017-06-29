@@ -6,7 +6,6 @@
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.EventPlannerPackageId)
-    @Html.HiddenFor(m => m.Amount)
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.HiddenFor(m => m.DateCreated)
     @Html.HiddenFor(m => m.PackageGrade)
@@ -26,6 +25,11 @@
         @Html.EditorFor(model => model.MaximumEvents, new {htmlAttributes = new {placeholder = "Enter Number Maximum Events"}})
         @Html.LabelFor(model => model.MaximumEvents)
         @Html.ValidationMessageFor(model => model.MaximumEvents, "", new {@class = "text-danger"})
+    </div>
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {placeholder = "Enter the amount"}})
+        @Html.LabelFor(model => model.Amount)
+        @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">

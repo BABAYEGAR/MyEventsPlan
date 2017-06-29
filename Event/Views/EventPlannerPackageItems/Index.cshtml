@@ -50,12 +50,10 @@
             <th>
                 @Html.DisplayNameFor(model => model.ItemName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Amount)
-            </th>
             <th>Action</th>
         </tr>
-
+            </thead>
+       <tbody>
         @foreach (var item in Model)
         {
             <tr>
@@ -66,15 +64,12 @@
                     @Html.DisplayFor(modelItem => item.ItemName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
                     @Html.ActionLink("Open", "Details", new {id = item.EventPlannerPackageItemId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
 
 
                 </td>
             </tr>
         }
-
+       </tbody>
     </table>
 </div>

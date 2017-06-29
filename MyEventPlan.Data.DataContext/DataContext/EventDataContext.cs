@@ -72,6 +72,11 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<ContactAddress> ContactAddress { get; set; }
         public virtual DbSet<ContactWebsite> ContactWebsite { get; set; }
         public virtual DbSet<ToDo> ToDos { get; set; }
+        public virtual DbSet<MealChoice> MealChoices { get; set; }
+        public virtual DbSet<CustomQuestion> CustomQuestions { get; set; }
+        public virtual DbSet<VisionBoard> VisionBoards { get; set; }
+        public virtual DbSet<VisionBoardComment> VisionBoardComments { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

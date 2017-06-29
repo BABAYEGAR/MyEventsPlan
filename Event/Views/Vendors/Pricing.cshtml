@@ -11,13 +11,24 @@
 <div class="row pricing-container">
     @foreach (var item in packages)
     {
+        string format = String.Format("{0:n0}", @item.Amount);
         if (item.PackageGrade == VendorPackageEnum.Deluxe.ToString())
         {
             <div class="col-md-4 pricing-box pricing-box-top">
                 <div class="well-box">
                     <h2 class="price-title">@item.PackageName</h2>
                     <h1 class="price-plan">
-                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/month</span>
+                        @if (item.Amount == 0)
+                        {
+                            <span class="dollor-sign"></span>
+                            <span>FREE</span> <span class="permonth"> </span>
+                        }
+                        else
+                        {
+                            <span class="dollor-sign">N</span>
+                            @format
+                            <span class="permonth">/month</span>
+                        }
                     </h1>
                     <p>@item.Description</p>
                     <a href="@Url.Action("Invoice", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Top Up</a>
@@ -39,7 +50,16 @@
                 <div class="well-box">
                     <h2 class="price-title">@item.PackageName</h2>
                     <h1 class="price-plan">
-                        <span class="dollor-sign">$</span>@item.Amount<span class="permonth">/month</span>
+                        @if (item.Amount == 0)
+                        {
+                            <span class="dollor-sign"></span>
+                            <span>FREE</span> <span class="permonth"> </span>
+                        }
+                        else
+                        {
+                            <span class="dollor-sign">N</span>
+                            @item.Amount<span class="permonth">/month</span>
+                        }
                     </h1>
                     <p>@item.Description</p>
                     <a href="@Url.Action("Invoice", "Vendors", new {id = item.VendorPackageId})" class="btn btn-default btn-sm">Top Up</a>

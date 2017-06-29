@@ -14,11 +14,7 @@
         @Html.LabelFor(model => model.ItemName)
         @Html.ValidationMessageFor(model => model.ItemName, "", new {@class = "text-danger"})
     </div>
-    <div class="mui-textfield mui-textfield--float-label">
-        @Html.EditorFor(model => model.Amount, new {htmlAttributes = new {placeholder = "Enter the amount"}})
-        @Html.LabelFor(model => model.Amount)
-        @Html.ValidationMessageFor(model => model.Amount, "", new {@class = "text-danger"})
-    </div>
+
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Add Item" class="btn btn-default"/>

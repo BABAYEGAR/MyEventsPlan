@@ -1,0 +1,21 @@
+﻿@model Event.Data.Objects.Entities.MealChoice
+@{
+    Layout = "../../Shared/Layout/_LayoutModal.cshtml";
+    long listId = ViewBag.guestListId;
+}
+@using (Html.BeginForm("Create", "MealChoices", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("GuestListId",listId)
+    @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.EditorFor(model => model.Choice, new {htmlAttributes = new {placeholder = "Enter Meal Choice"}})
+        @Html.LabelFor(model => model.Choice)
+        @Html.ValidationMessageFor(model => model.Choice, "", new {@class = "text-danger"})
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <input type="submit" value="Add Meal" class="btn btn-default"/>
+        </div>
+    </div>
+}
