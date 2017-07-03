@@ -87,7 +87,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult Calendar()
         {
-            ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name");
+            ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes.OrderByDescending(n=>n.Name), "EventTypeId", "Name");
             return View();
         }
         // GET: Events/FloorPlan
@@ -183,7 +183,7 @@ namespace MyEventPlan.Controllers.EventManagement
         }
 
         public bool CreateNewEvent(string title, string newEventStartDate, string newEventEndDate,
-            long appUserId, string color, long budget,
+            long appUserId, string color, string budget,
             long plannerId, long type, string eventDate)
         {
             try

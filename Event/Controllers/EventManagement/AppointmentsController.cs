@@ -57,7 +57,8 @@ namespace MyEventPlan.Controllers.EventManagement
                         end = e.EndDate,
                         allDay = false,
                         startTime = e.StartTime,
-                        endTime = e.EndTime
+                        endTime = e.EndTime,
+                        events = e.Event
                     };
                 var rows = appointmentList.ToArray();
                 return Json(rows, JsonRequestBehavior.AllowGet);
@@ -184,7 +185,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         [SessionExpire]
         public ActionResult CreateAppointmentFromEvent(
-            [Bind(Include = "AppointmentId,Name,StartDate,EndDate,Location,Notes")] Appointment appointment,
+            [Bind(Include = "AppointmentId,Name,StartDate,EndDate,Location,Notes,For")] Appointment appointment,
             FormCollection collectedValues)
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -201,6 +202,13 @@ namespace MyEventPlan.Controllers.EventManagement
                     appointment.EventPlannerId = loggedinuser.EventPlannerId;
                     appointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                     appointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                    appointment.ContactId = null;
+                    appointment.ReminderLength = null;
+                    appointment.ReminderLengthType = null;
+                    appointment.SendEmailReminder = false;
+                    appointment.SendTextMessageReminder = false;
+                    appointment.SetReminder = false;
+                    
                     if (events != null) appointment.EventId = events.EventId;
                 }
                 else
@@ -215,7 +223,9 @@ namespace MyEventPlan.Controllers.EventManagement
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Details", "Events", new {id = appointment.EventId});
             }
-            return View(appointment);
+            TempData["display"] = "There was an issue creating a new appointment!";
+            TempData["notificationtype"] = NotificationType.Success.ToString();
+            return RedirectToAction("Details", "Events", new { id = appointment.EventId });
         }
 
         // GET: Appointments/Edit/5

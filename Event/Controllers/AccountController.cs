@@ -217,7 +217,7 @@ namespace MyEventPlan.Controllers
             reset.Date = DateTime.Now;
             reset.Code = number;
             if (loggedinuser != null) reset.Email = loggedinuser.Email;
-            _databaseConnection.PasswordResets.Add(reset);
+            //_databaseConnection.PasswordResets.Add(reset);
             _databaseConnection.SaveChanges();
             //_dbc.SaveChanges();
 

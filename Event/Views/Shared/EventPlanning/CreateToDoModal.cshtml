@@ -28,18 +28,17 @@
         @Html.ValidationMessageFor(model => model.DueDate, "", new {@class = "text-danger"})
     </div>
     <div class="mui-select">
-        @Html.DropDownListFor(m => m.AppUserId, null, "to-do for", new {@class = ""})
+        @Html.DropDownListFor(m => m.AppUserId, null, "To-Do For", new {@class = ""})
         @Html.ValidationMessageFor(model => model.AppUserId, "", new {@class = "text-danger"})
     </div>
     <div class="mui-select">
-        @Html.DropDownListFor(m => m.ContactId, null, "assign to", new {@class = ""})
+        @Html.DropDownListFor(m => m.ContactId, null, "Assign To-Do To", new {@class = ""})
         @Html.ValidationMessageFor(model => model.ContactId, "", new {@class = "text-danger"})
     </div>
+    <div class="mui-textfield mui-textfield--float-label">
+        @Html.TextAreaFor(model => model.Notes, new { placeholder = "Enter the Appointment Note" })
 
-    <div class="mui-textfield mui-col-md-12">
-        @Html.TextAreaFor(model => model.Notes, new {placeholder = "Enter the Appointment Note"})
-
-        @Html.ValidationMessageFor(model => model.Notes, "", new {@class = "text-danger"})
+        @Html.ValidationMessageFor(model => model.Notes, "", new { @class = "text-danger" })
     </div>
     <div class="form-control col-md-6">
         @Html.EditorFor(model => model.SetReminder, new {htmlAttributes = new {placeholder = ""}})

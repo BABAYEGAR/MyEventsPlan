@@ -19,6 +19,7 @@
 @section css{
     <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
     <link href="~/Content/Color/spectrum.css" rel="stylesheet"/>
+    <link href="~/Content/select2/dist/css/select2.min.css" rel="stylesheet" />
 }
 
 <div id="popupUpdateEventForm" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -61,6 +62,20 @@
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
     <script src="~/Content/Color/spectrum.js"></script>
+    <script src="~/Content/select2/dist/js/select2.full.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".select2_single").select2({
+                placeholder: "Select a state",
+                allowClear: true
+            });
+            $(".select2_group").select2({});
+            $(".select2_multiple").select2({
+                maximumSelectionLength: 100,
+                allowClear: true
+            });
+        });
+    </script>
     <script type="text/javascript">
 
         $.datetimepicker.setLocale('en');

@@ -4,18 +4,8 @@
     Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @section css{
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
-    <style>
-        .main-panel > .content {
-            margin-top: 0px;
-            min-height: calc(100% - 123px);
-            padding: 0px 15px;
-        }
+    
 
-        .bootstrap-select > .dropdown-toggle.bs-placeholder, .bootstrap-select > .dropdown-toggle.bs-placeholder:active, .bootstrap-select > .dropdown-toggle.bs-placeholder:focus, .bootstrap-select > .dropdown-toggle.bs-placeholder:hover { color: white; }
-
-        .bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn) { width: 210%; }
-    </style>
 }
 @using (Html.BeginForm("CreateNewAppointment", "Appointments", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
@@ -58,9 +48,11 @@
                 @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
             </div>
         </div>
-        <div class="mui-select mui-col-md-6">
-            @Html.DropDownListFor(m => m.ContactId, (SelectList) ViewBag.ContactId, "Select contacts", new {@class = "selectpicker", id = "contacts", multiple = "multiple"})
-            @Html.ValidationMessageFor(model => model.ContactId, "", new {@class = "text-danger"})
+        <div class="form-group">
+            <div class="col-md-9 col-sm-9 col-xs-12">
+                @Html.DropDownListFor(m => m.ContactId, (SelectList) ViewBag.ContactId, new {@class = "form-control select2_multiple  col-md-12", multiple = "multiple", width = "100px"})
+                @Html.ValidationMessageFor(model => model.ContactId, "", new {@class = "text-danger"})
+            </div>
         </div>
         <div class="form-control col-md-6">
             @Html.EditorFor(model => model.SetReminder, new {htmlAttributes = new {placeholder = "", id = "setReminder"}})
@@ -72,7 +64,7 @@
             @Html.LabelFor(model => model.SendEmailReminder)
             @Html.ValidationMessageFor(model => model.SendEmailReminder, "", new {@class = "text-danger"})
         </div>
-        <div class="clearfix"></div>
+       
         <div class="mui-textfield mui-col-md-12">
             @Html.EditorFor(model => model.ReminderLength, new {htmlAttributes = new {placeholder = "Enter the Length", id = "reminderLength"}})
             @Html.ValidationMessageFor(model => model.ReminderLength, "", new {@class = "text-danger"})

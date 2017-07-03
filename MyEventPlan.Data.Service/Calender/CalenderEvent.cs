@@ -51,7 +51,7 @@ namespace MyEventPlan.Data.Service.Calender
                 }
             }
         }
-        public bool CreateNewEvent(string title, string newEventStartDate, string newEventEndDate,long appUserId, string color, long budget,
+        public bool CreateNewEvent(string title, string newEventStartDate, string newEventEndDate,long appUserId, string color, string budget,
             long plannerId, long type,string eventDate)
         {
             try
@@ -64,8 +64,8 @@ namespace MyEventPlan.Data.Service.Calender
                     EndDate = Convert.ToDateTime(newEventEndDate),
                     Status = EventStausEnum.New.ToString(),
                     Color = color,
-                    TargetBudget = budget.ToString(),
-                    EventPlannerId = plannerId,
+                    TargetBudget = budget.Replace(",", ""),
+                     EventPlannerId = plannerId,
                     EventTypeId = type,
                     StartTime = Convert.ToDateTime(newEventStartDate).ToShortTimeString(),
                     EndTime = Convert.ToDateTime(newEventEndDate).ToShortTimeString(),

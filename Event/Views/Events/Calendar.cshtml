@@ -17,7 +17,7 @@
     </ol>
 }
 @section add {
-    @Html.ActionLink("Manage ToDo(s)", "Index", "ToDoes", new { }, new { @class = "btn btn-primary fa fa-wrench pull-right" })
+    @*@Html.ActionLink("Manage ToDo(s)", "Index", "ToDoes", new { }, new { @class = "btn btn-primary fa fa-wrench pull-right" })*@
 }
 @section css{
     <link href="~/Content/DateTimePicker/jquery.datetimepicker.min.css" rel="stylesheet"/>
@@ -200,12 +200,12 @@
                     'Title': $('#eventTitle').val(),
                     'NewEventStartDate': $('#eventStartDate').val(),
                     'NewEventEndDate': $('#eventEndDate').val(),
+                    'appUserId': @loggedinuser.AppUserId,
                     'Color': $('#eventColor').val(),
                     'Budget': $('#eventBudget').val(),
                     'plannerId': @loggedinuser.EventPlannerId,
                     'type': $('#eventType').val(),
-                    'eventDate': $('#eventDate').val(),
-                    'appUserId': @loggedinuser.AppUserId,
+                    'eventDate': $('#eventDate').val()
                 };
                 ClearPopupFormValues();
 
