@@ -12,7 +12,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
-using MyEventPlan.Data.Service.Contact;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers

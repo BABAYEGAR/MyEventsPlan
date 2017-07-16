@@ -27,11 +27,8 @@ namespace MyEventPlan.Data.Service.AuthenticationManagement
             {
                 return user;
             }
-            else
-            {
-                user = null;
-            }
-            
+            user = null;
+
             return user;
         }
         /// <summary>

@@ -15,6 +15,13 @@
     </li>
     <li class="active">Pricing Table</li>
 }
+@section css{
+    <style>
+        .section-space100 {
+            padding-bottom: 0px;
+        }
+    </style>
+}
 <div class="section-space100">
     <div class="container">
         <div class="row">
@@ -59,7 +66,7 @@
     <br/>
     @foreach (var item in packages)
     {
-        string format = String.Format("{0:n0}", @item.Amount);
+        string format = String.Format("{0:n0}", item.Amount);
         if (item.PackageGrade == VendorPackageEnum.Deluxe.ToString())
         {
             <div class="col-md-4 pricing-box pricing-box-top">

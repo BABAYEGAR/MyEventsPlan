@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
@@ -11,15 +10,15 @@ namespace MyEventPlan.Data.Service.Calender
 {
     public class CalenderAppointment
     {
-        public  List<Event.Data.Objects.Entities.Appointment> LoadAllEventsAppointments(long? id)
+        public  List<Appointment> LoadAllEventsAppointments(long? id)
         {
             using (EventDataContext databaseConnection = new EventDataContext())
             {
                 var rslt = databaseConnection.Appointments.Where(n=>n.EventPlannerId == id && n.StartDate >= DateTime.Now);
-                List<Event.Data.Objects.Entities.Appointment> result = new List<Event.Data.Objects.Entities.Appointment>();
+                List<Appointment> result = new List<Appointment>();
                 foreach (var item in rslt)
                 {
-                    Event.Data.Objects.Entities.Appointment rec = new Event.Data.Objects.Entities.Appointment
+                    Appointment rec = new Appointment
                     {
                         EventId = item.EventId,
                         StartDate = item.StartDate,
@@ -37,15 +36,15 @@ namespace MyEventPlan.Data.Service.Calender
                 return result;
             }
         }
-        public List<Event.Data.Objects.Entities.Appointment> LoadAllUserAppointments(long? id)
+        public List<Appointment> LoadAllUserAppointments(long? id)
         {
             using (EventDataContext databaseConnection = new EventDataContext())
             {
                 var rslt = databaseConnection.Appointments.Where(n => n.EventPlannerId == id).Include(n=>n.Event);
-                List<Event.Data.Objects.Entities.Appointment> result = new List<Event.Data.Objects.Entities.Appointment>();
+                List<Appointment> result = new List<Appointment>();
                 foreach (var item in rslt)
                 {
-                    Event.Data.Objects.Entities.Appointment rec = new Event.Data.Objects.Entities.Appointment
+                    Appointment rec = new Appointment
                     {
                         EventId = item.EventId,
                         StartDate = item.StartDate,
@@ -85,7 +84,7 @@ namespace MyEventPlan.Data.Service.Calender
             try
             {
                 EventDataContext databaseConnection = new EventDataContext();
-                Event.Data.Objects.Entities.Appointment rec = new Event.Data.Objects.Entities.Appointment
+                Appointment rec = new Appointment
                 {
                     Name = title,
                     StartDate = Convert.ToDateTime(newEventStartDate),

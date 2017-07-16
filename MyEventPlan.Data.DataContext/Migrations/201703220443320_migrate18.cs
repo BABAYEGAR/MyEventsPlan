@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class migrate18 : DbMigration
     {
         public override void Up()
@@ -21,7 +20,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.InvoiceItemId)
                 .ForeignKey("dbo.Invoices", t => t.InvoiceId)
@@ -39,7 +38,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.InvoicePaymentId)
                 .ForeignKey("dbo.Invoices", t => t.InvoiceId)
@@ -57,7 +56,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.PersonalCheckListItemId)
                 .ForeignKey("dbo.Events", t => t.EventId, cascadeDelete: true)
@@ -76,7 +75,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.PersonalCheckListId)
                 .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: true)

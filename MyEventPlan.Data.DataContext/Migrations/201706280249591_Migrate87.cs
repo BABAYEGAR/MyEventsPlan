@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class Migrate87 : DbMigration
     {
         public override void Up()
@@ -14,7 +13,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CustomQuestionId = c.Long(nullable: false, identity: true),
                         Question = c.String(),
                         Answer = c.String(),
-                        GuestListId = c.Long(nullable: false),
+                        GuestListId = c.Long(nullable: false)
                     })
                 .PrimaryKey(t => t.CustomQuestionId)
                 .ForeignKey("dbo.GuestLists", t => t.GuestListId, cascadeDelete: true)
@@ -26,7 +25,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                     {
                         MealChoiceId = c.Long(nullable: false, identity: true),
                         Choice = c.String(),
-                        GuestListId = c.Long(nullable: false),
+                        GuestListId = c.Long(nullable: false)
                     })
                 .PrimaryKey(t => t.MealChoiceId)
                 .ForeignKey("dbo.GuestLists", t => t.GuestListId, cascadeDelete: true)

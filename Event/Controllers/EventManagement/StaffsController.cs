@@ -7,6 +7,7 @@ using System.Web.Security;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
+using MyEventPlan.Data.Service.EmailService;
 using MyEventPlan.Data.Service.Encryption;
 using MyEventPlan.Data.Service.Enum;
 
@@ -68,7 +69,42 @@ namespace MyEventPlan.Controllers.EventManagement
                 return HttpNotFound();
             return View(staff);
         }
-
+        // GET: Clients/Details/5
+        [SessionExpire]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GenerateLoginAccessForClient(long staffId, FormCollection collection)
+        {
+            var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+            var role = _databaseConnection.Roles.SingleOrDefault(n => n.Name == "Staff");
+            var staff = _databaseConnection.Staff.Find(staffId);
+            var appUser = new AppUser();
+            if (staff != null)
+            {
+                appUser.Firstname = staff.Firstname;
+                appUser.Lastname = staff.Lastname;
+                appUser.Email = staff.Email;
+                appUser.Mobile = staff.Mobile;
+                if (role != null) appUser.RoleId = role.RoleId;
+                appUser.DateLastModified = DateTime.Now;
+                appUser.DateCreated = DateTime.Now;
+                appUser.Password = new Hashing().HashPassword(collection["ConfirmPassword"]);
+                appUser.Status = UserAccountStatus.Enabled.ToString();
+                if (loggedinuser != null)
+                {
+                    appUser.CreatedBy = loggedinuser.AppUserId;
+                    appUser.LastModifiedBy = loggedinuser.AppUserId;
+                    appUser.StaffId = staffId;
+                }
+                _databaseConnection.AppUsers.Add(appUser);
+                _databaseConnection.SaveChanges();
+                if (events != null) new MailerDaemon().NewStaffLogin(staff, appUser.AppUserId);
+                TempData["display"] = "The login acces link has been successfully sent to the clients email!";
+                TempData["notificationtype"] = NotificationType.Success.ToString();
+                return RedirectToAction("Index", new { id = staff.StaffId });
+            }
+            return RedirectToAction("Index", new { id = staff.StaffId });
+        }
         // GET: Staffs/Create
         [SessionExpire]
         public ActionResult Create()

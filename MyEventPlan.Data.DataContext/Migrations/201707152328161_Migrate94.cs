@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class Migrate94 : DbMigration
     {
         public override void Up()
@@ -14,7 +13,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         BudgetPaymentId = c.Long(nullable: false, identity: true),
                         AmountPaid = c.Long(nullable: false),
                         DatePaid = c.DateTime(nullable: false),
-                        BudgetId = c.Long(nullable: false),
+                        BudgetId = c.Long(nullable: false)
                     })
                 .PrimaryKey(t => t.BudgetPaymentId)
                 .ForeignKey("dbo.Budgets", t => t.BudgetId, cascadeDelete: true)

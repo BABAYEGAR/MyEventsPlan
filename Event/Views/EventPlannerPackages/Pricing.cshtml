@@ -13,7 +13,7 @@
 <div class="row pricing-container">
     @foreach (var item in packages)
     {
-        string format = String.Format("{0:n0}", @item.Amount);
+        string format = String.Format("{0:n0}", item.Amount);
         if (item.PackageGrade == EventPlannerPackageEnum.High.ToString())
         {
             <div class="col-md-4 pricing-box pricing-box-top">

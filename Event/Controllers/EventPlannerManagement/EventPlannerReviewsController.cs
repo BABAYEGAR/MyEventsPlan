@@ -5,7 +5,6 @@ using System.Net;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
-using MyEventPlan.Data.Service.AuthenticationManagement;
 
 namespace MyEventPlan.Controllers.EventPlannerManagement
 {

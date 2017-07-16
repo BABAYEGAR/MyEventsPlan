@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class migrate49 : DbMigration
     {
         public override void Up()
@@ -26,7 +25,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.VendorImageId)
                 .ForeignKey("dbo.Vendors", t => t.VendorId)

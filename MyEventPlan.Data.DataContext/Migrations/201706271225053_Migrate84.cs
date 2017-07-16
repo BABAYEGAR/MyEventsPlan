@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class Migrate84 : DbMigration
     {
         public override void Up()
@@ -13,7 +12,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                     {
                         AppointmentContactMappingId = c.Long(nullable: false, identity: true),
                         ContactId = c.Long(),
-                        AppointmentId = c.Long(),
+                        AppointmentId = c.Long()
                     })
                 .PrimaryKey(t => t.AppointmentContactMappingId)
                 .ForeignKey("dbo.Appointments", t => t.AppointmentId)
@@ -32,7 +31,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         PostalCode = c.String(nullable: false),
                         State = c.String(nullable: false),
                         Country = c.String(nullable: false),
-                        ContactId = c.Long(),
+                        ContactId = c.Long()
                     })
                 .PrimaryKey(t => t.ContactAddressId)
                 .ForeignKey("dbo.Contacts", t => t.ContactId)
@@ -45,7 +44,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         ContactWebsiteId = c.Long(nullable: false, identity: true),
                         Type = c.String(nullable: false),
                         Website = c.String(nullable: false),
-                        ContactId = c.Long(),
+                        ContactId = c.Long()
                     })
                 .PrimaryKey(t => t.ContactWebsiteId)
                 .ForeignKey("dbo.Contacts", t => t.ContactId)
@@ -60,7 +59,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         EventId = c.Long(),
                         ContactId = c.Long(),
                         AppUserId = c.Long(),
-                        SetReminder = c.Boolean(nullable: false),
+                        SetReminder = c.Boolean(nullable: false)
                     })
                 .PrimaryKey(t => t.ToDoId)
                 .ForeignKey("dbo.AppUsers", t => t.AppUserId)

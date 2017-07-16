@@ -292,18 +292,56 @@ namespace MyEventPlan.Data.Service.EmailService
                 // ignored
             }
         }
-
         /// <summary>
         ///     Html page content for the new user email
         /// </summary>
         /// <param name="userId"></param>
         /// <param name="eventName"></param>
         /// <returns></returns>
-        private static string GetEmailBody_ClientLoginCreated(long userId,string eventName)
+        private static string GetEmailBody_ClientLoginCreated(long userId, string eventName)
         {
             return
                 new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/ClientLogin.html")).ReadToEnd()
-                .Replace("EventName", eventName)
+                    .Replace("EventName", eventName)
+                    .Replace("AppUserId", userId.ToString());
+        }
+        /// <summary>
+        ///     This method sends an email containing a username and password to a newly created user
+        /// </summary>
+        /// <param name="staff"></param>
+        /// <param name="userId"></param>
+        public void NewStaffLogin(Staff staff, long userId)
+        {
+            var message = new MailMessage
+            {
+                From = new MailAddress(Config.SupportEmailAddress),
+                Subject = "Staff Login-Access",
+                Priority = MailPriority.High,
+                SubjectEncoding = Encoding.UTF8,
+                Body = GetEmailBody_StaffLoginCreated(userId),
+                IsBodyHtml = true
+            };
+            //message.To.Add(Config.DevEmailAddress);
+            message.To.Add(staff.Email);
+            try
+            {
+                new SmtpClient().Send(message);
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
+        }
+
+        /// <summary>
+        ///     Html page content for the new user email
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        private static string GetEmailBody_StaffLoginCreated(long userId)
+        {
+            return
+                new StreamReader(HttpContext.Current.Server.MapPath("~/EmailTemplates/ClientLogin.html")).ReadToEnd()
                     .Replace("AppUserId", userId.ToString());
         }
     }

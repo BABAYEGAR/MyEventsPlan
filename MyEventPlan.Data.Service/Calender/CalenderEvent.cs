@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
-using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.Enum;
 
@@ -27,7 +25,7 @@ namespace MyEventPlan.Data.Service.Calender
                         Name = item.Name,
                         Color = item.Color,
                         StartTime = item.StartTime,
-                        EndTime = item.EndTime,
+                        EndTime = item.EndTime
                     };
 
 

@@ -1,18 +1,16 @@
+using System.Data.Entity.Migrations;
+using MyEventPlan.Data.DataContext.DataContext;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<MyEventPlan.Data.DataContext.DataContext.EventDataContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<EventDataContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(MyEventPlan.Data.DataContext.DataContext.EventDataContext context)
+        protected override void Seed(EventDataContext context)
         {
             //  This method will be called after migrating to the latest version.
 

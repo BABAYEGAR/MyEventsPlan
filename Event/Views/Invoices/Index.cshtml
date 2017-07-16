@@ -52,7 +52,7 @@
                         </h4>
                         <br/>
                         <br/>
-                        <h1 class="pull-left">N @(String.Format("{0:n0}", @totalInvoicedAmount))</h1>
+                        <h1 class="pull-left">N @(String.Format("{0:n0}", totalInvoicedAmount))</h1>
 
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         </h4>
                         <br/>
                         <br/>
-                        <h1 class="pull-left">N @(String.Format("{0:n0}", @totalPaymentAmount))</h1>
+                        <h1 class="pull-left">N @(String.Format("{0:n0}", totalPaymentAmount))</h1>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                         </h4>
                         <br/>
                         <br/>
-                        <h1 class="pull-left">N @(String.Format("{0:n0}", @remainingAmount))</h1>
+                        <h1 class="pull-left">N @(String.Format("{0:n0}", remainingAmount))</h1>
                     </div>
 
                 </div>
@@ -183,10 +183,10 @@
                     @Html.DisplayFor(modelItem => item.Client.Name)
                 </td>
                 <td>
-                    @(String.Format("{0:n0}", @invoicedAmount.Sum()))
+                    @(String.Format("{0:n0}", invoicedAmount.Sum()))
                 </td>
                 <td>
-                    @(String.Format("{0:n0}", @paymentsAmount.Sum()))
+                    @(String.Format("{0:n0}", paymentsAmount.Sum()))
                 </td>
                 <td>
                     @item.DueDate.ToShortDateString()

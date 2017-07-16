@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class migrate1 : DbMigration
     {
         public override void Up()
@@ -24,7 +23,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.AppointmentId)
                 .ForeignKey("dbo.Events", t => t.EventId, cascadeDelete: true)
@@ -51,7 +50,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.EventId)
                 .ForeignKey("dbo.EventPlanners", t => t.EventPlannerId)
@@ -72,7 +71,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         Mobile = c.String(nullable: false, maxLength: 100),
                         Password = c.String(nullable: false),
                         ConfirmPassword = c.String(nullable: false),
-                        RoleId = c.Long(),
+                        RoleId = c.Long()
                     })
                 .PrimaryKey(t => t.EventPlannerId)
                 .ForeignKey("dbo.Roles", t => t.RoleId)
@@ -99,7 +98,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.RoleId);
             
@@ -112,7 +111,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.EventTypeId);
             
@@ -132,7 +131,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.StaffId)
                 .ForeignKey("dbo.EventPlanners", t => t.EventPlannerId)
@@ -161,7 +160,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.AppUserId)
                 .ForeignKey("dbo.Clients", t => t.ClientId)
@@ -189,7 +188,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.ClientId)
                 .ForeignKey("dbo.Events", t => t.EventId)
@@ -221,7 +220,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.VendorId)
                 .ForeignKey("dbo.Events", t => t.EventId)
@@ -242,7 +241,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.LocationId);
             
@@ -256,7 +255,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.VendorServiceId);
             
@@ -272,7 +271,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.CheckListItemId)
                 .ForeignKey("dbo.CheckLists", t => t.CheckListId, cascadeDelete: false)
@@ -291,7 +290,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.CheckListId)
                 .ForeignKey("dbo.Events", t => t.EventId, cascadeDelete: false)
@@ -311,7 +310,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.ContactId)
                 .ForeignKey("dbo.EventPlanners", t => t.EventPlannerId)
@@ -332,7 +331,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.ContactRoleId)
                 .ForeignKey("dbo.EventPlanners", t => t.EventPlannerId)
@@ -344,7 +343,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                     {
                         EventContactMappingId = c.Long(nullable: false, identity: true),
                         EventId = c.Long(),
-                        ContactId = c.Long(),
+                        ContactId = c.Long()
                     })
                 .PrimaryKey(t => t.EventContactMappingId)
                 .ForeignKey("dbo.Contacts", t => t.ContactId)
@@ -362,7 +361,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.EventResourceMappingId)
                 .ForeignKey("dbo.Events", t => t.EventId)
@@ -381,7 +380,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.ResourceId)
                 .ForeignKey("dbo.EventPlanners", t => t.EventPlannerId, cascadeDelete: false)
@@ -398,7 +397,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.EventVendorMappingId)
                 .ForeignKey("dbo.Events", t => t.EventId)
@@ -419,7 +418,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.GuestListId)
                 .ForeignKey("dbo.Events", t => t.EventId, cascadeDelete: false)
@@ -441,7 +440,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.GuestId)
                 .ForeignKey("dbo.Events", t => t.EventId, cascadeDelete: false)
@@ -459,7 +458,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.MessageGroupMemberId)
                 .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: false)
@@ -476,7 +475,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.MessageGroupId);
             
@@ -495,7 +494,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.MessageId)
                 .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: false)
@@ -514,7 +513,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.NewsActionId)
                 .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: false)
@@ -535,7 +534,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.NewsId)
                 .ForeignKey("dbo.EventPlanners", t => t.EventPlannerId, cascadeDelete: false)
@@ -553,7 +552,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.NoteId)
                 .ForeignKey("dbo.Events", t => t.EventId, cascadeDelete: false)
@@ -572,7 +571,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.NotificationId)
                 .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: false)
@@ -584,7 +583,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                     {
                         ProspectContactMappingId = c.Long(nullable: false, identity: true),
                         ProspectId = c.Long(),
-                        ContactId = c.Long(),
+                        ContactId = c.Long()
                     })
                 .PrimaryKey(t => t.ProspectContactMappingId)
                 .ForeignKey("dbo.Contacts", t => t.ContactId)
@@ -610,7 +609,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.ProspectId)
                 .ForeignKey("dbo.EventPlanners", t => t.EventPlannerId)
@@ -628,7 +627,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.SettingId)
                 .ForeignKey("dbo.AppUsers", t => t.AppUserId, cascadeDelete: false)
@@ -645,7 +644,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.StaffEventMappingId)
                 .ForeignKey("dbo.Events", t => t.EventId)
@@ -668,7 +667,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.TaskId)
                 .ForeignKey("dbo.Events", t => t.EventId, cascadeDelete: false)

@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class migrate32 : DbMigration
     {
         public override void Up()
@@ -30,7 +29,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                     {
                         ProspectContactMappingId = c.Long(nullable: false, identity: true),
                         ProspectId = c.Long(),
-                        ContactId = c.Long(),
+                        ContactId = c.Long()
                     })
                 .PrimaryKey(t => t.ProspectContactMappingId);
             
@@ -40,7 +39,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                     {
                         EventContactMappingId = c.Long(nullable: false, identity: true),
                         EventId = c.Long(),
-                        ContactId = c.Long(),
+                        ContactId = c.Long()
                     })
                 .PrimaryKey(t => t.EventContactMappingId);
             
@@ -59,7 +58,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.ContactRoleId);
             

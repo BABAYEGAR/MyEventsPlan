@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
@@ -62,6 +59,7 @@ namespace MyEventPlan.Controllers.EventManagement
             if (ModelState.IsValid)
             {
                 contactAddress.Type = typeof(ContactAddressType).GetEnumName(int.Parse(collection["Type"]));
+                contactAddress.Country = typeof(CountryEnum).GetEnumName(int.Parse(collection["Country"]));
                 contactAddress.ContactId = Convert.ToInt64(collection["ContactId"]);
                 db.ContactAddress.Add(contactAddress);
                 db.SaveChanges();
@@ -103,6 +101,7 @@ namespace MyEventPlan.Controllers.EventManagement
             if (ModelState.IsValid)
             {
                 contactAddress.Type = typeof(ContactAddressType).GetEnumName(int.Parse(collection["Type"]));
+                contactAddress.Country = typeof(CountryEnum).GetEnumName(int.Parse(collection["Country"]));
                 db.Entry(contactAddress).State = EntityState.Modified;
                 db.SaveChanges();
                 TempData["display"] = "You have successfully modified the contact address!";
@@ -141,7 +140,7 @@ namespace MyEventPlan.Controllers.EventManagement
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the website!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { contactId = contactId });
+            return RedirectToAction("Index", new {contactId });
         }
         [SessionExpire]
         protected override void Dispose(bool disposing)

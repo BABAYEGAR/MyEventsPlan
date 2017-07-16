@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
@@ -139,7 +136,7 @@ namespace MyEventPlan.Controllers.EventManagement
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the website!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { contactId = contactId });
+            return RedirectToAction("Index", new {contactId });
         }
         [SessionExpire]
         protected override void Dispose(bool disposing)

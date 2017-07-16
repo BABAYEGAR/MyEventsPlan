@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Google.GData.Contacts;
-using Google.GData.Client;
-using Google.GData.Extensions;
 using Google.Contacts;
-
+using Google.GData.Client;
 
 namespace MyEventPlan.Data.Service.Contact
 {

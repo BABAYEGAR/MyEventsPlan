@@ -1,8 +1,7 @@
+using System.Data.Entity.Migrations;
+
 namespace MyEventPlan.Data.DataContext.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
-    
     public partial class migrate48 : DbMigration
     {
         public override void Up()
@@ -21,7 +20,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.VendorEnquiryId)
                 .ForeignKey("dbo.Vendors", t => t.VendorId)
@@ -41,7 +40,7 @@ namespace MyEventPlan.Data.DataContext.Migrations
                         CreatedBy = c.Long(),
                         DateCreated = c.DateTime(nullable: false),
                         DateLastModified = c.DateTime(nullable: false),
-                        LastModifiedBy = c.Long(),
+                        LastModifiedBy = c.Long()
                     })
                 .PrimaryKey(t => t.VendorReviewId)
                 .ForeignKey("dbo.Vendors", t => t.VendorId)

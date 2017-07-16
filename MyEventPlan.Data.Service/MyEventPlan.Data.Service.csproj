@@ -111,6 +111,7 @@
     <Compile Include="Enum\ChecklistStatusEnum.cs" />
     <Compile Include="Enum\ReminderLength.cs" />
     <Compile Include="Enum\ReminderRepeat.cs" />
+    <Compile Include="Enum\CountryEnum.cs" />
     <Compile Include="Enum\SideColor.cs" />
     <Compile Include="Enum\BackgroundColor.cs" />
     <Compile Include="Enum\ProspectStausEnum.cs" />
