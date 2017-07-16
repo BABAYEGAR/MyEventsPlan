@@ -17,6 +17,10 @@
         @Html.EditorFor(model => model.ItemName, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the item name"}})
         @Html.ValidationMessageFor(model => model.ItemName, "", new {@class = "text-danger"})
     </div>
+    <div class="mui-select">
+        @Html.DropDownListFor(m => m.VendorId, (SelectList) ViewBag.VendorId, "Select the vendor", new {@class = ""})
+        @Html.ValidationMessageFor(model => model.VendorId, "", new {@class = "text-danger"})
+    </div>
     <div class="mui-textfield mui-textfield--float-label">
         @Html.LabelFor(model => model.EstimatedAmount, new {@class = "control-label"})
 

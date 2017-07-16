@@ -15,8 +15,9 @@ namespace Event.Data.Objects.Entities
         public string Question { get; set; }
         [Required]
         public string Answer { get; set; }
-        public long GuestListId { get; set; }
-        [ForeignKey("GuestListId")]
-        public GuestList GuestList { get; set; }
+        public long GuestId { get; set; }
+        [ForeignKey("GuestId")]
+        public Guest Guest { get; set; }
+
     }
 }

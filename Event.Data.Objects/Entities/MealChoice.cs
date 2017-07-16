@@ -15,8 +15,8 @@ namespace Event.Data.Objects.Entities
         [DisplayName("Meal Choice")]
         [Required]
         public string Choice { get; set; }
-        public long GuestListId { get; set; }
-        [ForeignKey("GuestListId")]
-        public GuestList GuestList { get; set; }
+        public long GuestId { get; set; }
+        [ForeignKey("GuestId")]
+        public Guest Guest { get; set; }
     }
 }

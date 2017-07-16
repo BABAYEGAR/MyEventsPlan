@@ -15,16 +15,12 @@ namespace Event.Data.Objects.Entities
         [Required]
         [DisplayName("Item Name")]
         public string ItemName { get; set; }
-        [Required]
         [DisplayName("Estimated Amount")]
         public long? EstimatedAmount { get; set; }
-        [Required]
         [DisplayName("Negotiated Amount")]
         public long? NegotiatedAmount { get; set; }
-        [Required]
         [DisplayName("Actual Amount")]
         public long? ActualAmount { get; set; }
-        [Required]
         [DisplayName("Paid Till Date")]
         public long? PaidTillDate { get; set; }
         [DisplayName("Amount Still Due")]
@@ -32,5 +28,9 @@ namespace Event.Data.Objects.Entities
         public long? EventId { get; set; }
         [ForeignKey("EventId")]
         public virtual Event Event { get; set; }
+        public long? VendorId { get; set; }
+        [ForeignKey("VendorId")]
+        public virtual Vendor Vendor { get; set; }
+        public IEnumerable<BudgetPayment> BudgetPayments { get; set; }
     }
 }

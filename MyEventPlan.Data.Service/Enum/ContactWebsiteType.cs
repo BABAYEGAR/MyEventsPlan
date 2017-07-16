@@ -8,6 +8,6 @@ namespace MyEventPlan.Data.Service.Enum
 {
     public enum ContactWebsiteType
     {
-        Home,Work
+        Personal, Corporate
     }
 }

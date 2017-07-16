@@ -19,6 +19,7 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult Index(long id)
         {
             var budgets = _databaseConnection.Budgets.Where(n => n.EventId == id).Include(b => b.Event);
+            ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name");
             return View(budgets.ToList());
         }
 
@@ -29,8 +30,11 @@ namespace MyEventPlan.Controllers.EventManagement
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var budget = _databaseConnection.Budgets.Find(id);
-            if (budget == null)
-                return HttpNotFound();
+            if (budget != null)
+            {
+                ViewBag.VendorId = new SelectList(_databaseConnection.Vendors, "VendorId", "Name",budget.VendorId);
+                return View(budget);
+            }
             return View(budget);
         }
 
@@ -48,7 +52,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         [SessionExpire]
         public ActionResult Create(
-            [Bind(Include = "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate")]
+            [Bind(Include = "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate,VendorId")]
             Budget budget)
         {
             if (ModelState.IsValid)
@@ -153,7 +157,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     _databaseConnection.SaveChanges();
                     TempData["display"] = "Your have successfully modified the budget for the item!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index",new{id = events.EventId});
                 }
             }
             return View(budget);

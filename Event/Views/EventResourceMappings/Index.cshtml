@@ -56,6 +56,9 @@
     <thead>
     <tr>
         <th>
+            @Html.DisplayName("Date Allocated")
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Resource.Name)
         </th>
         <th>
@@ -70,7 +73,9 @@
     @foreach (var item in Model)
     {
         <tr>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated.Date.ToString("d"))
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Resource.Name)
             </td>

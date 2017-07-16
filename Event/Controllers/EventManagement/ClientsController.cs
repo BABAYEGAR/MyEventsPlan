@@ -100,7 +100,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SessionExpire]
-        public ActionResult Create([Bind(Include = "ClientId,Name,Password,Email,Mobile")] Client client)
+        public ActionResult Create([Bind(Include = "ClientId,Title,Name,Password,Email,Mobile")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -132,13 +132,25 @@ namespace MyEventPlan.Controllers.EventManagement
                 contact.Lastname = client.Name;
                 contact.Email = client.Email;
                 contact.Title = "Planner";
-                contact.EventPlannerId = loggedinuser.EventPlannerId;
-                contact.Mobile = client.Mobile;
-                contact.CreatedBy = loggedinuser.AppUserId;
-                contact.DateCreated = DateTime.Now;
-                contact.DateLastModified = DateTime.Now;
-                contact.LastModifiedBy = loggedinuser.AppUserId;
+                if (loggedinuser != null)
+                {
+                    contact.EventPlannerId = loggedinuser.EventPlannerId;
+                    contact.Mobile = client.Mobile;
+                    contact.CreatedBy = loggedinuser.AppUserId;
+                    contact.DateCreated = DateTime.Now;
+                    contact.DateLastModified = DateTime.Now;
+                    contact.LastModifiedBy = loggedinuser.AppUserId;
 
+                    var contactExist = _databaseConnection.Contacts
+                        .Where(m => m.Email == contact.Email && m.EventPlannerId == loggedinuser.EventPlannerId).ToList();
+
+                    if (contactExist.Count > 0)
+                    {
+                        TempData["display"] = "You have successfully added a new client but We couldnt't add the client to the contact list because a contact with the same name already exist!";
+                        TempData["notificationtype"] = NotificationType.Error.ToString();
+                        return RedirectToAction("Index");
+                    }
+                }
                 _databaseConnection.Contacts.Add(contact);
                 _databaseConnection.SaveChanges();
                 TempData["display"] = "You have successfully added a new client!";
@@ -167,7 +179,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [ValidateAntiForgeryToken]
         [SessionExpire]
         public ActionResult Edit(
-            [Bind(Include = "ClientId,Name,Password,Email,Mobile,EventPlannerId,EventId,CreatedBy,DateCreated")] Client
+            [Bind(Include = "ClientId,Title,Name,Password,Email,Mobile,EventPlannerId,EventId,CreatedBy,DateCreated")] Client
                 client)
         {
             if (ModelState.IsValid)

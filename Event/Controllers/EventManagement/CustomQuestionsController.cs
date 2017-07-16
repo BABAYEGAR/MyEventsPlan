@@ -21,7 +21,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult Index()
         {
-            var customQuestions = db.CustomQuestions.Include(c => c.GuestList);
+            var customQuestions = db.CustomQuestions;
             return View(customQuestions.ToList());
         }
 
@@ -45,7 +45,6 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult Create()
         {
-            ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name");
             return View();
         }
 
@@ -63,10 +62,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully added a new custom question!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Details","GuestLists",new{id = customQuestion.GuestListId});
+                return RedirectToAction("Details","Guests",new{id = customQuestion.GuestId});
             }
-
-            ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name", customQuestion.GuestListId);
             return View(customQuestion);
         }
 
@@ -83,7 +80,6 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 return HttpNotFound();
             }
-            ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name", customQuestion.GuestListId);
             return View(customQuestion);
         }
 
@@ -101,9 +97,9 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully modified the custom question!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Details", "GuestLists", new { id = customQuestion.GuestListId });
+                return RedirectToAction("Details", "Guests", new { id = customQuestion.GuestId });
             }
-            ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name", customQuestion.GuestListId);
+            //ViewBag.GuestListId = new SelectList(db.GuestLists, "GuestListId", "Name", customQuestion.GuestListId);
             return View(customQuestion);
         }
 

@@ -249,7 +249,6 @@ namespace MyEventPlan.Controllers.EventManagement
                 var checkList = _databaseConnection.CheckLists.Where(n => n.EventId == items.EventId);
                 var listItems = _databaseConnection.CheckListItems.Where(n => n.EventId == items.EventId);
                 var invoice = _databaseConnection.Invoices.Where(n => n.EventId == items.EventId);
-                var geustList = _databaseConnection.GuestLists.Where(n => n.EventId == items.EventId);
                 var guests = _databaseConnection.Guests.Where(n => n.EventId == items.EventId);
                 var appointment = _databaseConnection.Appointments.Where(n => n.EventId == items.EventId);
                 var vendorMapping = _databaseConnection.EventVendorMappings.Where(n => n.EventId == items.EventId);
@@ -308,8 +307,6 @@ namespace MyEventPlan.Controllers.EventManagement
                         _databaseConnection.InvoiceItems.Remove(itemss);
                     _databaseConnection.Invoices.Remove(item);
                 }
-                foreach (var item in geustList)
-                    _databaseConnection.GuestLists.Remove(item);
                 foreach (var item in guests)
                     _databaseConnection.Guests.Remove(item);
                 foreach (var item in appointment)

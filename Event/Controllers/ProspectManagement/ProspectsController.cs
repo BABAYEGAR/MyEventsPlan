@@ -22,7 +22,7 @@ namespace MyEventPlan.Controllers.ProspectManagement
         {
             var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
             ViewBag.EventTypeId = new SelectList(_databaseConnection.EventTypes, "EventTypeId", "Name");
-            ViewBag.ContactId = new SelectList(_databaseConnection.Contacts, "ContactId", "Firstname");
+            ViewBag.ContactId = new SelectList(_databaseConnection.Contacts, "ContactId", "DisplayName");
             var prospects =
                 _databaseConnection.Prospects.OrderByDescending(n => n.StartDate)
                     .Include(p => p.EventType)

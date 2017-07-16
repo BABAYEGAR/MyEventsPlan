@@ -144,7 +144,6 @@
                         slotMinutes: 15,
                         events: '@Url.Action("GetMyAppointments", "Appointments")',
                         eventClick: function(event) {
-                            $(this).css('border-color', event.backgroundColor);
                             ShowUpdateEventPopup(event);
 
                         },
@@ -165,8 +164,6 @@
                                 revertFunc();
                             }
                         },
-
-
                         dayClick: function(date) {
                             ShowNewEventPopup(date);
                         }

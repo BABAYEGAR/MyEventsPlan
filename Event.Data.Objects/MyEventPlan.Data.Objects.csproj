@@ -45,6 +45,7 @@
     <Compile Include="Entities\AppointmentContactMapping.cs" />
     <Compile Include="Entities\AppUser.cs" />
     <Compile Include="Entities\Budget.cs" />
+    <Compile Include="Entities\BudgetPayment.cs" />
     <Compile Include="Entities\ContactWebsite.cs" />
     <Compile Include="Entities\ContactAddress.cs" />
     <Compile Include="Entities\CustomQuestion.cs" />
@@ -65,7 +66,6 @@
     <Compile Include="Entities\Event.cs" />
     <Compile Include="Entities\EventResourceMapping.cs" />
     <Compile Include="Entities\Guest.cs" />
-    <Compile Include="Entities\GuestList.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\InvoiceItem.cs" />
     <Compile Include="Entities\InvoicePayment.cs" />

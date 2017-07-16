@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\EventManagement\AppointmentsController.cs" />
     <Compile Include="Controllers\EventManagement\AppUsersController.cs" />
+    <Compile Include="Controllers\EventManagement\BudgetPaymentsController.cs" />
     <Compile Include="Controllers\EventManagement\BudgetsController.cs" />
     <Compile Include="Controllers\EventManagement\CheckListItemsController.cs" />
     <Compile Include="Controllers\EventManagement\CheckListsController.cs" />
@@ -204,7 +205,6 @@
     <Compile Include="Controllers\EventManagement\EventResourceMappingsController.cs" />
     <Compile Include="Controllers\EventManagement\EventsController.cs" />
     <Compile Include="Controllers\EventManagement\EventTypesController.cs" />
-    <Compile Include="Controllers\EventManagement\GuestListsController.cs" />
     <Compile Include="Controllers\EventManagement\GuestsController.cs" />
     <Compile Include="Controllers\EventManagement\MealChoicesController.cs" />
     <Compile Include="Controllers\EventManagement\NotesController.cs" />
@@ -1781,8 +1781,6 @@
     <Content Include="Views\Home\ViewProfile.cshtml" />
     <Content Include="Views\Appointments\Calendar.cshtml" />
     <Content Include="Views\Guests\Details.cshtml" />
-    <Content Include="Views\GuestLists\Details.cshtml" />
-    <Content Include="Views\GuestLists\Index.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreateCheckListModal.cshtml" />
     <Content Include="Views\CheckLists\Details.cshtml" />
     <Content Include="Views\CheckLists\Index.cshtml" />
@@ -1901,6 +1899,8 @@
     <Content Include="Views\Account\EventPlannerInvoice.cshtml" />
     <Content Include="Views\Account\VendorInvoice.cshtml" />
     <Content Include="Views\Account\ChangeClientPassword.cshtml" />
+    <Content Include="Views\BudgetPayments\Details.cshtml" />
+    <Content Include="Views\BudgetPayments\Index.cshtml" />
     <None Include="Views\Clients\AllMyClients.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreatePersonalCheckListModal.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreatePersonalCheckListItemModal.cshtml" />
@@ -2056,6 +2056,8 @@
     <Content Include="Views\VisionBoardComments\Index.cshtml" />
     <Content Include="Views\Shared\EventPlanning\CreateVisionBoardCommentModal.cshtml" />
     <Content Include="Views\Guests\Index.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\EditBudgetPaymentModal.cshtml" />
+    <Content Include="Views\Shared\EventPlanning\CreateBudgetPaymentModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

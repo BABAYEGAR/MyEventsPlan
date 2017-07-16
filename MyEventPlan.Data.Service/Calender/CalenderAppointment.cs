@@ -56,8 +56,7 @@ namespace MyEventPlan.Data.Service.Calender
                         Notes = item.Notes,
                         Location = item.Location,
                         EventPlannerId = id,
-                        AppointmentId = item.AppointmentId,
-                        Event = item.Event
+                        AppointmentId = item.AppointmentId
                     };
                     result.Add(rec);
                 }

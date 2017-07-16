@@ -31,7 +31,6 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<StaffEventMapping> StaffEventMapping { get; set; }
         public virtual DbSet<EventPlanner> EventPlanners { get; set; }
         public virtual DbSet<VendorService> VendorServices { get; set; }
-        public virtual DbSet<GuestList> GuestLists { get; set; }
         public virtual DbSet<Guest> Guests { get; set; }
         public virtual DbSet<CheckList> CheckLists { get; set; }
         public virtual DbSet<CheckListItem> CheckListItems { get; set; }
@@ -76,9 +75,10 @@ namespace MyEventPlan.Data.DataContext.DataContext
         public virtual DbSet<CustomQuestion> CustomQuestions { get; set; }
         public virtual DbSet<VisionBoard> VisionBoards { get; set; }
         public virtual DbSet<VisionBoardComment> VisionBoardComments { get; set; }
+        public virtual DbSet<BudgetPayment> BudgetPayments { get; set; }
 
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        protected virtual void OnModelCreating(DbModelBuilder modelBuilder)
         {
         }
     }

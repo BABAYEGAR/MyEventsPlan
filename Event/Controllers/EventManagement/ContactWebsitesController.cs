@@ -66,12 +66,10 @@ namespace MyEventPlan.Controllers.EventManagement
                 contactWebsite.Type = typeof(ContactWebsiteType).GetEnumName(int.Parse(collection["Type"]));
                 db.ContactWebsite.Add(contactWebsite);
                 db.SaveChanges();
-                TempData["display"] = "You have successfully added a website!";
+                TempData["display"] = "You have successfully added a contact website!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new { contactId = contactWebsite.ContactId });
             }
-
-            //ViewBag.ContactId = new SelectList(db.Contacts, "ContactId", "Title", contactWebsite.ContactId);
             return View(contactWebsite);
         }
 
@@ -136,12 +134,12 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             ContactWebsite contactWebsite = db.ContactWebsite.Find(id);
-            long siteId = id;
+            long contactId = (long) contactWebsite.ContactId;
             db.ContactWebsite.Remove(contactWebsite);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the website!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { contactId = siteId });
+            return RedirectToAction("Index", new { contactId = contactId });
         }
         [SessionExpire]
         protected override void Dispose(bool disposing)

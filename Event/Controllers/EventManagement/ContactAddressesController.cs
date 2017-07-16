@@ -34,7 +34,7 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ContactAddress contactAddress = db.ContactAddress.Find(id);
+            ContactAddress contactAddress = db.ContactAddress.Include(n=>n.Contact).SingleOrDefault(n=>n.ContactAddressId == id);
             if (contactAddress == null)
             {
                 return HttpNotFound();
@@ -65,7 +65,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 contactAddress.ContactId = Convert.ToInt64(collection["ContactId"]);
                 db.ContactAddress.Add(contactAddress);
                 db.SaveChanges();
-                TempData["display"] = "You have successfully added a website!";
+                TempData["display"] = "You have successfully added a contact address!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index",new{ contactId  = contactAddress.ContactId});
             }
@@ -105,7 +105,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 contactAddress.Type = typeof(ContactAddressType).GetEnumName(int.Parse(collection["Type"]));
                 db.Entry(contactAddress).State = EntityState.Modified;
                 db.SaveChanges();
-                TempData["display"] = "You have successfully modified the website!";
+                TempData["display"] = "You have successfully modified the contact address!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new { contactId = contactAddress.ContactId });
             }
@@ -136,12 +136,12 @@ namespace MyEventPlan.Controllers.EventManagement
         public ActionResult DeleteConfirmed(long id)
         {
             ContactAddress contactAddress = db.ContactAddress.Find(id);
-            long addressId = id;
+            long contactId = (long) contactAddress.ContactId;
             db.ContactAddress.Remove(contactAddress);
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the website!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Index", new { contactId = addressId });
+            return RedirectToAction("Index", new { contactId = contactId });
         }
         [SessionExpire]
         protected override void Dispose(bool disposing)

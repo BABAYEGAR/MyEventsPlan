@@ -8,7 +8,8 @@ namespace Event.Data.Objects.Entities
     public class Client : Transport
     {
         public long ClientId { get; set; }
-
+        [Required]
+        public string Title { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

@@ -1,432 +1,707 @@
-﻿@model Event.Data.Objects.Entities.VendorImage
-@{ var images = Model; }
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageOne != null)
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@using MyEventPlan.Data.Service.Enum
+@model VendorImage
+@{
+    var images = Model; 
+    var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+    var db = new EventDataContext();
+    var packageSetting = db.VendorPackageSettings.SingleOrDefault(n => n.VendorId == loggedinuser.VendorId && n.Status == PackageStatusEnum.Active.ToString());
+}
+@if (packageSetting != null && packageSetting.VendorPackage.PackageName == "Bronze")
+{
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal11">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageOne" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                    </a>
+                    if (images.ImageOne != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal11">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageOne" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal11">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal11">
+                    <a href="#" data-toggle="modal" data-target="#myModal1">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal1">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image One </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageTwo != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal12">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageTwo" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image One </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div> 
+}
+@if (packageSetting != null &&  packageSetting.VendorPackage.PackageName == "Silver")
+{
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageOne != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal11">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageOne" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal11">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal12">
+                    <a href="#" data-toggle="modal" data-target="#myModal1">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal2">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Two </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageThree != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal13">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageThree" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image One </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageTwo != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal12">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageTwo" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal12">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal13">
+                    <a href="#" data-toggle="modal" data-target="#myModal2">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal3">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Three </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageFour != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal14">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageFour" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Two </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageThree != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal13">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageThree" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal13">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal14">
+                    <a href="#" data-toggle="modal" data-target="#myModal3">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal4">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Four </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageFive != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal15">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageFive" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Three </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageFour != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal14">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageFour" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal14">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal15">
+                    <a href="#" data-toggle="modal" data-target="#myModal4">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal5">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Five </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageSix != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal16">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageSix" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Four </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageFive != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal15">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageFive" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal15">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal16">
+                    <a href="#" data-toggle="modal" data-target="#myModal5">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal6">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Six </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageSeven != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal17">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageSeven" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Five </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+}
+@if (packageSetting != null && packageSetting.VendorPackage.PackageName == "Gold")
+{
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageOne != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal11">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageOne" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal11">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal17">
+                    <a href="#" data-toggle="modal" data-target="#myModal1">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal7">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Seven </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageEight != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal18">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageEight" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image One </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageTwo != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal12">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageTwo" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal12">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal18">
+                    <a href="#" data-toggle="modal" data-target="#myModal2">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal8">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Eight </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageNine != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal19">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageNine" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Two </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageThree != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal13">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageThree" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal13">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal19">
+                    <a href="#" data-toggle="modal" data-target="#myModal3">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal9">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
-            </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Nine </a>
-                </h2>
-            </div>
-        </div>
-        <!-- /.vendor details -->
-    </div>
-    <!-- /.vendor list block -->
-</div>
-<div class="col-md-6">
-    <div class="vendor-list-block mb30">
-        <!-- vendor list block -->
-        <div class="vendor-img">
-            @if (images != null)
-            {
-                if (images.ImageTen != null)
-                {
-                    <a href="#" data-toggle="modal" data-target="#myModal20">
-                        <img src="~/UploadedFiles/VendorImage/@images.ImageTen" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
                     </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Three </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageFour != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal14">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageFour" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal14">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
                 }
                 else
                 {
-                    <a href="#" data-toggle="modal" data-target="#myModal20">
+                    <a href="#" data-toggle="modal" data-target="#myModal4">
                         <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
                     </a>
                 }
-            }
-            else
-            {
-                <a href="#" data-toggle="modal" data-target="#myModal10">
-                    <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
-                </a>
-            }
-            <div class="favorite-action">
-                <a href="#" class="fav-icon">
-                    <i class="fa fa-heart"></i>
-                </a>
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="vendor-detail">
-            <!-- vendor details -->
-            <div class="caption">
-                <h2>
-                    <a href="#" class="title">Image Ten </a>
-                </h2>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Four </a>
+                    </h2>
+                </div>
             </div>
+            <!-- /.vendor details -->
         </div>
-        <!-- /.vendor details -->
+        <!-- /.vendor list block -->
     </div>
-    <!-- /.vendor list block -->
-</div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageFive != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal15">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageFive" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal15">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a href="#" data-toggle="modal" data-target="#myModal5">
+                        <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                    </a>
+                }
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Five </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageSix != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal16">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageSix" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal16">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a href="#" data-toggle="modal" data-target="#myModal6">
+                        <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                    </a>
+                }
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Six </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageSeven != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal17">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageSeven" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal17">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a href="#" data-toggle="modal" data-target="#myModal7">
+                        <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                    </a>
+                }
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Seven </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageEight != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal18">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageEight" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal18">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a href="#" data-toggle="modal" data-target="#myModal8">
+                        <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                    </a>
+                }
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Eight </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageNine != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal19">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageNine" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal19">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a href="#" data-toggle="modal" data-target="#myModal9">
+                        <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                    </a>
+                }
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Nine </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+    <div class="col-md-6">
+        <div class="vendor-list-block mb30">
+            <!-- vendor list block -->
+            <div class="vendor-img">
+                @if (images != null)
+                {
+                    if (images.ImageTen != null)
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal20">
+                            <img src="~/UploadedFiles/VendorImage/@images.ImageTen" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#" data-toggle="modal" data-target="#myModal20">
+                            <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a href="#" data-toggle="modal" data-target="#myModal10">
+                        <img src="~/Content/AppTheme/images/avatar.jpg" alt="wedding venue" width="308px" height="166px" class="img-responsive">
+                    </a>
+                }
+                <div class="favorite-action">
+                    <a href="#" class="fav-icon">
+                        <i class="fa fa-heart"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="vendor-detail">
+                <!-- vendor details -->
+                <div class="caption">
+                    <h2>
+                        <a href="#" class="title">Image Ten </a>
+                    </h2>
+                </div>
+            </div>
+            <!-- /.vendor details -->
+        </div>
+        <!-- /.vendor list block -->
+    </div>
+}

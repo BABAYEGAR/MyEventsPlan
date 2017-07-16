@@ -19,8 +19,5 @@ namespace Event.Data.Objects.Entities
         public long EventId { get; set; }
         [ForeignKey("EventId")]
         public Event Event { get; set; }
-        public long GuestListId { get; set; }
-        [ForeignKey("GuestListId")]
-        public GuestList GuestList { get; set; }
     }
 }

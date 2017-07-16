@@ -67,5 +67,6 @@ namespace Event.Data.Objects.Entities
         public  IEnumerable<VendorEnquiry> VendorEnquiries { get; set; }
         public  IEnumerable<VendorImage> VendorImages { get; set; }
         public  IEnumerable<SubscriptionInvoice> SubscriptionInvoices { get; set; }
+        public IEnumerable<Budget> Budgets { get; set; }
     }
 }

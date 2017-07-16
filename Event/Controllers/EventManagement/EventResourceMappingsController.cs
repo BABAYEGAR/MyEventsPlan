@@ -188,15 +188,20 @@ namespace MyEventPlan.Controllers.EventManagement
         {
             var eventResourceMapping = _databaseConnection.EventResourceMapping.Find(id);
 
-            var resourceId = eventResourceMapping.ResourceId;
-            var resource = _databaseConnection.Resources.Find(resourceId);
-            resource.Quantity = resource.Quantity + eventResourceMapping.Quantity;
-            resource.DateLastModified = DateTime.Now;
-
-            eventResourceMapping.Quantity = 0;
-
-            _databaseConnection.Entry(resource).State = EntityState.Modified;
-            _databaseConnection.Entry(eventResourceMapping).State = EntityState.Modified;
+            if (eventResourceMapping != null)
+            {
+                var resourceId = eventResourceMapping.ResourceId;
+                var resource = _databaseConnection.Resources.Find(resourceId);
+                if (resource != null)
+                {
+                    resource.Quantity = resource.Quantity + eventResourceMapping.Quantity;
+                    resource.DateLastModified = DateTime.Now;
+                    eventResourceMapping.Quantity = 0;
+                    _databaseConnection.Entry(resource).State = EntityState.Modified;
+                    _databaseConnection.SaveChanges();
+                }
+            }
+            _databaseConnection.EventResourceMapping.Remove(eventResourceMapping);
             _databaseConnection.SaveChanges();
             TempData["display"] = "You have successfully deallocated the resources from the event!";
             TempData["notificationtype"] = NotificationType.Success.ToString();

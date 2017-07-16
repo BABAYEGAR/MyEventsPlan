@@ -65,7 +65,6 @@ namespace Event.Data.Objects.Entities
         public IEnumerable<StaffEventMapping> StaffEventMapping { get; set; }
         public IEnumerable<Appointment> Appointments { get; set; }
         public IEnumerable<Contact> Contacts { get; set; }
-        public IEnumerable<GuestList> GuestLists { get; set; }
         public IEnumerable<Guest> Guests { get; set; }
         public IEnumerable<News> Newses { get; set; }
         public IEnumerable<Resource> Resources { get; set; }

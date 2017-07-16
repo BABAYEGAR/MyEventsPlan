@@ -131,7 +131,6 @@ namespace MyEventPlan.Controllers.EventManagement
                 //recent event details
                 var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                 ViewBag.events = @event;
-                ViewBag.guestList = _databaseConnection.GuestLists.Where(n => n.EventId == @event.EventId).ToList();
                 ViewBag.checkList = _databaseConnection.CheckLists.Where(n => n.EventId == @event.EventId).ToList();
                 ViewBag.clients = _databaseConnection.Clients.Where(n => n.EventId == @event.EventId).ToList();
                 ViewBag.resources = _databaseConnection.EventResourceMapping.Where(n => n.EventId == @event.EventId).ToList();
@@ -359,7 +358,6 @@ namespace MyEventPlan.Controllers.EventManagement
             var checkList = _databaseConnection.CheckLists.Where(n => n.EventId == @event.EventId);
             var listItems = _databaseConnection.CheckListItems.Where(n => n.EventId == @event.EventId);
             var invoice = _databaseConnection.Invoices.Where(n => n.EventId == @event.EventId);
-            var geustList = _databaseConnection.GuestLists.Where(n => n.EventId == @event.EventId);
             var guests = _databaseConnection.Guests.Where(n => n.EventId == @event.EventId);
             var appointment = _databaseConnection.Appointments.Where(n => n.EventId == @event.EventId);
             var vendorMapping = _databaseConnection.EventVendorMappings.Where(n => n.EventId == @event.EventId);
@@ -418,8 +416,6 @@ namespace MyEventPlan.Controllers.EventManagement
                     _databaseConnection.InvoiceItems.Remove(itemss);
                 _databaseConnection.Invoices.Remove(item);
             }
-            foreach (var item in geustList)
-                _databaseConnection.GuestLists.Remove(item);
             foreach (var item in guests)
                 _databaseConnection.Guests.Remove(item);
             foreach (var item in appointment)

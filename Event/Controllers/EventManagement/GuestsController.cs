@@ -17,11 +17,11 @@ namespace MyEventPlan.Controllers.EventManagement
 
         // GET: Guests
         [SessionExpire]
-        public ActionResult Index(long? guestListId)
+        public ActionResult Index()
         {
+            var events = Session["event"] as Event.Data.Objects.Entities.Event;
             var guests =
-                _databaseConnection.Guests.Where(n => n.GuestListId == guestListId).Include(g => g.Event).Include(g => g.GuestList);
-            ViewBag.guestListId = guestListId;
+                _databaseConnection.Guests.Where(n => n.EventId == events.EventId).Include(g => g.Event);
             return View(guests.ToList());
         }
 
@@ -45,7 +45,7 @@ namespace MyEventPlan.Controllers.EventManagement
             guest.Status = GuestStatusEnum.Attending.ToString();
             _databaseConnection.Entry(guest).State = EntityState.Modified;
             _databaseConnection.SaveChanges();
-            return RedirectToAction("Index", new {guestListId = guest.GuestListId});
+            return RedirectToAction("Index");
         }
 
         // GET: Guests/GuestNotAttending/5
@@ -56,7 +56,7 @@ namespace MyEventPlan.Controllers.EventManagement
             guest.Status = GuestStatusEnum.NotAttending.ToString();
             _databaseConnection.Entry(guest).State = EntityState.Modified;
             _databaseConnection.SaveChanges();
-            return RedirectToAction("Index", new {guestListId = guest.GuestListId});
+            return RedirectToAction("Index");
         }
 
         // GET: Guests/GuestAttending/5
@@ -67,7 +67,7 @@ namespace MyEventPlan.Controllers.EventManagement
             guest.Status = GuestStatusEnum.Attending.ToString();
             _databaseConnection.Entry(guest).State = EntityState.Modified;
             _databaseConnection.SaveChanges();
-            return RedirectToAction("Index", new {guestListId = guest.GuestListId});
+            return RedirectToAction("Index");
         }
 
         // GET: Guests/GuestNotAttending/5
@@ -78,7 +78,7 @@ namespace MyEventPlan.Controllers.EventManagement
             guest.Status = GuestStatusEnum.NotAttending.ToString();
             _databaseConnection.Entry(guest).State = EntityState.Modified;
             _databaseConnection.SaveChanges();
-            return RedirectToAction("Index", new {guestListId = guest.GuestListId});
+            return RedirectToAction("Index");
         }
 
         // GET: Guests/Create
@@ -119,7 +119,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 new MailerDaemon().NewGuest(guest, eventName.Name);
                 TempData["display"] = "You have successfully added the guest!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index", new {guestListId = guest.GuestListId});
+                return RedirectToAction("Index");
             }
             return View(guest);
         }

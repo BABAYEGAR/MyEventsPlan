@@ -12,21 +12,13 @@ namespace Event.Data.Objects.Entities
     public class ContactAddress
     {
         public long ContactAddressId { get; set; }
-        [Required]
         public string Type { get; set; }
-        [DisplayName("Street 1")]
-        [Required]
+        [DisplayName("Address Line 1")]
         public string Street1 { get; set; }
-        [DisplayName("Street 2")]
-        [Required]
-        public string Street2 { get; set; }
         [DisplayName("Postal Code")]
-        [Required]
         public string PostalCode { get; set; }
-        [Required]
         public string State { get; set; }
         [DisplayName("Country/Region")]
-        [Required]
         public string Country { get; set; }
         public long? ContactId { get; set; }
         [ForeignKey("ContactId")]

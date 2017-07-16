@@ -57,8 +57,7 @@ namespace MyEventPlan.Controllers.EventManagement
                         end = e.EndDate,
                         allDay = false,
                         startTime = e.StartTime,
-                        endTime = e.EndTime,
-                        events = e.Event
+                        endTime = e.EndTime
                     };
                 var rows = appointmentList.ToArray();
                 return Json(rows, JsonRequestBehavior.AllowGet);

@@ -12,6 +12,10 @@
         @Html.LabelFor(model => model.ItemName)
         @Html.ValidationMessageFor(model => model.ItemName, "", new {@class = "text-danger"})
     </div>
+    <div class="mui-select">
+        @Html.DropDownListFor(m => m.VendorId, (SelectList) ViewBag.VendorId, "Select the vendor", new {@class = ""})
+        @Html.ValidationMessageFor(model => model.VendorId, "", new {@class = "text-danger"})
+    </div>
     <div class="mui-textfield mui-textfield--float-label">
         @Html.EditorFor(model => model.EstimatedAmount, new {htmlAttributes = new {placeholder = "Enter Item Estimated Amount"}})
         @Html.LabelFor(model => model.EstimatedAmount)
@@ -26,11 +30,6 @@
         @Html.EditorFor(model => model.ActualAmount, new {htmlAttributes = new {placeholder = "Enter Item Actual Amount"}})
         @Html.LabelFor(model => model.ActualAmount)
         @Html.ValidationMessageFor(model => model.ActualAmount, "", new {@class = "text-danger"})
-    </div>
-    <div class="mui-textfield mui-textfield--float-label">
-        @Html.EditorFor(model => model.PaidTillDate, new {htmlAttributes = new {placeholder = "Enter Amount Paid Till Date"}})
-        @Html.LabelFor(model => model.PaidTillDate)
-        @Html.ValidationMessageFor(model => model.PaidTillDate, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">

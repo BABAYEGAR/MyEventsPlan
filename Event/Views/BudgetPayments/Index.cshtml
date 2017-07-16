@@ -1,33 +1,34 @@
 ﻿@using Event.Data.Objects.Entities
-@model IEnumerable<GuestList>
+@model IEnumerable<BudgetPayment>
 @{
-    var events = Session["event"] as Event;
     ViewBag.Title = "List";
-    ViewBag.TableHeader = "My GuestList";
-    ViewBag.TableSubHeader = "List of all my Guest List";
+    ViewBag.TableHeader = "Budget Payments";
+    ViewBag.TableSubHeader = "List of all budget payments";
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
-    var guestList = new GuestList();
+    var payment = new BudgetPayment();
+    var events = Session["event"] as Event;
+   
 }
 @section links{
 
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="@Url.Action("Index", "Events")">My Events</a>
+            <a href="@Url.Action("Index", "Events")">My Dashboard</a>
         </li>
         <li class="breadcrumb-item">
             <a href="@if (events != null)
                      {
-                         @Url.Action("Details", "Events", new {id = events.EventId})
+                         @Url.Action("Index", "Budgets")
                      }">
-                Event Dashboard
+                My Budgets
             </a>
         </li>
     </ol>
 }
 @section add {
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary fa fa-plus  pull-right waves-effect waves-light" data-toggle="modal" data-target="#myModal">
-        Add Guest List
+    <button type="button" class="btn btn-primary  fa fa-plus pull-right" data-toggle="modal" data-target="#myModal">
+        Add Payment
     </button>
 
     <!-- Modal -->
@@ -38,11 +39,11 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">Add a guest list</h4>
+                    <h4 class="modal-title" id="myModalLabel">Add a new Payment</h4>
                 </div>
                 <div class="modal-body">
                     @{
-                        Html.RenderPartial("EventPlanning/CreateGuestListModal", guestList);
+                        Html.RenderPartial("EventPlanning/CreateBudgetPaymentModal", payment);
                     }
                 </div>
             </div>
@@ -51,12 +52,16 @@
     </div>
 }
 <div class="card-content table-responsive">
-   <table class="table table-hover" id="grid">
+    <table class="table table-hover" id="grid">
         <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.DatePaid)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AmountPaid)
+            </th>
+
             <th>Action</th>
         </tr>
         </thead>
@@ -65,24 +70,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.DatePaid.Date.ToString("d"))
                 </td>
                 <td>
-                    @Html.ActionLink("Open", "Details", new {id = item.GuestListId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
-
+                    @Html.DisplayFor(modelItem => item.AmountPaid)
+                </td>
+                <td>
+                    @Html.ActionLink("Open", "Details", new {id = item.BudgetPaymentId}, new {@class = "btn btn-lg btn-default fa fa-folder-open"})
                 </td>
             </tr>
         }
         </tbody>
     </table>
 </div>
-@section scripts{
-    <script type="text/javascript">
-        $('#myModal')
-            .on('shown.bs.modal',
-                function() {
-                    $('#myInput').focus();
-                });
-    </script>
-
-}

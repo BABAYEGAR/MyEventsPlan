@@ -31,13 +31,26 @@
         }
 
     </dd>
+    <dt>
+        @Html.DisplayName("Date Allocated")
+    </dt>
 
+    <dd>
+        @Html.DisplayFor(model => model.DateCreated.Date.ToString("d"))
+    </dd>
     <dt>
         @Html.DisplayNameFor(model => model.Resource.Name)
     </dt>
 
     <dd>
         @Html.DisplayFor(model => model.Resource.Name)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Quantity)
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.Quantity)
     </dd>
 
 </dl>
