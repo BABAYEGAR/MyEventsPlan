@@ -13,7 +13,7 @@
 
     //recent event details
 
-    List<GuestList> guestList = ViewBag.guestList;
+    //List<GuestList> guestList = ViewBag.guestList;
     List<CheckList> checkList = ViewBag.checkList;
     List<Client> clients = ViewBag.clients;
     List<EventResourceMapping> resources = ViewBag.resources;
@@ -29,7 +29,7 @@
     var appointment = new Appointment();
 }
 @section majorinfo{
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="col-lg-3 col-md-6 col-sm-9">
         <div class="card card-stats">
             <div class="card-header" data-background-color="@Model.Color">
                 <i class="material-icons">hourglass_empty</i>
@@ -156,7 +156,7 @@
     <div class="row">
         @if (role.ManageEvents)
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="purple">
                         <i class="material-icons">today</i>
@@ -177,7 +177,7 @@
         }
         @if (role.ManageEventVendors)
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="blue">
                         <i class="material-icons">group</i>
@@ -198,7 +198,7 @@
         }
         @if (eventPlanner != null && role.ManageStaff && eventPlanner.Type == EventPlannerTypeEnum.Organization.ToString())
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="amber">
                         <i class="material-icons">people</i>
@@ -219,7 +219,7 @@
         }
         @if (role.ManageEvents && eventPlanner.Type == EventPlannerTypeEnum.Organization.ToString())
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="amber">
                         <i class="material-icons">people</i>
@@ -242,7 +242,7 @@
     <div class="row">
         @if (role.ManageCheckList)
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="deep_orange">
                         <i class="material-icons">list</i>
@@ -263,20 +263,20 @@
         }
         @if (role.ManageGuestList)
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="teal">
                         <i class="material-icons">view_list</i>
                     </div>
                     <div class="card-content">
-                        <p class="category">Guest-List</p>
+                        <p class="category">Attendees</p>
                         <h3 class="title">
-                            @guestList.Count<small> Guest-List</small>
+                            9<small> Guest-List</small>
                         </h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">view_list</i> <a href="@Url.Action("Index", "GuestLists", new {eventId = Model.EventId})">View Guest-List</a>
+                            <i class="material-icons">view_list</i> <a href="@Url.Action("Index", "Guests")">View Guest-List</a>
                         </div>
                     </div>
                 </div>
@@ -284,7 +284,7 @@
         }
         @if (role.ManageNotes)
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="green">
                         <i class="material-icons">note</i>
@@ -305,7 +305,7 @@
         }
         @if (role.ManageResources)
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="teal">
                         <i class="material-icons">cloud</i>
@@ -328,7 +328,7 @@
     <div class="row">
         @if (role.ManageBudgets)
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="amber">
                         <i class="material-icons">N</i>
@@ -349,7 +349,7 @@
         }
         @if (role.ManageInvoices)
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="green">
                         <i class="material-icons">description</i>
@@ -370,7 +370,7 @@
         }
         @if (role.ManageTasks && eventPlanner.Type == EventPlannerTypeEnum.Organization.ToString())
         {
-            <div class="col-lg-3 col-md-6 col-sm-6">
+            <div class="col-lg-3 col-md-6 col-sm-9">
                 <div class="card card-stats">
                     <div class="card-header" data-background-color="green">
                         <i class="material-icons">assignment</i>
@@ -389,7 +389,7 @@
                 </div>
             </div>
         }
-        <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="col-lg-3 col-md-6 col-sm-9">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="green">
                     <i class="material-icons">assignment</i>

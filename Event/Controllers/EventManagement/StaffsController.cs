@@ -98,7 +98,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 }
                 _databaseConnection.AppUsers.Add(appUser);
                 _databaseConnection.SaveChanges();
-                if (events != null) new MailerDaemon().NewStaffLogin(staff, appUser.AppUserId);
+                new MailerDaemon().NewStaffLogin(staff, appUser.AppUserId);
                 TempData["display"] = "The login acces link has been successfully sent to the clients email!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new { id = staff.StaffId });

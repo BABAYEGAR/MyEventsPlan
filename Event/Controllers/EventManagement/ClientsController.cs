@@ -100,7 +100,7 @@ namespace MyEventPlan.Controllers.EventManagement
         [HttpPost]
         [ValidateAntiForgeryToken]
         [SessionExpire]
-        public ActionResult Create([Bind(Include = "ClientId,Title,Name,Password,Email,Mobile")] Client client)
+        public ActionResult Create([Bind(Include = "ClientId,Title,Name,Password,Email,Mobile")] Client client,FormCollection collection)
         {
             if (ModelState.IsValid)
             {
@@ -131,7 +131,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 contact.Firstname = client.Name;
                 contact.Lastname = client.Name;
                 contact.Email = client.Email;
-                contact.Title = "Planner";
+                contact.Title = null;
                 if (loggedinuser != null)
                 {
                     contact.EventPlannerId = loggedinuser.EventPlannerId;
@@ -151,8 +151,42 @@ namespace MyEventPlan.Controllers.EventManagement
                         return RedirectToAction("Index");
                     }
                 }
+                //save contact transaction
                 _databaseConnection.Contacts.Add(contact);
                 _databaseConnection.SaveChanges();
+
+                //if generate login access is checked then create creadentials
+                if (collection["LoginAccess"] != null)
+                {
+                    //get client role
+                    var role = _databaseConnection.Roles.SingleOrDefault(n => n.Name == "Client");
+
+                    //populate appuser object
+                    var appUser = new AppUser
+                    {
+                        Firstname = client.Name,
+                        Lastname = client.Name,
+                        Email = collection["AccessEmail"],
+                        Mobile = client.Mobile
+                    };
+                    if (role != null) appUser.RoleId = role.RoleId;
+                    appUser.DateLastModified = DateTime.Now;
+                    appUser.DateCreated = DateTime.Now;
+                    appUser.Password = new Hashing().HashPassword(collection["Password"]);
+                    appUser.Status = UserAccountStatus.Enabled.ToString();
+                    if (loggedinuser != null)
+                    {
+                        appUser.CreatedBy = loggedinuser.AppUserId;
+                        appUser.LastModifiedBy = loggedinuser.AppUserId;
+                        appUser.ClientId = client.ClientId;
+                    }
+                    //save transaction
+                    _databaseConnection.AppUsers.Add(appUser);
+                    _databaseConnection.SaveChanges();
+
+                    //send email
+                    if (events != null) new MailerDaemon().NewClientLogin(client, appUser.AppUserId, events.Name);
+                }
                 TempData["display"] = "You have successfully added a new client!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
                 return RedirectToAction("Index", new {id = client.EventId});

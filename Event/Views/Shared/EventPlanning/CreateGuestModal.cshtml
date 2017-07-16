@@ -1,16 +1,15 @@
-﻿@using MyEventPlan.Data.DataContext.DataContext
-@model Event.Data.Objects.Entities.Guest
+﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
+@model Guest
 @{
     var db = new EventDataContext();
-    long guestListId = ViewBag.guestListId;
-    var eventId = db.GuestLists.Find(guestListId).EventId;
+    var events = Session["event"] as Event;
     Layout = "../../Shared/Layout/_LayoutModal.cshtml";
 }
 @using (Html.BeginForm("Create", "Guests", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
-    @Html.Hidden("GuestListId", guestListId)
-    @Html.Hidden("EventId", eventId)
+    @Html.Hidden("EventId", events.EventId)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
     <div class="mui-textfield mui-textfield--float-label">
@@ -30,7 +29,7 @@
     </div>
     <div class="control-group">
         <div class="controls">
-            <input type="submit" value="Add Guest" class="btn btn-default"/>
+            <input type="submit" value="Add Attendee" class="btn btn-default"/>
         </div>
     </div>
 }

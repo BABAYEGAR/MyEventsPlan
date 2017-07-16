@@ -30,9 +30,43 @@
         @Html.EditorFor(model => model.Mobile, new { htmlAttributes = new { @class = "span8", placeholder = "Enter client mobile number" } })
         @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
     </div>
+    <div class="form-control col-md-6">
+        <input type="checkbox" name="LoginAccess" id="selector"/>
+        @Html.Label("Generate Client Login?")
+    </div>
+    <div id="credential">
+        <div class="mui-textfield mui-textfield--float-label">
+            @Html.EditorFor(model => model.AccessEmail, new {htmlAttributes = new {placeholder = "Enter a access email"}})
+            @Html.LabelFor(model => model.AccessEmail)
+            @Html.ValidationMessageFor(model => model.AccessEmail, "", new {@class = "text-danger"})
+        </div>
+        <div class="mui-textfield mui-textfield--float-label">
+            @Html.LabelFor(model => model.Password, new {@class = "control-label"})
+
+            @Html.PasswordFor(model => model.Password, new {@class = "span8", placeholder = "Enter access password"})
+            @Html.ValidationMessageFor(model => model.Password, "", new {@class = "text-danger"})
+        </div>
+    </div>
     <div class="control-group">
         <div class="controls">
             <input type="submit" value="Add Client" class="btn btn-default"/>
         </div>
     </div>
 }
+@section scripts{
+    <script>
+    
+        $(document).ready(function () {
+            $('#credential').hide();
+            $('#selector').change(function(){
+                if(this.checked)
+                    $('#credential').fadeIn('slow');
+                else
+                    $('#credential').fadeOut('slow');
+
+            });
+        });
+    </script> 
+}
+
+

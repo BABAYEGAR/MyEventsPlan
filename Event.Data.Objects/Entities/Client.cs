@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,7 +8,6 @@ namespace Event.Data.Objects.Entities
     public class Client : Transport
     {
         public long ClientId { get; set; }
-        [Required]
         public string Title { get; set; }
         [Required]
         public string Name { get; set; }
@@ -17,7 +17,9 @@ namespace Event.Data.Objects.Entities
 
         [Required]
         public string Mobile { get; set; }
-
+        [DisplayName("Access Email")]
+        public string AccessEmail { get; set; }
+        public string Password { get; set; }
         public long? EventPlannerId { get; set; }
 
         [ForeignKey("EventPlannerId")]

@@ -8,7 +8,6 @@ namespace Event.Data.Objects.Entities
     public class Contact :Transport
     {
         public long ContactId { get; set; }
-        [Required]
         public string Title { get; set; }
         [Required]
         public string Firstname { get; set; }

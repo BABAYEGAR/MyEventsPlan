@@ -3,11 +3,10 @@
 @{
     ViewBag.Title = "List";
     ViewBag.TableHeader = "My Guests";
-    ViewBag.TableSubHeader = "List of all my guests";
+    ViewBag.TableSubHeader = "List of all event Attendees";
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var guest = new Guest();
     var events = Session["event"] as Event;
-    long guestListId = ViewBag.guestListId;
 }
 @section links{
     <ol class="breadcrumb">
@@ -16,12 +15,6 @@
         </li>
         <li class="breadcrumb-item">
             <a href="@Url.Action("Details", "Events", new {id = events.EventId})">Event Dashboard</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="@Url.Action("Index", "GuestLists", new {eventId = events.EventId})">Event Guest-Lists</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="@Url.Action("Details", "GuestLists", new {id = guestListId})">Event Guest-List Details</a>
         </li>
     </ol>
 }

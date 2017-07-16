@@ -40,11 +40,11 @@
             </div>
         <div class="mui-row">
             <div class="mui-textfield mui-col-md-6">
-                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {placeholder = "Select the Event Start Date", id = "eventStartDate"}})
+                @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {placeholder = "Select the Start Date", id = "eventStartDate"}})
                 @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
             </div>
             <div class="mui-textfield mui-col-md-6">
-                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {placeholder = "Select the Event End Date", id = "eventEndDate"}})
+                @Html.EditorFor(model => model.EndDate, new {htmlAttributes = new {placeholder = "Select the End Date", id = "eventEndDate"}})
                 @Html.ValidationMessageFor(model => model.EndDate, "", new {@class = "text-danger"})
             </div>
         </div>
