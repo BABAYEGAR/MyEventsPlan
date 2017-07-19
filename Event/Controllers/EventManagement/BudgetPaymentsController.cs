@@ -55,7 +55,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully added a payment to the budget!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new{ budgetId = budgetPayment.BudgetId});
             }
             return View(budgetPayment);
         }
@@ -89,7 +89,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully modified the budget payment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = budgetPayment.BudgetPaymentId });
             }
             //ViewBag.BudgetId = new SelectList(db.Budgets, "BudgetId", "ItemName", budgetPayment.BudgetId);
             return View(budgetPayment);

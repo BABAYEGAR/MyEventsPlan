@@ -13,29 +13,15 @@
     var estimated = Model.Sum(n => n.EstimatedAmount);
     var negotiated = Model.Sum(n => n.NegotiatedAmount);
     var actual = Model.Sum(n => n.ActualAmount);
-    var toDate = Model.Sum(n => n.PaidTillDate);
+    long? toDate = db.BudgetPayments.ToList().Sum(n => n.AmountPaid);
     var due = Model.Sum(n => n.AmountStillDue);
 
 }
 @section topSection{
     <div class="content">
         <div class="container-fluid">
-         
+         <h2 class="text-center">Target Budget: N @String.Format("{0:n0}", events.TargetBudget)</h2>
             <div class="col-lg-2 col-md-2 col-sm-2 col-md-offset-1" style="color: blue">
-                <div class="card card-stats">
-                    <div class="card-content">
-                        <p class="category"></p>
-                        <h4 class="title pull-left">
-                            TARGET BUDGET
-                        </h4>
-                        <br/>
-                        <br/>
-                        <h1 class="pull-left">
-                            <h1 class="pull-left">N String.Format("{0:n0}", @events.TargetBudget).00</h1>
-                        </h1>
-
-                    </div>
-                </div>
                 <div class="card card-stats">
                     <div class="card-content">
                         <p class="category"></p>
@@ -45,7 +31,7 @@
                         <br/>
                         <br/>
                         <h1 class="pull-left">
-                            <h1 class="pull-left">N String.Format("{0:n0}", @estimated).00</h1>
+                            <h1 class="pull-left">N @String.Format("{0:n0}", estimated) .00</h1>
                         </h1>
 
                     </div>
@@ -60,7 +46,7 @@
                             </h4>
                             <br/>
                             <br/>
-                            <h1 class="pull-left">N String.Format("{0:n0}", @negotiated).00</h1>
+                            <h1 class="pull-left">N @String.Format("{0:n0}", negotiated) .00</h1>
                         </div>
                     </div>
                 </div>
@@ -73,7 +59,7 @@
                             </h4>
                             <br/>
                             <br/>
-                            <h1 class="pull-left">N String.Format("{0:n0}", @actual).00</h1>
+                            <h1 class="pull-left">N @String.Format("{0:n0}", actual) .00</h1>
                         </div>
 
                     </div>
@@ -87,7 +73,7 @@
                             </h4>
                             <br/>
                             <br/>
-                            <h1 class="pull-left">N String.Format("{0:n0}", @toDate).00</h1>
+                            <h1 class="pull-left">N @String.Format("{0:n0}", toDate) .00</h1>
                         </div>
 
                     </div>
@@ -101,7 +87,7 @@
                             </h4>
                             <br/>
                             <br/>
-                            <h1 class="pull-left">N String.Format("{0:n0}", @due).00</h1>
+                            <h1 class="pull-left">N @String.Format("{0:n0}", due) .00</h1>
                         </div>
 
                     </div>
@@ -194,7 +180,7 @@
                     @Html.DisplayFor(modelItem => item.ActualAmount)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PaidTillDate)
+                    @(db.BudgetPayments.Where(n=>n.BudgetId == item.BudgetId).ToList().Sum(n=>n.AmountPaid))
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AmountStillDue)

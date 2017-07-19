@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Event.Data.Objects.Entities;
 using MyEventPlan.Data.DataContext.DataContext;
 using MyEventPlan.Data.Service.AuthenticationManagement;
+using MyEventPlan.Data.Service.Calender;
 using MyEventPlan.Data.Service.Enum;
 
 namespace MyEventPlan.Controllers.EventManagement
@@ -25,7 +26,16 @@ namespace MyEventPlan.Controllers.EventManagement
             ViewBag.checkListId = checkListId;
             return View(checkListItems.ToList());
         }
-
+        [HttpGet]
+        public ActionResult ReloadItems(long? checkListId)
+        {
+            var checkListItems =
+                _databaseConnection.CheckListItems.Where(n => n.CheckListId == checkListId)
+                    .Include(c => c.CheckList)
+                    .Include(c => c.Event);
+            ViewBag.checkListId = checkListId;
+            return PartialView("EventPlanning/CheckListItems", checkListItems.ToList());
+        }
         // GET: CheckListItems/Details/5
         [SessionExpire]
         public ActionResult Details(long? id)
@@ -132,6 +142,32 @@ namespace MyEventPlan.Controllers.EventManagement
                 return RedirectToAction("Index", new {checkListId = checkListItem.CheckListId});
             }
             return View(checkListItem);
+        }
+        public bool CreateMoreItems(string Name, string EventId, string CheckListId)
+        {
+            try
+            {
+                var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
+                var items = new CheckListItem();
+                items.Name = Name;
+                items.CheckListId = Convert.ToInt64(CheckListId);
+                items.EventId = Convert.ToInt64(EventId);
+                items.DateCreated = DateTime.Now;
+                items.DateLastModified = DateTime.Now;
+                if (loggedinuser != null)
+                {
+                    items.CreatedBy = loggedinuser.AppUserId;
+                    items.LastModifiedBy = loggedinuser.AppUserId;
+                }
+
+                _databaseConnection.CheckListItems.Add(items);
+                _databaseConnection.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         // GET: CheckListItems/UncheckItem/5

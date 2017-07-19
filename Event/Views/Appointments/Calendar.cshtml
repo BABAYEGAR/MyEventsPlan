@@ -238,17 +238,24 @@
             $('#fc_edit').click();
             $('#popupUpdateEventForm').fadeIn();
             $('#eventTitles').val(event.title);
-            $('#eventStartDates').val((event.start).format('M/D/Y HH:mm'));
-            $('#eventEndDates').val(event.end.format('M/D/Y HH:mm'));
+            $('#eventStartDates').val((event.start).format('D/M/Y HH:mm'));
+            $('#eventEndDates').val(event.end.format('D/M/Y HH:mm'));
             $('#eventLocations').val(event.location);
             $('#eventNotes').val(event.note);
             $('#appointmentId').val(event.id);
+            $('#reminderLengthTypes').val(event.reminderType);
+            $('#reminderRepeats').val(event.reminderRepeat);
+            $('#reminderLengths').val(event.reminderLength);
+            $('#sendEmailReminders').val(event.sendEmailReminder);
+            $('#setReminders').val(event.setReminder);
+            $('#selectFor').val(event.fors);
+            $('#eventId').val(event.eventId);
         }
 
         function ShowNewEventPopup(date) {
             $('#fc_create').click();
             $('#popupSaveEventForm').fadeIn();
-            $('#eventStartDate').val(date.format('M/D/Y HH:mm'));
+            $('#eventStartDate').val(date.format('D/M/Y HH:mm'));
         }
 
         function ClearPopupFormValues() {

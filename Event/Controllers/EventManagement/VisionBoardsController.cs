@@ -128,8 +128,9 @@ namespace MyEventPlan.Controllers.EventManagement
         // POST: VisionBoards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(long id)
+        public ActionResult DeleteConfirmed(FormCollection collection)
         {
+            var id = Convert.ToInt64(collection["VisionBoardId"]);
             VisionBoard visionBoard = db.VisionBoards.Find(id);
             
             db.VisionBoards.Remove(visionBoard);

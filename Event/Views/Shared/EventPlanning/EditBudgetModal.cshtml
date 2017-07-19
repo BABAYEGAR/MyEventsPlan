@@ -9,6 +9,8 @@
     @Html.HiddenFor(m => m.DateCreated)
     @Html.HiddenFor(m => m.CreatedBy)
     @Html.HiddenFor(m => m.EventId)
+    @Html.HiddenFor(m => m.PaidTillDate)
+    @Html.HiddenFor(m => m.VendorId)
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
 
     <div class="mui-textfield mui-textfield--float-label">
@@ -38,12 +40,6 @@
 
         @Html.EditorFor(model => model.ActualAmount, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the items actual amount"}})
         @Html.ValidationMessageFor(model => model.ActualAmount, "", new {@class = "text-danger"})
-    </div>
-    <div class="mui-textfield mui-textfield--float-label">
-        @Html.LabelFor(model => model.PaidTillDate, new {@class = "control-label"})
-
-        @Html.EditorFor(model => model.PaidTillDate, new {htmlAttributes = new {@class = "span8", placeholder = "Enter the amount paid till date"}})
-        @Html.ValidationMessageFor(model => model.PaidTillDate, "", new {@class = "text-danger"})
     </div>
     <div class="control-group">
         <div class="controls">

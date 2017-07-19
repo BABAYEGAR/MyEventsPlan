@@ -44,6 +44,12 @@ namespace MyEventPlan.Controllers
             ViewBag.planners = _databaseConnection.EventPlanners.ToList();
             ViewBag.vendorpackage = _databaseConnection.VendorPackages.ToList();
             ViewBag.plannerpackage = _databaseConnection.EventPlannerPackages.ToList();
+            ViewBag.board = _databaseConnection.VisionBoards.Where(n => n.CreatedBy == loggedinuser.AppUserId).ToList();
+            ViewBag.users = _databaseConnection.AppUsers.ToList();
+            ViewBag.roles = _databaseConnection.Roles.ToList();
+            ViewBag.services = _databaseConnection.VendorServices.ToList();
+            ViewBag.types = _databaseConnection.EventTypes.ToList();
+            ViewBag.locations = _databaseConnection.Locations.ToList();
             return View();
         }
 

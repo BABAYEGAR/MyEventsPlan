@@ -141,6 +141,8 @@ namespace MyEventPlan.Controllers.EventManagement
                 ViewBag.vendors = _databaseConnection.EventVendorMappings.Where(n => n.EventId == @event.EventId).ToList();
                 ViewBag.budget = _databaseConnection.Budgets.Where(n => n.EventId == @event.EventId).ToList();
                 ViewBag.task = _databaseConnection.Tasks.Where(n => n.EventId == @event.EventId).ToList();
+                ViewBag.guest = _databaseConnection.Guests.Where(n => n.EventId == @event.EventId).ToList();
+             
 
                 ViewBag.remainingDays = @event.EventDate.Subtract(DateTime.Now).Days;
                 Session["event"] = @event;

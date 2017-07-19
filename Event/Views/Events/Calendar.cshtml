@@ -247,15 +247,15 @@
                     color: event.color,
                     preferredFormat: "hex"
                 });
-            $('#eventStartDates').val((event.start).format('M/D/Y HH:mm'));
-            $('#eventEndDates').val(event.end.format('M/D/Y HH:mm'));
+            $('#eventStartDates').val((event.start).format('D/M/Y HH:mm'));
+            $('#eventEndDates').val(event.end.format('D/M/Y HH:mm'));
             $('#eventId').val(event.id);
         }
 
         function ShowNewEventPopup(date) {
             ClearPopupFormValues();
             $('#fc_create').click();
-            $('#eventStartDate').val(date.format('M/D/Y HH:mm'));
+            $('#eventStartDate').val(date.format('D/M/Y HH:mm'));
         }
 
         function ClearPopupFormValues() {

@@ -20,6 +20,12 @@
     List<EventPlanner> planners = ViewBag.planners;
     List<VendorPackage> vendorPackage = ViewBag.vendorpackage;
     List<EventPlannerPackage> plannerPackage = ViewBag.plannerpackage;
+    List<VisionBoard> board = ViewBag.board;
+    List<AppUser> users = ViewBag.users;
+    List<Role> roles = ViewBag.roles;
+    List<VendorService> services = ViewBag.services;
+    List<EventType> types = ViewBag.types;
+    List<Location> locations = ViewBag.locations;
 
     var role = Session["role"] as Role;
     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
@@ -120,7 +126,7 @@
     <div class="row">
     @if (role.ManageEvents)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="purple">
                     <i class="material-icons">event_seat</i>
@@ -142,7 +148,7 @@
 
     @if (role.ManageCalendar)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="green">
                     <i class="material-icons">today</i>
@@ -160,7 +166,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="purple">
                     <i class="material-icons">today</i>
@@ -181,7 +187,7 @@
     }
     @if (role.ManageProspects)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="deep_orange">
                     <i class="material-icons">assignment</i>
@@ -202,7 +208,7 @@
     }
     @if (role.ManageStaff)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="amber">
                     <i class="material-icons">supervisor_account</i>
@@ -223,7 +229,7 @@
     }
     @if (role.ManageInvoices)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="green">
                     <i class="material-icons">description</i>
@@ -244,7 +250,7 @@
     }
     @if (role.ManageContacts)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="blue">
                     <i class="material-icons">contacts</i>
@@ -265,7 +271,7 @@
     }
     @if (role.ManageResources)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="teal">
                     <i class="material-icons">cloud</i>
@@ -287,7 +293,7 @@
 
     @if (role.ManageApplicationUser)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="purple">
                     <i class="material-icons">event_seat</i>
@@ -295,7 +301,7 @@
                 <div class="card-content">
                     <p class="category"></p>
                     <h3 class="title">
-                        @events.Count<small> Users</small>
+                        @users.Count<small> Users</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -305,7 +311,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="deep_orange">
                     <i class="material-icons">event_seat</i>
@@ -323,7 +329,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="amber">
                     <i class="material-icons">event_seat</i>
@@ -344,7 +350,7 @@
     }
     @if (role.ManageRoles)
      {
-         <div class="col-lg-3 col-md-6 col-sm-9">
+         <div class="col-lg-3 col-md-3 col-sm-6">
              <div class="card card-stats">
                  <div class="card-header" data-background-color="green">
                      <i class="material-icons">today</i>
@@ -365,7 +371,7 @@
      }
     @if (role.ManagePackages)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="blue">
                     <i class="material-icons">card_giftcard</i>
@@ -383,7 +389,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="purple">
                     <i class="material-icons">card_giftcard</i>
@@ -404,7 +410,7 @@
     }
     @if (role.ManageEventType)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="deep_orange">
                     <i class="material-icons">Event Types</i>
@@ -412,7 +418,7 @@
                 <div class="card-content">
                     <p class="category"></p>
                     <h3 class="title">
-                        @prospects.Count<small> Event Categories</small>
+                        @types.Count<small> Event Categories</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -425,7 +431,7 @@
     }
     @if (role.ManageVendorServices)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="purple">
                     <i class="material-icons">event_seat</i>
@@ -433,7 +439,7 @@
                 <div class="card-content">
                     <p class="category"></p>
                     <h3 class="title">
-                        @events.Count<small> Services</small>
+                        @services.Count<small> Services</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -446,7 +452,7 @@
     }
     @if (role.ManageLocations)
     {
-        <div class="col-lg-3 col-md-6 col-sm-9">
+        <div class="col-lg-3 col-md-3 col-sm-6">
             <div class="card card-stats">
                 <div class="card-header" data-background-color="yellow">
                     <i class="material-icons">location_on</i>
@@ -454,7 +460,7 @@
                 <div class="card-content">
                     <p class="category"></p>
                     <h3 class="title">
-                        @events.Count<small> Locations</small>
+                        @locations.Count<small> Locations</small>
                     </h3>
                 </div>
                 <div class="card-footer">
@@ -465,7 +471,7 @@
             </div>
         </div>
     }
-    <div class="col-lg-3 col-md-6 col-sm-9">
+    <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="card card-stats">
             <div class="card-header" data-background-color="yellow">
                 <i class="material-icons">location_on</i>
@@ -473,7 +479,7 @@
             <div class="card-content">
                 <p class="category"></p>
                 <h3 class="title">
-                    @events.Count<small> Vision Board</small>
+                    @board.Count<small> Vision Board</small>
                 </h3>
             </div>
             <div class="card-footer">

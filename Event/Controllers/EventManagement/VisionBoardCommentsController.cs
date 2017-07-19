@@ -47,7 +47,8 @@ namespace MyEventPlan.Controllers.EventManagement
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "VisionBoardCommentId,Comment,VisionBoardId,CreatedBy,DateCreated,DateLastModified,LastModifiedBy")] VisionBoardComment visionBoardComment)
+        public ActionResult Create([Bind(Include = "VisionBoardCommentId,Comment,VisionBoardId,CreatedBy,DateCreated" +
+                                                   ",DateLastModified,LastModifiedBy")] VisionBoardComment visionBoardComment,FormCollection collection)
         {
             if (ModelState.IsValid)
             {
@@ -56,6 +57,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 {
                     visionBoardComment.CreatedBy = loggedinuser.AppUserId;
                     visionBoardComment.LastModifiedBy = loggedinuser.AppUserId;
+                    visionBoardComment.VisionBoardId = Convert.ToInt64(collection["VisionBoardId"]);
                 }
                 visionBoardComment.DateCreated = DateTime.Now;
                 visionBoardComment.DateLastModified = DateTime.Now;
@@ -63,7 +65,7 @@ namespace MyEventPlan.Controllers.EventManagement
                 db.SaveChanges();
                 TempData["display"] = "You have successfully added a comment!";
                 TempData["notificationtype"] = NotificationType.Success.ToString();
-                return RedirectToAction("Details","VisionBoards",new{id = visionBoardComment.VisionBoardId});
+                return RedirectToAction("Index","VisionBoards");
             }
 
             ViewBag.VisionBoardId = new SelectList(db.VisionBoards, "VisionBoardId", "File", visionBoardComment.VisionBoardId);
@@ -120,7 +122,7 @@ namespace MyEventPlan.Controllers.EventManagement
             db.SaveChanges();
             TempData["display"] = "You have successfully deleted the comment!";
             TempData["notificationtype"] = NotificationType.Success.ToString();
-            return RedirectToAction("Details","VisionBoards",new{id = boardId});
+            return RedirectToAction("Index","VisionBoards");
         }
 
         protected override void Dispose(bool disposing)

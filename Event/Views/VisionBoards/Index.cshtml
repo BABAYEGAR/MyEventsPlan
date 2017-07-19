@@ -1,4 +1,5 @@
 ﻿@using Event.Data.Objects.Entities
+@using MyEventPlan.Data.DataContext.DataContext
 @model IEnumerable<VisionBoard>
 @{
     ViewBag.Title = "List";
@@ -6,6 +7,8 @@
     ViewBag.TableSubHeader = "List of all my vision board(s)";
     Layout = "../Shared/Layout/_LayoutTable.cshtml";
     var board = new VisionBoard();
+    var db = new EventDataContext();
+    var comment = new VisionBoardComment();
 }
 @section links{
     <ol class="breadcrumb">
@@ -40,27 +43,107 @@
 
     </div>
 }
-<div class="card-content table-responsive">
-    <table class="table table-hover" id="grid">
-        <thead class="text-primary">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th></th>
-        </tr>
-        </thead>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.ActionLink("Open", "Details", new {id = item.VisionBoardId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
-                </td>
-            </tr>
-        }
+<!-- Modal -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">Delete Vision Board</h4>
+            </div>@using (Html.BeginForm("Delete", "VisionBoards"))
+            {    <input type="hidden" id="id" name="VisionBoardId" />
+                      <div class="modal-body">
 
-    </table>
+                          @Html.AntiForgeryToken()
+                          <p>
+                              Are you sure you want to delete the vision board?
+                          </p>
+
+                      </div>
+                      <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger pull-right fa fa-trash" />
+                          <input type="button" data-dismiss="modal" value="Cancel" class="btn btn-default pull-left" />
+                      </div>
+                  }
+        </div>
+    </div>
+
 </div>
+
+<!-- Comment Modal -->
+<div class="modal fade" id="myModals1" tabindex="-1" role="dialog" aria-labelledby="myModalLabels1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabels1">Add a new comment</h4>
+            </div>
+            <div class="modal-body">
+                @{
+                   Html.RenderPartial("EventPlanning/CreateVisionBoardCommentModal", comment);
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@foreach (var item in Model)
+{
+    var comments = db.VisionBoardComments.Where(n => n.VisionBoardId == item.VisionBoardId).ToList();
+    <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="thumbnail text-center" style="height: 553.925px; padding-top: 0.5em;">
+            <div class="caption">
+                <h3></h3>
+                <div style="height: 300px; overflow: hidden; width: 100%;">
+                    <img src="~/UploadedFiles/VisionBoard/@item.File" style="max-height: 300px; max-width: 100%;">
+                </div>
+                <p class="small margin-top-Halfem"></p>
+            </div>
+            <div class="margin-top-1em">
+                @*<a href="" class="btn btn-sm btn-default loadModal1" data-id="@item.VisionBoardId" data-toggle="modal" >Edit</a>*@
+                <a href="" class="btn btn-sm btn-default loadModal2" data-id="@item.VisionBoardId" data-toggle="modal" >Post Comment</a>
+                <a href="~/UploadedFiles/VisionBoard/@item.File" target="_blank" class="btn btn-sm btn-default">Download</a>
+                <a href="" class="btn btn-sm btn-default loadModal3" data-id="@item.VisionBoardId" data-toggle="modal">Delete</a>
+            </div>
+
+            <hr>
+            <div class="row margin-1em text-left">
+                @foreach (var items in comments)
+                {
+                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                        <i class="fa fa-comment"></i>
+                    </div>
+                    <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11 small">
+                        <span class="font-bold">@(db.AppUsers.Find(items.CreatedBy).DisplayName)</span><br>
+                        <span class="text-muted">@items.DateCreated</span>
+                        <div class="margin-top-Halfem">@items.Comment</div>
+                        <div class="margin-top-Halfem">
+                            <a href="@Url.Action("Delete","VisionBoardComments",new{id = items.VisionBoardCommentId})" data-id="5812" class="btn btn-sm btn-default deleteComment pp-read-only">Delete</a>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+}
+@section scripts
+{
+    <script>
+        $(document).ready(function(){
+            $(".loadModal2").click(function(){ // Click to only happen on announce links
+                $("#VisionBoardId").val($(this).data('id'));
+                $('#myModals1').modal('show');
+            });
+            $(".loadModal3").click(function(){ // Click to only happen on announce links
+                $("#id").val($(this).data('id'));
+                $('#myModal1').modal('show');
+            });
+        });
+    </script>
+}

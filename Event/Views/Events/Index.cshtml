@@ -86,10 +86,10 @@
                 }
 
                 <td>
-                    @item.StartDate.ToShortDateString()
+                    @item.StartDate.ToString("dd/MM/yy")
                 </td>
                 <td>
-                    @item.EndDate.ToShortDateString()
+                    @item.EndDate.ToString("dd/MM/yy")
                 </td>
                 <td>
                     @Html.ActionLink("Open", "Details", new {id = item.EventId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})

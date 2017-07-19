@@ -1,12 +1,13 @@
 ﻿@model Event.Data.Objects.Entities.VisionBoardComment
 @{
     Layout = "../../Shared/Layout/_LayoutModal.cshtml";
-    long boardId = ViewBag.boardId;
+    //long boardId = ViewBag.boardId;
 }
 @using (Html.BeginForm("Create", "VisionBoardComments", FormMethod.Post, new {enctype = "multipart/form-data", @class = "form-horizontal"}))
 {
     @Html.AntiForgeryToken()
-    @Html.Hidden("VisionBoardId",boardId)
+    @*@Html.Hidden("VisionBoardId",boardId)*@
+    <input type="hidden" id="VisionBoardId" name="VisionBoardId"/>
     @Html.ValidationSummary(true, "", new {@class = "text-danger"})
     <div class="mui-textfield mui-textfield--float-label">
         @Html.EditorFor(model => model.Comment, new {htmlAttributes = new {placeholder = "Enter comment"}})

@@ -55,7 +55,15 @@ namespace MyEventPlan.Data.Service.Calender
                         Notes = item.Notes,
                         Location = item.Location,
                         EventPlannerId = id,
-                        AppointmentId = item.AppointmentId
+                        AppointmentId = item.AppointmentId,
+                        SendEmailReminder = item.SendEmailReminder,
+                        SetReminder = item.SetReminder,
+                        ReminderLengthType = item.ReminderLengthType,
+                        ReminderRepeat =  item.ReminderRepeat,
+                        ReminderLength = item.ReminderLength,
+                        For = item.For,
+
+                       
                     };
                     result.Add(rec);
                 }

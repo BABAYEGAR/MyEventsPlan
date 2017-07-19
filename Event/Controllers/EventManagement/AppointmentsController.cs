@@ -56,7 +56,12 @@ namespace MyEventPlan.Controllers.EventManagement
                         end = e.EndDate,
                         allDay = false,
                         startTime = e.StartTime,
-                        endTime = e.EndTime
+                        endTime = e.EndTime,
+                        reminderType = e.ReminderLengthType,
+                        reminderRepeat = e.ReminderRepeat,
+                        reminderLength = e.ReminderLength,
+                        sendEmailReminder = e.SendEmailReminder,
+                        setReminder = e.SetReminder
                     };
                 var rows = appointmentList.ToArray();
                 return Json(rows, JsonRequestBehavior.AllowGet);
@@ -84,8 +89,18 @@ namespace MyEventPlan.Controllers.EventManagement
                 calendarAppointment.EndDate = Convert.ToDateTime(collectedValues["EndDate"]);
                 calendarAppointment.StartTime = Convert.ToDateTime(collectedValues["StartDate"]).ToShortTimeString();
                 calendarAppointment.EndTime = Convert.ToDateTime(collectedValues["EndDate"]).ToShortTimeString();
+                calendarAppointment.ReminderLength = Convert.ToInt64(collectedValues["ReminderLength"]);
+                calendarAppointment.ReminderRepeat =
+                    typeof(ReminderRepeat).GetEnumName(int.Parse(collectedValues["ReminderRepeat"]));
+                calendarAppointment.ReminderLengthType = typeof(ReminderLength).GetEnumName(int.Parse(collectedValues["ReminderLengthType"]));
+                calendarAppointment.SetReminder = Convert.ToBoolean(collectedValues["SetReminder"]);
+                calendarAppointment.SendEmailReminder = Convert.ToBoolean(collectedValues["SendEmailReminder"]);
+                calendarAppointment.SendTextMessageReminder = false;
+
+                //add object to transaction
                 _databaseConnection.Entry(calendarAppointment).State = EntityState.Modified;
             }
+            //save transaction
             _databaseConnection.SaveChanges();
             return RedirectToAction("Calendar");
         }

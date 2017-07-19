@@ -4,9 +4,6 @@
 @{
     Layout = "../Shared/Layout/_LayoutAppTheme.cshtml";
     var db = new EventDataContext();
-    var allVendors = db.Vendors.OrderByDescending(n => n.AverageRating).ToList();
-    //var countedVendors = allVendors.Take(6);
-
     var allPlanners = db.EventPlanners.Include(m => m.Location).ToList();
     var countedPlanners = allPlanners.Take(3);
 }
@@ -122,6 +119,16 @@
                     <p>Centralize all your attendee details and view current headcounts. Store contact details like emails, phone numbers, etc. For RSVP-style events, you can even organize attendees into groups/families and add Plus Ones.</p>
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="feature-block feature-center mb30">
+                    <!-- feature block -->
+                    <div class="feature-icon">
+                        <i class="icon icon-size-60 icon-lock icon-default"></i>
+                    </div>
+                    <h2>Multi User-Access</h2>
+                    <p> Share user access and give permissions to team members and clients to foster collaboration online. Each user has their own login credentials, and multiple users can be working in your account at the same time. </p>
+                </div>
+            </div>
             <!-- /.feature block -->
             <div class="col-md-3">
                 <div class="feature-block feature-center mb30">
@@ -133,16 +140,7 @@
                     <p> Take notes and share ideas with clients and team members. Our messages and notes tools give you a place to save and share every conversation and thought. Our messaging tool allows you enjoy one-on-one conversation or group conversation with vendors and clients. </p>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="feature-block feature-center mb30">
-                    <!-- feature block -->
-                    <div class="feature-icon">
-                        <i class="icon icon-size-60 icon-lock icon-default"></i>
-                    </div>
-                    <h2>Multi User-Access</h2>
-                    <p> Share user access and give permissions to team members and clients to foster collaboration online. Each user has their own login credentials, and multiple users can be working in your account at the same time. </p>
-                </div>
-            </div>
+    
             <!-- /.feature block -->
         </div>
         <!-- /.feature center -->
@@ -291,23 +289,23 @@
             <div class="col-md-4">
                 <div class="well-box feature-block text-center">
                     <div class="feature-icon">
-                        <i class="icon-guest-list icon-size-60 icon-light"></i>
+                        <i class="icon-store icon-size-60 icon-light"></i>
                     </div>
                     <div class="feature-info">
-                        <h4>Track Attendees and Guest</h4>
-                        <p>With RSVP details and real-time guest listings that can be updated. </p>
-
+                        <h4>Promote your business & make sales</h4>
+                        <p>By tracking and managing leads and contacts. </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="well-box feature-block text-center">
                     <div class="feature-icon">
-                        <i class="icon-store icon-size-60 icon-light"></i>
+                        <i class="icon-guest-list icon-size-60 icon-light"></i>
                     </div>
                     <div class="feature-info">
-                        <h4>Promote your business & make sales</h4>
-                        <p>By tracking and managing leads and contacts. </p>
+                        <h4>Track Attendees and Guest</h4>
+                        <p>With RSVP details and real-time guest listings that can be updated. </p>
+
                     </div>
                 </div>
             </div>

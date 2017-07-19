@@ -60,61 +60,20 @@
 
     </div>
 }
-    <div class="card-content table-responsive">
-       <table class="table table-hover" id="grid">
-            <thead>
-            <tr>
-                <th>
-                    <input type="checkbox" id="check-all" class="flat" onclick="toggle(this)">
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-
-                <th>Action</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var item in Model)
-            {
-                var allMappings = db.CheckListItems.SingleOrDefault(
-                    n =>
-                        n.CheckListItemId == item.CheckListItemId &&
-                        n.CheckListId == item.CheckListId && n.Checked);
-
-
-                <tr>
-                    <td>
-                        @if (allMappings != null)
-                        {
-                            <a href="@Url.Action("UncheckItem", "CheckListItems", new {id = item.CheckListItemId})">
-                                <i class="fa fa-remove"></i>
-                            </a>
-                        }
-                        else
-                        {
-                            <input type="checkbox" class="flat" name="table_records" value="@item.CheckListItemId">
-                        }
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-
-                    <td>
-                        @Html.ActionLink("Open", "Details", new {id = item.CheckListItemId}, new {@class = "btn btn-default btn-lg fa fa-folder-open"})
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
+    <div class="card-content table-responsive" id="items">
+        @{
+            Html.RenderPartial("EventPlanning/CheckListItems",Model);
+        }
     </div>
 }
-<script>
-    function toggle(source) {
-        checkboxes = document.getElementsByName('table_records');
-        for (var i = 0, n = checkboxes.length; i < n; i++) {
-            checkboxes[i].checked = source.checked;
+
+@section scripts{
+    <script>
+        function toggle(source) {
+            checkboxes = document.getElementsByName('table_records');
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                checkboxes[i].checked = source.checked;
+            }
         }
-    }
-</script>
+    </script>
+}

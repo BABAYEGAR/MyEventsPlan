@@ -24,6 +24,7 @@
     List<EventVendorMapping> vendors = ViewBag.vendors;
     List<Budget> budget = ViewBag.budget;
     List<Task> task = ViewBag.task;
+    List<Guest> guest = ViewBag.guest;
     int remainingDays = ViewBag.remainingDays;
 
     var appointment = new Appointment();
@@ -271,7 +272,7 @@
                     <div class="card-content">
                         <p class="category">Attendees</p>
                         <h3 class="title">
-                            9<small> Guest-List</small>
+                            @guest.Count<small> Guest-List</small>
                         </h3>
                     </div>
                     <div class="card-footer">

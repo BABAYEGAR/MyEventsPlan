@@ -61,17 +61,6 @@ namespace MyEventPlan.Controllers.EventManagement
                 if (events != null)
                 {
                     var targetBudget = Convert.ToInt64(events.TargetBudget);
-                    var eventBudget = _databaseConnection.Budgets.Where(n => n.EventId == events.EventId).ToList();
-                    long totalAmount = 0;
-                    if (eventBudget.Count > 0)
-                    {
-                        var sum = _databaseConnection.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
-                        if (sum != null)
-                            totalAmount = (long) sum;
-                    }
-
-                    if (totalAmount + budget.PaidTillDate < targetBudget)
-                    {
                         var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                         budget.DateCreated = DateTime.Now;
                         budget.DateLastModified = DateTime.Now;
@@ -93,11 +82,8 @@ namespace MyEventPlan.Controllers.EventManagement
                         TempData["display"] = "Your have successfully added the budget for an item!";
                         TempData["notificationtype"] = NotificationType.Info.ToString();
                         return RedirectToAction("Index", new {id = events.EventId});
-                    }
                 }
-                TempData["display"] = "Your budget item overides your target budget !";
-                TempData["notificationtype"] = NotificationType.Error.ToString();
-                if (events != null) return RedirectToAction("Index", new {id = events.EventId});
+
             }
             return View(budget);
         }
@@ -122,23 +108,12 @@ namespace MyEventPlan.Controllers.EventManagement
         [SessionExpire]
         public ActionResult Edit(
             [Bind(Include =
-                "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate,EventId,CreatedBy,DateCreated")]
+                "BudgetId,ItemName,EstimatedAmount,NegotiatedAmount,ActualAmount,PaidTillDate,EventId,CreatedBy,DateCreated,VendorId")]
             Budget budget)
         {
             var events = Session["event"] as Event.Data.Objects.Entities.Event;
-            var eventBudget = _databaseConnection.Budgets.Where(n => n.EventId == events.EventId).ToList();
-            long totalAmount = 0;
-            if (eventBudget.Count > 0)
-            {
-                var sum = _databaseConnection.Budgets.Where(n => n.EventId == events.EventId).Sum(n => n.PaidTillDate);
-                if (sum != null)
-                    totalAmount = (long) sum;
-            }
             if (events != null)
             {
-                var targetBudget = Convert.ToInt64(events.TargetBudget);
-                if (totalAmount + budget.PaidTillDate < targetBudget)
-                {
                     var loggedinuser = Session["myeventplanloggedinuser"] as AppUser;
                     budget.DateLastModified = DateTime.Now;
                     budget.EventId = events.EventId;
@@ -146,6 +121,9 @@ namespace MyEventPlan.Controllers.EventManagement
                     {
                         budget.LastModifiedBy = loggedinuser.AppUserId;
                         budget.AmountStillDue = budget.ActualAmount - budget.PaidTillDate;
+                        budget.AmountStillDue = budget.ActualAmount -
+                            _databaseConnection.BudgetPayments.Where(n => n.BudgetId == budget.BudgetId).ToList()
+                                .Sum(n => n.AmountPaid);
                     }
                     else
                     {
@@ -158,7 +136,7 @@ namespace MyEventPlan.Controllers.EventManagement
                     TempData["display"] = "Your have successfully modified the budget for the item!";
                     TempData["notificationtype"] = NotificationType.Info.ToString();
                     return RedirectToAction("Index",new{id = events.EventId});
-                }
+                
             }
             return View(budget);
         }
