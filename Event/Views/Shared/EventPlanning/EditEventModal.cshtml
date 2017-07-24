@@ -70,10 +70,12 @@
 <script src="~/Content/Color/spectrum.js"></script>
 <script type="text/javascript">
 
-
+    $("input[data-val-date]").removeAttr("data-val-date");
     jQuery('#datetimepicker5')
         .datetimepicker({
-            format: 'm-d-Y',
+            format:'d-m-y H:i',
+            formatTime:'h:i',
+            formatDate:'d-m-Y',
             onShow: function() {
                 this.setOptions({
                     minDate: 0
@@ -84,7 +86,9 @@
         });
     jQuery('#datetimepicker6')
         .datetimepicker({
-            format: 'm-d-Y H:i',
+            format:'d-m-y H:i',
+            formatTime:'h:i',
+            formatDate:'d-m-Y',
             onShow: function() {
                 this.setOptions({
                     minDate: 0,
@@ -94,10 +98,12 @@
         });
     jQuery('#datetimepicker7')
         .datetimepicker({
-            format: 'm-d-Y H:i',
+            format:'d-m-y H:i',
+            formatTime:'h:i',
+            formatDate:'d-m-Y',
             onShow: function() {
                 this.setOptions({
-                    minDate: jQuery('#datetimepicker6').val()
+                    minDate: window.jQuery('#datetimepicker6').val()
                 });
             }
         });

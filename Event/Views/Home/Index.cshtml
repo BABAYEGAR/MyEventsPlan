@@ -7,13 +7,18 @@
     var allPlanners = db.EventPlanners.Include(m => m.Location).ToList();
     var countedPlanners = allPlanners.Take(3);
 }
-<style>
-    .finder-caption h1 {
-        font-size: 42px;
-        font-weight: 400;
-        letter-spacing: -2px;
-    }
-</style>
+@section css
+{
+    <style>
+        .finder-caption h1 {
+            font-size: 42px;
+            font-weight: 400;
+            letter-spacing: -2px;
+        }
+    </style>
+
+}
+
 <div class="slider-bg">
     <!-- slider start-->
     <div id="slider" class="owl-carousel owl-theme slider">
@@ -140,13 +145,13 @@
                     <p> Take notes and share ideas with clients and team members. Our messages and notes tools give you a place to save and share every conversation and thought. Our messaging tool allows you enjoy one-on-one conversation or group conversation with vendors and clients. </p>
                 </div>
             </div>
-    
+
             <!-- /.feature block -->
         </div>
         <!-- /.feature center -->
         <div class="row">
             <div class="col-md-12 text-center">
-                <a href="@Url.Action("Create","EventPlanners")" class="btn btn-primary">Get Started</a>
+                <a href="@Url.Action("Create", "EventPlanners")" class="btn btn-primary">Get Started</a>
             </div>
         </div>
     </div>
@@ -166,11 +171,11 @@
         {
             <div class="row">
                 <div class="form-group col-md-4">
-                    @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Vendor Service", new {@class = "form-control",id = "category" })
+                    @Html.DropDownListFor(m => m.VendorServiceId, null, "Select Vendor Service", new {@class = "form-control", id = "category"})
                     @Html.ValidationMessageFor(model => model.VendorServiceId, "", new {@class = "text-danger"})
                 </div>
                 <div class="form-group col-md-4">
-                    @Html.DropDownListFor(m => m.LocationId, null, "Select Vendor Location", new {@class = "form-control",id = "service"})
+                    @Html.DropDownListFor(m => m.LocationId, null, "Select Vendor Location", new {@class = "form-control", id = "service"})
                     @Html.ValidationMessageFor(model => model.LocationId, "", new {@class = "text-danger"})
                 </div>
                 <div class="form-group col-md-4">
@@ -254,7 +259,7 @@
                         <h4>Create & Manage Event Bookings</h4>
                         <p>Book events with dates and color codes.</p>
                         <p>
-                            
+
                         </p>
                     </div>
                 </div>
@@ -268,7 +273,7 @@
                         <h4>Boost your events efficiency</h4>
                         <p>Boost your events efficiency.</p>
                         <p>
-                            
+
                         </p>
                     </div>
                 </div>
@@ -316,21 +321,21 @@
     <script>
         $(window)
             .load(function() {
-                    $("#category")
-                        .change(function() {
-                            if ($("#category").val() == "") {
-                                $("#findvendors").prop("disabled", true);
-                            } else
-                                $("#findvendors").prop("disabled", false);
-                        });
-                    $("#service")
-                        .change(function() {
-                            if ($("#service").val() == "") {
-                                $("#findvendors").prop("disabled", true);
-                            } else
-                                $("#findvendors").prop("disabled", false);
-                        });
-                });
-         
+                $("#category")
+                    .change(function() {
+                        if ($("#category").val() == "") {
+                            $("#findvendors").prop("disabled", true);
+                        } else
+                            $("#findvendors").prop("disabled", false);
+                    });
+                $("#service")
+                    .change(function() {
+                        if ($("#service").val() == "") {
+                            $("#findvendors").prop("disabled", true);
+                        } else
+                            $("#findvendors").prop("disabled", false);
+                    });
+            });
+
     </script>
 }

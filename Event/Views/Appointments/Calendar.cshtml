@@ -64,7 +64,8 @@
     <script src="~/Content/Color/spectrum.js"></script>
     <script src="~/Content/select2/dist/js/select2.full.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
+            $("input[data-val-date]").removeAttr("data-val-date");
             $(".select2_single").select2({
                 placeholder: "Select a state",
                 allowClear: true
@@ -81,7 +82,9 @@
         $.datetimepicker.setLocale('en');
         jQuery('#eventDate')
             .datetimepicker({
-                format: 'm-d-Y',
+                format:'d-m-y H:i',
+                formatTime:'h:i',
+                formatDate:'d-m-Y',
                 onShow: function() {
                     this.setOptions({
                         minDate: 0
@@ -92,7 +95,9 @@
             });
         jQuery('#eventStartDate')
             .datetimepicker({
-                format: 'm-d-Y H:i',
+                format:'d-m-y H:i',
+                formatTime:'h:i',
+                formatDate:'d-m-Y',
                 onShow: function() {
                     this.setOptions({
                         minDate: 0
@@ -101,7 +106,9 @@
             });
         jQuery('#eventEndDate')
             .datetimepicker({
-                format: 'm-d-Y H:i',
+                format:'d-m-y H:i',
+                formatTime:'h:i',
+                formatDate:'d-m-Y',
                 onShow: function() {
                     this.setOptions({
                         minDate: jQuery('#eventStartDate').val()
@@ -110,7 +117,9 @@
             });
         jQuery('#eventStartDates')
             .datetimepicker({
-                format: 'm-d-Y H:i',
+                format:'d-m-y H:i',
+                formatTime:'h:i',
+                formatDate:'d-m-Y',
                 onShow: function() {
                     this.setOptions({
                     });
@@ -118,7 +127,9 @@
             });
         jQuery('#eventEndDates')
             .datetimepicker({
-                format: 'm-d-Y H:i',
+                format:'d-m-y H:i',
+                formatTime:'h:i',
+                formatDate:'d-m-Y',
                 onShow: function() {
                     this.setOptions({
                     });

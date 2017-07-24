@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -224,9 +225,9 @@ namespace MyEventPlan.Controllers.EventManagement
             {
                 if (role != null && loggedinuser != null && role.Name == "Event Planner")
                 {
-                    @event.CreatedBy = loggedinuser.AppUserId;
                     @event.DateCreated = DateTime.Now;
                     @event.DateLastModified = DateTime.Now;
+                    @event.CreatedBy = loggedinuser.AppUserId;
                     @event.LastModifiedBy = loggedinuser.AppUserId;
                     @event.TargetBudget = @event.TargetBudget.Replace(",", "");
                     @event.Status = EventStausEnum.New.ToString();

@@ -54,9 +54,12 @@
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Content/DateTimePicker/jquery.datetimepicker.full.min.js"></script>
     <script type="text/javascript">
+        $("input[data-val-date]").removeAttr("data-val-date");
         jQuery('#datetimepicker6')
             .datetimepicker({
-                format: 'm-d-Y H:i',
+                format:'d-m-y H:i',
+                formatTime:'h:i',
+                formatDate:'d-m-Y',
                 onShow: function(ct) {
                     this.setOptions({
                         minDate: 0
@@ -65,7 +68,9 @@
             });
         jQuery('#datetimepicker7')
             .datetimepicker({
-                format: 'm-d-Y H:i',
+                format:'d-m-y H:i',
+                formatTime:'h:i',
+                formatDate:'d-m-Y',
                 onShow: function(ct) {
                     this.setOptions({
                         minDate: $('#datetimepicker6').val()
